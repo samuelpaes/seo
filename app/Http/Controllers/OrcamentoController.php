@@ -207,7 +207,7 @@ class OrcamentoController extends Controller
 			}
 			
 			asort($dotacoes_suplementacao);
-			return($dotacoes_suplementacao);
+			//return($dotacoes_suplementacao);
 						
 			foreach ($request->anl_codigo_dotacao as $dotacao)
 			{
