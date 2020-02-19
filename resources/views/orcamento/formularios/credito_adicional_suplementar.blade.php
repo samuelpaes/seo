@@ -394,7 +394,7 @@
 													<tr style="height:100px">
 														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 90px; line-height: 1.5; text-align:center; color:#000;  margin-right:5px;"><b>Unidade Executora</b></label></th>
 														<th style="text-align:center; "><label style="flex-wrap:nowrap; display: inline-block; width: 120px; line-height: 1.5; text-align:center; color:#000;  margin-right:5px;"><b>Classificação Funcional Programática</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000; margin-right:5px;"><b>Natureza De Despesa</b></label></th>
+														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000; margin-right:7px;"><b>Natureza De Despesa</b></label></th>
 														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000;  margin-left:-10px;"><b>Vínculo</b></label></th>
 														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000; margin-left:-15px;"><b>Dotação</b></label></th>
 														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></label></th>
