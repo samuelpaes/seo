@@ -379,7 +379,7 @@
 								</div>
 								
 								<div class="content">
-											
+									<div class="row flex-nowrap">				
 										<div class="col-md-12" align="center" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap;">
 											<span class="pull-center">
 												<label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
@@ -389,7 +389,7 @@
 											</span>
 										</div>	
 										<div class="content table-responsive table-full-width" style="font-size:12px; overflow-x:auto; width:100%;" >
-											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style='font-size:98%; text-align:center'>
+											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style='font-size:98%; text-align:center; position:relative; left:-10px'>
 												<thead>
 													<tr style="height:100px">
 														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 90px; line-height: 1.5; text-align:center; color:#000; "><b>Unidade Executora</b></label></th>
@@ -463,7 +463,7 @@
 												</div>
                                    			</div>
 										</div>
-									
+									</div>
 								</div>			
 							</div>
 							
