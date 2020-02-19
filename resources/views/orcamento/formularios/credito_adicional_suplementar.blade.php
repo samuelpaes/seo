@@ -826,14 +826,18 @@
 						
 						if(foco == 'suplementar'){
 							//$("#sup_codigo_dotacao").focus();
-							document.getElementById('cardSuplementacao').style.display = "";
-							document.getElementById("sup_codigo_dotacao").focus({preventScroll:false});
+							if(document.getElementById('cardSuplementacao') != null){
+								document.getElementById('cardSuplementacao').style.display = "";
+								document.getElementById("sup_codigo_dotacao").focus({preventScroll:false});
+							}
 						}
 						else if(foco == 'anular')
 						{
 							//$("#anl_codigo_dotacao").focus();
+							if(document.getElementById('cardAnulacao') != null){
 							document.getElementById('cardAnulacao').style.display = "";
 							document.getElementById("anl_codigo_dotacao").focus({preventScroll:false});
+							}
 						}
 						//alert(foco);
 					});
