@@ -392,7 +392,7 @@
 										</div>
 										
 											
-										<div class="content table-responsive table-full-width" style="font-size:12px; overflow-x:auto;" >
+										<div class="content table-responsive" style="font-size:12px; overflow-x:auto;" >
 											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style='font-size:98%'>
 												<thead>
 													<tr style="height:100px">
