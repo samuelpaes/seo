@@ -379,7 +379,7 @@
 								</div>
 								
 								<div class="content">
-									<div class="row flex-nowrap">				
+											
 										<div class="col-md-12" align="center" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap;">
 											<span class="pull-center">
 												<label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
@@ -463,7 +463,7 @@
 												</div>
                                    			</div>
 										</div>
-									</div>
+									
 								</div>			
 							</div>
 							
