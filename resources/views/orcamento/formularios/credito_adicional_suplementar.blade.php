@@ -380,8 +380,7 @@
 								
 								<div class="content">
 									<div class="row flex-nowrap">
-										<div class="col-md-5">
-										</div>
+										
 										
 										<div class="col-md-12" align="center" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap;">
 											<span class="pull-center">
@@ -391,8 +390,7 @@
 												<button value="anular" id="anular" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
 											</span>
 										</div>
-										<div class="col-md-5">
-										</div>
+										
 											
 										<div class="content table-responsive table-full-width" style="font-size:12px; overflow-x:auto;" >
 											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style='font-size:98%'>
