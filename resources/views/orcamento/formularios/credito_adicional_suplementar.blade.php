@@ -392,14 +392,14 @@
 											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style='font-size:98%'>
 												<thead>
 													<tr style="height:100px">
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 90px; line-height: 1.5; text-align:center; color:#000;  margin-left:-30px; margin-right:-30px"><b>Unidade Executora</b></label></th>
-														<th style="text-align:center; "><label style="flex-wrap:nowrap; display: inline-block; width: 120px; line-height: 1.5; text-align:center; color:#000;  margin-left:-30px; margin-right:-30px"><b>Classificação Funcional Programática</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000;  margin-left:-30px; margin-right:-30px"><b>Natureza De Despesa</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000;  margin-left:-30px; margin-right:-30px"><b>Vínculo</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000; margin-left:-30px; margin-right:-30px"><b>Dotação</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000;  margin-left:-30px; margin-right:-30px"><b>Valor</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000;  margin-left:-30px; margin-right:-30px"><b>Recurso</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 5px; line-height: 1.5; text-align:center; color:#000;  margin-left:-30px; margin-right:-30px"><b></b></label></th>
+														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 90px; line-height: 1.5; text-align:center; color:#000;"><b>Unidade Executora</b></label></th>
+														<th style="text-align:center; "><label style="flex-wrap:nowrap; display: inline-block; width: 120px; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></label></th>
+														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></label></th>
+														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></label></th>
+														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000 "><b>Dotação</b></label></th>
+														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></label></th>
+														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Recurso</b></label></th>
+														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 5px; line-height: 1.5; text-align:center; color:#000"><b></b></label></th>
 													</tr>
 												</thead>
 												<tbody>
