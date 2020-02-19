@@ -205,10 +205,9 @@ class OrcamentoController extends Controller
 				}
 				
 			}
-			
+			//reordena as dotacoes
 			asort($dotacoes_suplementacao);
-			//return($dotacoes_suplementacao);
-						
+									
 			foreach ($request->anl_codigo_dotacao as $dotacao)
 			{
 				if($dotacao <> null)
@@ -231,7 +230,9 @@ class OrcamentoController extends Controller
 				}
 				
 			}
-			
+			//reordena as dotacoes
+			asort($dotacoes_anulacao);
+
 			if($request->acao == "suplementar")
 			{
 				$sup_valor = $request->sup_valor;
