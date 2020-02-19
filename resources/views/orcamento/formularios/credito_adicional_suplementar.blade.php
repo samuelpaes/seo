@@ -379,9 +379,7 @@
 								</div>
 								
 								<div class="content">
-									<div class="row flex-nowrap">
-										
-										
+									<div class="row flex-nowrap">				
 										<div class="col-md-12" align="center" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap;">
 											<span class="pull-center">
 												<label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
@@ -389,10 +387,8 @@
 												<input class="form-control" type="hidden" placeholder="R$ 0,00" name="sup_valor[]" style="display: inline-block; width:80px;"></input>
 												<button value="anular" id="anular" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
 											</span>
-										</div>
-										
-											
-										<div class="content table-responsive" style="font-size:12px; overflow-x:auto;" >
+										</div>	
+										<div class="content table-responsive table-full-width" style="font-size:12px; overflow-x:auto;" >
 											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style='font-size:98%'>
 												<thead>
 													<tr style="height:100px">
@@ -412,7 +408,7 @@
 													@foreach($dotacoes_anulacao as $dotacao)
 														
 													<tr style="height:auto;">
-														<td style="width:75px;"><input name="anl_unidade_executora[{{$i}}]" value="{{$dotacao['unidade_executora']}}"><div class="form-control" style='flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;'>{{$dotacao['unidade_executora']}}</div></input></td>
+														<td style="width:75px"><input name="anl_unidade_executora[{{$i}}]" value="{{$dotacao['unidade_executora']}}"><div class="form-control" style='flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;'>{{$dotacao['unidade_executora']}}</div></input></td>
 														<td style="width:120px;"><input name="anl_classificacao_funcional[{{$i}}]" value="{{$dotacao['classificacao_funcional_programatica']}}"><div class="form-control" style=' flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;' id="classificacao_anl-{{$i}}">{{$dotacao['classificacao_funcional_programatica']}}</div></input></td>
 														<td style="width:100px"><input name="anl_natureza_despesa[{{$i}}]" value="{{$dotacao['natureza_de_despesa']}}"><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;' id="natureza_anl-{{$i}}">{{$dotacao['natureza_de_despesa']}}</div></input></td>
 														<input type="hidden" value="{{$i}}" name="anl_id[{{$i}}]" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'></input>
