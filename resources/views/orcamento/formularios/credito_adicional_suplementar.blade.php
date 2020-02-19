@@ -280,8 +280,8 @@
 
 									
 										
-										<div class="table-responsive table-body" style="font-size:12px; overflow-x:auto;" >
-											<table class="table table-hover table-striped" id="tabela_suplementar" name="tabela_suplementar" style='font-size:98%'>
+										<div class="table-responsive table-body" style="font-size:12px; " >
+											<table class="table table-hover table-striped" id="tabela_suplementar" name="tabela_suplementar" style='font-size:98%; overflow-x:auto;'>
 												<thead>
 													<tr style="height:100px">
 														<th><label style="flex-wrap:nowrap; display: inline-block; width: 90px; line-height: 1.5; text-align:center; color:#000;  margin-right:5px;"><b>Unidade Executora</b></label></th>
