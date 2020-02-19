@@ -388,7 +388,7 @@
 												<button value="anular" id="anular" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
 											</span>
 										</div>	
-										<div class="content table-responsive table-full-width" style="font-size:12px; overflow-x:auto; width:100%" >
+										<div class="content table-responsive table-full-width" style="font-size:12px; overflow-x:auto; width:100%; align:center" >
 											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style='font-size:98%'>
 												<thead>
 													<tr style="height:100px">
