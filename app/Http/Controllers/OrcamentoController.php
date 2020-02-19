@@ -182,8 +182,9 @@ class OrcamentoController extends Controller
 			}
 
 		
-			return($request->sup_codigo_dotacao);
+			
 			asort($request->sup_codigo_dotacao);
+			return($request->sup_codigo_dotacao);
 			foreach ($request->sup_codigo_dotacao as $dotacao)
 			{
 				if($dotacao <> null)
