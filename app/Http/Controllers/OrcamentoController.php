@@ -39,7 +39,7 @@ class OrcamentoController extends Controller
 		$superavit = false;
 		$excesso = false;
 		///////////////////
-		return($request);
+		
 		if($request->formulario <> null)
 		{
 			$formulario = $request->formulario;
