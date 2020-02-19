@@ -205,8 +205,7 @@ class OrcamentoController extends Controller
 				}
 				
 			}
-			//reordena as dotacoes
-			asort($dotacoes_suplementacao);
+			
 									
 			foreach ($request->anl_codigo_dotacao as $dotacao)
 			{
@@ -230,9 +229,7 @@ class OrcamentoController extends Controller
 				}
 				
 			}
-			//reordena as dotacoes
-			asort($dotacoes_anulacao);
-
+			
 			if($request->acao == "suplementar")
 			{
 				$sup_valor = $request->sup_valor;
@@ -393,14 +390,12 @@ class OrcamentoController extends Controller
 				$formulario = $request->formulario;
 			}
 			
-			if($formulario == "credito_adicional_suplementar")
-			{
-				return view ('orcamento/formularios/credito_adicional_suplementar')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
-			}
-			else if ($formulario == "remanejamento_transposicao_transferencia")
-			{
-				return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
-			}
+			//reordena as dotacoes
+			asort($dotacoes_anulacao);
+			//reordena as dotacoes
+			asort($dotacoes_suplementacao);
+			return view ('orcamento/formularios/credito_adicional_suplementar')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
+			
 		}
 		else if ($request->formulario =="remanejamento_transposicao_transferencia")
 		{
@@ -467,6 +462,7 @@ class OrcamentoController extends Controller
 				}
 				
 			}
+			asort($dotacoes_suplementacao);
 
 			if(!empty($dotacoes_suplementacao))
 			{
@@ -503,6 +499,7 @@ class OrcamentoController extends Controller
 				}
 				
 			}
+			asort($dotacoes_remanejamento);
 
 			if(!empty($dotacoes_remanejamento))
 			{
@@ -535,7 +532,8 @@ class OrcamentoController extends Controller
 				}
 				
 			}
-			
+			asort($dotacoes_transposicao);
+
 			if(!empty($dotacoes_transposicao))
 			{
 				foreach($dotacoes_transposicao as $dotacao)
@@ -567,6 +565,19 @@ class OrcamentoController extends Controller
 				}
 				
 			}
+			asort($dotacoes_transferencia);
+
+			if(!empty($dotacoes_transferencia))
+			{
+				foreach($dotacoes_transferencia as $dotacao)
+				{
+					$dotacoes_transferencia_vinculos[] = SaldoDeDotacao2019::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();
+				}
+				$dotacoes_transferencia_vinculos= array_unique($dotacoes_transferencia_vinculos, SORT_REGULAR);
+			}
+			else{
+			}
+
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -918,18 +929,6 @@ class OrcamentoController extends Controller
 			
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-			if(!empty($dotacoes_transferencia))
-			{
-				foreach($dotacoes_transferencia as $dotacao)
-				{
-					$dotacoes_transferencia_vinculos[] = SaldoDeDotacao2019::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();
-				}
-				$dotacoes_transferencia_vinculos= array_unique($dotacoes_transferencia_vinculos, SORT_REGULAR);
-			}
-			else{
-			}
-
 			//return($dotacoes_transposicao_vinculos);
 			return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with("dotacoes_remanejamento", $dotacoes_remanejamento)->with('dotacoes_remanejamento_vinculos', $dotacoes_remanejamento_vinculos)->with("dotacoes_transposicao", $dotacoes_transposicao)->with('dotacoes_transposicao_vinculos', $dotacoes_transposicao_vinculos)->with("dotacoes_transferencia", $dotacoes_transferencia)->with('dotacoes_transferencia_vinculos', $dotacoes_transferencia_vinculos)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
 		}
