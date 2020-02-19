@@ -183,8 +183,6 @@ class OrcamentoController extends Controller
 
 		
 			
-			asort($request->sup_codigo_dotacao);
-			return($request->sup_codigo_dotacao);
 			foreach ($request->sup_codigo_dotacao as $dotacao)
 			{
 				if($dotacao <> null)
@@ -207,6 +205,9 @@ class OrcamentoController extends Controller
 				}
 				
 			}
+			
+			asort($dotacoes_suplementacao);
+			return($dotacoes_suplementacao);
 						
 			foreach ($request->anl_codigo_dotacao as $dotacao)
 			{
