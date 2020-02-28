@@ -100,7 +100,6 @@
   height:3em;
   margin:0px;
   padding:0 0px;
-  color:#fff;
   box-shadow:0 -1px rgba(0,0,0,.5) inset;
 }
 
@@ -252,7 +251,7 @@ h1.heading {
 }
  
 .btnfos {
-  color: #40609d;
+  color: grey;
   cursor: pointer;
   display: block;
   font-size: 16px;
@@ -289,7 +288,9 @@ h1.heading {
 
 .btnfos-2:hover,
 .btnfos-2:active {
-  letter-spacing: 5px
+  letter-spacing: 5px;
+  color: #40609d;
+  font-weight: bold;
 }
 
 .btnfos-2:after,
@@ -344,15 +345,15 @@ h1.heading {
 								<li>
 								<input id="check00" type="checkbox" name="menu"/>
 									<label for="check00" >
-										<a class="btnfos btnfos-2">Home</a> 
+										<a class="btnfos btnfos-2" >Home</a> 
 									</labe>
     							</li>
 								<li class="menu">
 									<input id="check01" type="checkbox" name="menu"/>
 									<label for="check01" >
-										<a class="btnfos btnfos-2">ORÇAMENTO</a></b>
+										<a class="btnfos btnfos-2" id="01" onmouseover="abrirMenu(id)" onmouseout="setTimeout(function fecharMenu(id),3000)">ORÇAMENTO</a></b>
 									</label>
-									<ul class="submenu">
+									<ul class="submenu" onmouseover="abrirMenu('01')" onmouseout="fecharMenu('01')">
 										<li><a href="{{ route('orcamento_saldo_dotacoes') }}">Saldo de Dotações</a></li>
 										<li><a href="#">Contratos</a></li>
 										<li><a href="{{ route('orcamento_agenda_orcamentaria') }}">Agenda Orçamentária</a></li>
@@ -362,9 +363,9 @@ h1.heading {
 									</ul>
 								</li>
 								<li>
-								   <a href="">
-									   <p style="color:#40609d">CONTABILIDADE</p>
-									</a>
+								<label for="check00" >
+										<a class="btnfos btnfos-2" >CONTABILIDADE</a> 
+									</labe>
 								</li>
 								<li>
 								   <a href="">
@@ -537,6 +538,24 @@ h1.heading {
 		
 		
 	</body>
+
+<script>
+
+function abrirMenu(x){
+
+	//alert(x);
+	document.getElementById("check"+x).checked = true;
+}
+
+function fecharMenu(x){
+
+
+document.getElementById("check"+x).checked = false;
+}
+
+
+
+</script>
 
 
 
