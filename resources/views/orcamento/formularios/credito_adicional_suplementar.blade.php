@@ -280,19 +280,19 @@
 
 									
 										
-										<div style="font-size:12px; overflow-x:auto;" >
-											<table class="table table-hover table-striped" id="tabela_suplementar" name="tabela_suplementar" style='font-size:98%;'>
+										<div class="content table-responsive table-full-width" style="font-size:12px; align:center">
+											<table class="table table-hover table-striped" id="tabela_suplementar" name="tabela_suplementar" style="font-size:98%; width:100%; display:block; overflow:auto;">
 												<thead>
 													<tr style="height:100px">
-														<th><label style="flex-wrap:nowrap; display: inline-block; width: 90px; line-height: 1.5; text-align:center; color:#000;  margin-right:5px;"><b>Unidade Executora</b></label></th>
-														<th><label style="flex-wrap:nowrap; display: inline-block; width: 120px; line-height: 1.5; text-align:center; color:#000;  margin-right:5px;"><b>Classificação Funcional Programática</b></label></th>
-														<th><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000; margin-right:10px;"><b>Natureza De Despesa</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000;  margin-left:-10px;"><b>Vínculo</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000; margin-left:-15px;"><b>Dotação</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Recurso</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 5px; line-height: 1.5; text-align:center; color:#000; margin-left:-40px; margin-right:-40px"><b></b></label></th>
-												</tr>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000 "><b>Dotação</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Justificativa</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b></b></label></th>
+													</tr>
 												</thead>
 												<tbody>
 												
@@ -300,12 +300,12 @@
 													<?php $i = 0; ?>
 													@foreach($dotacoes_suplementacao as $dotacao)
 															
-													<tr style="height:auto;">
-														<td style="width:75px; align:center;"><input name="sup_unidade_executora[{{$i}}]" value="{{$dotacao['unidade_executora']}}"><div class="form-control" style='flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;'>{{$dotacao['unidade_executora']}}</div></input></td>
-														<td style="width:120px; align:center;"><input name="sup_classificacao_funcional[{{$i}}]" value="{{$dotacao['classificacao_funcional_programatica']}}"><div class="form-control" style=' flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;' id="classificacao_sup-{{$i}}">{{$dotacao['classificacao_funcional_programatica']}}</div></input></td>
-														<td style="width:100px; align:center"><input name="sup_natureza_despesa[{{$i}}]" value="{{$dotacao['natureza_de_despesa']}}"><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;' id="natureza_sup-{{$i}}">{{$dotacao['natureza_de_despesa']}}</div></input></td>
+													<tr style="height:80%;">
+														<td style="align:center;"><input name="sup_unidade_executora[{{$i}}]" value="{{$dotacao['unidade_executora']}}"><div class="form-control" style='flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;'>{{$dotacao['unidade_executora']}}</div></input></td>
+														<td style="align:center;"><input name="sup_classificacao_funcional[{{$i}}]" value="{{$dotacao['classificacao_funcional_programatica']}}"><div class="form-control" style=' flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;' id="classificacao_sup-{{$i}}">{{$dotacao['classificacao_funcional_programatica']}}</div></input></td>
+														<td style="align:center;"><input name="sup_natureza_despesa[{{$i}}]" value="{{$dotacao['natureza_de_despesa']}}"><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;' id="natureza_sup-{{$i}}">{{$dotacao['natureza_de_despesa']}}</div></input></td>
 														<input type="hidden" value="{{$i}}" name="sup_id[{{$i}}]" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'></input>
-														<td style="width:100px; align:center"><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'>	
+														<td style="align:center;"><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'>	
 															<select class="form-control" name="sup_vinculo[{{$i}}]"  onclick="sup_atualizar_vinculo(this, {{$i}})"  onmouseout="sup_atualizar_vinculo(this, {{$i}})" onmouseover="sup_atualizar_vinculo(this, {{$i}})" onkeyup="sup_atualizar_vinculo(this, {{$i}})" id="vinculo_sup-{{$i}}" onchange="incluirVinculoNovo(this, this)" style="width:auto; height:auto;position:relative; top:-5px; ">
 																<option selected></option>	
 																@foreach($dotacoes_suplementacao_vinculos as $j => $value)
@@ -318,10 +318,10 @@
 																<option value="adicionar_vinculo-{{$i}}" >ADICIONAR +</option>
 															</select>
 														</td>
-														<td style="width:65px; align:center"><input value="{{$dotacao['codigo_dotacao']}}" name='sup_codigo_dotacao[]' hidden></input><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'>{{$dotacao['codigo_dotacao']}}</div></td>
-														<td style="width:100px; align:center"><input name="sup_valor[{{$i}}]" value="{{$dotacao['valor']}}" placeholder="R$ 0,00" onkeypress="sup_atualizar_valor(this, {{$i}})" onkeydown="sup_atualizar_valor(this, {{$i}})" onkeyup="sup_atualizar_valor(this, {{$i}})" onclick="sup_atualizar_valor(this, {{$i}})" onmouseout="sup_atualizar_valor(this, {{$i}})"  onmouseover="sup_atualizar_valor(this, {{$i}})" id="valor_sup-{{$i}}" class="form-control"></input></td>
-														<td style="width:100px; align:center"><textarea name='sup_justificativa[{{$i}}]' onkeyup="sup_atualizar_justificativa(this, {{$i}})"  onclick="sup_atualizar_justificativa(this, {{$i}})" onmouseout="sup_atualizar_justificativa(this, {{$i}})" onmouseover="sup_atualizar_justificativa(this, {{$i}})" class="form-control" id="justificativa_sup-{{$i}}" style="width:100%; height:40px; text-transform: uppercase;">{{$dotacao['justificativa']}}</textarea></td>
-														<td style="width:5px; align:center"><button type="button" style="width:100%; color:#000" id="rem_suplementar" onclick="removerLinha(this, this.id)"><div class="outer"><div class="inner"><label class="label_remove">Excluir</label></div></div></input></td>
+														<td style="align:center;"><input value="{{$dotacao['codigo_dotacao']}}" name='sup_codigo_dotacao[]' hidden></input><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'>{{$dotacao['codigo_dotacao']}}</div></td>
+														<td style="align:center;"><input name="sup_valor[{{$i}}]" value="{{$dotacao['valor']}}" placeholder="R$ 0,00" onkeypress="sup_atualizar_valor(this, {{$i}})" onkeydown="sup_atualizar_valor(this, {{$i}})" onkeyup="sup_atualizar_valor(this, {{$i}})" onclick="sup_atualizar_valor(this, {{$i}})" onmouseout="sup_atualizar_valor(this, {{$i}})"  onmouseover="sup_atualizar_valor(this, {{$i}})" id="valor_sup-{{$i}}" class="form-control"></input></td>
+														<td style="align:center;"><textarea name='sup_justificativa[{{$i}}]' onkeyup="sup_atualizar_justificativa(this, {{$i}})"  onclick="sup_atualizar_justificativa(this, {{$i}})" onmouseout="sup_atualizar_justificativa(this, {{$i}})" onmouseover="sup_atualizar_justificativa(this, {{$i}})" class="form-control" id="justificativa_sup-{{$i}}" style="width:100%; height:40px; text-transform: uppercase;">{{$dotacao['justificativa']}}</textarea></td>
+														<td style="align:center;"><button type="button" style="width:100%; color:#000" id="rem_suplementar" onclick="removerLinha(this, this.id)"><div class="outer"><div class="inner"><label class="label_remove">Excluir</label></div></div></input></td>
 														<td hidden><input class="form-control" name='sup_dotacao[{{$i}}]' value="{{'R$ '.number_format($dotacao['dotacao'], 2, ',', '.')}}" style='display:hidden; border:none; background:none; color:#000; font-weight:normal;width:auto; text-align:center;'></input></td>
 													</tr>
 													<?php 
@@ -336,8 +336,8 @@
 													@endif
 														
 													<tr style="display : table-row;" height="10">
-														<td style="width:50px;" colspan="6"></td>
-														<td style="width:100px;" colspan="2"></td>
+														<td colspan="6"></td>
+														<td colspan="2"></td>
 													</tr>	
 												</tbody>
 											</table>  
@@ -379,7 +379,10 @@
 								</div>
 								
 								<div class="content">
-									<div class="row flex-nowrap">				
+									<div class="row flex-nowrap">
+										<div class="col-md-5">
+										</div>
+										
 										<div class="col-md-12" align="center" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap;">
 											<span class="pull-center">
 												<label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
@@ -387,19 +390,22 @@
 												<input class="form-control" type="hidden" placeholder="R$ 0,00" name="sup_valor[]" style="display: inline-block; width:80px;"></input>
 												<button value="anular" id="anular" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
 											</span>
-										</div>	
-										<div style="font-size:12px; overflow-x:auto; width:100%;" >
-											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style='font-size:98%; text-align:center; position:relative; left:-10px'>
+										</div>
+										<div class="col-md-5">
+										</div>
+											
+										<div class="content table-responsive table-full-width" style="font-size:12px; align:center">
+											<table class="table table-hover table-striped" id="tabela_anular" name="tabela_anular" style="font-size:98%; width:100%; display:block; overflow:auto;">
 												<thead>
 													<tr style="height:100px">
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 90px; line-height: 1.5; text-align:center; color:#000; "><b>Unidade Executora</b></label></th>
-														<th style="text-align:center; "><label style="flex-wrap:nowrap; display: inline-block; width: 120px; line-height: 1.5; text-align:center; color:#000;  "><b>Classificação Funcional Programática</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000;"><b>Natureza De Despesa</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000; "><b>Vínculo</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000; "><b>Dotação</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Recurso</b></label></th>
-														<th style=""><label style="flex-wrap:nowrap; display: inline-block; width: 5px; line-height: 1.5; text-align:center; color:#000; "><b></b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000 "><b>Dotação</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Recurso</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b></b></label></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -407,12 +413,12 @@
 													<?php $i = 0; ?>
 													@foreach($dotacoes_anulacao as $dotacao)
 														
-													<tr style="height:auto;">
-														<td style="width:75px; "><input name="anl_unidade_executora[{{$i}}]" value="{{$dotacao['unidade_executora']}}"><div class="form-control" style='flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; '>{{$dotacao['unidade_executora']}}</div></input></td>
-														<td style="width:120px; "><input name="anl_classificacao_funcional[{{$i}}]" value="{{$dotacao['classificacao_funcional_programatica']}}"><div class="form-control" style=' flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;  ' id="classificacao_anl-{{$i}}">{{$dotacao['classificacao_funcional_programatica']}}</div></input></td>
-														<td style="width:100px; "><input name="anl_natureza_despesa[{{$i}}]" value="{{$dotacao['natureza_de_despesa']}}"><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; ' id="natureza_anl-{{$i}}">{{$dotacao['natureza_de_despesa']}}</div></input></td>
+													<tr style="height:80%;">
+														<td style="align:center;"><input name="anl_unidade_executora[{{$i}}]" value="{{$dotacao['unidade_executora']}}"><div class="form-control" style='flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;'>{{$dotacao['unidade_executora']}}</div></input></td>
+														<td style="align:center;"><input name="anl_classificacao_funcional[{{$i}}]" value="{{$dotacao['classificacao_funcional_programatica']}}"><div class="form-control" style=' flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;' id="classificacao_anl-{{$i}}">{{$dotacao['classificacao_funcional_programatica']}}</div></input></td>
+														<td style="align:center;"><input name="anl_natureza_despesa[{{$i}}]" value="{{$dotacao['natureza_de_despesa']}}"><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;' id="natureza_anl-{{$i}}">{{$dotacao['natureza_de_despesa']}}</div></input></td>
 														<input type="hidden" value="{{$i}}" name="anl_id[{{$i}}]" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'></input>
-														<td style="width:100px; "><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'>	
+														<td style="align:center;"><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'>	
 															<select class="form-control" name="anl_vinculo[{{$i}}]" onclick="anl_atualizar_vinculo(this, {{$i}})"  onmouseout="anl_atualizar_vinculo(this, {{$i}})" onmouseover="sup_atualizar_vinculo(this, {{$i}})" onkeyup="anl_atualizar_vinculo(this, {{$i}})" id="vinculo_anl-{{$i}}" style="width:auto; height:auto;position:relative; top:-5px;">
 																<option selected></option>	
 																@foreach($dotacoes_anulacao_vinculos as $j => $value)
@@ -424,11 +430,11 @@
 																@endforeach
 															</select>
 														</td>
-														<td style="width:65px; "><input value="{{$dotacao['codigo_dotacao']}}" name='anl_codigo_dotacao[]' hidden></input><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center; '>{{$dotacao['codigo_dotacao']}}</div></td>
-														<td style="width:100; "><input name="anl_valor[{{$i}}]" value="{{$dotacao['valor']}}" placeholder="R$ 0,00" onkeypress="anl_atualizar_valor(this, {{$i}})" onkeydown="anl_atualizar_valor(this, {{$i}})" onkeyup="anl_atualizar_valor(this, {{$i}})" onclick="anl_atualizar_valor(this, {{$i}})" onmouseout="anl_atualizar_valor(this, {{$i}})"  onmouseover="anl_atualizar_valor(this, {{$i}})" id="valor_anl-{{$i}}" class="form-control"></input></td>
-														<td style="width:100; "><textarea name='anl_recurso[{{$i}}]' onkeypress="anl_atualizar_recurso(this, {{$i}})" onkeydown="anl_atualizar_recurso(this, {{$i}})" onkeyup="anl_atualizar_recurso(this, {{$i}})"  onclick="anl_atualizar_recurso(this, {{$i}})" onmouseout="anl_atualizar_recurso(this, {{$i}})" onmouseover="anl_atualizar_recurso(this, {{$i}})" id="recurso_anl-{{$i}}" class="form-control" style="width:100%; height:40px;  text-transform: uppercase;">{{$dotacao['recurso']}}</textarea></td>
-														<td style="width:5px; "><button type="button" style="width:100%; color:#000" id="rem_anular" onclick="removerLinha(this, this.id)"><div class="outer"><div class="inner"><label class="label_remove">Excluir</label></div></div></input></td>
-														<td hidden><input class="form-control" name='anl_dotacao[{{$i}}]' value="{{'R$ '.number_format($dotacao['dotacao'], 2, ',', '.')}}" style='display:hidden; border:none; background:none; color:#000; font-weight:normal;width:auto; text-align:center; '></input></td>
+														<td style="align:center;"><input value="{{$dotacao['codigo_dotacao']}}" name='anl_codigo_dotacao[]' hidden></input><div class="form-control" style='display:hidden; border:none; background:none; color:#000; font-weight:normal; width:auto; text-align:center;'>{{$dotacao['codigo_dotacao']}}</div></td>
+														<td style="align:center;"><input name="anl_valor[{{$i}}]" value="{{$dotacao['valor']}}" placeholder="R$ 0,00" onkeypress="anl_atualizar_valor(this, {{$i}})" onkeydown="anl_atualizar_valor(this, {{$i}})" onkeyup="anl_atualizar_valor(this, {{$i}})" onclick="anl_atualizar_valor(this, {{$i}})" onmouseout="anl_atualizar_valor(this, {{$i}})"  onmouseover="anl_atualizar_valor(this, {{$i}})" id="valor_anl-{{$i}}" class="form-control"></input></td>
+														<td style="align:center;"><textarea name='anl_recurso[{{$i}}]' onkeypress="anl_atualizar_recurso(this, {{$i}})" onkeydown="anl_atualizar_recurso(this, {{$i}})" onkeyup="anl_atualizar_recurso(this, {{$i}})"  onclick="anl_atualizar_recurso(this, {{$i}})" onmouseout="anl_atualizar_recurso(this, {{$i}})" onmouseover="anl_atualizar_recurso(this, {{$i}})" id="recurso_anl-{{$i}}" class="form-control" style="width:100%; height:40px;  text-transform: uppercase;">{{$dotacao['recurso']}}</textarea></td>
+														<td style="align:center;"><button type="button" style="width:100%; color:#000" id="rem_anular" onclick="removerLinha(this, this.id)"><div class="outer"><div class="inner"><label class="label_remove">Excluir</label></div></div></input></td>
+														<td hidden><input class="form-control" name='anl_dotacao[{{$i}}]' value="{{'R$ '.number_format($dotacao['dotacao'], 2, ',', '.')}}" style='display:hidden; border:none; background:none; color:#000; font-weight:normal;width:auto; text-align:center;'></input></td>
 													</tr>
 													<?php 
 														$total_anular = $dotacao['dotacao'] + $total_anular;
@@ -442,8 +448,8 @@
 													@endif
 													
 													<tr style="display : table-row;" height="10">
-														<td style="width:50px;" colspan="6"></td>
-														<td style="width:100px;" colspan="2"></td>
+														<td colspan="6"></td>
+														<td colspan="2"></td>
 													</tr>	
 												</tbody>
 											</table>  
@@ -820,18 +826,14 @@
 						
 						if(foco == 'suplementar'){
 							//$("#sup_codigo_dotacao").focus();
-							if(document.getElementById('cardSuplementacao') != null){
-								document.getElementById('cardSuplementacao').style.display = "";
-								document.getElementById("sup_codigo_dotacao").focus({preventScroll:false});
-							}
+							document.getElementById('cardSuplementacao').style.display = "";
+							document.getElementById("sup_codigo_dotacao").focus({preventScroll:false});
 						}
 						else if(foco == 'anular')
 						{
 							//$("#anl_codigo_dotacao").focus();
-							if(document.getElementById('cardAnulacao') != null){
 							document.getElementById('cardAnulacao').style.display = "";
 							document.getElementById("anl_codigo_dotacao").focus({preventScroll:false});
-							}
 						}
 						//alert(foco);
 					});

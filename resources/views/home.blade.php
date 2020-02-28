@@ -96,12 +96,10 @@
 
 #menu{
   position:relative;
-  top:0;
   width:100%;
   height:3em;
-  margin:10px;
-  padding:0 10px;
-  background:#000;
+  margin:0px;
+  padding:0 0px;
   color:#fff;
   box-shadow:0 -1px rgba(0,0,0,.5) inset;
 }
@@ -112,27 +110,17 @@
   position:relative;
 }
 
-p{
-
-	color:#40609d
-}
-
-li:hover p{color:#fff}
-li:hover .arrow-down:after {background:#fff}
-li:hover .arrow-down:before {background:#fff}
-
 
 label{
   height:3em;
   margin-left:0px;
   margin-right:0px;
-  top:10px;
+  top:6px;
   position:relative;
   display:block;
-  padding:0px 0px 0px 30px;
+  padding:0px 0px 0px 10px;
   line-height:2em;
   transition:background 0.5s;
-  border-radius:10px 10px 0px 0px;
 }
 
 label:after{
@@ -141,12 +129,11 @@ label:after{
   display:block;
   width:100%;
   height:0;
-  color: #fff;
   transition:border-bottom .3s, border-top .3s .3s;
 }
 
 label:hover,
-input:checked ~ label{background:rgba(64,96,157,1);  },
+input:checked ~ label{},
 
 
 input:checked ~ label:after{
@@ -186,69 +173,155 @@ ul.submenu{
   z-index:1;
   transition:border-bottom .1s, border-top .1s .1s;
   line-height:0.2em;
-  background:#40609d;
+  background:#fff;
 }
 
 ul.submenu li a{
   display:block;
   padding:10px;
-  color:#fff;
+  color:#000;
   text-decoration:none;
   transition:background .3s;
   white-space:nowrap;
 }
 
 ul.submenu li a:hover{
-	color:#40609d;
+	
 	background:rgba(255,255,255,0);
 }
 
-<!--arrow-->
-
-.arrow-down {
-  width: 100%;
-  position: relative;
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
+* {
+  -moz-box-sizing: inherit;
+       box-sizing: inherit;
+  -webkit-transition-property: all;
+          transition-property: all;
+  -webkit-transition-duration: .6s;
+          transition-duration: .6s;
+  -webkit-transition-timing-function: ease;
+          transition-timing-function: ease;
 }
 
-.arrow-down.active {
+html,
+body {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box;
+  height: 100%;
   width: 100%;
-  height: 50px;
 }
 
-.arrow-down:before, .arrow-down:after {
-  content: "";
+body {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+.buttons {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  display: table-cell;
+  padding: 1em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+h1.heading {
+  color: #fff;
+  font-size: 1.25em;
+  font-weight: 900;
+  margin: 0 0 0.5em;
+}
+@media (min-width: 450px) {
+  h1.heading {
+    font-size: 1.75em;
+  }
+}
+@media (min-width: 760px) {
+  h1.heading {
+    font-size: 3.25em;
+  }
+}
+@media (min-width: 900px) {
+  h1.heading {
+    font-size: 4.25em;
+    margin: 0 0 0.5em;
+  }
+}
+ 
+.btnfos {
+  color: #40609d;
+  cursor: pointer;
   display: block;
-  width: 10px;
-  height: 2px;
-  background: #40609d;
-  position: absolute;
-  top: 31px;
-  left:0px;
-  transition: transform .8s;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 45px;
+  max-width: 160px;
+  margin: 0 auto 1em;
+  position: relative;
+  text-transform: uppercase;
+  vertical-align: middle;
+  width: 100%;
+}
+@media (min-width: 400px) {
+  .btnfos {
+    display: inline-block;
+    margin-right: 2em;
+  }
+  .btnfos:nth-of-type(even) {
+    margin-right: 0;
+  }
+}
+@media (min-width: 600px) {
+  .btnfos:nth-of-type(even) {
+    margin-right: 2em;
+  }
+  .btnfos:nth-of-type(5) {
+    margin-right: 0;
+  }
 }
 
-.arrow-down:before {
-  left: 139px;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-  transform: rotate(45deg);
+.btnfos-2 {
+  letter-spacing: 0;
 }
 
-.arrow-down:after {
-  left: 145px;
-  transform: rotate(-45deg);
+.btnfos-2:hover,
+.btnfos-2:active {
+  letter-spacing: 5px
 }
 
-.arrow-down.active:before {
-  transform: rotate(-45deg);
-  background: #fff;
+.btnfos-2:after,
+.btnfos-2:before {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  -webkit-transition: all 280ms ease-in-out;
+          transition: all 280ms ease-in-out;
+  width: 0;
 }
 
-.arrow-down.active:after {
-  transform: rotate(45deg);
-  background: #fff;
+.btnfos-2:hover:after,
+.btnfos-2:hover:before {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  border-color: #fff;
+  -webkit-transition: width 350ms ease-in-out;
+          transition: width 350ms ease-in-out;
+  width: 70%;
 }
 
+.btnfos-2:hover:before {
+  bottom: auto;
+  top: 0;
+  width: 100%;
+}
 	</style>
 </head>
 	<body>
@@ -269,17 +342,16 @@ ul.submenu li a:hover{
 							</ul>
 							<ul class="nav navbar-nav navbar-right" style="position:relative; display: inline;">
 								<li>
-								   <a href="">
-									   <p style="color:#40609d">HOME</p>
-									</a>
-								</li>
+								<input id="check00" type="checkbox" name="menu"/>
+									<label for="check00" >
+										<a class="btnfos btnfos-2">Home</a> 
+									</labe>
+    							</li>
 								<li class="menu">
 									<input id="check01" type="checkbox" name="menu"/>
-									<div class="arrow-down" onclick="this.classList.toggle('active')" >
-										<label for="check01" >
-											<p style="position:relative; top:13px"><b>ORÇAMENTO</b></p>
-										</label>
-									</div>
+									<label for="check01" >
+										<a class="btnfos btnfos-2">ORÇAMENTO</a></b>
+									</label>
 									<ul class="submenu">
 										<li><a href="{{ route('orcamento_saldo_dotacoes') }}">Saldo de Dotações</a></li>
 										<li><a href="#">Contratos</a></li>
