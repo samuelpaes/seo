@@ -548,6 +548,68 @@
 	
 	function atualizarFormulario()
 	{
+
+		var screenWidth = screen.width;
+		var screenHeight = screen.height;
+		//ajuste de tela
+		if(screenWidth < '1320')
+		{
+			//tela suplementar
+			document.getElementById("tabela_suplementar").style.tableLayout = "";
+			document.getElementById("tabela_suplementar").style.borderCollapse ="";
+			document.getElementById("tabela_suplementar").style.width="";
+			document.getElementById("tabela_suplementar").style.marginLeft="";
+			document.getElementById("tabela_suplementar").style.marginRight="";
+			document.getElementById("tabela_suplementar").style.textAlign="";
+			document.getElementById("tabela_suplementar").style.paddingTop="";
+			document.getElementById("tabela_suplementar").style.paddingBottom="";
+
+			document.getElementById("tabela_suplementar").style.display="block";
+			document.getElementById("tabela_suplementar").style.overflow="auto";
+
+			//tela remanejar
+			document.getElementById("tabela_anular").style.tableLayout = "";
+			document.getElementById("tabela_anular").style.borderCollapse ="";
+			document.getElementById("tabela_anular").style.width="";
+			document.getElementById("tabela_anular").style.marginLeft="";
+			document.getElementById("tabela_anular").style.marginRight="";
+			document.getElementById("tabela_anular").style.textAlign="";
+			document.getElementById("tabela_anular").style.paddingTop="";
+			document.getElementById("tabela_anular").style.paddingBottom="";
+
+			document.getElementById("tabela_anular").style.display="block";
+			document.getElementById("tabela_anular").style.overflow="auto";
+
+			
+		}
+		else{
+			document.getElementById("tabela_suplementar").style.tableLayout = "fixed";
+			document.getElementById("tabela_suplementar").style.borderCollapse ="collapse";
+			document.getElementById("tabela_suplementar").style.width="100%";
+			document.getElementById("tabela_suplementar").style.marginLeft="auto";
+			document.getElementById("tabela_suplementar").style.marginRight="auto";
+			document.getElementById("tabela_suplementar").style.textAlign="center";
+			document.getElementById("tabela_suplementar").style.paddingTop="16";
+			document.getElementById("tabela_suplementar").style.paddingBottom="16";
+
+			document.getElementById("tabela_suplementar").style.display="";
+			document.getElementById("tabela_suplementar").style.overflow="";
+
+			//tebela remanejar
+			document.getElementById("tabela_anular").style.tableLayout = "fixed";
+			document.getElementById("tabela_anular").style.borderCollapse ="collapse";
+			document.getElementById("tabela_anular").style.width="100%";
+			document.getElementById("tabela_anular").style.marginLeft="auto";
+			document.getElementById("tabela_anular").style.marginRight="auto";
+			document.getElementById("tabela_anular").style.textAlign="center";
+			document.getElementById("tabela_anular").style.paddingTop="16";
+			document.getElementById("tabela_anular").style.paddingBottom="16";
+
+			document.getElementById("tabela_anular").style.display="";
+			document.getElementById("tabela_anular").style.overflow="";
+
+		}
+
 		//copia os dados da tabela
 		var tabela_superavit = $('#tabela_superavit');
 		var qtdLinhas = $("#tabela_superavit tbody tr").length;

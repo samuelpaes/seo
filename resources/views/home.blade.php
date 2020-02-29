@@ -27,7 +27,7 @@
 	<!-- Bootstrap core CSS     -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
 	
-
+	
     <!-- Animation library for notifications   -->
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet"/>
 	
@@ -90,246 +90,229 @@
 
 	<style>
 
-	/*Style for the first level menu bar*/
 
+/* ~~~~~~~ INIT. BTN ~~~~~~~ */
 
+/* ~~~~~~~ INIT. BTN ~~~~~~~ */
 
-#menu{
-  position:relative;
-  width:100%;
-  height:3em;
-  margin:0px;
-  padding:0 0px;
-  box-shadow:0 -1px rgba(0,0,0,.5) inset;
-}
-
-#menu > li{
-  float:left;
-  list-style-type:none;
-  position:relative;
-}
-
-
-label{
-  height:3em;
-  margin-left:0px;
-  margin-right:0px;
-  top:6px;
-  position:relative;
-  display:block;
-  padding:0px 0px 0px 10px;
-  line-height:2em;
-  transition:background 0.5s;
-}
-
-label:after{
-  content:"";
-  position:relative;
-  display:block;
-  width:100%;
-  height:0;
-  transition:border-bottom .3s, border-top .3s .3s;
-}
-
-label:hover,
-input:checked ~ label{},
-
-
-input:checked ~ label:after{
-  border-top:0 solid rgba(255,255,255,.5);
-  border-bottom:4px solid rgba(255,255,255,.5);
-  transition:border-top .1s, border-bottom .1s .1s;
-  color: #fff;
-}
-
-input:checked ~ label:after{
-  border-top:0 solid rgba(255,255,255,.5);
-  border-bottom:4px solid rgba(255,255,255,.5);
-  transition:border-top .1s, border-bottom .1s .1s;
-  color: #fff;
-}
-
-/*hide the inputs*/
-input{display:none;}
-
-/*show the second levele menu of the selected voice*/
-input:checked ~ ul.submenu{
-  max-height:300px;
-  transition:max-height 0.8s ease-in;
-}
-
-/*style for the second level menu*/
-ul.submenu{
-  margin-left:0px;
-  margin-right:0px;
-  max-height:0;
-  padding:0;
-  overflow:hidden;
-  list-style-type:none;
-  transition:max-height 0.8s ease-out;
-  position:relative;
-  top:7px;
-  z-index:1;
-  transition:border-bottom .1s, border-top .1s .1s;
-  line-height:0.2em;
-  background:#fff;
-}
-
-ul.submenu li a{
-  display:block;
-  padding:10px;
-  color:#000;
-  text-decoration:none;
-  transition:background .3s;
-  white-space:nowrap;
-}
-
-ul.submenu li a:hover{
+.btn {		
+	position: relative;	
+	padding: 1.4rem 0.6rem;
+	font-weight:bold;
+	color:#40609d;
+	transition: all 600ms cubic-bezier(0.77, 0, 0.175, 1);	
+	cursor: pointer;
+	user-select: none;
+	border:none;
+	color:#40609d;	
+	height:60px;
+	width:100%x;;
+	top:-15px;
 	
-	background:rgba(255,255,255,0);
+	
 }
 
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,900);
-* {
-  -moz-box-sizing: inherit;
-       box-sizing: inherit;
-  -webkit-transition-property: all;
-          transition-property: all;
-  -webkit-transition-duration: .6s;
-          transition-duration: .6s;
-  -webkit-transition-timing-function: ease;
-          transition-timing-function: ease;
+.btn:before, .btn:after {
+	content: '';
+	position: absolute;	
+	transition: inherit;
+	z-index: -1;
+	
 }
 
-html,
-body {
-  -moz-box-sizing: border-box;
-       box-sizing: border-box;
-  height: 100%;
+.btn:hover {
+	color: #fff;
+	transition-delay: .6s;
+}
+
+.btn:hover:before {
+	transition-delay: 0s;
+}
+
+.btn:hover:after {
+	background: #40609d;
+	transition-delay: .4s;
+}
+
+/* From Top */
+
+.from-top:before, 
+.from-top:after {
+	left: 0;
+	height: 0;
+	width: 100%;
+}
+
+.from-top:before {
+	bottom: 0;	
+	border: 1px solid #40609d;
+	border-top: 0;
+	border-bottom: 0;
+}
+
+.from-top:after {
+	top: 0;
+	height: 0;
+}
+
+.from-top:hover:before,
+.from-top:hover:after {
+	height: 100%;
+}
+
+.drop {
+  overflow: hidden;
+  list-style: none;
+  position: relative;
+  padding: 0px;
+  text-align:center;
+  top: 25px;
+  width:100%;
+  margin: auto;
+  
+
+}
+
+.drop div {
+  -webkit-transform: translate(0, -100%);
+  -moz-transform: translate(0, -100%);
+  -ms-transform: translate(0, -100%);
+  transform: translate(0, -100%);
+  -webkit-transition: all 0.9s;
+  -moz-transition: all 0.9s;
+  -ms-transition: all 0.9s;
+  transition: all 0.9s;
+  position: relative;
+  background:#b7c6e1;
+  
+}
+
+.drop li:hover {
+
+  padding: 0;
   width: 100%;
+  background: #40609d	 !important;
+  opacity:0.8;
+ color:#fff;
 }
 
-body {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-}
-
-.buttons {
-  display: table;
-  height: 100%;
-  width: 100%;
-}
-
-.container {
-  display: table-cell;
-  padding: 1em;
-  text-align: center;
-  vertical-align: middle;
-}
-
-h1.heading {
-  color: #fff;
-  font-size: 1.25em;
-  font-weight: 900;
-  margin: 0 0 0.5em;
-}
-@media (min-width: 450px) {
-  h1.heading {
-    font-size: 1.75em;
-  }
-}
-@media (min-width: 760px) {
-  h1.heading {
-    font-size: 3.25em;
-  }
-}
-@media (min-width: 900px) {
-  h1.heading {
-    font-size: 4.25em;
-    margin: 0 0 0.5em;
-  }
-}
+#marker {
+  height: 6px;
+  background: #40609d	 !important;
+  position: relative;
+  bottom: 0;
  
-.btnfos {
-  color: grey;
-  cursor: pointer;
-  display: block;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 45px;
-  max-width: 160px;
-  margin: 0 auto 1em;
-  position: relative;
-  text-transform: uppercase;
-  vertical-align: middle;
-  width: 100%;
-}
-@media (min-width: 400px) {
-  .btnfos {
-    display: inline-block;
-    margin-right: 2em;
-  }
-  .btnfos:nth-of-type(even) {
-    margin-right: 0;
-  }
-}
-@media (min-width: 600px) {
-  .btnfos:nth-of-type(even) {
-    margin-right: 2em;
-  }
-  .btnfos:nth-of-type(5) {
-    margin-right: 0;
-  }
+  z-index: 2;
+  -webkit-transition: all 0.35s;
+  -moz-transition: all 0.35s;
+  -ms-transition: all 0.35s;
+  transition: all 0.35s;
 }
 
-.btnfos-2 {
-  letter-spacing: 0;
+#main li:nth-child(1):hover ul div {
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+#main li:nth-child(1):hover ~ #marker {
+  -webkit-transform: translate(0px, 0);
+  -moz-transform: translate(0px, 0);
+  -ms-transform: translate(0px, 0);
+  transform: translate(0px, 0);
 }
 
-.btnfos-2:hover,
-.btnfos-2:active {
-  letter-spacing: 5px;
-  color: #40609d;
-  font-weight: bold;
+#main li:nth-child(2):hover ul div {
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+#main li:nth-child(2):hover ~ #marker {
+  -webkit-transform: translate(120px, 0);
+  -moz-transform: translate(120px, 0);
+  -ms-transform: translate(120px, 0);
+  transform: translate(120px, 0);
 }
 
-.btnfos-2:after,
-.btnfos-2:before {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  border: 1px solid rgba(255, 255, 255, 0);
-  bottom: 0px;
-  content: " ";
-  display: block;
-  margin: 0 auto;
-  position: relative;
-  -webkit-transition: all 280ms ease-in-out;
-          transition: all 280ms ease-in-out;
-  width: 0;
+#main li:nth-child(3):hover ul div {
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+#main li:nth-child(3):hover ~ #marker {
+  -webkit-transform: translate(240px, 0);
+  -moz-transform: translate(240px, 0);
+  -ms-transform: translate(240px, 0);
+  transform: translate(240px, 0);
 }
 
-.btnfos-2:hover:after,
-.btnfos-2:hover:before {
-  -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-  border-color: #fff;
-  -webkit-transition: width 350ms ease-in-out;
-          transition: width 350ms ease-in-out;
-  width: 70%;
+#main li:nth-child(4):hover ul div {
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+#main li:nth-child(4):hover ~ #marker {
+  -webkit-transform: translate(360px, 0);
+  -moz-transform: translate(360px, 0);
+  -ms-transform: translate(360px, 0);
+  transform: translate(360px, 0);
 }
 
-.btnfos-2:hover:before {
-  bottom: auto;
-  top: 0;
-  width: 100%;
+#main li:nth-child(5):hover ul div {
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
 }
-	</style>
+#main li:nth-child(5):hover ~ #marker {
+  -webkit-transform: translate(360px, 0);
+  -moz-transform: translate(360px, 0);
+  -ms-transform: translate(360px, 0);
+  transform: translate(360px, 0);
+}
+
+#main li:nth-child(6):hover ul div {
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+#main li:nth-child(6):hover ~ #marker {
+  -webkit-transform: translate(360px, 0);
+  -moz-transform: translate(360px, 0);
+  -ms-transform: translate(360px, 0);
+  transform: translate(360px, 0);
+}
+
+#main li:nth-child(7):hover ul div {
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+#main li:nth-child(7):hover ~ #marker {
+  -webkit-transform: translate(360px, 0);
+  -moz-transform: translate(360px, 0);
+  -ms-transform: translate(360px, 0);
+  transform: translate(360px, 0);
+}
+
+
+}
+
+
+</style>
 </head>
-	<body>
+	<body onmouseover="checaResolucao()" onmousemove="checaResolucao()" onwheel="checaResolucao()">
 			
-				<nav class="navbar navbar-default navbar-fixed" style="height:60px; z-index:10">
-					<div class="container-fluid">
-						<div class="navbar-header">
+				<nav class="navbar navbar-default navbar-fixed" style="height:60px; z-index:10;
+  text-overflow: ellipsis;
+  " id="barraOficial">
+					<div class="container-fluid"  style="height:60px;">
+						<div class="navbar-header"  style="height:60px;">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
 								<span class="sr-only">Toggle navigation</span>
 								<span class="icon-bar"></span>
@@ -337,59 +320,91 @@ h1.heading {
 								<span class="icon-bar"></span>
 							</button>
 						</div>
-						<div class="collapse navbar-collapse">
-							<ul class="nav navbar-nav navbar-left" style="position:relative;  display: inline;">
+						<div class="collapse navbar-collapse" style="height:60px;">
+							<ul class="nav navbar-nav navbar-left" style="position:relative;  display: inline; height:60px;">
 								<img src="{{url('img/logo.png ')}}" style="max-width: 200px; height: 35px; color:#000; position:absolute; top:10px;">
 							</ul>
-							<ul class="nav navbar-nav navbar-right" style="position:relative; display: inline;">
+							<ul class="nav navbar-nav navbar-right" style="position:relative;height:60px; text-overflow: ellipsis;white-space: nowrap;" id="main">
+								
 								<li>
-								<input id="check00" type="checkbox" name="menu"/>
-									<label for="check00" >
-										<a class="btnfos btnfos-2" >Home</a> 
-									</labe>
-    							</li>
-								<li class="menu">
-									<input id="check01" type="checkbox" name="menu"/>
-									<label for="check01" >
-										<a class="btnfos btnfos-2" id="01" onmouseover="abrirMenu(id)" onmouseout="setTimeout(function fecharMenu(id),3000)">ORÇAMENTO</a></b>
-									</label>
-									<ul class="submenu" onmouseover="abrirMenu('01')" onmouseout="fecharMenu('01')">
-										<li><a href="{{ route('orcamento_saldo_dotacoes') }}">Saldo de Dotações</a></li>
-										<li><a href="#">Contratos</a></li>
-										<li><a href="{{ route('orcamento_agenda_orcamentaria') }}">Agenda Orçamentária</a></li>
-										<li><a href="{{ route('orcamento_formularios') }}">Formulários</a></li>
-										<li><a href="{{ route('orcamento_manual') }}">Manual de Alterações</a></li>
-										<li><a href="{{ route('orcamento_leis_decretos') }}">Leis e Decretos</a></li>
-									</ul>
-								</li>
-								<li>
-								<label for="check00" >
-										<a class="btnfos btnfos-2" >CONTABILIDADE</a> 
-									</labe>
-								</li>
-								<li>
-								   <a href="">
-									   <p style="color:#40609d">CAPACITAÇÕES</p>
-									</a>
-								</li>
-								<li>
-								   <a href="">
-									   <p style="color:#40609d">COMITÊ GESTOR</p>
-									</a>
-								</li>
-								<li>
-								   <a href="">
-									   <p style="color:#40609d">PODEMOS AJUDAR?</p>
-									</a>
+									<div class="btn from-top">
+										<div style="position:relative; top:5px;font-size:16px"><i class="pe-7s-graph2" style="position:relative;font-weight:bold; top:1.5px"></i></b> ORÇAMENTO</div>
+										<ul class="drop">
+											<div>
+												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset;">Saldo de Dotações</a></li>
+												<li><a href="#" style="all: unset;">Contratos</a></li>
+												<li><a href="{{ route('orcamento_agenda_orcamentaria') }}" style="all: unset;">Agenda Orçamentária</a></li>
+												<li><a href="{{ route('orcamento_formularios') }}" style="all: unset;">Formulários</a></li>
+												<li><a href="{{ route('orcamento_manual') }}" style="all: unset;">Manual de Alterações</a></li>
+												<li><a href="{{ route('orcamento_leis_decretos') }}" style="all: unset;">Leis e Decretos</a></li>
+											</div>
+										</ul>
+									</div>
 								</li>
 								
+								<li>
+									<div class="btn from-top" >
+										<div style="position:relative; top:5px;font-size:16px"><i class="pe-7s-calculator" style="position:relative;font-weight:bold; top:1.5px"></i></b> CONTABILIDADE</div>
+										<ul class="drop">
+											<div>
+												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset;">Formulários</a></li>
+												<li><a href="#" style="all: unset;">Leis e Decretos</a></li>
+											</div>
+										</ul>
+									</div>
+								</li>
+								
+								<li>
+								
+									<div class="btn from-top" >
+										<div style="position:relative; top:5px;font-size:16px"><i class="pe-7s-study" style="position:relative;font-weight:bold; top:1.5px"></i></b> CAPACITAÇÕES</div>	
+									</div>
+								</li>
+								<li>
+									<div class="btn from-top" >
+										<div style="position:relative; top:5px;font-size:16px"><i class="pe-7s-network" style="position:relative;font-weight:bold; top:1.5px"></i></b> COMITÊ GESTOR</div>	
+									</div>
+								</li>
+								<li>
+									<div class="btn from-top" >
+										<div style="position:relative; top:5px; font-size:16px"><i class="pe-7s-help1" style="position:relative;font-weight:bold; top:1.5px"></i></b> AJUDA</div>	
+									</div>
+								</li>
+								@if(auth()->user()->isAdmin == 1)
+								<li>
+									<div class="btn from-top">
+										<div style="position:relative; top:5px; font-size:16px"><i class="pe-7s-users" style="position:relative;font-weight:bold; top:1.5px"></i></b> USUÁRIOS</div>
+										<ul class="drop">
+											<div>
+												<li><a href="{{ route('register') }}" style="all: unset;">Cadastrar Usuário</a></li>
+												<li><a href="{{ url('/alterar-usuario') }}" style="all: unset;">Alterar Usuário</a></li>
+											</div>
+										</ul>
+									</div>
+								</li>
+
+								<li>
+									<div class="btn from-top">
+										<div style="position:relative;top:5px;font-size:16px"><i class="pe-7s-config" style="position:relative;font-weight:bold; top:1.5px"></i> CONFIGURAÇÕES</b></div>
+										<ul class="drop">
+											<div>
+												<li><a href="{{ url('unidade-orcamentaria/index') }}" style="all: unset;">Unidade Orçamentária</a></li>
+												<li><a href="{{ url('classificacao-funcional-programatica/index') }}" style="all: unset;">Classificação <br>Funcional Programática</a></li>
+												<li><a href="{{ url('natureza-de-despesa/index') }}" style="all: unset;">Natureza de Despesa</a></li>
+												<li><a href="{{ url('vinculos/index') }}" style="all: unset;">Vínculos</a></li>
+												<li><a href="{{ url('dotacao-orcamentaria/index') }}" style="all: unset;">Dotação Orçamentária</a></li>  
+											</div>
+										</ul>
+									</div>
+								</li>
+								@endif
 								<li>
 								   <a href="">
 									   <p>{{ Auth::user()->name }}</p>
 									</a>
 								</li>
-								<li>
-									
+
+									<li>
 									<a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -398,15 +413,228 @@ h1.heading {
 									 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-								</li>
-								<li class="separator hidden-lg hidden-md"></li>
+								</li>								
 							</ul>
 					
 						</div>
 					</div>
 				</nav>
 		
-			
+			<!-- estilo alternativo para página responsiva -->
+			<div class="wrapper" style="position:relative; z-index:1;" id="barraAlternativa" hidden>
+				<div class="sidebar" data-color="blue" data-image="{{ asset('img/sidebar-1.jpg') }}" >
+
+				<!--
+
+					Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+					Tip 2: you can also add an image using data-image tag
+
+				-->
+
+					<div class="sidebar-wrapper" style=" overflow-x:hidden; overflow-y: scroll;">
+						<div class="logo">
+							<a href="{{ route('home') }}" class="simple-text">
+								<img src="{{url('img/logo_white.png ')}}" style="max-width: 500px; height: 80px;">
+							</a>
+						</div>
+
+						<ul class="nav">
+							
+							<li>
+								<input id="check01" type="checkbox" name="menu"/>
+								<label for="check01">
+									<i class="pe-7s-news-paper" style="position:relative; top:6px;"></i>
+									<p style="position:relative; top:6px;"><a href="{{ route('home') }}" style="font:inherit; color: inherit; text-decoration: inherit;">PORTAL</a></p>
+								</label>
+							</li>
+						
+							<li>
+								<input id="check02" type="checkbox" name="menu"/>
+								<div class="arrow-down" onclick="this.classList.toggle('active')">
+									<label for="check02">
+										<i class="pe-7s-graph2" style="position:relative; top:6px;"></i>
+										<p style="position:relative; top:6px;">ORÇAMENTO</p>
+									</label>
+								</div>
+								<ul class="submenu">
+										<li><a href="{{ route('orcamento_saldo_dotacoes') }}">Saldo de Dotações</a></li>
+										<li><a href="#">Contratos</a></li>
+										<li><a href="{{ route('orcamento_agenda_orcamentaria') }}">Agenda Orçamentária</a></li>
+										<li><a href="{{ route('orcamento_formularios') }}">Formulários</a></li>
+										<li><a href="{{ route('orcamento_manual') }}">Manual de Alterações</a></li>
+										<li><a href="{{ route('orcamento_leis_decretos') }}">Leis e Decretos</a></li>
+								</ul>
+							</li>
+
+							<li>
+								<input id="check03" type="checkbox" name="menu"/>
+								<div class="arrow-down" onclick="this.classList.toggle('active')">
+									<label for="check03">
+										<i class="pe-7s-calculator" style="position:relative; top:6px;"></i>
+										<p style="position:relative; top:6px;">CONTABILIDADE</p>
+									</label>
+								</div>
+								<ul class="submenu">
+									<li><a href="{{ route('contabilidade_formularios') }}">Formulários</a></li>
+									<li><a href="{{ route('contabilidade_leis_decretos') }}">Leis e Decretos</a></li>
+								</ul>
+							</li>
+							
+							<li>
+								<input id="check04" type="checkbox" name="menu"/>
+								<label for="check04">
+									<i class="pe-7s-study" style="position:relative; top:6px;"></i>
+									<p style="position:relative; top:6px;">CAPACITAÇÕES</p>
+								</label>
+							</li>
+							
+							<li>
+								
+									<input id="check05" type="checkbox" name="menu"/>
+									<label for="check05">
+										<i class="pe-7s-network" style="position:relative; top:6px;"></i>
+										<p style="position:relative; top:6px;"><a href="{{ route('comite_gestor') }}" style="font:inherit; color: inherit; text-decoration: inherit;">COMITÊ GESTOR</a></p>
+									</label>
+								
+							</li>
+							
+							<li>
+								<input id="check06" type="checkbox" name="menu"/>
+								<label for="check06">
+									<i class="pe-7s-help1" style="position:relative; top:6px;"></i>
+									<p style="position:relative; top:6px;">PODEMOS AJUDAR?</p>
+								</label>
+							</li>
+
+							@if(auth()->user()->isAdmin == 1)
+								
+							
+							<li>
+								<input id="check07" type="checkbox" name="menu"/>
+								<div class="arrow-down" onclick="this.classList.toggle('active')">
+									<label for="check07">
+										<i class="pe-7s-users" style="position:relative; top:6px;"></i>
+										<p style="position:relative; top:6px;">USUÁRIOS</p>
+									</label>
+								</div>
+								<ul class="submenu">
+									<li><a href="{{ route('register') }}">Cadastrar Usuário</a></li>
+									<li><a href="{{ url('/alterar-usuario') }}">Alterar Usuário</a></li>
+								</ul>
+							</li>
+							
+							<li>
+								<input id="check08" type="checkbox" name="menu"/>
+								<div class="arrow-down" onclick="this.classList.toggle('active')">
+									<label for="check08">
+										<i class="pe-7s-config" style="position:relative; top:6px;"></i>
+										<p style="position:relative; top:6px;">CONFIGURAÇÕES</p>
+									</label>
+								</div>
+								<ul class="submenu">
+									<li><a href="{{ url('unidade-orcamentaria/index') }}">Unidade Orçamentária</a></li>
+									<li><a href="{{ url('classificacao-funcional-programatica/index') }}">Classificação Funcional Programática</a></li>
+									<li><a href="{{ url('natureza-de-despesa/index') }}">Natureza de Despesa</a></li>
+									<li><a href="{{ url('vinculos/index') }}">Vínculos</a></li>
+									<li><a href="{{ url('dotacao-orcamentaria/index') }}">Dotação Orçamentária</a></li>  
+								</ul>
+							</li>
+							
+							@endif
+						</ul>
+					</div>
+				</div>
+				<div class="main-panel">
+					<nav class="navbar navbar-default navbar-fixed"  style="position:relative; ">
+						<div class="container-fluid" >
+							<div class="navbar-header">
+								<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+									<span class="icon-bar"></span>
+								</button>
+							</div>
+							<div class="collapse navbar-collapse">
+								<ul class="nav navbar-nav navbar-left">
+									<div class="arrow left" onclick="goBack()"></div>
+									<div class="arrow right" onclick="goForward()"></div>
+								
+									<!--<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+												<i class="fa fa-globe"></i>
+												<b class="caret hidden-sm hidden-xs"></b>
+												<span class="notification hidden-sm hidden-xs">5</span>
+												<p class="hidden-lg hidden-md">
+													5 Notifications
+													<b class="caret"></b>
+												</p>
+										</a>
+										<ul class="dropdown-menu">
+											<li><a href="#">Notification 1</a></li>
+											<li><a href="#">Notification 2</a></li>
+											<li><a href="#">Notification 3</a></li>
+											<li><a href="#">Notification 4</a></li>
+											<li><a href="#">Another notification</a></li>
+										</ul>
+									</li>
+									<li>
+									<a href="">
+											<i class="fa fa-search"></i>
+											<p class="hidden-lg hidden-md">Search</p>
+										</a>
+									</li>-->
+								</ul>
+
+								<ul class="nav navbar-nav navbar-right">
+									<li>
+									<a href="">
+										<p>{{ Auth::user()->name }}</p>
+										</a>
+									</li>
+									
+									<!--<li class="dropdown">
+										<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+												<p>
+													Dropdown
+													<b class="caret"></b>
+												</p>
+
+										</a>
+										<ul class="dropdown-menu">
+											<li><a href="#">Action</a></li>
+											<li><a href="#">Another action</a></li>
+											<li><a href="#">Something</a></li>
+											<li><a href="#">Another action</a></li>
+											<li><a href="#">Something</a></li>
+											<li class="divider"></li>
+											<li><a href="#">Separated link</a></li>
+										</ul>
+									</li>
+									
+									<a href="">
+										<i class="fa fa-search"></i>
+										<p class="hidden-lg hidden-md">Search</p>
+									</a>-->
+									
+									<li>
+										<a class="dropdown-item" href="{{ route('logout') }}"
+										onclick="event.preventDefault();
+														document.getElementById('logout-form').submit();">
+											Sair
+										</a>
+										<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+											@csrf
+										</form>
+									</li>
+									<li class="separator hidden-lg hidden-md"></li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+					
+				</div>
+			</div>
 			
 			<div class="content">
 				<div class="container-fluid">
@@ -537,25 +765,31 @@ h1.heading {
 		</div>-->	
 		
 		
+		<script>
+
+function checaResolucao()
+{
+	
+		var screenWidth = window.screen.width;
+		var screenHeight = window.screen.height;
+		
+		//ajuste de tela
+		if(screenWidth < 1321)
+		{
+			document.getElementById('barraAlternativa').hidden=false;
+			document.getElementById('barraOficial').hidden=true;
+		}
+		else{
+			
+			document.getElementById('barraAlternativa').hidden=true;
+			document.getElementById('barraOficial').hidden=false;
+		}
+	}
+</script>
+
 	</body>
 
-<script>
 
-function abrirMenu(x){
-
-	//alert(x);
-	document.getElementById("check"+x).checked = true;
-}
-
-function fecharMenu(x){
-
-
-document.getElementById("check"+x).checked = false;
-}
-
-
-
-</script>
 
 
 
