@@ -82,9 +82,13 @@
 													<input value="Pesquisar" type="submit" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;">
 												</div>	
 												<div class="col-md-2">
-													<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
+													<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#novasDotacoes">
 														Nova
 													</a>
+												
+													<!--<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
+														Nova
+													</a>-->
 												</div>	
 												<div class="col-md-2">
 													<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#atualizarDotacoes">
@@ -537,6 +541,45 @@ function c(v)
 				</div>
 			</form>		
 		</div>
+		
+	</div>
+</div>
+
+<!-- Modal Nova Dotação Orcamentária-->
+<div id="novasDotacoes" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+    <!-- Modal content-->
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h5 class="modal-title">Inserir Dotação</h5>
+			</div>
+						
+				<div class="modal-body">
+					
+						<div class="row">
+							<div class="col-md-6">
+							<form method="get">
+								<button name="unidade" type="submit" class="btn btn-info btn-fill pull-right" value="orcamentaria">Novo Exercício</button><br>
+							</div>
+							</form>
+							<div class="col-md-6">
+								<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
+									Exercício Existente
+								</a>
+							</div>
+						</div>
+					</form>		
+				</div>
+					
+			<div class="modal-footer">		
+			</div>
+		
+		</div>
+		
+	</div>
 		
 	</div>
 </div>
