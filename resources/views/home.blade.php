@@ -22,7 +22,7 @@
  
     <!-- Styles -->
     <!--<link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
-	<!--<link href="{{ asset('css/seo-home.css') }}" rel="stylesheet">-->
+	<link href="{{ asset('css/seo-home.css') }}" rel="stylesheet">
 	
 	<!-- Bootstrap core CSS     -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
@@ -40,7 +40,7 @@
 
     <!--<link href="{{ asset('css/reveal-and-hide.css') }}" rel="stylesheet"/> -->
     <!--  Light Bootstrap Table core CSS    -->
-    <link href="{{ asset('css/light-bootstrap-dashboard.css?v=1.4.0') }}"rel="stylesheet"/>
+    <link href="{{ asset('css/light-bootstrap-dashboard-home.css?v=1.4.0') }}"rel="stylesheet"/>
 
 	
 	<!--Calendar-->
@@ -104,7 +104,6 @@
 	cursor: pointer;
 	user-select: none;
 	border:none;
-	color:#40609d;	
 	height:60px;
 	width:100%x;;
 	top:-15px;
@@ -166,8 +165,8 @@
   position: relative;
   padding: 0px;
   text-align:center;
-  top: 25px;
-  width:100%;
+  top: 27px;
+  left:-6px;
   margin: auto;
   
 
@@ -183,7 +182,8 @@
   -ms-transition: all 0.9s;
   transition: all 0.9s;
   position: relative;
-  background:#b7c6e1;
+  background:#a4b7da;
+   color:#fff;
   
 }
 
@@ -193,7 +193,7 @@
   width: 100%;
   background: #40609d	 !important;
   opacity:0.8;
- color:#fff;
+  color:#fff;
 }
 
 #marker {
@@ -301,16 +301,37 @@
 }
 
 
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1px grey; 
+  border-radius: 1.3px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+background: rgba(255, 255, 255, 0.4);
+  border-radius: 5px;
+  opacity:0.5;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+ background: rgba(255, 255, 255, 0.9);
 }
 
 
 </style>
 </head>
-	<body onmouseover="checaResolucao()" onmousemove="checaResolucao()" onwheel="checaResolucao()">
+	<body onmouseover="checaResolucao()" onmousemove="checaResolucao()" onwheel="checaResolucao()" style="background:#25385b">
 			
-				<nav class="navbar navbar-default navbar-fixed" style="height:60px; z-index:10;
-  text-overflow: ellipsis;
-  " id="barraOficial">
+				<nav class="navbar navbar-default navbar-fixed" style="height:60px; z-index:10;text-overflow: ellipsis;" id="barraOficial">
 					<div class="container-fluid"  style="height:60px;">
 						<div class="navbar-header"  style="height:60px;">
 							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
@@ -320,7 +341,7 @@
 								<span class="icon-bar"></span>
 							</button>
 						</div>
-						<div class="collapse navbar-collapse" style="height:60px;">
+						
 							<ul class="nav navbar-nav navbar-left" style="position:relative;  display: inline; height:60px;">
 								<img src="{{url('img/logo.png ')}}" style="max-width: 200px; height: 35px; color:#000; position:absolute; top:10px;">
 							</ul>
@@ -328,8 +349,8 @@
 								
 								<li>
 									<div class="btn from-top">
-										<div style="position:relative; top:5px;font-size:16px"><i class="pe-7s-graph2" style="position:relative;font-weight:bold; top:1.5px"></i></b> ORÇAMENTO</div>
-										<ul class="drop">
+										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-graph2" style="position:relative;font-weight:bold; top:1.5px"></i></b> ORÇAMENTO</div>
+										<ul class="drop" style="width:108.5%;">
 											<div>
 												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset;">Saldo de Dotações</a></li>
 												<li><a href="#" style="all: unset;">Contratos</a></li>
@@ -344,8 +365,8 @@
 								
 								<li>
 									<div class="btn from-top" >
-										<div style="position:relative; top:5px;font-size:16px"><i class="pe-7s-calculator" style="position:relative;font-weight:bold; top:1.5px"></i></b> CONTABILIDADE</div>
-										<ul class="drop">
+										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-calculator" style="position:relative;font-weight:bold; top:1.5px"></i></b> CONTABILIDADE</div>
+										<ul class="drop" style="width:110%;">
 											<div>
 												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset;">Formulários</a></li>
 												<li><a href="#" style="all: unset;">Leis e Decretos</a></li>
@@ -357,24 +378,24 @@
 								<li>
 								
 									<div class="btn from-top" >
-										<div style="position:relative; top:5px;font-size:16px"><i class="pe-7s-study" style="position:relative;font-weight:bold; top:1.5px"></i></b> CAPACITAÇÕES</div>	
+										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-study" style="position:relative;font-weight:bold; top:1.5px"></i></b> CAPACITAÇÕES</div>	
 									</div>
 								</li>
 								<li>
 									<div class="btn from-top" >
-										<div style="position:relative; top:5px;font-size:16px"><i class="pe-7s-network" style="position:relative;font-weight:bold; top:1.5px"></i></b> COMITÊ GESTOR</div>	
+										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-network" style="position:relative;font-weight:bold; top:1.5px"></i></b> COMITÊ GESTOR</div>	
 									</div>
 								</li>
 								<li>
 									<div class="btn from-top" >
-										<div style="position:relative; top:5px; font-size:16px"><i class="pe-7s-help1" style="position:relative;font-weight:bold; top:1.5px"></i></b> AJUDA</div>	
+										<div style="position:relative; top:5px; font-size:14px"><i class="pe-7s-help1" style="position:relative;font-weight:bold; top:1.5px"></i></b> AJUDA</div>	
 									</div>
 								</li>
 								@if(auth()->user()->isAdmin == 1)
 								<li>
 									<div class="btn from-top">
-										<div style="position:relative; top:5px; font-size:16px"><i class="pe-7s-users" style="position:relative;font-weight:bold; top:1.5px"></i></b> USUÁRIOS</div>
-										<ul class="drop">
+										<div style="position:relative; top:5px; font-size:14px"><i class="pe-7s-users" style="position:relative;font-weight:bold; top:1.5px"></i></b> USUÁRIOS</div>
+										<ul class="drop" style="width:110.5%;">
 											<div>
 												<li><a href="{{ route('register') }}" style="all: unset;">Cadastrar Usuário</a></li>
 												<li><a href="{{ url('/alterar-usuario') }}" style="all: unset;">Alterar Usuário</a></li>
@@ -385,8 +406,8 @@
 
 								<li>
 									<div class="btn from-top">
-										<div style="position:relative;top:5px;font-size:16px"><i class="pe-7s-config" style="position:relative;font-weight:bold; top:1.5px"></i> CONFIGURAÇÕES</b></div>
-										<ul class="drop">
+										<div style="position:relative;top:5px;font-size:14px"><i class="pe-7s-config" style="position:relative;font-weight:bold; top:1.5px"></i> CONFIGURAÇÕES</b></div>
+										<ul class="drop" style="width:108%;">
 											<div>
 												<li><a href="{{ url('unidade-orcamentaria/index') }}" style="all: unset;">Unidade Orçamentária</a></li>
 												<li><a href="{{ url('classificacao-funcional-programatica/index') }}" style="all: unset;">Classificação <br>Funcional Programática</a></li>
@@ -416,7 +437,7 @@
 								</li>								
 							</ul>
 					
-						</div>
+						
 					</div>
 				</nav>
 		
@@ -773,8 +794,9 @@ function checaResolucao()
 		var screenWidth = window.screen.width;
 		var screenHeight = window.screen.height;
 		
+		//alert(window.screen.width);
 		//ajuste de tela
-		if(screenWidth < 1321)
+		if(screenWidth < 1199)
 		{
 			document.getElementById('barraAlternativa').hidden=false;
 			document.getElementById('barraOficial').hidden=true;

@@ -103,7 +103,7 @@ function ativarCamposParaFiltro()
 			document.getElementById('valor').disabled=false;
 			document.getElementById('valor').required=true;
 			document.getElementById('valor').setAttribute("onkeyup", "mascaraCodigoDespesa( this, cDespesa );");
-			document.getElementById('valor').setAttribute("maxlength", "12");
+			document.getElementById('valor').setAttribute("maxlength", "17");
 		}
 		else
 		{
@@ -129,13 +129,13 @@ function cDespesa(v)
 		   
 				
 	//Coloca um ponto entre o primeiro e o segundo
-	v=v.replace(/(\d{1})(\d)/,"$1.$2")
-			
-	v=v.replace(/(\d{1})(\d)/,"$1.$2")
-			
 	v=v.replace(/(\d{2})(\d)/,"$1.$2")
-			
-	v=v.replace(/(\d)(\d{2})$/,"$1.$2");
+	
+	v=v.replace(/(\d{3})(\d)/,"$1.$2")
+	
+	v=v.replace(/(\d{4})(\d)/,"$1.$2")
+	
+	v=v.replace(/(\d{1})(\d{2,3})$/, "$1.$2");
 	
 	return v;
 }

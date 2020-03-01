@@ -3210,7 +3210,7 @@ fieldset[disabled] .btn-neutral.active {
     left: 0;
 }
 
-@media (min-width: 992px) {
+@media (min-width: 1200px) {
     .navbar-form {
         margin-top: 21px;
         margin-bottom: 21px;
@@ -3293,7 +3293,7 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 /*          Changes for small display      */
-@media (max-width: 991px) {
+@media (max-width: 1199px) {
     .main-panel {
         width: 100%;
     }
