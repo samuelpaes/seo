@@ -19,10 +19,10 @@
 							<div class="card">
 								<div class="header">
 									<div class="row">
-										<div class="col-md-9">
+										<div class="col-md-10">
 										<h5 class="title">Cadastrar Dotação Orçamentária</h5>
 										</div>
-										<div class="col-md-2">
+										<div class="col-md-1">
 											<label for="Exercicio">Exercício:</label>
 										</div>
 										<div class="col-md-1">
