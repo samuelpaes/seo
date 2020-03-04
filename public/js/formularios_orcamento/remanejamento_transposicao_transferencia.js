@@ -371,6 +371,121 @@
 	function atualizarFormulario()
 	{
 		
+		var screenWidth = screen.width;
+		var screenHeight = screen.height;
+		//ajuste de tela
+		if(screenWidth < '1320')
+		{
+			//tela suplementar
+			document.getElementById("tabela_suplementar").style.tableLayout = "";
+			document.getElementById("tabela_suplementar").style.borderCollapse ="";
+			document.getElementById("tabela_suplementar").style.width="";
+			document.getElementById("tabela_suplementar").style.marginLeft="";
+			document.getElementById("tabela_suplementar").style.marginRight="";
+			document.getElementById("tabela_suplementar").style.textAlign="";
+			document.getElementById("tabela_suplementar").style.paddingTop="";
+			document.getElementById("tabela_suplementar").style.paddingBottom="";
+
+			document.getElementById("tabela_suplementar").style.display="block";
+			document.getElementById("tabela_suplementar").style.overflow="auto";
+
+			//tela remanejar
+			document.getElementById("tabela_remanejar").style.tableLayout = "";
+			document.getElementById("tabela_remanejar").style.borderCollapse ="";
+			document.getElementById("tabela_remanejar").style.width="";
+			document.getElementById("tabela_remanejar").style.marginLeft="";
+			document.getElementById("tabela_remanejar").style.marginRight="";
+			document.getElementById("tabela_remanejar").style.textAlign="";
+			document.getElementById("tabela_remanejar").style.paddingTop="";
+			document.getElementById("tabela_remanejar").style.paddingBottom="";
+
+			document.getElementById("tabela_remanejar").style.display="block";
+			document.getElementById("tabela_remanejar").style.overflow="auto";
+
+			//tela transpor
+			document.getElementById("tabela_transpor").style.tableLayout = "";
+			document.getElementById("tabela_transpor").style.borderCollapse ="";
+			document.getElementById("tabela_transpor").style.width="";
+			document.getElementById("tabela_transpor").style.marginLeft="";
+			document.getElementById("tabela_transpor").style.marginRight="";
+			document.getElementById("tabela_transpor").style.textAlign="";
+			document.getElementById("tabela_transpor").style.paddingTop="";
+			document.getElementById("tabela_transpor").style.paddingBottom="";
+
+			document.getElementById("tabela_transpor").style.display="block";
+			document.getElementById("tabela_transpor").style.overflow="auto";
+
+			//tela transferir
+			document.getElementById("tabela_transferir").style.tableLayout = "";
+			document.getElementById("tabela_transferir").style.borderCollapse ="";
+			document.getElementById("tabela_transferir").style.width="";
+			document.getElementById("tabela_transferir").style.marginLeft="";
+			document.getElementById("tabela_transferir").style.marginRight="";
+			document.getElementById("tabela_transferir").style.textAlign="";
+			document.getElementById("tabela_transferir").style.paddingTop="";
+			document.getElementById("tabela_transferir").style.paddingBottom="";
+
+			document.getElementById("tabela_transferir").style.display="block";
+			document.getElementById("tabela_transferir").style.overflow="auto";
+		}
+		else{
+			document.getElementById("tabela_suplementar").style.tableLayout = "fixed";
+			document.getElementById("tabela_suplementar").style.borderCollapse ="collapse";
+			document.getElementById("tabela_suplementar").style.width="100%";
+			document.getElementById("tabela_suplementar").style.marginLeft="auto";
+			document.getElementById("tabela_suplementar").style.marginRight="auto";
+			document.getElementById("tabela_suplementar").style.textAlign="center";
+			document.getElementById("tabela_suplementar").style.paddingTop="16";
+			document.getElementById("tabela_suplementar").style.paddingBottom="16";
+
+			document.getElementById("tabela_suplementar").style.display="";
+			document.getElementById("tabela_suplementar").style.overflow="";
+
+			//tebela remanejar
+			document.getElementById("tabela_remanejar").style.tableLayout = "fixed";
+			document.getElementById("tabela_remanejar").style.borderCollapse ="collapse";
+			document.getElementById("tabela_remanejar").style.width="100%";
+			document.getElementById("tabela_remanejar").style.marginLeft="auto";
+			document.getElementById("tabela_remanejar").style.marginRight="auto";
+			document.getElementById("tabela_remanejar").style.textAlign="center";
+			document.getElementById("tabela_remanejar").style.paddingTop="16";
+			document.getElementById("tabela_remanejar").style.paddingBottom="16";
+
+			document.getElementById("tabela_remanejar").style.display="";
+			document.getElementById("tabela_remanejar").style.overflow="";
+
+			//tebela transpor
+			document.getElementById("tabela_transpor").style.tableLayout = "fixed";
+			document.getElementById("tabela_transpor").style.borderCollapse ="collapse";
+			document.getElementById("tabela_transpor").style.width="100%";
+			document.getElementById("tabela_transpor").style.marginLeft="auto";
+			document.getElementById("tabela_transpor").style.marginRight="auto";
+			document.getElementById("tabela_transpor").style.textAlign="center";
+			document.getElementById("tabela_transpor").style.paddingTop="16";
+			document.getElementById("tabela_transpor").style.paddingBottom="16";
+
+			document.getElementById("tabela_transpor").style.display="";
+			document.getElementById("tabela_transpor").style.overflow="";
+
+			//tebela transferir
+			document.getElementById("tabela_transferir").style.tableLayout = "fixed";
+			document.getElementById("tabela_transferir").style.borderCollapse ="collapse";
+			document.getElementById("tabela_transferir").style.width="100%";
+			document.getElementById("tabela_transferir").style.marginLeft="auto";
+			document.getElementById("tabela_transferir").style.marginRight="auto";
+			document.getElementById("tabela_transferir").style.textAlign="center";
+			document.getElementById("tabela_transferir").style.paddingTop="16";
+			document.getElementById("tabela_transferir").style.paddingBottom="16";
+
+			document.getElementById("tabela_transferir").style.display="";
+			document.getElementById("tabela_transferir").style.overflow="";
+
+
+		}
+		//alert(screenHeight);
+		//screenWidth = 1320
+		//screenHeight = 825;
+	
 			if ($('#chk_remanejamento').is(':checked')) {
 				document.getElementById('sup_tipo_remanejamento').value = "ok";
 				//document.getElementById('anl_tipo_remanejamento').value = "ok";
