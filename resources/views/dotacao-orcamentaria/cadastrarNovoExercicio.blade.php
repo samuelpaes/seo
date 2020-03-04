@@ -26,7 +26,7 @@
 											<label for="Exercicio">Exercício:</label>
 										</div>
 										<div class="col-md-2">
-											<input type="number" min="2000" max="9999" maxlength="4" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+											<input type="text" maxlength="3" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
 									</div>	
 								</div>
@@ -72,6 +72,15 @@
 			</div>	
 		</div>
 		
+		<script>
+
+			$(document).ready(function() {
+			$("#exercicio").keyup(function() {
+				$("#exercicio").val(this.value.match(/[0-9]*/));
+			});
+			});
+		</script>
+
 		
 		@if ($mensagem <> "")
 			<script>
