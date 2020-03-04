@@ -32,7 +32,7 @@
 									<div class="row">
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled>Exercício</input></label>
-											<input onkeyup="ativarCamposParaFiltro(this)" type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+											<input onkeyup="ativarCamposParaFiltro()" type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
 										<div class="col-md-2">
 										</div>
@@ -127,11 +127,11 @@
 		}
 
 
-function ativarCamposParaFiltro(x) 
+function ativarCamposParaFiltro() 
 	{
-		alert(x);
-		alert(x.length);
-		if (x.lenhjt)
+		var exercicio = document.getElementById("exercicio").value;
+		alert(exercicio.length);
+				if (x.lenhjt)
 		{
 			document.getElementById('btnImplementar').disabled = true;
 		
