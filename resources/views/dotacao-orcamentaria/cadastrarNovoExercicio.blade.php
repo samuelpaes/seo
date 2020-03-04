@@ -130,7 +130,6 @@
 function ativarCamposParaFiltro() 
 	{
 		var exercicio = document.getElementById("exercicio").value;
-		alert(exercicio.length);
 		if (exercicio.length == 4 && exercicio > 2015 && exercicio < 2999)
 		{
 			document.getElementById('btnImplementar').disabled=false;
