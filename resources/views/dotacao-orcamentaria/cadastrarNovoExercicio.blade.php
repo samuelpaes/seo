@@ -19,8 +19,12 @@
 							<div class="card">
 								<div class="header">
 									<div class="row">
-										<div class="col-md-12">
+										<div class="col-md-10">
 										<h5 class="title">Cadastrar Dotação Orçamentária</h5>
+										</div>
+										<div class="col-md-2">
+											<label for="Exercicio">Exercício</label>
+											<input type="number" min="2000" max="9999" maxlength="4" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
 									</div>	
 								</div>
@@ -38,20 +42,17 @@
 												@endforeach
 											</select>
 										</div>
-										<div class="col-md-2">
-											<label for="Exercicio">Exercício</label>
-											<input type="number" min="2000" max="9999" maxlength="4" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
-										</div>
+										
 										
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
-											<button type="submit" id="btnImplementar" class="btn btn-info btn-fill pull-right" disabled>Implementar</button>
+											<button type="submit" id="btnImplementar" class="btn btn-info btn-fill pull-left" disabled>Implementar</button>
 										</div>
 										<div class="col-md-2">
 										</div>
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
-											<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#importarArquivo">
+											<a class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo">
 												Importar
 											</a>
 										</div>	
