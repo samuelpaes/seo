@@ -561,11 +561,11 @@ function c(v)
 					
 						<div class="row">
 							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrarNovoExercício') }}" class="btn btn-info btn-fill pull-left">
+								<a href="{{ url('dotacao-orcamentaria/cadastrarNovoExercicio') }}" class="btn btn-info btn-fill pull-left">
 									Novo Exercício
 								</a>
 							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrarExercícioExistente') }}" class="btn btn-info btn-fill pull-left">
+								<a href="{{ url('dotacao-orcamentaria/cadastrarExercicioExistente') }}" class="btn btn-info btn-fill pull-left">
 									Exercício Existente
 								</a>
 							</div>	
