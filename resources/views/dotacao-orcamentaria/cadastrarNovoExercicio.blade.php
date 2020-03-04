@@ -38,7 +38,7 @@
 										</div>
 										<div class="col-md-4">
 											<label for="UnidadeOrcamentaria">Unidade Orçamentária:</label>
-											<select class="form-control" name="unidade_orcamentaria" id="unidade_orcamentaria" onchange="ativarCamposParaFiltro()">
+											<select class="form-control" name="unidade_orcamentaria" id="unidade_orcamentaria" onchange="ativarCamposParaFiltro()" disabled>
 												<option value="" selected></option>
 												@foreach ($unidadesOrcamentarias as $unidadeOrcamentaria)
 												<option  value="{{{$unidadeOrcamentaria['codigo']}}}" >{{{$unidadeOrcamentaria['codigo']}}} - {{{$unidadeOrcamentaria['unidade']}}}</option> 
@@ -53,7 +53,7 @@
 			
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
-											<a class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo">
+											<a class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>
 												Importar
 											</a>
 										</div>	
