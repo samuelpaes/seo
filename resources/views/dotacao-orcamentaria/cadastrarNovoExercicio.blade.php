@@ -19,11 +19,11 @@
 							<div class="card">
 								<div class="header">
 									<div class="row">
-										<div class="col-md-8">
+										<div class="col-md-9">
 										<h5 class="title">Cadastrar Dotação Orçamentária</h5>
 										</div>
-										<div class="col-md-2">
-											<label for="Exercicio">Exercício</label>
+										<div class="col-md-1">
+											<label for="Exercicio">Exercício:</label>
 										</div>
 										<div class="col-md-2">
 											<input type="number" min="2000" max="9999" maxlength="4" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
