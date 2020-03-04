@@ -561,7 +561,7 @@ function c(v)
 					
 						<div class="row">
 							<div class="col-md-6">
-								<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#novoExercicio">
+								<a href="{{ url('dotacao-orcamentaria/cadastrarNovoExercicio') }}" class="btn btn-info btn-fill pull-left">
 									Novo Exercício
 								</a>
 							<div class="col-md-6">
@@ -584,44 +584,6 @@ function c(v)
 	</div>
 </div>
 
-<!-- Modal Novo Exercício Orçamentário-->
-<div id="novoExercício" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-
-    <!-- Modal content-->
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h5 class="modal-title">Inserir Dotação</h5>
-			</div>
-						
-				<div class="modal-body">
-					
-						<div class="row">
-							<div class="col-md-6">
-								<a class="btn btn-info btn-fill pull-left">
-									Importar
-								</a>
-							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrarNovoExercicio') }}" class="btn btn-info btn-fill pull-left">
-									Inserir
-								</a>
-							</div>	
-							</div>
-						</div>
-					</form>		
-				</div>
-					
-			<div class="modal-footer">		
-			</div>
-		
-		</div>
-		
-	</div>
-		
-	</div>
-</div>
 
 
 <!-- Modal Unidade não Localizada-->
