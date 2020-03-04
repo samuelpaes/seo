@@ -42,12 +42,18 @@
 											<label for="Exercicio">Exercício</label>
 											<input type="number" min="2000" max="9999" maxlength="4" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
-										<div class="col-md-4">
-										</div>
+										
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
 											<button type="submit" id="btnImplementar" class="btn btn-info btn-fill pull-right" disabled>Implementar</button>
 										</div>
+										<div class="col-md-2">
+										</div>
+										<div class="col-md-2">
+											<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#atualizarDotacoes">
+											Importar
+											</a>
+										</div>	
 									</div>
 									<div class="clearfix"></div>
 								</div>
