@@ -561,7 +561,7 @@ function c(v)
 					
 						<div class="row">
 							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrarNovoExercicio') }}" class="btn btn-info btn-fill pull-left">
+								<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#novoExercicio">
 									Novo Exercício
 								</a>
 							<div class="col-md-6">

@@ -41,7 +41,6 @@
 										<div class="col-md-2">
 											<label for="Exercicio">Exercício</label>
 											<input type="number" min="2000" max="9999" maxlength="4" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
-											<input class="form-control" type="number" min="2000" max="3000" maxlength="4" step="0.01"></input>
 										</div>
 										<div class="col-md-4">
 										</div>
