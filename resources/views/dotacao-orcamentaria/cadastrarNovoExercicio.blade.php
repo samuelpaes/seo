@@ -23,10 +23,10 @@
 										<h5 class="title">Cadastrar Dotação Orçamentária</h5>
 										</div>
 										<div class="col-md-2">
-											<h7 class="title">Cadastrar Dotação Orçamentária</h7>
+											<label for="Exercicio">Exercício:</label>
 										</div>
 										<div class="col-md-1">
-											<input type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+											
 										</div>
 									</div>	
 								</div>
@@ -35,6 +35,10 @@
 									@csrf
 									@method('POST')								
 									<div class="row">
+										<div class="col-md-2">
+										<label><input style="border:none;  background-color: transparent;" disabled>Exercício</input></label>
+										<input type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+										</div>
 										<div class="col-md-4">
 											<label for="UnidadeOrcamentaria">Unidade Orçamentária:</label>
 											<select class="form-control" name="unidade_orcamentaria" id="unidade_orcamentaria" onchange="ativarCamposParaFiltro()">
@@ -44,7 +48,6 @@
 												@endforeach
 											</select>
 										</div>
-										
 										
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
