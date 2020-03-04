@@ -40,12 +40,7 @@
 										</div>
 										<div class="col-md-2">
 											<label for="Exercicio">Exercício</label>
-											<select class="form-control" name="exercicio" id="exercicio" onchange="ativarCamposParaFiltro()">
-												<option value="" selected></option>
-												<option  value="2019" >2019</option> 
-												<option  value="2018" >2018</option> 
-												<option  value="2017" >2017</option> 
-											</select>
+											<input type="number" min="2000" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
 										<div class="col-md-4">
 										</div>

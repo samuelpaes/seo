@@ -604,7 +604,7 @@ function c(v)
 									Importar
 								</a>
 							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrarNovoExistente') }}" class="btn btn-info btn-fill pull-left">
+								<a href="{{ url('dotacao-orcamentaria/cadastrarNovoExercicio') }}" class="btn btn-info btn-fill pull-left">
 									Inserir
 								</a>
 							</div>	
