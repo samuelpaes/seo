@@ -53,7 +53,7 @@
 			
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
-											<button id="btnImplementar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>importar</button>
+											<button id="btnImportar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>importar</button>
 										</div>	
 									</div>
 									<div class="clearfix"></div>
@@ -131,13 +131,17 @@ function ativarCamposParaFiltro()
 	{
 		var exercicio = document.getElementById("exercicio").value;
 		alert(exercicio.length);
-				if (x.lenhjt)
+		if (exercicio.length == 4 && exercicio > 2015 && exercicio < 2999)
 		{
-			document.getElementById('btnImplementar').disabled = true;
+			document.getElementById('btnImplementar').disabled=false;
+			document.getElementById('btnImportar').disabled=false;
+			document.getElementById('unidade_orcamentaria').disabled=false;
 		
 		}
 		else{
-			document.getElementById('btnImplementar').disabled=false;
+			document.getElementById('btnImplementar').disabled=true;
+			document.getElementById('btnImportar').disabled=true;
+			document.getElementById('unidade_orcamentaria').disabled=true;
 		}
 	}		
 </script>
