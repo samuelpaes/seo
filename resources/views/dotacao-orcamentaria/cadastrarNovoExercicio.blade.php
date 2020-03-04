@@ -166,8 +166,9 @@ function ativarCamposParaFiltro()
 			</div>
 			<form action="{{ route('importarUnidadeOrcamentaria') }}" method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
-				<input name="exercicio" id="exercicio2" hidden/>
+				
 				<div class="modal-body">
+				<input name="exercicio" id="exercicio2" hidden/>
 					<div class="row">
 						<div class="col-md-9">
 							<input type="file" name="arquivo"  accept=".xlsx"></input>
