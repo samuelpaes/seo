@@ -32,7 +32,7 @@
 									<div class="row">
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled>Exercício</input></label>
-											<input onkeyup="ativarCamposParaFiltro()" type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+											<input onkeyup="ativarCamposParaFiltro()" type="text" maxlength="4" pattern="([0-9]{4})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
 										<div class="col-md-2">
 										</div>
@@ -53,7 +53,7 @@
 			
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
-											<button id="btnImportar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>importar</button>
+											<button id="btnImportar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>Importar</button>
 										</div>	
 									</div>
 									<div class="clearfix"></div>
@@ -135,6 +135,7 @@ function ativarCamposParaFiltro()
 			document.getElementById('btnImplementar').disabled=false;
 			document.getElementById('btnImportar').disabled=false;
 			document.getElementById('unidade_orcamentaria').disabled=false;
+			document.getElementById('exercicio2').value=exercicio;
 		
 		}
 		else{
@@ -165,6 +166,7 @@ function ativarCamposParaFiltro()
 			</div>
 			<form action="{{ route('importarUnidadeOrcamentaria') }}" method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
+				<input name="exercicio" id="exercicio2" hidden/>
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-9">
