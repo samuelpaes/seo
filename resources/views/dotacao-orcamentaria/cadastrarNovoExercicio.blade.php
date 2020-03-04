@@ -22,11 +22,11 @@
 										<div class="col-md-9">
 										<h5 class="title">Cadastrar Dotação Orçamentária</h5>
 										</div>
-										<div class="col-md-1">
+										<div class="col-md-2">
 											<label for="Exercicio">Exercício:</label>
 										</div>
-										<div class="col-md-2">
-											<input type="text" maxlength="3" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+										<div class="col-md-1">
+											<input type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
 									</div>	
 								</div>
