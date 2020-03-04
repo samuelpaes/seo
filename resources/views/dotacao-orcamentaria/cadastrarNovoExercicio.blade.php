@@ -40,7 +40,7 @@
 										</div>
 										<div class="col-md-2">
 											<label for="Exercicio">Exercício</label>
-											<input type="number" min="2000" max="9999" max-length="4" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+											<input type="number" min="2000" max="9999" maxlength="4" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
 										<div class="col-md-4">
 										</div>
