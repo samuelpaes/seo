@@ -53,9 +53,7 @@
 			
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
-											<a class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>
-												Importar
-											</a>
+											<button id="btnImplementar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>importar</button>
 										</div>	
 									</div>
 									<div class="clearfix"></div>
