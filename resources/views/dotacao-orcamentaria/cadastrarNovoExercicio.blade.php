@@ -19,15 +19,10 @@
 							<div class="card">
 								<div class="header">
 									<div class="row">
-										<div class="col-md-9">
+										<div class="col-md-12">
 										<h5 class="title">Cadastrar Dotação Orçamentária</h5>
 										</div>
-										<div class="col-md-2">
-											<label for="Exercicio">Exercício:</label>
-										</div>
-										<div class="col-md-1">
-											
-										</div>
+										
 									</div>	
 								</div>
 							<div class="content">
@@ -36,8 +31,10 @@
 									@method('POST')								
 									<div class="row">
 										<div class="col-md-2">
-										<label><input style="border:none;  background-color: transparent;" disabled>Exercício</input></label>
-										<input type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+											<label><input style="border:none;  background-color: transparent;" disabled>Exercício</input></label>
+											<input type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+										</div>
+										<div class="col-md-2">
 										</div>
 										<div class="col-md-4">
 											<label for="UnidadeOrcamentaria">Unidade Orçamentária:</label>
@@ -53,8 +50,7 @@
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
 											<button type="submit" id="btnImplementar" class="btn btn-info btn-fill pull-left" disabled>Implementar</button>
 										</div>
-										<div class="col-md-2">
-										</div>
+			
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
 											<a class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo">
