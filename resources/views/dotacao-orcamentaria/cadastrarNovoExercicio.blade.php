@@ -32,7 +32,7 @@
 									<div class="row">
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled>Exercício</input></label>
-											<input onkeyup="ativarCamposParaFiltro()" type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+											<input onkeyup="ativarCamposParaFiltro(this)" type="text" maxlength="4" pattern="([0-9]{3})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
 										</div>
 										<div class="col-md-2">
 										</div>
@@ -127,10 +127,11 @@
 		}
 
 
-function ativarCamposParaFiltro() 
+function ativarCamposParaFiltro(x) 
 	{
-		alert('oi');
-		if ((document.getElementById('unidade_orcamentaria').value == "") || (document.getElementById('exercicio').value == ""))
+		alert(x);
+		alert(x.length);
+		if (x.lenhjt)
 		{
 			document.getElementById('btnImplementar').disabled = true;
 		
