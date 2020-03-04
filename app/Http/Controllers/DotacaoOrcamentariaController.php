@@ -400,7 +400,7 @@ class DotacaoOrcamentariaController extends Controller
         //
     }
 	
-	public function cadastrar()
+	public function cadastrarExercicioExistente()
     {
         $pesquisaFeita="";
 		$dotacaoOrcamentariaJaExiste='';
@@ -408,6 +408,19 @@ class DotacaoOrcamentariaController extends Controller
 		$unidadesOrcamentarias = UnidadeOrcamentaria::all();
 		$unidadesExecutoras= UnidadeExecutora::all();
 		$mensagem = "";
+
+		return view('dotacao-orcamentaria/cadastrar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
+	}
+	
+	public function cadastrarNovoExercício()
+    {
+        $pesquisaFeita="";
+		$dotacaoOrcamentariaJaExiste='';
+		$verificacao='';
+		$unidadesOrcamentarias = UnidadeOrcamentaria::all();
+		$unidadesExecutoras= UnidadeExecutora::all();
+		$mensagem = "";
+
 		return view('dotacao-orcamentaria/cadastrar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
     }
 	
@@ -564,12 +577,12 @@ class SaldoDeDotacao2019 extends Model
 				$colecao['saldo'] = str_replace(array(".",","),array("", "."),$colecao['saldo']);
 				$colecao['reserva'] = str_replace(array(".",","),array("", "."),$colecao['reserva']);
 				
-				$dotacao = SaldoDeDotacao2019::where([
+				$dotacao = SaldoDeDotacao2019::whereCodigo_dotacao($colecao['codigo_dotacao'])->firstOrFail();
+				/*$dotacao = SaldoDeDotacao2019::where([
 					'codigo_dotacao' => $colecao['codigo_dotacao'],
 					'vinculo' => $colecao['vinculo'],
-				])->first();
-				 				
-				//return($colecao);
+				])->first();*/
+							 
 				
 				$dotacao->dotacao = $colecao['dotacao'];
 				$dotacao->empenhado = $colecao['empenhado'];
@@ -578,6 +591,7 @@ class SaldoDeDotacao2019 extends Model
 				
 				// Save/update user. 
 				// This will will update your the row in ur db.
+				
 			   $dotacao->save();
 			   
 			  }

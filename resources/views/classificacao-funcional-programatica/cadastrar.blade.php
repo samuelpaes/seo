@@ -27,7 +27,7 @@
 										<div class="col-md-4">
 											<div class="form-group">
 												<label>Código</label>
-												<input type="text" name="codigo" id="codigo" maxlength="12"  onkeyup="mascaraCodigoDespesa( this, cDespesa );" class="form-control{{ $errors->has('registro') ? ' is-invalid' : '' }}" required autofocus>																		
+												<input type="text" name="codigo" id="codigo" maxlength="17"  onkeyup="mascaraCodigoDespesa( this, cDespesa );" class="form-control{{ $errors->has('registro') ? ' is-invalid' : '' }}" required autofocus>																		
 											</div>
 										</div>
 								
@@ -137,18 +137,17 @@
 			
 			//Remove tudo o que não é dígito
 			v=v.replace(/\D/g,"");            
-		   
-				
+				   
+						
 			//Coloca um ponto entre o primeiro e o segundo
-			v=v.replace(/(\d{1})(\d)/,"$1.$2")
-			
-			v=v.replace(/(\d{1})(\d)/,"$1.$2")
-			
 			v=v.replace(/(\d{2})(\d)/,"$1.$2")
 			
-			v=v.replace(/(\d)(\d{2})$/,"$1.$2");
-		
-
+			v=v.replace(/(\d{3})(\d)/,"$1.$2")
+			
+			v=v.replace(/(\d{4})(\d)/,"$1.$2")
+			
+			v=v.replace(/(\d{1})(\d{2,3})$/, "$1.$2");
+			
 			return v;
 		}	
 </script>

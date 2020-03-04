@@ -40,7 +40,7 @@ table.treetable span.indenter a {
 					<div class="col-md-12">
 						<div class="card">
 							<div class="header">
-								<form method="get" action="{{ route('showDotacaoOrcamentaria') }}">
+								<form method="get" action="{{ route('showNaturezaDeDespesa') }}">
 									<div class="row">
 										<div class="col-md-6">
 											<h4 class="title">Natureza de Despesa</h4>	
