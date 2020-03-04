@@ -409,7 +409,7 @@ class DotacaoOrcamentariaController extends Controller
 		$unidadesExecutoras= UnidadeExecutora::all();
 		$mensagem = "";
 
-		return view('dotacao-orcamentaria/cadastrar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
+		return view('dotacao-orcamentaria/cadastrarExercicioExistente')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
 	}
 	
 	public function cadastrarNovoExercício()
@@ -421,7 +421,7 @@ class DotacaoOrcamentariaController extends Controller
 		$unidadesExecutoras= UnidadeExecutora::all();
 		$mensagem = "";
 
-		return view('dotacao-orcamentaria/cadastrar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
+		return view('dotacao-orcamentaria/cadastrarNovoExercicio')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
     }
 	
 	public function implementar(Request $request)
