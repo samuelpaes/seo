@@ -565,15 +565,10 @@ function c(v)
 									Novo Exercício
 								</a>
 							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrarExercicioExistente') }}" class="btn btn-info btn-fill pull-left">
-							<form method="get">
-								<button name="unidade" type="submit" class="btn btn-info btn-fill pull-right" value="orcamentaria">Novo Exercício</button><br>
-							</div>
-							</form>
-							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
+								<a href="{{ url('dotacao-orcamentaria/cadastrarExercícioExistente') }}" class="btn btn-info btn-fill pull-left">
 									Exercício Existente
 								</a>
+							</div>	
 							</div>
 						</div>
 					</form>		
