@@ -67,6 +67,8 @@
 										</div>
 										<div class="col-md-7" >
 											<div class="row">
+												<div class="col-md-2">
+												</div>
 												<div class="col-md-4" style="margin-right:-4px;">
 													<select class="form-control" id="filtro" name="filtro" onchange="ativarCamposParaFiltro()">
 														<option value="TODAS" selected>Todas</option>
@@ -90,11 +92,7 @@
 														Nova
 													</a>-->
 												</div>	
-												<div class="col-md-2">
-													<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#atualizarDotacoes">
-														Importar
-													</a>
-												</div>	
+													
 											</div>	
 										</div>
 									</div>
