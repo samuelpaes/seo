@@ -412,7 +412,7 @@ class DotacaoOrcamentariaController extends Controller
 		return view('dotacao-orcamentaria/cadastrarExercicioExistente')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
 	}
 	
-	public function cadastrarNovoExercício()
+	public function cadastrarNovoExercicio()
     {
         $pesquisaFeita="";
 		$dotacaoOrcamentariaJaExiste='';

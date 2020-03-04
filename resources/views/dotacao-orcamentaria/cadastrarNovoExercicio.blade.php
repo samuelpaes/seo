@@ -32,7 +32,7 @@
 									<div class="row">
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled>Exercício</input></label>
-											<input onkeyup="ativarCamposParaFiltro()" type="text" maxlength="4" pattern="([0-9]{4})" name="exercicio" id="exercicio"  placeholder="ANO" class="form-control"></input>
+											<input onkeyup="ativarCamposParaFiltro()" type="text" maxlength="4" pattern="([0-9]{4})" name="exercicio" id="exercicio"  placeholder="" class="form-control"></input>
 										</div>
 										<div class="col-md-2">
 										</div>
@@ -72,9 +72,10 @@
 		<script>
 
 			$(document).ready(function() {
-			$("#exercicio").keyup(function() {
-				$("#exercicio").val(this.value.match(/[0-9]*/));
-			});
+				$("#exercicio").keyup(function() {
+					$("#exercicio").val(this.value.match(/[0-9]*/));
+				});
+				
 			});
 		</script>
 
@@ -94,10 +95,16 @@
 	
 	@endsection	
 		
-		
-
+		 
 
 <script>
+
+document.addEventListener('DOMContentLoaded', function() 
+	{
+		var exercicio = new Date().getFullYear()
+		$("#exercicio").attr("placeholder", exercicio);
+	}, false);
+	
 /* Máscaras Código da Unidade Orcamentaria */
 		function mascaraCodigoDespesa(o,f){
 			v_obj=o
@@ -164,7 +171,7 @@ function ativarCamposParaFiltro()
 		
 				<h5 class="modal-title">Importar Arquivo</h5>
 			</div>
-			<form action="{{ route('cadastrarNovoExercicio') }}" method="post" enctype="multipart/form-data"  files="true">
+			<form  method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
 				
 				<div class="modal-body">
