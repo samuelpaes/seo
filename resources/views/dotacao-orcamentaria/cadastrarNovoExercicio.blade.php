@@ -50,8 +50,9 @@
 										<div class="col-md-2">
 										</div>
 										<div class="col-md-2">
-											<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#atualizarDotacoes">
-											Importar
+											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
+											<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#importarArquivo">
+												Importar
 											</a>
 										</div>	
 									</div>
