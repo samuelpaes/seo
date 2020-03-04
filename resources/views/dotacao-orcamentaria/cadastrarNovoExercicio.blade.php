@@ -164,7 +164,7 @@ function ativarCamposParaFiltro()
 		
 				<h5 class="modal-title">Importar Arquivo</h5>
 			</div>
-			<form action="{{ route('importarUnidadeOrcamentaria') }}" method="post" enctype="multipart/form-data"  files="true">
+			<form action="{{ route('cadastrarNovoExercicio') }}" method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
 				
 				<div class="modal-body">
