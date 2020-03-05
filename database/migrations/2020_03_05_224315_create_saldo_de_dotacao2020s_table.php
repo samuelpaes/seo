@@ -36,6 +36,6 @@ class CreateSaldoDeDotacao2020sTable extends Migration
      */
     public function down()
     {
-        Schema::drop('saldo_de_dotacao2020s');
+        Schema::dropIfExists('saldo_de_dotacao2020s');
     }
 }
