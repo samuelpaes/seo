@@ -14,8 +14,6 @@
 								<br>
 							</div>	
 						</div>
-						
-						<form method="POST" action="{{route ('implementarDotacaoOrcamentaria') }}">	
 							<div class="card">
 								<div class="header">
 									<div class="row">
@@ -26,9 +24,7 @@
 									</div>	
 								</div>
 							<div class="content">
-								<div class="header">
-									@csrf
-									@method('POST')								
+								<div class="header">							
 									<div class="row">
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled>Exercício</input></label>
@@ -47,8 +43,14 @@
 										</div>
 										
 										<div class="col-md-2">
-											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
-											<button type="submit" id="btnImplementar" class="btn btn-info btn-fill pull-left" disabled>Implementar</button>
+											<form method="POST" action="{{route ('cadastrarExercicioExistenteDotacaoOrcamentaria') }}">	
+												@csrf
+												@method('POST')	
+												<input id="acao" name="acao" value="implementar" hidden />
+												<input id="implementarExercicio" name="exercicio" hidden />
+												<label><input style="border:none;  background-color: transparent;" disabled></input></label>
+												<button type="submit" id="btnImplementar" class="btn btn-info btn-fill pull-left" disabled>Implementar</button>
+											</form>
 										</div>
 			
 										<div class="col-md-2">
@@ -143,6 +145,8 @@ function ativarCamposParaFiltro()
 			document.getElementById('btnImportar').disabled=false;
 			document.getElementById('unidade_orcamentaria').disabled=false;
 			document.getElementById('exercicio2').value=exercicio;
+			document.getElementById('implementarExercicio').value=exercicio;
+			document.getElementById('importarExercicio').value=exercicio;
 		
 		}
 		else{

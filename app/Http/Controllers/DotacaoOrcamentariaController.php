@@ -400,7 +400,7 @@ class DotacaoOrcamentariaController extends Controller
         //
     }
 	
-	public function cadastrarExercicioExistente()
+	public function cadastrarExercicioExistente(Request $request)
     {
         $pesquisaFeita="";
 		$dotacaoOrcamentariaJaExiste='';
@@ -408,6 +408,61 @@ class DotacaoOrcamentariaController extends Controller
 		$unidadesOrcamentarias = UnidadeOrcamentaria::all();
 		$unidadesExecutoras= UnidadeExecutora::all();
 		$mensagem = "";
+
+		if($request->acao == "implementar")
+		{
+			$pesquisaFeita="ok";
+			$dotacaoOrcamentariaJaExiste='';
+			$verificacao='';
+			$mensagem='';
+			$unidadesOrcamentarias = UnidadeOrcamentaria::all();
+			$unidadeOrcamentaria = DB::select("select * from unidade_orcamentarias where codigo='$request->unidade_orcamentaria'");
+			$unidadesExecutoras = UnidadeExecutora::all();
+			$classificacoesFuncionaisProgramaticas = ClassificacaoFuncionalProgramatica::all();
+			$vinculos  = Vinculos::all();
+			$naturezasDeDespesas = NaturezaDeDespesa::all();
+		
+			$tabela = 'saldo_de_dotacao'.$request->exercicio.'s';
+			
+			if (Schema::hasTable($tabela)) {
+				$mensagem='A Dotação Orçamentária da '.$unidadeOrcamentaria[0]->unidade.', execício '.$request->exercicio.', já foi criada! - VERIFICAR SALDO DE DOTAÇÃO NO MENU ORÇAMENTO. ';
+				
+				return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('tabela', $tabela);
+			}
+			else{
+				Artisan::call('make:migration:schema', ['name' => 'create_'.$tabela.'_table', '--schema' => 'unidade_orcamentaria:string, unidade_executora:string, classificacao_funcional_programatica:string, natureza_de_despesa:string, vinculo:string, codigo_dotacao:integer, dotacao:decimal, empenhado:decimal, saldo:decimal, reserva:decimal, usuario_alteracao:string']);
+				Artisan::call('migrate:refresh');
+				
+				$my_file = 'C:/xampp/htdocs/seo/app/SaldoDeDotacao'.$request->exercicio.'.php';
+				$handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file); //implicitly creates file
+				$fillable = '$'.'fillable';
+				$data ="<?php
+							namespace SEO;
+
+							use Illuminate\Database\Eloquent\Model;
+							use Illuminate\Notifications\Notifiable;
+
+
+							class SaldoDeDotacao.$request->exercicio extends Model
+							{
+								use Notifiable;
+								protected $fillable = [
+										'unidade_orcamentaria', 'unidade_executora', 'classificacao_funcional_programatica', 'natureza_de_despesa', 'codigo_dotacao', 'vinculo', 'dotacao', 'empenhado', 'saldo', 'reserva',
+									];
+
+							}";	
+							
+				fwrite($handle, $data);
+
+				return('oi');
+				
+				//return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('tabela', $tabela);
+			}
+		}
+		else if ($acao =="importar")
+		{
+
+		}
 
 		return view('dotacao-orcamentaria/cadastrarExercicioExistente')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
 	}
@@ -451,7 +506,7 @@ class DotacaoOrcamentariaController extends Controller
 			return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('tabela', $tabela);
 		}
 		else{
-			Artisan::call('make:migration:schema', ['name' => 'create_'.$tabela.'_table', '--schema' => 'unidade_orcamentaria:string, unidade_executora:string, classificacao_funcional_programatica:string, natureza_de_despesa:string, vinculo:string, codigo_dotacao:integer, dotacao:decimal, empenhado:decimal, saldo:decimal, reserva:decimal, usuario_alteracao']);
+			Artisan::call('make:migration:schema', ['name' => 'create_'.$tabela.'_table', '--schema' => 'unidade_orcamentaria:string, unidade_executora:string, classificacao_funcional_programatica:string, natureza_de_despesa:string, vinculo:string, codigo_dotacao:integer, dotacao:decimal, empenhado:decimal, saldo:decimal, reserva:decimal, usuario_alteracao:string']);
 			Artisan::call('migrate');
 			
 			$my_file = 'C:/xampp/htdocs/seo/app/SaldoDeDotacao'.$request->exercicio.'.php';
@@ -464,7 +519,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 
-class SaldoDeDotacao2019 extends Model
+class SaldoDeDotacao.$request->exercicio extends Model
 {
 	use Notifiable;
 	protected $fillable = [
