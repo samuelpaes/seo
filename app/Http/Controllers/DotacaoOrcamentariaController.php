@@ -8,7 +8,7 @@ use SEO\DotacaoOrcamentaria;
 use SEO\UnidadeOrcamentaria;
 use SEO\UnidadeExecutora;
 use SEO\Vinculos;
-use SEO\SaldoDeDotacao2019;
+use SEO\SaldoDeDotacoes;
 use SEO\NaturezaDeDespesa;
 use Illuminate\Http\Request;
 use DB;
@@ -52,17 +52,17 @@ class DotacaoOrcamentariaController extends Controller
 			$dotacao_nao_incluida="";
 			$unidade_naoLocalizada="";
 			$pesquisaFeita="";
-			$saldoDeDotacoes = SaldoDeDotacao2019::all();
+			$saldoDeDotacoes = SaldoDeDotacoes::all();
 			$laco = sizeof($data->unidadeExecutora);
 			$mensagem = "";
 			for($i=1; $i <= $laco; $i++)
 				{
-					//$teste = SaldoDeDotacao2019::whereRaw('codigo_dotacao= "'.$data->codigo_dotacao[$i].'" and vinculo ="'.$data->vinculo[$i].'" and natureza_de_despesa = "'. $data->naturezaDeDespesa[$i].'"')->count();
+					//$teste = SaldoDeDotacoes::whereRaw('codigo_dotacao= "'.$data->codigo_dotacao[$i].'" and vinculo ="'.$data->vinculo[$i].'" and natureza_de_despesa = "'. $data->naturezaDeDespesa[$i].'"')->count();
 					$j=0;
-					if (SaldoDeDotacao2019::whereRaw('codigo_dotacao= "'.$data->codigo_dotacao[$i].'" and vinculo ="'.$data->vinculo[$i].'" and natureza_de_despesa = "'. $data->naturezaDeDespesa[$i].'"')->count() == 0)
+					if (SaldoDeDotacoes::whereRaw('codigo_dotacao= "'.$data->codigo_dotacao[$i].'" and vinculo ="'.$data->vinculo[$i].'" and natureza_de_despesa = "'. $data->naturezaDeDespesa[$i].'"')->count() == 0)
 					{
 						
-						SaldoDeDotacao2019::create([
+						SaldoDeDotacoes::create([
 							'unidade_orcamentaria' =>$data->unidadeOrcamentaria,
 							'unidade_executora' => $data->unidadeExecutora[$i],
 							'classificacao_funcional_programatica' => $data->classificacaoFuncional[$i],
@@ -105,7 +105,7 @@ class DotacaoOrcamentariaController extends Controller
      */
     public function store(Request $request)
     {
-    $saldoDeDotacoes = SaldoDeDotacao2019::all();
+    $saldoDeDotacoes = SaldoDeDotacoes::all();
 	return  ($saldoDeDotacoes);
     }
 
@@ -132,20 +132,20 @@ class DotacaoOrcamentariaController extends Controller
 		
 	if ($request->filtro =='TODAS')
 	{
-		$saldoDeDotacoes = SaldoDeDotacao2019::all();
+		$saldoDeDotacoes = SaldoDeDotacoes::all();
 	}
 	else if ($request->filtro =='ORCAMENTARIA')
 	{
-		$saldoDeDotacoes =  SaldoDeDotacao2019::where('unidade_orcamentaria', '==', '%'.$request->codigo.'%')->firstOrFail();
+		$saldoDeDotacoes =  SaldoDeDotacoes::where('unidade_orcamentaria', '==', '%'.$request->codigo.'%')->firstOrFail();
 	}
 	else if ($request->filtro =='EXECUTORA'){
-		$saldoDeDotacoes =  SaldoDeDotacao2019::where('unidade_executora', 'LIKE', '%'.$request->codigo.'%')->firstOrFail();
+		$saldoDeDotacoes =  SaldoDeDotacoes::where('unidade_executora', 'LIKE', '%'.$request->codigo.'%')->firstOrFail();
 	}
 	else if ($request->filtro =='DOTACAO'){
-		$saldoDeDotacoes =  SaldoDeDotacao2019::whereRaw('codigo_dotacao = '.$request->codigo.'')->get();
+		$saldoDeDotacoes =  SaldoDeDotacoes::whereRaw('codigo_dotacao = '.$request->codigo.'')->get();
 	}
 	else{
-		$saldoDeDotacoes = SaldoDeDotacao2019::all();
+		$saldoDeDotacoes = SaldoDeDotacoes::all();
 	}
 	
 	if (count($saldoDeDotacoes) > 0)
@@ -363,9 +363,9 @@ class DotacaoOrcamentariaController extends Controller
 		$mensagem = "A Dotação foi atualizada com Sucesso!";
 		$indiceA="";
 		
-		$saldoDeDotacoes = SaldoDeDotacao2019::all();
+		$saldoDeDotacoes = SaldoDeDotacoes::all();
 		
-		$dotacao = SaldoDeDotacao2019::where([
+		$dotacao = SaldoDeDotacoes::where([
 			'codigo_dotacao' => $request->codigo_dotacao,
 			'vinculo' => $request->codigo_vinculo,
 		])->first();
@@ -467,15 +467,30 @@ class DotacaoOrcamentariaController extends Controller
 		return view('dotacao-orcamentaria/cadastrarExercicioExistente')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
 	}
 	
-	public function cadastrarNovoExercicio()
+	public function cadastrarNovoExercicio(Request $request)
     {
+		$mensagem = "";
         $pesquisaFeita="";
 		$dotacaoOrcamentariaJaExiste='';
 		$verificacao='';
+		
 		$unidadesOrcamentarias = UnidadeOrcamentaria::all();
 		$unidadesExecutoras= UnidadeExecutora::all();
-		$mensagem = "";
-
+		$classificacoesFuncionaisProgramaticas = ClassificacaoFuncionalProgramatica::all();
+		$vinculos  = Vinculos::all();
+		$naturezasDeDespesas = NaturezaDeDespesa::all();
+		
+		$unidadeOrcamentaria = DB::select("select * from unidade_orcamentarias where codigo='$request->unidade_orcamentaria'");
+		
+		
+		$acao = $request->acao;
+		$exercicio = $request->exercicio;
+		
+		if($acao == "implementar")
+		{
+			$pesquisaFeita="ok";
+			return view('dotacao-orcamentaria/implementar')->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('exercicio', $exercicio)->with('pesquisaFeita', $pesquisaFeita)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas', $classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem);
+		}
 		return view('dotacao-orcamentaria/cadastrarNovoExercicio')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
     }
 	
@@ -632,8 +647,8 @@ class SaldoDeDotacao.$request->exercicio extends Model
 				$colecao['saldo'] = str_replace(array(".",","),array("", "."),$colecao['saldo']);
 				$colecao['reserva'] = str_replace(array(".",","),array("", "."),$colecao['reserva']);
 				
-				$dotacao = SaldoDeDotacao2019::whereCodigo_dotacao($colecao['codigo_dotacao'])->firstOrFail();
-				/*$dotacao = SaldoDeDotacao2019::where([
+				$dotacao = SaldoDeDotacoes::whereCodigo_dotacao($colecao['codigo_dotacao'])->firstOrFail();
+				/*$dotacao = SaldoDeDotacoes::where([
 					'codigo_dotacao' => $colecao['codigo_dotacao'],
 					'vinculo' => $colecao['vinculo'],
 				])->first();*/

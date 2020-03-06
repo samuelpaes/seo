@@ -175,7 +175,7 @@
 								@csrf
 								@method('POST')	
 								<input type="hidden" name="unidadeOrcamentaria" value="{{$unidadeOrcamentaria[0]->codigo}}"></input>
-								<input id="tabela" name="tabela" value="{{$tabela}}" type="hidden"></input>
+								<input id="tabela" name="tabela" value="{{$exercicio}}" type="hidden"></input>
 								<div class="content table-responsive table-full-width">
 									<table class="table table-hover table-striped" id="tabelaDotacao" name="tabelaDotacao" style='font-size:98%'>
 										<thead>

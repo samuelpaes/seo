@@ -32,6 +32,7 @@
 										</div>
 										<div class="col-md-2">
 										</div>
+										<form method="POST" action="{{route ('cadastrarNovoExercicioDotacaoOrcamentaria') }}">	
 										<div class="col-md-4">
 											<label for="UnidadeOrcamentaria">Unidade Orçamentária:</label>
 											<select class="form-control" name="unidade_orcamentaria" id="unidade_orcamentaria" onchange="ativarCamposParaFiltro()" disabled>
@@ -43,16 +44,16 @@
 										</div>
 										
 										<div class="col-md-2">
-											<form method="POST" action="{{route ('cadastrarExercicioExistenteDotacaoOrcamentaria') }}">	
+											
 												@csrf
 												@method('POST')	
 												<input id="acao" name="acao" value="implementar" hidden />
 												<input id="implementarExercicio" name="exercicio" hidden />
 												<label><input style="border:none;  background-color: transparent;" disabled></input></label>
 												<button type="submit" id="btnImplementar" class="btn btn-info btn-fill pull-left" disabled>Implementar</button>
-											</form>
+											
 										</div>
-			
+										</form>
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
 											<button type="button" id="btnImportar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>Importar</button>
