@@ -8,7 +8,7 @@ use SEO\DotacaoOrcamentaria;
 use SEO\UnidadeOrcamentaria;
 use SEO\UnidadeExecutora;
 use SEO\Vinculos;
-use SEO\SaldoDeDotacoes;
+use SEO\SaldodeDotacao;
 use SEO\NaturezaDeDespesa;
 use Illuminate\Http\Request;
 use DB;
@@ -52,17 +52,19 @@ class DotacaoOrcamentariaController extends Controller
 			$dotacao_nao_incluida="";
 			$unidade_naoLocalizada="";
 			$pesquisaFeita="";
-			$saldoDeDotacoes = SaldoDeDotacoes::all();
+			$SaldodeDotacaos = SaldodeDotacao::all();
 			$laco = sizeof($data->unidadeExecutora);
 			$mensagem = "";
+			//return($data);
 			for($i=1; $i <= $laco; $i++)
 				{
-					//$teste = SaldoDeDotacoes::whereRaw('codigo_dotacao= "'.$data->codigo_dotacao[$i].'" and vinculo ="'.$data->vinculo[$i].'" and natureza_de_despesa = "'. $data->naturezaDeDespesa[$i].'"')->count();
+					//$teste = SaldodeDotacaos::whereRaw('codigo_dotacao= "'.$data->codigo_dotacao[$i].'" and vinculo ="'.$data->vinculo[$i].'" and natureza_de_despesa = "'. $data->naturezaDeDespesa[$i].'"')->count();
 					$j=0;
-					if (SaldoDeDotacoes::whereRaw('codigo_dotacao= "'.$data->codigo_dotacao[$i].'" and vinculo ="'.$data->vinculo[$i].'" and natureza_de_despesa = "'. $data->naturezaDeDespesa[$i].'"')->count() == 0)
+					if (SaldodeDotacao::whereRaw('codigo_dotacao= "'.$data->codigo_dotacao[$i].'" and vinculo ="'.$data->vinculo[$i].'" and natureza_de_despesa = "'. $data->naturezaDeDespesa[$i].'"and exercicio = "'. $data->exercicio[$i].'"')->count() == 0)
 					{
 						
-						SaldoDeDotacoes::create([
+						SaldodeDotacao::create([
+							'exercicio' =>$data->exercicio,
 							'unidade_orcamentaria' =>$data->unidadeOrcamentaria,
 							'unidade_executora' => $data->unidadeExecutora[$i],
 							'classificacao_funcional_programatica' => $data->classificacaoFuncional[$i],
@@ -75,8 +77,10 @@ class DotacaoOrcamentariaController extends Controller
 							'reserva' => str_replace(array(".",","),array("", "."),$data->reserva[$i]),
 							
 						]);
+						
 						$mensagem='Dotação incluída com Sucesso!';
-						$verificao='Sucesso';
+						$verificacao='Sucesso';
+						
 					}
 					else
 					{
@@ -90,10 +94,12 @@ class DotacaoOrcamentariaController extends Controller
 						{
 							$mensagem='A Dotação '.$data->codigo_dotacao[$i].' não foi incluída!';
 						}
+						
 					}
+					
 				}
-
-		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('pesquisaFeita', $pesquisaFeita)->with('mensagem', $mensagem)->with('saldoDeDotacoes', $saldoDeDotacoes)->with('indiceA', $indiceA)->with('verificacao', $verificacao);
+		
+		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('pesquisaFeita', $pesquisaFeita)->with('mensagem', $mensagem)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('indiceA', $indiceA)->with('verificacao', $verificacao);
 
     }
 
@@ -105,8 +111,8 @@ class DotacaoOrcamentariaController extends Controller
      */
     public function store(Request $request)
     {
-    $saldoDeDotacoes = SaldoDeDotacoes::all();
-	return  ($saldoDeDotacoes);
+    	$SaldodeDotacaos = SaldodeDotacao::all();
+		return  ($SaldodeDotacaos);
     }
 
     /**
@@ -117,8 +123,6 @@ class DotacaoOrcamentariaController extends Controller
      */
     public function show(Request $request)
     {
-		
-		
 		$pesquisaFeita = '';
 		$unidade_naoLocalizada= '';
 		$verificacao = "";
@@ -132,28 +136,28 @@ class DotacaoOrcamentariaController extends Controller
 		
 	if ($request->filtro =='TODAS')
 	{
-		$saldoDeDotacoes = SaldoDeDotacoes::all();
+		$SaldodeDotacaos = SaldodeDotacao::all();
 	}
 	else if ($request->filtro =='ORCAMENTARIA')
 	{
-		$saldoDeDotacoes =  SaldoDeDotacoes::where('unidade_orcamentaria', '==', '%'.$request->codigo.'%')->firstOrFail();
+		$SaldodeDotacaos =  SaldodeDotacaos::where('unidade_orcamentaria', '==', '%'.$request->codigo.'%')->firstOrFail();
 	}
 	else if ($request->filtro =='EXECUTORA'){
-		$saldoDeDotacoes =  SaldoDeDotacoes::where('unidade_executora', 'LIKE', '%'.$request->codigo.'%')->firstOrFail();
+		$SaldodeDotacaos =  SaldodeDotacaos::where('unidade_executora', 'LIKE', '%'.$request->codigo.'%')->firstOrFail();
 	}
 	else if ($request->filtro =='DOTACAO'){
-		$saldoDeDotacoes =  SaldoDeDotacoes::whereRaw('codigo_dotacao = '.$request->codigo.'')->get();
+		$SaldodeDotacaos =  SaldodeDotacaos::whereRaw('codigo_dotacao = '.$request->codigo.'')->get();
 	}
 	else{
-		$saldoDeDotacoes = SaldoDeDotacoes::all();
+		$SaldodeDotacaos = SaldodeDotacao::all();
 	}
 	
-	if (count($saldoDeDotacoes) > 0)
+	if (count($SaldodeDotacaos) > 0)
 	{
 		$pesquisaFeita = 'ok';
 	// filtrando as Unidades Orçamentárias
 		$i=0;
-		foreach($saldoDeDotacoes as $saldo)
+		foreach($SaldodeDotacaos as $saldo)
 		{
 			
 			$unidadesOrcamentarias[$i]['codigo_orcamentaria'] = $saldo['unidade_orcamentaria'];
@@ -186,7 +190,7 @@ class DotacaoOrcamentariaController extends Controller
 		
 		// filtrando as Unidades Executoras
 		$i=0;
-		foreach($saldoDeDotacoes as $saldo)
+		foreach($SaldodeDotacaos as $saldo)
 			{	
 				$unidadesExecutoras[$i]['codigo_executora'] = $saldo['unidade_executora'];
 				$unidadesExecutoras[$i]['codigo_orcamentaria'] = $saldo['unidade_orcamentaria'];
@@ -218,7 +222,7 @@ class DotacaoOrcamentariaController extends Controller
 		
 		//filtrando as Dotações e as Classificações Funcionais Programáticas e Valores
 		$i=0;
-		foreach($saldoDeDotacoes as $saldo)
+		foreach($SaldodeDotacaos as $saldo)
 			{
 			$classificacoesFuncionais[$i]['codigo_classificacaoFuncionalProgramatica'] = $saldo['classificacao_funcional_programatica'];
 			$classificacoesFuncionais[$i]['especificacao_classificacaoFuncionalProgramatica'] = DB::table('classificacao_funcional_programaticas')->where('codigo', $classificacoesFuncionais[$i]['codigo_classificacaoFuncionalProgramatica'])->value('especificacao');
@@ -259,7 +263,7 @@ class DotacaoOrcamentariaController extends Controller
 
 		//filtrando as Naturezas de Despesas, Dotacoes e Valores
 		$i=0;
-		foreach($saldoDeDotacoes as $saldo)
+		foreach($SaldodeDotacaos as $saldo)
 			{
 			
 				$naturezas_dotacoes_total[$i]['codigo_natureza'] = $saldo['natureza_de_despesa'];
@@ -303,7 +307,7 @@ class DotacaoOrcamentariaController extends Controller
 
 		//filtrando os Vinculos, Código de Dotações, Dotações, Empenhado e Saldo
 		$i=0;
-		foreach($saldoDeDotacoes as $saldo)
+		foreach($SaldodeDotacaos as $saldo)
 		{
 			
 			$vinculos_valores[$i]['codigo_vinculo'] = $saldo['vinculo'];
@@ -333,7 +337,7 @@ class DotacaoOrcamentariaController extends Controller
 	}
 	
 	//return  ($vinculos_valores);
-	return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('verificacao', $verificacao)->with('saldoDeDotacoes', $saldoDeDotacoes)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionais', $classificacoesFuncionais)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('vinculos_valores',$vinculos_valores)->with('indiceA',$indiceA);
+	return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('verificacao', $verificacao)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionais', $classificacoesFuncionais)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('vinculos_valores',$vinculos_valores)->with('indiceA',$indiceA);
     }
 
     /**
@@ -363,9 +367,9 @@ class DotacaoOrcamentariaController extends Controller
 		$mensagem = "A Dotação foi atualizada com Sucesso!";
 		$indiceA="";
 		
-		$saldoDeDotacoes = SaldoDeDotacoes::all();
+		$SaldodeDotacaos = SaldodeDotacao::all();
 		
-		$dotacao = SaldoDeDotacoes::where([
+		$dotacao = SaldodeDotacaos::where([
 			'codigo_dotacao' => $request->codigo_dotacao,
 			'vinculo' => $request->codigo_vinculo,
 		])->first();
@@ -422,42 +426,12 @@ class DotacaoOrcamentariaController extends Controller
 			$vinculos  = Vinculos::all();
 			$naturezasDeDespesas = NaturezaDeDespesa::all();
 		
-			$tabela = 'saldo_de_dotacao'.$request->exercicio.'s';
 			
-			if (Schema::hasTable($tabela)) {
-				$mensagem='A Dotação Orçamentária da '.$unidadeOrcamentaria[0]->unidade.', execício '.$request->exercicio.', já foi criada! - VERIFICAR SALDO DE DOTAÇÃO NO MENU ORÇAMENTO. ';
-				
-				return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('tabela', $tabela);
-			}
-			else{
-				Artisan::call('make:migration:schema', ['name' => 'create_'.$tabela.'_table', '--schema' => 'unidade_orcamentaria:string, unidade_executora:string, classificacao_funcional_programatica:string, natureza_de_despesa:string, vinculo:string, codigo_dotacao:integer, dotacao:decimal, empenhado:decimal, saldo:decimal, reserva:decimal, usuario_alteracao:string']);
-				Artisan::call('migrate:refresh');
-				
-				$my_file = 'C:/xampp/htdocs/seo/app/SaldoDeDotacao'.$request->exercicio.'.php';
-				$handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file); //implicitly creates file
-				$fillable = '$'.'fillable';
-				$data ="<?php
-							namespace SEO;
-
-							use Illuminate\Database\Eloquent\Model;
-							use Illuminate\Notifications\Notifiable;
-
-
-							class SaldoDeDotacao.$request->exercicio extends Model
-							{
-								use Notifiable;
-								protected $fillable = [
-										'unidade_orcamentaria', 'unidade_executora', 'classificacao_funcional_programatica', 'natureza_de_despesa', 'codigo_dotacao', 'vinculo', 'dotacao', 'empenhado', 'saldo', 'reserva',
-									];
-
-							}";	
-							
-				fwrite($handle, $data);
 
 				return('oi');
 				
-				//return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('tabela', $tabela);
-			}
+				//return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('exercicio', $exercicio);
+			
 		}
 		else if ($acao =="importar")
 		{
@@ -506,50 +480,8 @@ class DotacaoOrcamentariaController extends Controller
 		$classificacoesFuncionaisProgramaticas = ClassificacaoFuncionalProgramatica::all();
 		$vinculos  = Vinculos::all();
 		$naturezasDeDespesas = NaturezaDeDespesa::all();
-	
-		//arquivo codificado para json
-		//$unidadeOrcamentaria = json_encode($unidadeOrcamentaria, true);
-		//arquivo decodificado
-		//$unidadeOrcamentaria = json_decode($unidadeOrcamentaria, true);
-		
-		$tabela = strtolower( preg_replace("/[^a-zA-Z0-9-]/", "_", strtr(utf8_decode(trim($unidadeOrcamentaria[0]->unidade)), utf8_decode("áàãâéêíóôõúüñçÁÀÃÂÉÊÍÓÔÕÚÜÑÇ"),"aaaaeeiooouuncAAAAEEIOOOUUNC-")) );
-		$tabela = 'saldo_de_dotacao'.$request->exercicio.'s';
-		
-		if (Schema::hasTable($tabela)) {
-			$mensagem='A Dotação Orçamentária da '.$unidadeOrcamentaria[0]->unidade.', execício '.$request->exercicio.', já foi criada! - VERIFICAR SALDO DE DOTAÇÃO NO MENU ORÇAMENTO. ';
-			
-			return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('tabela', $tabela);
-		}
-		else{
-			Artisan::call('make:migration:schema', ['name' => 'create_'.$tabela.'_table', '--schema' => 'unidade_orcamentaria:string, unidade_executora:string, classificacao_funcional_programatica:string, natureza_de_despesa:string, vinculo:string, codigo_dotacao:integer, dotacao:decimal, empenhado:decimal, saldo:decimal, reserva:decimal, usuario_alteracao:string']);
-			Artisan::call('migrate');
-			
-			$my_file = 'C:/xampp/htdocs/seo/app/SaldoDeDotacao'.$request->exercicio.'.php';
-			$handle = fopen($my_file, 'w') or die('Cannot open file:  '.$my_file); //implicitly creates file
-			$fillable = '$'.'fillable';
-			$data ="<?php
-namespace SEO;
-
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
-
-
-class SaldoDeDotacao.$request->exercicio extends Model
-{
-	use Notifiable;
-	protected $fillable = [
-			'unidade_orcamentaria', 'unidade_executora', 'classificacao_funcional_programatica', 'natureza_de_despesa', 'codigo_dotacao', 'vinculo', 'dotacao', 'empenhado', 'saldo', 'reserva',
-		];
-
-}";	
-			fwrite($handle, $data);
-
-			
-			
-			return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('tabela', $tabela);
-		}
-		
-	
+				
+		return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('exercicio', $exercicio);
     }
 	
 	public function importar(Request $request)
@@ -647,8 +579,8 @@ class SaldoDeDotacao.$request->exercicio extends Model
 				$colecao['saldo'] = str_replace(array(".",","),array("", "."),$colecao['saldo']);
 				$colecao['reserva'] = str_replace(array(".",","),array("", "."),$colecao['reserva']);
 				
-				$dotacao = SaldoDeDotacoes::whereCodigo_dotacao($colecao['codigo_dotacao'])->firstOrFail();
-				/*$dotacao = SaldoDeDotacoes::where([
+				$dotacao = SaldodeDotacaos::whereCodigo_dotacao($colecao['codigo_dotacao'])->firstOrFail();
+				/*$dotacao = SaldodeDotacaos::where([
 					'codigo_dotacao' => $colecao['codigo_dotacao'],
 					'vinculo' => $colecao['vinculo'],
 				])->first();*/

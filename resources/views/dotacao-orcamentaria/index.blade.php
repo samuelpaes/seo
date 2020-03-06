@@ -553,8 +553,7 @@ function c(v)
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h5 class="modal-title">Inserir Dotação</h5>
-			</div>
-						
+			</div>	
 				<div class="modal-body">
 					
 						<div class="row">
@@ -615,7 +614,7 @@ function c(v)
 		@else
 		<div class="alert alert-danger" style="border-radius: 5px">
             <button type="button" aria-hidden="true" data-dismiss="modal" class="close">×</button>
-            <span><b> Atenção! - </b> {{$mensagem}}</span>
+            <span><b> Atenção! - </b> {{$verificacao}}</span>
          </div>
 		@endif
 	</div>

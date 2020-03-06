@@ -76,7 +76,14 @@
 				<div class="col-md-12">
 					<div class="card">
 						<div class="header">
-							<h4 class="title">Dotação Orçamentária</h4>
+							<div class="row">
+								<div class="col-md-11">
+									<h4 class="title">Dotação Orçamentária</h4>
+								</div>
+								<div class="col-md-1">
+									<h4 class="title">{{$exercicio}}</h4>
+								</div>
+							</div>
 							<br>
 						</div>	
 					</div>
@@ -175,9 +182,9 @@
 								@csrf
 								@method('POST')	
 								<input type="hidden" name="unidadeOrcamentaria" value="{{$unidadeOrcamentaria[0]->codigo}}"></input>
-								<input id="tabela" name="tabela" value="{{$exercicio}}" type="hidden"></input>
+								<input id="exercicio" name="exercicio" value="{{$exercicio}}" type="hidden"></input>
 								<div class="content table-responsive table-full-width">
-									<table class="table table-hover table-striped" id="tabelaDotacao" name="tabelaDotacao" style='font-size:98%'>
+									<table class="table table-hover table-striped" id="exercicioDotacao" name="exercicioDotacao" style='font-size:98%'>
 										<thead>
 											<tr>
 												<th>Cód. Dotação</th>
@@ -341,7 +348,7 @@ function addItemDotacao(){
 		}
 		else{};	
 	
-		var local=document.getElementById('tabelaDotacao');
+		var local=document.getElementById('exercicioDotacao');
 		tblBody = local.tBodies[0];
 		var newRow1 = tblBody.insertRow(-1);
 		var newCell0 = newRow1.insertCell(0);
@@ -369,12 +376,12 @@ function addItemDotacao(){
       function removerLinha(obj){
             // Capturamos a referência da TR (linha) pai do objeto
             var objTR = obj.parentNode.parentNode;	
-            // Capturamos a referência da TABLE (tabela) pai da linha
+            // Capturamos a referência da TABLE (exercicio) pai da linha
             var objTable = objTR.parentNode;
 			// Capturamos o índice da linha
             var indexTR = objTR.rowIndex;
 			// Chamamos o método de remoção de linha nativo do JavaScript, passando como parâmetro o índice da linha  
-			document.getElementById("tabelaDotacao").deleteRow(indexTR)
+			document.getElementById("exercicioDotacao").deleteRow(indexTR)
         } 
 </script>
 
@@ -390,7 +397,7 @@ function addItemDotacao(){
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<button data-balloon="O arquivo a ser importado precisa ser um arquivo 'xlsx' contendo as colunas com os indices 'codigo' e 'unidade' na primeira linha tabela." data-balloon-pos="down" class="close"><i class="pe-7s-help1" style="font-size: 20px; font-weight: bold;"></i></button>
+				<button data-balloon="O arquivo a ser importado precisa ser um arquivo 'xlsx' contendo as colunas com os indices 'codigo' e 'unidade' na primeira linha exercicio." data-balloon-pos="down" class="close"><i class="pe-7s-help1" style="font-size: 20px; font-weight: bold;"></i></button>
 		
 	
 		

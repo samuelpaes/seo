@@ -14,6 +14,7 @@ class CreateSaldoDeDotacaosTable extends Migration
     {
         Schema::create('saldo_de_dotacaos', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('exercicio');
             $table->string('unidade_orcamentaria');
             $table->string('unidade_executora');
             $table->string('classificacao_funcional_programatica');
