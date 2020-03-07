@@ -171,42 +171,6 @@ function ativarCamposParaFiltro()
 
 
 
-<!-- Modal Importar Unidade Orcamentaria Arquivo-->
-<div id="importarArquivo" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-
-    <!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<button data-balloon="O arquivo a ser importado precisa ser um arquivo 'xlsx' contendo as colunas com os indices 'codigo' e 'unidade' na primeira linha tabela." data-balloon-pos="down" class="close"><i class="pe-7s-help1" style="font-size: 20px; font-weight: bold;"></i></button>
-		
-	
-		
-				<h5 class="modal-title">Importar Arquivo</h5>
-			</div>
-			<form  method="post" enctype="multipart/form-data"  files="true">
-			{{ csrf_field() }}
-				
-				<div class="modal-body">
-				<input name="exercicio" id="exercicio2" hidden/>
-					<div class="row">
-						<div class="col-md-9">
-							<input type="file" name="arquivo"  accept=".xlsx"></input>
-						</div>
-
-					</div>
-				</div>
-				<div class="modal-footer">	
-					<button type="submit" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right">Enviar</button>	
-					<button type="button" class="btn btn-info btn-fill pull-right" data-dismiss="modal" style="background:#ffbc67; border-color:#ffbc67">Cancelar</button>								
-				</div>
-			</form>		
-		</div>
-		
-	</div>
-</div>
-
 
 <!-- Modal Mensagem-->
 <div class="modal"  id="modalMensagem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >

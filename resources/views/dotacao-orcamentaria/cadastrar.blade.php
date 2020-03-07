@@ -40,15 +40,20 @@
 										</div>
 										<div class="col-md-2">
 											<label for="Exercicio">Exercício</label>
-											<select class="form-control" name="exercicio" id="exercicio" onchange="ativarCamposParaFiltro()">
+												<select class="form-control" name="exercicio" id="exercicio" onchange="ativarCamposParaFiltro()">
 												
 											</select>
 										</div>
-										<div class="col-md-4">
+										<div class="col-md-2">
 										</div>
+										
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;" disabled></input></label>
 											<button type="submit" id="btnImplementar" class="btn btn-info btn-fill pull-right" disabled>Implementar</button>
+										</div>
+										<div class="col-md-2">
+											<label><input style="border:none;  background-color: transparent;"></input></label>
+											<button type="button" id="btnImportar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" >Importar</button>
 										</div>
 									</div>
 									<div class="clearfix"></div>
@@ -118,7 +123,7 @@ function ativarCamposParaFiltro()
 		if ((document.getElementById('unidade_orcamentaria').value == "") || (document.getElementById('exercicio').value == ""))
 		{
 			document.getElementById('btnImplementar').disabled = true;
-		
+					
 		}
 		else{
 			document.getElementById('btnImplementar').disabled=false;
@@ -128,12 +133,13 @@ function ativarCamposParaFiltro()
 	document.addEventListener('DOMContentLoaded', function() 
 	{
 		var exercicio = new Date().getFullYear()
+		document.getElementById('exercicio2').value = new Date().getFullYear();
 		$("#exercicio").attr("placeholder", exercicio);
 		
 		
 		var i;
 		var j = 0;
-		for (i = exercicio+1; i > (exercicio-51); i--) 
+		for (i = exercicio+1; i > (exercicio-4); i--) 
 		{
 			var select = document.getElementById("exercicio");
 			var option = document.createElement("option");
@@ -150,10 +156,7 @@ function ativarCamposParaFiltro()
 </script>
 
 
-
-
-
-<!-- Modal Importar Unidade Orcamentaria Arquivo-->
+<!-- Modal Importar Dotação Atualizada-->
 <div id="importarArquivo" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
@@ -161,14 +164,15 @@ function ativarCamposParaFiltro()
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<button data-balloon="O arquivo a ser importado precisa ser um arquivo 'xlsx' contendo as colunas com os indices 'codigo' e 'unidade' na primeira linha tabela." data-balloon-pos="down" class="close"><i class="pe-7s-help1" style="font-size: 20px; font-weight: bold;"></i></button>
+				<button data-balloon="O arquivo a ser importado precisa ser um arquivo 'xlsx' contendo as colunas com os indices 'codigo_dotacao', 'unidade_executora', 'classificacao_funcional_programatica', 'natureza_de_despesa', 'vinculo', 'dotacao', 'empenhado', 'saldo' e 'reserva'  na primeira linha tabela." data-balloon-pos="down" data-balloon-length='xlarge' class="close"><i class="pe-7s-help1" style="font-size: 20px; font-weight: bold;word-wrap:break-word"></i></button>
 		
 	
 		
-				<h5 class="modal-title">Importar Arquivo</h5>
+				<h5 class="modal-title">Importar Arquivo de Atualização</h5>
 			</div>
-			<form action="{{ route('importarUnidadeOrcamentaria') }}" method="post" enctype="multipart/form-data"  files="true">
+			<form action="{{ route('importarAtualizarDotacaoOrcamentaria') }}" method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
+				<input id="exercicio2" name="exercicio" hidden/>
 				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-9">

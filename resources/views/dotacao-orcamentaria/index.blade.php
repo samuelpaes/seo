@@ -68,6 +68,8 @@
 										<div class="col-md-7" >
 											<div class="row">
 												<div class="col-md-2">
+													<select class="form-control" id="exercicio" name="exercicio" >
+													</select>
 												</div>
 												<div class="col-md-4" style="margin-right:-4px;">
 													<select class="form-control" id="filtro" name="filtro" onchange="ativarCamposParaFiltro()">
@@ -84,13 +86,9 @@
 													<input value="Pesquisar" type="submit" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;">
 												</div>	
 												<div class="col-md-2">
-													<a class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#novasDotacoes">
+													<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
 														Nova
 													</a>
-												
-													<!--<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
-														Nova
-													</a>-->
 												</div>	
 													
 											</div>	
@@ -502,7 +500,25 @@ function c(v)
 }
 	
 	
-
+document.addEventListener('DOMContentLoaded', function() 
+	{
+		var exercicio = new Date().getFullYear()
+		$("#exercicio").attr("placeholder", exercicio);
+		
+		
+		var i;
+		var j = 0;
+		for (i = exercicio+1; i > (exercicio-4); i--) 
+		{
+			var select = document.getElementById("exercicio");
+			var option = document.createElement("option");
+			j = j+1;
+			option.text = i;
+			option.value = i;
+			select.add(option, select[j]);
+			select.selectedIndex = "1";
+		}
+	}, false);
 
 
 
@@ -543,12 +559,13 @@ function c(v)
 	</div>
 </div>
 
-<!-- Modal Nova Dotação Orcamentária-->
+<!--apagar
+<!-- Modal Nova Dotação Orcamentária
 <div id="novasDotacoes" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
-    <!-- Modal content-->
-		<!-- Modal content-->
+    <!-- Modal content
+		<!-- Modal content
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -580,7 +597,7 @@ function c(v)
 		
 	</div>
 </div>
-
+-->
 
 
 <!-- Modal Unidade não Localizada-->
@@ -614,7 +631,7 @@ function c(v)
 		@else
 		<div class="alert alert-danger" style="border-radius: 5px">
             <button type="button" aria-hidden="true" data-dismiss="modal" class="close">×</button>
-            <span><b> Atenção! - </b> {{$verificacao}}</span>
+            <span><b> Atenção! - </b> {{$mensagem}}</span>
          </div>
 		@endif
 	</div>

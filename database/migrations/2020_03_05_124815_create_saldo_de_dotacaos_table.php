@@ -25,7 +25,7 @@ class CreateSaldoDeDotacaosTable extends Migration
             $table->decimal('empenhado');
             $table->decimal('saldo');
             $table->decimal('reserva');
-            $table->string('usuario_alteracao');
+            $table->string('user_update');
             $table->timestamps();
         });
     }
