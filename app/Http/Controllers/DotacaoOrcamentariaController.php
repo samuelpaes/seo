@@ -404,44 +404,9 @@ class DotacaoOrcamentariaController extends Controller
         //
     }
 	
-	public function cadastrarExercicioExistente(Request $request)
-    {
-        $pesquisaFeita="";
-		$dotacaoOrcamentariaJaExiste='';
-		$verificacao='';
-		$unidadesOrcamentarias = UnidadeOrcamentaria::all();
-		$unidadesExecutoras= UnidadeExecutora::all();
-		$mensagem = "";
-
-		if($request->acao == "implementar")
-		{
-			$pesquisaFeita="ok";
-			$dotacaoOrcamentariaJaExiste='';
-			$verificacao='';
-			$mensagem='';
-			$unidadesOrcamentarias = UnidadeOrcamentaria::all();
-			$unidadeOrcamentaria = DB::select("select * from unidade_orcamentarias where codigo='$request->unidade_orcamentaria'");
-			$unidadesExecutoras = UnidadeExecutora::all();
-			$classificacoesFuncionaisProgramaticas = ClassificacaoFuncionalProgramatica::all();
-			$vinculos  = Vinculos::all();
-			$naturezasDeDespesas = NaturezaDeDespesa::all();
-		
-			
-
-				return('oi');
-				
-				//return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('exercicio', $exercicio);
-			
-		}
-		else if ($acao =="importar")
-		{
-
-		}
-
-		return view('dotacao-orcamentaria/cadastrarExercicioExistente')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
-	}
 	
-	public function cadastrarNovoExercicio(Request $request)
+	
+	public function cadastrar(Request $request)
     {
 		$mensagem = "";
         $pesquisaFeita="";
@@ -465,7 +430,7 @@ class DotacaoOrcamentariaController extends Controller
 			$pesquisaFeita="ok";
 			return view('dotacao-orcamentaria/implementar')->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('exercicio', $exercicio)->with('pesquisaFeita', $pesquisaFeita)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas', $classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem);
 		}
-		return view('dotacao-orcamentaria/cadastrarNovoExercicio')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
+		return view('dotacao-orcamentaria/cadastrar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadesOrcamentarias', $unidadesOrcamentarias);
     }
 	
 	public function implementar(Request $request)
@@ -480,7 +445,8 @@ class DotacaoOrcamentariaController extends Controller
 		$classificacoesFuncionaisProgramaticas = ClassificacaoFuncionalProgramatica::all();
 		$vinculos  = Vinculos::all();
 		$naturezasDeDespesas = NaturezaDeDespesa::all();
-				
+		$exercicio = $request->exercicio;
+		
 		return view('dotacao-orcamentaria/implementar')->with('pesquisaFeita', $pesquisaFeita)->with('dotacaoOrcamentariaJaExiste', $dotacaoOrcamentariaJaExiste)->with('mensagem', $mensagem)->with('unidadeOrcamentaria', $unidadeOrcamentaria)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionaisProgramaticas',$classificacoesFuncionaisProgramaticas)->with('vinculos', $vinculos)->with('naturezasDeDespesas', $naturezasDeDespesas)->with('exercicio', $exercicio);
     }
 	

@@ -41,10 +41,7 @@
 										<div class="col-md-2">
 											<label for="Exercicio">Exercício</label>
 											<select class="form-control" name="exercicio" id="exercicio" onchange="ativarCamposParaFiltro()">
-												<option value="" selected></option>
-												<option  value="2019" >2019</option> 
-												<option  value="2018" >2018</option> 
-												<option  value="2017" >2017</option> 
+												
 											</select>
 										</div>
 										<div class="col-md-4">
@@ -127,6 +124,29 @@ function ativarCamposParaFiltro()
 			document.getElementById('btnImplementar').disabled=false;
 		}
 	}		
+	
+	document.addEventListener('DOMContentLoaded', function() 
+	{
+		var exercicio = new Date().getFullYear()
+		$("#exercicio").attr("placeholder", exercicio);
+		
+		
+		var i;
+		var j = 0;
+		for (i = exercicio+1; i > (exercicio-51); i--) 
+		{
+			var select = document.getElementById("exercicio");
+			var option = document.createElement("option");
+			j = j+1;
+			option.text = i;
+			option.value = i;
+			select.add(option, select[j]);
+			select.selectedIndex = "1";
+		}
+		
+		
+		
+	}, false);
 </script>
 
 

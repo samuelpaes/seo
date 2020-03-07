@@ -183,6 +183,7 @@
 								@method('POST')	
 								<input type="hidden" name="unidadeOrcamentaria" value="{{$unidadeOrcamentaria[0]->codigo}}"></input>
 								<input id="exercicio" name="exercicio" value="{{$exercicio}}" type="hidden"></input>
+								<input id="usuario" name="usuario" value="{{ Auth::user()->name }}" type="hidden"></input>
 								<div class="content table-responsive table-full-width">
 									<table class="table table-hover table-striped" id="exercicioDotacao" name="exercicioDotacao" style='font-size:98%'>
 										<thead>

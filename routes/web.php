@@ -71,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
 /*Rotas Dotação Orçamentária*/
 Route::middleware(['auth'])->group(function () {
     Route::get('dotacao-orcamentaria/index', 'DotacaoOrcamentariaController@index', function () {});
+	Route::any('dotacao-orcamentaria/cadastrar', 'DotacaoOrcamentariaController@cadastrar', function () {})->name('cadastrarDotacaoOrcamentaria');
 	Route::any('dotacao-orcamentaria/cadastrarExercicioExistente', 'DotacaoOrcamentariaController@cadastrarExercicioExistente', function () {})->name('cadastrarExercicioExistenteDotacaoOrcamentaria');
 	Route::any('dotacao-orcamentaria/cadastrarNovoExercicio', 'DotacaoOrcamentariaController@cadastrarNovoExercicio', function () {})->name('cadastrarNovoExercicioDotacaoOrcamentaria');
 	Route::post('dotacao-orcamentaria/inserir', 'DotacaoOrcamentariaController@create', function () {})->name('inserirDotacaoOrcamentaria');

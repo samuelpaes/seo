@@ -106,6 +106,15 @@ document.addEventListener('DOMContentLoaded', function()
 	{
 		var exercicio = new Date().getFullYear()
 		$("#exercicio").attr("placeholder", exercicio);
+		
+		for(var i = exercicio; i < (exercicio - 50); i--)
+		{
+		}
+		alert(exercicio-50);
+		/*
+		option.text = "01.000.0000";
+		option.value = "01.000.0000";
+		select.add(option, select[1]);*/
 	}, false);
 	
 /* Máscaras Código da Unidade Orcamentaria */
