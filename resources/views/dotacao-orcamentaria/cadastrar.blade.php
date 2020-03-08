@@ -116,7 +116,16 @@
 
 			return v;
 		}
-
+function ativarEnviar()
+	{
+		if (document.getElementById('arquivo').value == "")
+		{
+			document.getElementById('btnEnviar').disabled = true;		
+		}
+		else{
+			document.getElementById('btnEnviar').disabled=false;
+		}
+	}		
 
 function ativarCamposParaFiltro() 
 	{
@@ -173,16 +182,16 @@ function ativarCamposParaFiltro()
 			<form action="{{ route('importarAtualizarDotacaoOrcamentaria') }}" method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
 				<input id="exercicio2" name="exercicio" hidden/>
-				<div class="modal-body">
+				<div class="modal-body" onclick="ativarEnviar()" onmouseover="ativarEnviar()" onmousemove="ativarEnviar()">
 					<div class="row">
 						<div class="col-md-9">
-							<input type="file" name="arquivo"  accept=".xlsx"></input>
+							<input type="file" id="arquivo" name="arquivo"  accept=".xlsx" onclick="ativarEnviar()" onmouseover="ativarEnviar()"></input>
 						</div>
 
 					</div>
 				</div>
 				<div class="modal-footer">	
-					<button type="submit" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right">Enviar</button>	
+					<button type="submit" id="btnEnviar" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right" disabled>Enviar</button>	
 					<button type="button" class="btn btn-info btn-fill pull-right" data-dismiss="modal" style="background:#ffbc67; border-color:#ffbc67">Cancelar</button>								
 				</div>
 			</form>		
@@ -201,7 +210,7 @@ function ativarCamposParaFiltro()
 			<span><b> Sucesso! - </b>{{$mensagem}}. </span>
 		</div>
 		@else
-		<div class="alert alert-danger" style="border-radius: 5px">
+		<div class="alert alert-warning" style="border-radius: 5px">
             <button type="button" aria-hidden="true" data-dismiss="modal" class="close">×</button>
             <span><b> Atenção! - </b> {{$mensagem}}</span>
          </div>

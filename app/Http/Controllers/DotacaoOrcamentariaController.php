@@ -32,15 +32,38 @@ class DotacaoOrcamentariaController extends Controller
      */
     public function index()
     {
+		
+		//verifica a quantidade de exercicio cadastrados na base de dados
+		$totalExercicio = SaldodeDotacao::distinct('exercicio')->count('exercicio');
+		// pega todos os exercícios
+		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
+		//return(sizeof($exercicios));
+		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
+		{
+			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
+		}
+		$exercicioAntigo = min($exercicios);
 
 		$pesquisaFeita = '';
 		$unidade_naoLocalizada= '';
 		$verificacao = "";
 		$indiceA="";
 		$mensagem = "";
+		
+		//verifica a quantidade de exercicio cadastrados na base de dados
+		$totalExercicio = SaldodeDotacao::distinct('exercicio')->count('exercicio');
+		//seleciona uma vez cada um dos exercícios
+		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
+		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
+		{
+			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
+		}
+		//seleciona o mais antigo
+		$exercicioAntigo = min($exercicios);
+		
 
 	//return($natureza_dotacao_total);
-	return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao);
+	return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios);
     }
 
     /**
@@ -121,7 +144,7 @@ class DotacaoOrcamentariaController extends Controller
 			$exercicioAntigo = min($exercicios);
 
 			//deleta o úlimo exercicio caso haja mais de 4 exercícicio
-			if($totalExercicio > 4)
+			if(count($exercicios) > 4)
 			{
 				SaldodeDotacao::whereRaw('exercicio= "'.$exercicioAntigo.'"')->delete();
 			}
@@ -150,7 +173,7 @@ class DotacaoOrcamentariaController extends Controller
      */
     public function show(Request $request)
     {
-		//return($request);
+		
 		$pesquisaFeita = '';
 		$unidade_naoLocalizada= '';
 		$verificacao = "";
@@ -170,7 +193,7 @@ class DotacaoOrcamentariaController extends Controller
 	{
 
 		$SaldodeDotacaos =  SaldodeDotacao::where('unidade_orcamentaria', '=', $request->codigo)->where('exercicio', '=', $request->exercicio)->get();
-		//return($SaldodeDotacaos);
+		
 	}
 	else if ($request->filtro =='EXECUTORA'){
 		$SaldodeDotacaos =  SaldodeDotacao::where('unidade_executora', 'LIKE', '%'.$request->codigo.'%')->where('exercicio', '=', $request->exercicio)->get();
@@ -216,7 +239,7 @@ class DotacaoOrcamentariaController extends Controller
 			}
 		
 		$unidadesOrcamentarias = array_unique($unidadesOrcamentarias, SORT_REGULAR);
-		return($unidadesOrcamentarias[1]);
+	
 		//---------------------------------------------------------------------------------------------
 		
 		// filtrando as Unidades Executoras
@@ -367,8 +390,19 @@ class DotacaoOrcamentariaController extends Controller
 		
 	}
 	
-	return  ($vinculos_valores);
-	return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('verificacao', $verificacao)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionais', $classificacoesFuncionais)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('vinculos_valores',$vinculos_valores)->with('indiceA',$indiceA);
+	
+		//verifica a quantidade de exercicio cadastrados na base de dados
+		$totalExercicio = SaldodeDotacao::distinct('exercicio')->count('exercicio');
+		//seleciona uma vez cada um dos exercícios
+		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
+		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
+		{
+			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
+		}
+		//seleciona o mais antigo
+		$exercicioAntigo = min($exercicios);
+
+		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('verificacao', $verificacao)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionais', $classificacoesFuncionais)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('vinculos_valores',$vinculos_valores)->with('indiceA',$indiceA)->with('exercicios', $exercicios);
     }
 
     /**
@@ -542,33 +576,30 @@ class DotacaoOrcamentariaController extends Controller
 					}
 				
 				}
-			
-			}
-			else
-			{
-				$mensagem="Arquivo fora do formato exigido para importação. Verificar índices!";
-			}
-		
-		}
-		else
-		{
-			$mensagem="Tipo de arquivo não permitido!";
-		}
-		
-		
+				
+				
 		foreach ($colecoes as $colecao)
 		{	
-
-			$colecao['dotacao'] = str_replace("R$", " ", $colecao['dotacao']);
-			$colecao['empenhado'] = str_replace("R$", " ", $colecao['empenhado']);
-			$colecao['saldo'] = str_replace("R$", " ", $colecao['saldo']);
-			$colecao['reserva'] = str_replace("R$", " ", $colecao['reserva']);
+				
+			/*$colecao['dotacao'] = str_replace("R$", "", $colecao['dotacao']);
+			$colecao['empenhado'] = str_replace("R$", "", $colecao['empenhado']);
+			$colecao['saldo'] = str_replace("R$", "", $colecao['saldo']);
+			$colecao['reserva'] = str_replace("R$", "", $colecao['reserva']);*/
 				   
-			//Set user object attributes
-			$colecao['dotacao'] = str_replace(array(".",","),array("", "."),$colecao['dotacao']);
-			$colecao['empenhado'] = str_replace(array(".",","),array("", "."),$colecao['empenhado']);
-			$colecao['saldo'] = str_replace(array(".",","),array("", "."),$colecao['saldo']);
-			$colecao['reserva'] = str_replace(array(".",","),array("", "."),$colecao['reserva']);
+			/*$colecao['dotacao'] = str_replace(".","",$colecao['dotacao']);
+			$colecao['empenhado'] = str_replace(".","",$colecao['empenhado']);
+			$colecao['saldo'] = str_replace(".","",$colecao['saldo']);
+			$colecao['reserva'] = str_replace(".","",$colecao['reserva']);
+			
+			$colecao['dotacao'] = str_replace(",",".",$colecao['dotacao']);
+			$colecao['empenhado'] = str_replace(",",".",$colecao['empenhado']);
+			$colecao['saldo'] = str_replace(",",".",$colecao['saldo']);
+			$colecao['reserva'] = str_replace(",",".",$colecao['reserva']);*/
+	
+			/*$colecao['dotacao'] = str_replace(array(",","."),array(".", ""),$colecao['dotacao']);
+			$colecao['empenhado'] = str_replace(array(",","."),array(".", ""),$colecao['empenhado']);
+			$colecao['saldo'] = str_replace(array(",","."),array(".", ""),$colecao['saldo']);
+			$colecao['reserva'] = str_replace(array(",","."),array(".", ""),$colecao['reserva']);*/
 
 			//Verifica se existe dotacao já cadastrada
 			if (DB::table('saldo_de_dotacaos')->where('codigo_dotacao', $colecao['codigo_dotacao'])->count() == 0) 
@@ -620,8 +651,23 @@ class DotacaoOrcamentariaController extends Controller
 			   
 			  }
 		}
+			
+			}
+			else
+			{
+				$mensagem="Arquivo fora do formato exigido para importação. Verificar índices!";
+			}
 		
-		//return ($pesquisaFeita);
+		}
+		else
+		{
+			$mensagem="Tipo de arquivo não permitido!";
+		}
+		
+	
+		
+		
+		
 		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao);
 		
 	

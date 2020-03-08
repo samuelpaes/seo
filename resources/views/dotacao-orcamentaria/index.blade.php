@@ -68,7 +68,7 @@
 										<div class="col-md-7" >
 											<div class="row">
 												<div class="col-md-2">
-													<select class="form-control" id="exercicio" name="exercicio" >
+													<select class="form-control" id="exercicio" name="exercicio" onclick="informaExercicioSelecionado()" onmousemove="informaExercicioSelecionado()"  >
 													</select>
 												</div>
 												<div class="col-md-4" style="margin-right:-4px;">
@@ -86,9 +86,17 @@
 													<input value="Pesquisar" type="submit" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;">
 												</div>	
 												<div class="col-md-2">
+													<!--<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
+														Nova
+													</a>-->		
+													@if(count($exercicios) > 4)
+														<button type="button" id="btnImportar" class="btn btn-info btn-fill pull-left" data-toggle="modal" data-target="#modalAtencaoExercicio" >Nova</button>
+													@else
 													<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
 														Nova
 													</a>
+													@endif
+														
 												</div>	
 													
 											</div>	
@@ -498,13 +506,20 @@ function c(v)
 
 	return v;
 }
+
+function informaExercicioSelecionado()
+{
+	document.getElementById('exercicio2').value = document.getElementById('exercicio').value;
+	
+}
 	
 	
 document.addEventListener('DOMContentLoaded', function() 
 	{
 		var exercicio = new Date().getFullYear()
 		$("#exercicio").attr("placeholder", exercicio);
-		
+		document.getElementById('exercicio2').value = exercicio;
+	
 		
 		var i;
 		var j = 0;
@@ -629,7 +644,7 @@ document.addEventListener('DOMContentLoaded', function()
 			<span><b> Sucesso! - </b>{{$mensagem}}. </span>
 		</div>
 		@else
-		<div class="alert alert-danger" style="border-radius: 5px">
+		<div class="alert alert-warning" style="border-radius: 5px">
             <button type="button" aria-hidden="true" data-dismiss="modal" class="close">×</button>
             <span><b> Atenção! - </b> {{$mensagem}}</span>
          </div>
@@ -637,3 +652,13 @@ document.addEventListener('DOMContentLoaded', function()
 	</div>
 </div>
 
+<!-- Modal Atenção Risco de Exclusão de Exercicio-->
+<div class="modal"  id="modalAtencaoExercicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
+	<div class="modal-dialog" role="document">
+		<div class="alert alert-danger" style="border-radius: 5px">
+            <button type="button" aria-hidden="true" data-dismiss="modal" class="close">×</button>
+            <span style="align:center" ><b> Atenção! - </b> Ao iniciar a implementação do saldo de dotações do exercício de <input id="exercicio2" class="form-control" style="all: unset; width:33px;" /> você estará removendo da base de dados todo o saldo de dotações do exercício de {{min($exercicios)}}! <br><br> Tem certeza que deseja continuar?</span>
+         </div>
+		
+	</div>
+</div>
