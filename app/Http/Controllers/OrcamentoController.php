@@ -937,18 +937,25 @@ class OrcamentoController extends Controller
     {
 		
 		$saldoDeDotacoes = array();
-		$secretaria['unidade'] = auth()->user()->secretaria;
-		$secretaria['codigo'] = DB::select("select codigo from unidade_orcamentarias where unidade='".$secretaria['unidade']."'");
-		$secretaria['codigo'] = '01.16.00';
+		$secretaria = auth()->user()->secretaria;
+		$secretaria = DB::select("select codigo from unidade_orcamentarias where unidade='".$secretaria."'");
+		$secretaria = DB::table('unidade_orcamentarias')->where('unidade', $secretaria)->first();
+
+		
+		//$secretaria_codigo = $secretaria['codigo'];
 		$mensagem = '';
 		$verificacao='';
-		//return ($request);
+	
+		$exercicio = date("Y");
+		return($secretaria);
 		if ($request->filtro =='TODAS')
 		{
-			$saldoDeDotacoes =  SaldoDeDotacao::where('unidade_orcamentaria', 'LIKE', '%'.$secretaria['codigo'].'%')->get();		}
+			$saldoDeDotacoes =  SaldoDeDotacao::where('unidade_orcamentaria', 'LIKE', '%'.$secretaria['codigo'].'%')->where('exercicio', '=', "$request->exercicio")->get();		
+		}
 		else if ($request->filtro =='DOTACAO')
 		{
-			$saldoDeDotacoes =  SaldoDeDotacao::whereRaw('codigo_dotacao= "'.$request->codigo.'" and unidade_orcamentaria ="'.$secretaria['codigo'].'"')->get();
+			$saldoDeDotacoes =  SaldoDeDotacao::where('codigo_dotacao', '=', '%'.$request->codigo.'%')->where('unidade_orcamentaria', '=', "$secretaria_codigo")->where('exercicio', '=', "$request->exercicio")->get();		
+			//$saldoDeDotacoes =  SaldoDeDotacao::whereRaw('codigo_dotacao= "'.$request->codigo.'" and unidade_orcamentaria ="'.$secretaria['codigo'].'"')->get();
 		}
 		else if ($request->filtro =='EXECUTORA')
 		{
@@ -964,9 +971,9 @@ class OrcamentoController extends Controller
 		}
 		else
 		{
-			$saldoDeDotacoes =  SaldoDeDotacao::where('unidade_orcamentaria', 'LIKE', '%'.$secretaria['codigo'].'%')->get();
+			$saldoDeDotacoes =  SaldoDeDotacao::where('unidade_orcamentaria', 'LIKE', '%'.$secretaria['codigo'].'%')->where('exercicio', '=', "$exercicio")->get();
 		}
-	
+		return($saldoDeDotacoes);
 		if (count($saldoDeDotacoes) > 0)
 		{
 			// filtrando as Unidades Orçamentárias

@@ -665,10 +665,19 @@ class DotacaoOrcamentariaController extends Controller
 		}
 		
 	
+		//verifica a quantidade de exercicio cadastrados na base de dados
+		$totalExercicio = SaldodeDotacao::distinct('exercicio')->count('exercicio');
+		// pega todos os exercícios
+		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
+		//return(sizeof($exercicios));
+		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
+		{
+			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
+		}
+		$exercicioAntigo = min($exercicios);
 		
 		
-		
-		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao);
+		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios);
 		
 	
 

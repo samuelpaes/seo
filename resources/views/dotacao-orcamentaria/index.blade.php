@@ -677,7 +677,17 @@ document.addEventListener('DOMContentLoaded', function()
 		}
 	}, false);
 
+function ativarContinuar()
+{
 
+	if ($('#chk_aceito').is(':checked')) {
+		document.getElementById("btnContinuar").disabled = false;
+	}
+	else{
+		document.getElementById("btnContinuar").disabled = true;
+	}
+
+}
 
 
 </script>
@@ -716,45 +726,6 @@ document.addEventListener('DOMContentLoaded', function()
 	</div>
 </div>
 
-<!--apagar
-<!-- Modal Nova Dotação Orcamentária
-<div id="novasDotacoes" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-
-    <!-- Modal content
-		<!-- Modal content
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h5 class="modal-title">Inserir Dotação</h5>
-			</div>	
-				<div class="modal-body">
-					
-						<div class="row">
-							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrarNovoExercicio') }}" class="btn btn-info btn-fill pull-right">
-									Novo Exercício
-								</a>
-							</div>
-							<div class="col-md-6">
-								<a href="{{ url('dotacao-orcamentaria/cadastrarExercicioExistente') }}" class="btn btn-info btn-fill pull-left">
-									Exercício Existente
-								</a>
-							</div>	
-						</div>
-					</form>		
-				</div>
-					
-			<div class="modal-footer">		
-			</div>
-		
-		</div>
-		
-	</div>
-		
-	</div>
-</div>
--->
 
 
 <!-- Modal Unidade não Localizada-->
@@ -798,26 +769,38 @@ document.addEventListener('DOMContentLoaded', function()
 <div class="modal"  id="modalAtencaoExercicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
 	<div class="modal-dialog" role="document">
 		<div class="alert alert-danger" style="border-radius: 5px">
-            <span style="text-align: center;" ><b> Atenção! - </b> Ao iniciar a implementação do saldo de dotações do exercício de <input id="exercicio2" class="form-control" style="all: unset; width:33px;" /> você estará removendo da base de dados todo o saldo de dotações do exercício de {{min($exercicios)}}! 
+			<br>
+            <p style="text-align: center;" ><b> Atenção! - </b> Ao iniciar a implementação do saldo de dotações do exercício de <input id="exercicio2" class="form-control" style="all: unset; width:36px;" /> você estará removendo da base de dados todo o saldo de dotações do exercício de {{min($exercicios)}}! 
 			<br>
 			<br> 
-			Tem certeza que deseja continuar?</span>
+			Tem certeza que deseja continuar?</p>
 			<br>
 			<br>
-			<label class="container"  style="text-align: center; line-height: normal; background:none;left:-35px;">
-				COOMPREENDO OS RISCOS DA AÇÃO!
-				<input type="checkbox" value="" name="" id=""/>
-					<span class="checkmark" style="left:140px; top:-0.5px;"></span>
+			<label class="container"  style="text-align: center; line-height: normal; background:none;left:0px;">
+				COOMPREENDO OS RISCOS DESTA AÇÃO!
+				<input type="checkbox" value="" name="" id="chk_aceito" onclick="ativarContinuar()"/>
+					<span class="checkmark" style="left:140px; top:-0.5px;" ></span>
 			</label>
 			<br>
 			<br>
-			<a href="{{ url('dotacao-orcamentaria/cadastrar') }}" class="btn btn-info btn-fill pull-left">
-				Continuar
-			</a>
-			<button type="button" aria-hidden="true" data-dismiss="modal" class="btn btn-info btn-fill pull-right">Cancelar</button>
-			<br>
-			<br>
-
+			<form method="get" action="{{ route('cadastrarDotacaoOrcamentaria') }}" >
+			<div class="row">
+				<div class="col-md-2">
+				</div>
+				
+				<div class="col-md-4">
+					<button type="submit" id="btnContinuar" class="btn btn-info btn-fill pull-right" disabled>
+						Continuar
+					</button>
+				</div>
+		
+				<div class="col-md-4">
+					<button type="button" aria-hidden="true" data-dismiss="modal" class="btn btn-info btn-fill pull-left" style="background:#fc363d; border-color:#fc363d">Cancelar</button>
+				</div>
+				<div class="col-md-2">
+				</div>
+			</div>
+			</form>
          </div>
 		
 	</div>

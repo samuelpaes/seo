@@ -15,7 +15,11 @@
 											<br>
 										</div>
 										<div class="col-md-7" style="margin-right:-4px;">
-											<div class="col-md-6">
+											<div class="col-md-2">
+												<select class="form-control" name="exercicio" id="exercicio">
+												</select>
+											</div>
+											<div class="col-md-5">
 												<select class="form-control" id="filtro" name="filtro" onchange="ativarCamposParaFiltro()">
 													<option value="TODAS" selected>Todas</option>
 													<option value="EXECUTORA">Unidade Executora</option>
@@ -24,7 +28,7 @@
 													<option value="DOTACAO">Dotação</option>
 												</select>
 											</div>	
-											<div class="col-md-3" style="margin-right:-4px;">
+											<div class="col-md-2" style="margin-right:-4px;">
 												<input class="form-control" name="codigo" id="codigo"  onkeyup="mascaraCodigo( this, c );" placeholder="Código"  autofocus disabled>
 											</div>
 											<div class="col-md-3">
@@ -305,6 +309,25 @@ function c(v)
 	{
 	}
 }
+
+document.addEventListener('DOMContentLoaded', function() 
+	{
+		var exercicio = new Date().getFullYear()
+		$("#exercicio").attr("placeholder", exercicio);
+		
+		var i;
+		var j = 0;
+		for (i = exercicio+1; i > (exercicio-4); i--) 
+		{
+			var select = document.getElementById("exercicio");
+			var option = document.createElement("option");
+			j = j+1;
+			option.text = i;
+			option.value = i;
+			select.add(option, select[j]);
+			select.selectedIndex = "1";
+		}
+	}, false);
 </script>
 
 @endsection		
