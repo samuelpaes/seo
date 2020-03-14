@@ -728,7 +728,7 @@
 								
 
 								<input name="secretaria" value="{{ Auth::user()->secretaria }}" class="form-control" id="secretaria" type="hidden"></input>						
-								<input name="tipo_alteracao" type="hidden" value="Remanejamento, Transposição e Transferência"></input>
+								<input name="tipo_alteracao" type="hidden" value="REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA"></input>
 								<input name="instrumento" class="form-control" id="instrumento2" type="hidden"></input>
 								<input name="numeroInstrumento" class="form-control" id="numeroInstrumento2" type="hidden"></input>
 								<input name="data" class="form-control" id="data2" type="hidden"></input>

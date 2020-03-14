@@ -40,8 +40,8 @@
 										</div>
 										<div class="col-md-2">
 											<label for="Exercicio">Exercício</label>
-												<select class="form-control" name="exercicio" id="exercicio" onchange="ativarCamposParaFiltro()">
-												
+												<select class="form-control" name="exercicio" id="exercicio" onchange="ativarBotaoParaImportar()">
+												<option  value="" ></option> 
 											</select>
 										</div>
 										<div class="col-md-2">
@@ -53,7 +53,7 @@
 										</div>
 										<div class="col-md-2">
 											<label><input style="border:none;  background-color: transparent;"></input></label>
-											<button type="button" id="btnImportar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" >Importar</button>
+											<button type="button" id="btnImportar" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivo" disabled>Importar</button>
 										</div>
 									</div>
 									<div class="clearfix"></div>
@@ -137,12 +137,27 @@ function ativarCamposParaFiltro()
 		else{
 			document.getElementById('btnImplementar').disabled=false;
 		}
-	}		
+	}	
+
+	
+function ativarBotaoParaImportar() 
+	{
+			var e = document.getElementById("exercicio");
+			var exercicio = e.options[e.selectedIndex].value;
+			if(exercicio != "")
+			{
+				document.getElementById('btnImportar').disabled= false;
+				document.getElementById('exercicio2').value = exercicio;
+			}
+			else{
+				document.getElementById('btnImportar').disabled= true;
+				document.getElementById('exercicio2').value = "";
+			}
+	}	
 	
 	document.addEventListener('DOMContentLoaded', function() 
 	{
 		var exercicio = new Date().getFullYear()
-		document.getElementById('exercicio2').value = new Date().getFullYear();
 		$("#exercicio").attr("placeholder", exercicio);
 		
 		
@@ -156,7 +171,7 @@ function ativarCamposParaFiltro()
 			option.text = i;
 			option.value = i;
 			select.add(option, select[j]);
-			select.selectedIndex = "1";
+			select.selectedIndex = "0";
 		}
 		
 		
@@ -167,7 +182,7 @@ function ativarCamposParaFiltro()
 
 <!-- Modal Importar Dotação Atualizada-->
 <div id="importarArquivo" class="modal fade" role="dialog">
-	<div class="modal-dialog">
+	<div class="modal-dialog"  onclick="ativarEnviar()" onmouseover="ativarEnviar()" onmousemove="ativarEnviar()">
 
     <!-- Modal content-->
 		<div class="modal-content">
@@ -181,8 +196,8 @@ function ativarCamposParaFiltro()
 			</div>
 			<form action="{{ route('importarAtualizarDotacaoOrcamentaria') }}" method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
-				<input id="exercicio2" name="exercicio" hidden/>
-				<div class="modal-body" onclick="ativarEnviar()" onmouseover="ativarEnviar()" onmousemove="ativarEnviar()">
+			<input id="exercicio2" name="exercicio" hidden/>
+				<div class="modal-body">
 					<div class="row">
 						<div class="col-md-9">
 							<input type="file" id="arquivo" name="arquivo"  accept=".xlsx" onclick="ativarEnviar()" onmouseover="ativarEnviar()"></input>

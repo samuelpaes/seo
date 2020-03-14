@@ -60,10 +60,10 @@ class DotacaoOrcamentariaController extends Controller
 		}
 		//seleciona o mais antigo
 		$exercicioAntigo = min($exercicios);
-		
+		$exercicio = date("Y");
 
 	//return($natureza_dotacao_total);
-	return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios);
+	return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios)->with('exercicio', $exercicio);
     }
 
     /**
@@ -184,10 +184,12 @@ class DotacaoOrcamentariaController extends Controller
 		$classificacoesFuncionais=array();
 		$naturezas_dotacoes_total=array();
 		$vinculos_valores=array();
-		
+		$exercicio = $request->exercicio;
+
 	if ($request->filtro =='TODAS')
 	{
 		$SaldodeDotacaos = SaldodeDotacao::where("exercicio" , $request->exercicio )->get();
+	
 	}
 	else if ($request->filtro =='ORCAMENTARIA')
 	{
@@ -202,9 +204,10 @@ class DotacaoOrcamentariaController extends Controller
 		$SaldodeDotacaos =  SaldodeDotacao::whereRaw('codigo_dotacao = '.$request->codigo.'')->where('exercicio', '=', $request->exercicio)->get();
 	}
 	else{
-		$SaldodeDotacaos = SaldodeDotacao::all();
+		$SaldodeDotacaos = SaldodeDotacao::where("exercicio" , date("Y") )->get();
+		$exercicio = date("Y");
 	}
-	
+	//return($SaldodeDotacaos);
 	
 	if (count($SaldodeDotacaos) > 0)
 	{
@@ -222,18 +225,22 @@ class DotacaoOrcamentariaController extends Controller
 			{	
 				$unidadesOrcamentarias[$j]['dotacao'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=', $unidadesOrcamentarias[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('dotacao');		
 				
 				$unidadesOrcamentarias[$j]['empenhado'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=', $unidadesOrcamentarias[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('empenhado');	
 				
 				$unidadesOrcamentarias[$j]['saldo'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=', $unidadesOrcamentarias[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('saldo');	
 				
 				$unidadesOrcamentarias[$j]['reserva'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=', $unidadesOrcamentarias[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('reserva');	
 				
 			}
@@ -255,18 +262,22 @@ class DotacaoOrcamentariaController extends Controller
 			{	
 				$unidadesExecutoras[$j]['dotacao'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.unidade_executora', '=', $unidadesExecutoras[$j]['codigo_executora'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('dotacao');		
 				
 				$unidadesExecutoras[$j]['empenhado'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.unidade_executora', '=', $unidadesExecutoras[$j]['codigo_executora'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('empenhado');	
 				
 				$unidadesExecutoras[$j]['saldo'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.unidade_executora', '=', $unidadesExecutoras[$j]['codigo_executora'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('saldo');	
 				
 				$unidadesExecutoras[$j]['reserva'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.unidade_executora', '=', $unidadesExecutoras[$j]['codigo_executora'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('reserva');	
 			}
 		$unidadesExecutoras = array_unique($unidadesExecutoras, SORT_REGULAR);
@@ -291,24 +302,28 @@ class DotacaoOrcamentariaController extends Controller
 				->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $classificacoesFuncionais[$j]['codigo_classificacaoFuncionalProgramatica'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $classificacoesFuncionais[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $classificacoesFuncionais[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('dotacao');		
 				
 				$classificacoesFuncionais[$j]['empenhado'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $classificacoesFuncionais[$j]['codigo_classificacaoFuncionalProgramatica'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $classificacoesFuncionais[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $classificacoesFuncionais[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('empenhado');
 				
 				$classificacoesFuncionais[$j]['saldo'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $classificacoesFuncionais[$j]['codigo_classificacaoFuncionalProgramatica'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $classificacoesFuncionais[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $classificacoesFuncionais[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('saldo');
 				
 				$classificacoesFuncionais[$j]['reserva'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $classificacoesFuncionais[$j]['codigo_classificacaoFuncionalProgramatica'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $classificacoesFuncionais[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $classificacoesFuncionais[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('reserva');
 			}
 		$classificacoesFuncionais = array_unique($classificacoesFuncionais, SORT_REGULAR);		
@@ -336,24 +351,28 @@ class DotacaoOrcamentariaController extends Controller
 				->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('dotacao');		
 				
 				$naturezas_dotacoes_total[$j]['empenhado'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('empenhado');	
 				
 				$naturezas_dotacoes_total[$j]['saldo'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('saldo');	
 				
 				$naturezas_dotacoes_total[$j]['reserva'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
+				->where('exercicio', '=', $request->exercicio)
 				->sum('reserva');	
 			}
 		$naturezas_dotacoes_total = array_unique($naturezas_dotacoes_total, SORT_REGULAR);
@@ -401,8 +420,8 @@ class DotacaoOrcamentariaController extends Controller
 		}
 		//seleciona o mais antigo
 		$exercicioAntigo = min($exercicios);
-
-		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('verificacao', $verificacao)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionais', $classificacoesFuncionais)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('vinculos_valores',$vinculos_valores)->with('indiceA',$indiceA)->with('exercicios', $exercicios);
+		//return($SaldodeDotacaos)
+		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('verificacao', $verificacao)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionais', $classificacoesFuncionais)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('vinculos_valores',$vinculos_valores)->with('indiceA',$indiceA)->with('exercicios', $exercicios)->with('exercicio', $exercicio);
     }
 
     /**
@@ -432,9 +451,20 @@ class DotacaoOrcamentariaController extends Controller
 		$mensagem = "A Dotação foi atualizada com Sucesso!";
 		$indiceA="";
 		
+		//verifica a quantidade de exercicio cadastrados na base de dados
+		$totalExercicio = SaldodeDotacao::distinct('exercicio')->count('exercicio');
+		// pega todos os exercícios
+		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
+		//return(sizeof($exercicios));
+		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
+		{
+			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
+		}
+		$exercicioAntigo = min($exercicios);
+
 		$SaldodeDotacaos = SaldodeDotacao::all();
 		
-		$dotacao = SaldodeDotacaos::where([
+		$dotacao = SaldodeDotacao::where([
 			'codigo_dotacao' => $request->codigo_dotacao,
 			'vinculo' => $request->codigo_vinculo,
 		])->first();
@@ -455,7 +485,7 @@ class DotacaoOrcamentariaController extends Controller
        $dotacao->save();
 	   
 	   
-	  return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('mensagem', $mensagem)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('indiceA', $indiceA)->with('verificacao', $verificacao);
+	  return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('mensagem', $mensagem)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios);
 	}
 
     /**
@@ -527,6 +557,7 @@ class DotacaoOrcamentariaController extends Controller
 		$nome = $arquivo->getClientOriginalName();
 		$pesquisaFeita='';
 		
+		
 		if($arquivo->getClientOriginalExtension() == "xlsx")
 		{
 			$mensagem = '';
@@ -581,28 +612,10 @@ class DotacaoOrcamentariaController extends Controller
 		foreach ($colecoes as $colecao)
 		{	
 				
-			/*$colecao['dotacao'] = str_replace("R$", "", $colecao['dotacao']);
-			$colecao['empenhado'] = str_replace("R$", "", $colecao['empenhado']);
-			$colecao['saldo'] = str_replace("R$", "", $colecao['saldo']);
-			$colecao['reserva'] = str_replace("R$", "", $colecao['reserva']);*/
-				   
-			/*$colecao['dotacao'] = str_replace(".","",$colecao['dotacao']);
-			$colecao['empenhado'] = str_replace(".","",$colecao['empenhado']);
-			$colecao['saldo'] = str_replace(".","",$colecao['saldo']);
-			$colecao['reserva'] = str_replace(".","",$colecao['reserva']);
-			
-			$colecao['dotacao'] = str_replace(",",".",$colecao['dotacao']);
-			$colecao['empenhado'] = str_replace(",",".",$colecao['empenhado']);
-			$colecao['saldo'] = str_replace(",",".",$colecao['saldo']);
-			$colecao['reserva'] = str_replace(",",".",$colecao['reserva']);*/
-	
-			/*$colecao['dotacao'] = str_replace(array(",","."),array(".", ""),$colecao['dotacao']);
-			$colecao['empenhado'] = str_replace(array(",","."),array(".", ""),$colecao['empenhado']);
-			$colecao['saldo'] = str_replace(array(",","."),array(".", ""),$colecao['saldo']);
-			$colecao['reserva'] = str_replace(array(",","."),array(".", ""),$colecao['reserva']);*/
-
+			$count = SaldodeDotacao::where('codigo_dotacao', $colecao['codigo_dotacao'])->where('exercicio', $request->exercicio)->count();
+				
 			//Verifica se existe dotacao já cadastrada
-			if (DB::table('saldo_de_dotacaos')->where('codigo_dotacao', $colecao['codigo_dotacao'])->count() == 0) 
+			if ($count == 0) 
 			{
 				$unidadeExecutora = $colecao['unidade_executora'];
 				$unidadeOrcamentaria = DB::select("select unidade_orcamentaria from unidade_executoras where codigo='$unidadeExecutora'");

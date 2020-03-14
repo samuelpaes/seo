@@ -186,10 +186,13 @@
 									<input value="{{$numeroInstrumento[0]}}" type="number" id="numeroInstrumento" class="form-control" style="display: inline-block; width:150px;" ></input>
 									/
 									<select class="form-control" onkeyup="" onclick="" onmouseout=""  onmouseover="" name="anoInstrumento" id="anoInstrumento" style="display: inline-block; width:auto">
-										<option selected></option>
-										<option value="2019" <?php if ($numeroInstrumento[1] == '2019') echo ' selected="selected"'; ?> >2019</option>
+									
+										
+										
+										<!--<option value="2019" <?php if ($numeroInstrumento[1] == '2019') echo ' selected="selected"'; ?> >2019</option>
 										<option value="2018" <?php if ($numeroInstrumento[1] == '2018') echo ' selected="selected"'; ?> >2018</option>		
-										<option value="2017" <?php if ($numeroInstrumento[1] == '2017') echo ' selected="selected"'; ?> >2017</option>					
+										<option value="2017" <?php if ($numeroInstrumento[1] == '2017') echo ' selected="selected"'; ?> >2017</option>-->
+															
 									</select>
 								</div>
 							</div>
@@ -697,7 +700,7 @@
 								</div>							
 								
 								<input name="secretaria" value="{{ Auth::user()->secretaria }}" class="form-control" id="secretaria" type="hidden"></input>
-								<input name="tipo_alteracao" type="hidden" value="Credito Adicional Suplementar"></input>
+								<input name="tipo_alteracao" type="hidden" value="CREDITO ADICIONAL SUPLEMENTAR"></input>
 								<input name="instrumento" class="form-control" id="instrumento2" type="hidden"></input>
 								<input name="numeroInstrumento" class="form-control" id="numeroInstrumento2" type="hidden"></input>
 								<input name="data" class="form-control" id="data2" type="hidden"></input>
@@ -837,5 +840,25 @@
 						}
 						//alert(foco);
 					});
-				</script>
+
+document.addEventListener('DOMContentLoaded', function() 
+	{
+		var exercicio = new Date().getFullYear()
+		
+		
+		var i;
+		var j = 0;
+		for (i = exercicio+1; i > (exercicio-3); i--) 
+		{
+			var select = document.getElementById("anoInstrumento");
+			var option = document.createElement("option");
+			j = j+1;
+			option.text = i;
+			option.value = i;
+			select.add(option, select[j]);
+			select.selectedIndex = "1";
+		}
+	}, false);
+</script>
+</script>
 

@@ -277,7 +277,7 @@ class UnidadeOrcamentariaController extends Controller
 			
 			
 			//verifica se há a quantidade de indices exigida para upload do arquivo
-			if(count($colecoes[0]) > 2)
+			if(count($colecoes[0]) == 2)
 			{
 				for($i=0; $i <sizeof($colecoes); $i++)
 				{

@@ -49,6 +49,18 @@
 										$indiceD = 0;
 										$indiceE = 0;
 										$total = 0;
+
+										echo "
+										<div class='row' style='line-height:1px'>
+											<div class='col-md-9'>
+											</div>
+											<div class='col-md-3'>
+												<h4><b>EXERCICIO DE $exercicio</b>
+											</div>
+										</div>
+							
+										";
+
 										foreach($unidadesOrcamentarias as $orcamentaria)
 										{	
 											echo "<div class='content table-responsive table-full-width'>
@@ -62,8 +74,8 @@
 											$indiceA=$indiceA+1;
 											echo 	"
 													<tr style='background:none; '>
-														<td height='5' colspan='3'  style='border:0px; '><b>{$orcamentaria['unidade_orcamentaria']}</b></td>	
-														<td height='5' align='right' style='border:0px; '><b></b></td>
+														<td height='5' colspan='3'  style='border:0px;' ><b>{$orcamentaria['unidade_orcamentaria']}</b></td>	
+														<td height='5' align='right' style='border:0px; '><b>CÓDIGO</b></td>
 														<td height='5' align='right' style='border:0px; '><b>DOTAÇÃO</b></td>
 														<td height='5' align='right' style='border:0px; '><b>EMPENHADO</b></td>
 														<td height='5' align='right' style='border:0px; '><b>RESERVA</b></td>
@@ -73,10 +85,10 @@
 													<tr class='treegrid-{$indiceA}'>
 														<td colspan='3'>{$orcamentaria['codigo_orcamentaria']} - {$orcamentaria['unidade_orcamentaria']} </td>	
 														<td width='10%' align='right'></td>
-														<td width='10%' align='right'>{$orcamentaria['dotacao']}</td>
-														<td width='10%' align='right'>{$orcamentaria['empenhado']}</td>
-														<td width='10%' align='right'>{$orcamentaria['reserva']}</td>
-														<td width='10%' align='right'>{$orcamentaria['saldo']}</td>
+														<td width='10%' align='right' style='white-space: nowrap;'>{$orcamentaria['dotacao']}</td>
+														<td width='10%' align='right' style='white-space: nowrap;'>{$orcamentaria['empenhado']}</td>
+														<td width='10%' align='right' style='white-space: nowrap;'>{$orcamentaria['reserva']}</td>
+														<td width='10%' align='right' style='white-space: nowrap;'>{$orcamentaria['saldo']}</td>
 														
 													</tr>
 													";
@@ -98,10 +110,10 @@
 																<td style='border:0px'></td>
 																<td style='border:0px'></td>
 																<td width='10%' style='border:0px'></td>
-																<td width='10%' style='border:0px' align='right'>{$executora['dotacao']} </td>
-																<td width='10%' style='border:0px' align='right'>{$executora['empenhado']} </td>
-																<td width='10%' style='border:0px' align='right'>{$executora['reserva']} </td>
-																<td width='10%' style='border:0px' align='right'>{$executora['saldo']} </td>
+																<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$executora['dotacao']} </td>
+																<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$executora['empenhado']} </td>
+																<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$executora['reserva']} </td>
+																<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$executora['saldo']} </td>
 															</tr>
 															";
 													$indiceC = $indiceA;	
@@ -120,10 +132,10 @@
 																		<td style='border:0px'></td>
 																		<td style='border:0px'></td>
 																		<td width='10%' style='border:0px'></td>
-																		<td width='10%' style='border:0px' align='right'>{$classificacaoFuncional['dotacao']}</td>
-																		<td width='10%' style='border:0px' align='right'>{$classificacaoFuncional['empenhado']}</td>
-																		<td width='10%' style='border:0px' align='right'>{$classificacaoFuncional['reserva']}</td>
-																		<td width='10%' style='border:0px' align='right'>{$classificacaoFuncional['saldo']}</td>
+																		<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$classificacaoFuncional['dotacao']}</td>
+																		<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$classificacaoFuncional['empenhado']}</td>
+																		<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$classificacaoFuncional['reserva']}</td>
+																		<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$classificacaoFuncional['saldo']}</td>
 																	</tr>";	
 															$indiceD = $indiceA;		
 																	
@@ -142,11 +154,11 @@
 																				<td style='border:0px'>{$natureza_dotacao_total['codigo_natureza']} - {$natureza_dotacao_total['especificacao_natureza']} </td>
 																				<td style='border:0px'></td>
 																				<td style='border:0px'></td>
-																				<td width='10%' style='border:0px;white-space:nowrap;' align='center'><b><ul><sub>COD. DOTAÇÃO</sup></ul><ul><sub>{$natureza_dotacao_total['codigo_dotacao']}</ul></sub></b></td>
-																				<td width='10%' style='border:0px' align='right'>{$natureza_dotacao_total['dotacao']}</td>
-																				<td width='10%' style='border:0px' align='right'>{$natureza_dotacao_total['empenhado']}</td>
-																				<td width='10%' style='border:0px' align='right'>{$natureza_dotacao_total['reserva']}</td>
-																				<td width='10%' style='border:0px' align='right'>{$natureza_dotacao_total['saldo']}</td>
+																				<td width='10%' style='border:0px;white-space:nowrap;' align='center'><b><!---<ul><sub>COD. DOTAÇÃO</sup></ul><ul><sub>-->{$natureza_dotacao_total['codigo_dotacao']}</ul></sub></b></td>
+																				<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$natureza_dotacao_total['dotacao']}</td>
+																				<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$natureza_dotacao_total['empenhado']}</td>
+																				<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$natureza_dotacao_total['reserva']}</td>
+																				<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'>{$natureza_dotacao_total['saldo']}</td>
 																			</tr>";	
 																	$indiceE = $indiceA;	
 																	
@@ -170,10 +182,10 @@
 																						<td style='border:0px'></td>
 																						<td style='border:0px'></td>
 																						<td width='10%' style='border:0px' align='center'><p style='position:relative; left:20px;'>{$vinculo_valor['codigo_dotacao']}</p></td>
-																						<td width='10%' style='border:0px' align='right'><input onKeyUp='formatarMoedaeAtualizarSaldo(this,{$indiceA})' align='right' class='form-control' style=' width: 100%; padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333; text-align:right;' id='dotacao-{$indiceA}' name='dotacao' value='{$vinculo_valor['dotacao']}' disabled></td>
-																						<td width='10%' style='border:0px' align='right'><input onKeyUp='formatarMoedaeAtualizarSaldo(this,{$indiceA})' align='right' class='form-control' style=' width: 100%; padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333; text-align:right;' id='empenhado-{$indiceA}'name='empenhado' value='{$vinculo_valor['empenhado']}' disabled></td>
-																						<td width='10%' style='border:0px' align='right'><input onKeyUp='formatarMoedaeAtualizarSaldo(this,{$indiceA})' align='right' class='form-control' style=' width: 100%; padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333; text-align:right;' id='reserva-{$indiceA}' name='reserva' value='{$vinculo_valor['reserva']}' disabled></td>
-																						<td width='10%' style='border:0px' align='right'><input onKeyUp='formatarMoedaeAtualizarSaldo(this,{$indiceA})' align='right' class='form-control' style=' width: 100%; padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333; text-align:right;' id='saldo-{$indiceA}' name='saldo' value='{$vinculo_valor['saldo']}' disabled></td>
+																						<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'><input onKeyUp='formatarMoedaeAtualizarSaldo(this,{$indiceA})' align='right' class='form-control' style=' width: 100%; padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333; text-align:right;' id='dotacao-{$indiceA}' name='dotacao' value='{$vinculo_valor['dotacao']}' disabled></td>
+																						<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'><input onKeyUp='formatarMoedaeAtualizarSaldo(this,{$indiceA})' align='right' class='form-control' style=' width: 100%; padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333; text-align:right;' id='empenhado-{$indiceA}'name='empenhado' value='{$vinculo_valor['empenhado']}' disabled></td>
+																						<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'><input onKeyUp='formatarMoedaeAtualizarSaldo(this,{$indiceA})' align='right' class='form-control' style=' width: 100%; padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333; text-align:right;' id='reserva-{$indiceA}' name='reserva' value='{$vinculo_valor['reserva']}' disabled></td>
+																						<td width='10%' style='border:0px' align='right' style='white-space: nowrap;'><input onKeyUp='formatarMoedaeAtualizarSaldo(this,{$indiceA})' align='right' class='form-control' style=' width: 100%; padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333; text-align:right;' id='saldo-{$indiceA}' name='saldo' value='{$vinculo_valor['saldo']}' disabled></td>
 																					</tr>
 																					";			
 																		}																													
@@ -312,8 +324,11 @@ function c(v)
 
 document.addEventListener('DOMContentLoaded', function() 
 	{
-		var exercicio = new Date().getFullYear()
-		$("#exercicio").attr("placeholder", exercicio);
+		
+		//var exercicio = new Date().getFullYear()
+		exercicio = "<?php echo $exercicio ?>";
+		exercicio = parseInt(exercicio);
+		//$("#exercicio").attr("placeholder", exercicio);
 		
 		var i;
 		var j = 0;

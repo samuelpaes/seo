@@ -37,7 +37,21 @@
     <link href="{{ asset ('css/pe-icon-7-stroke.css') }}" rel="stylesheet" />
 	
 	<style>
-	
+
+body {
+	width:100%;
+    height: 100%;
+    background: linear-gradient(45deg,#fff, #edf1f8, #fff,#edf1f8, #fff);
+    background-size: 600% 100%;
+    animation: gradient 16s linear infinite;
+    animation-direction: alternate;
+
+}
+
+@keyframes gradient {
+    0% {background-position: 0%}
+    100% {background-position: 100%}
+}
 	.login{
 		
 		opacity:1;
@@ -111,6 +125,58 @@
 	}
 	}
 
+	img{
+  max-width:100%;
+  height:auto;
+  display:none;
+}
+
+
+
+
+
+@media screen and (max-width: 700px) {
+  .column {
+    width: 100%;
+  }
+  img{
+    display:block;
+  }
+  .left {
+  background:none;
+
+  }
+
+  #gradient {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #836997;
+}
+
+#note {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+#note a {
+  display: block;
+  padding: 4px 5px;
+  background: #fff;
+  color: #000;
+  font: 12px/1 sans-serif;
+  text-decoration: none;
+}
+
+#note a:hover {
+  background: #ccc;
+}
+
+}
+
 	</style>
 
 </head>
@@ -120,12 +186,13 @@
 			<form method="POST" action="{{ route('login') }}">
 				<div class="content" style="">
 					<div class="container-fluid" >
-						 <img class="logotipo" src="{{url('img/logo.png ')}}" style="max-width: 700px; height: 130px;  display: block;margin-left: auto;margin-right: auto;">
+					<div class="row">
+  						<img class="logotipo" src="{{url('img/logo.png ')}}" style="max-width: 700px; height: 130px;  display: block;margin-left: auto;margin-right: auto; ">
 					<div>
 				</div>
 			@csrf
 				<br>
-				<div class="login">
+				<div class="login" style="min-width:300px;">
 				<div class="content">
 					<div class="container-fluid">
 						<div class="row">
@@ -177,12 +244,12 @@
 										</div>
 									</div>
 											
-									<button type="submit" class="btn btn-info btn-fill pull-right" value="entrar" style="background-color:#2e4b86; border-color:#21345b">Logar</button>
+									<button type="submit" class="btn btn-info btn-fill pull-right" value="entrar" style="background-color:#2e4b86; border-color:#21345b;">Logar</button>
 											
 									@if (Route::has('password.request'))
-									<a class="btn btn-default btn-block" style="width: 40%;" href="{{ route('password.request') }}">
-										{{ __('Esqueceu a Senha?') }}
-									</a>
+									<!--<a class="btn btn-default btn-block" style="width: 40%;" href="{{ route('password.request') }}">
+										{{ ('Esqueceu a Senha?') }}
+									</a>-->
 									@endif
 									
 									<div class="clearfix"></div>

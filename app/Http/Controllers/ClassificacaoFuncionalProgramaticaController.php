@@ -52,7 +52,7 @@ class ClassificacaoFuncionalProgramaticaController extends Controller
 				$keys = array_keys($colecoes[$i]);
 				$keys[array_search($keys[0], $keys)] = 'codigo';
 				$keys[array_search($keys[1], $keys)]= 'especificacao';
-				$keys[array_search($keys[2], $keys)] = 'tipo';
+				//$keys[array_search($keys[2], $keys)] = 'tipo';
 				$colecoes[$i] = array_combine($keys, $colecoes[$i]);
 				
 				if ($colecoes[$i]['codigo'] == "")
@@ -75,17 +75,17 @@ class ClassificacaoFuncionalProgramaticaController extends Controller
 					$condition1=false;
 				}
 					
-				if (DB::table('classificacao_funcional_programaticas')->where('especificacao', $colecao['especificacao'])->count() == 0 AND $colecao['especificacao'] <> "") 
+				/*if (DB::table('classificacao_funcional_programaticas')->where('especificacao', $colecao['especificacao'])->count() == 0 AND $colecao['especificacao'] <> "") 
 				{
 					$condition2=true;
 				}
 				else
 				{
 					$condition2=false;
-				}
+				}*/
 				
 				//Verifica se existe natureza ja cadastrada
-				if ($condition1 == true and $condition2 == true) 
+				if ($condition1 == true) 
 				{
 					$encoding = 'UTF-8';
 					$colecao['codigo'] = mb_convert_case($colecao['codigo'], MB_CASE_UPPER, $encoding);

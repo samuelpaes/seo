@@ -33,7 +33,7 @@
 													<input type="text" name="codigo" id="codigo" maxlength="8"  onkeyup="mascaraCodigoDespesa( this, cDespesa );" class="form-control{{ $errors->has('registro') ? ' is-invalid' : '' }}" required autofocus>																		
 												</div>
 											</div>
-											<div class="col-md-6">
+											<div class="col-md-5">
 												<div class="form-group">
 													<label for="unidade-orcamentaria">Unidade Orçamentária</label>
 													<input type="text" class="form-control"  name="unidade"  style="text-transform: uppercase" required>
@@ -43,6 +43,8 @@
 												<label><input style="border:none; background-color: transparent;" disabled></input></label>
 												<button type="submit" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c; margin-left:70px">Cadastrar</button>
 											</div>	
+											<div class="col-md-1">
+											</div>
 											<div class="col-md-1">
 												<label><input style="border:none;  background-color: transparent;" disabled></input></label>
 												<button type="button" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivoOrcamentaria">Importar</button>
@@ -59,15 +61,15 @@
 							<div class="card">
 								<div class="header">
 									<div class="row">
-										<div class="col-md-6">
+										<div class="col-md-4">
 										<h5 class="title">Cadastrar Unidade Executora</h5>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-8">
 											<div class="row">
-												<div class="col-md-4">
-													<label for="UnidadeOrcamentaria">Unidade Orçamentária:</label>
+												<div class="col-md-5" style="word-wrap: nowrap;">
+													<label for="UnidadeOrcamentaria" >Unidade Orçamentária:</label>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<select class="form-control" name="unidade_orcamentaria" id="unidade_orcamentaria" onchange="ativarCamposParaFiltro()">
 														<option value="" selected></option>
 														@foreach ($unidadesOrcamentarias as $unidadeOrcamentaria)

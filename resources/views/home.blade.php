@@ -191,14 +191,14 @@
 
   padding: 0;
   width: 100%;
-  background: #40609d	 !important;
+  background: #edf1f8	 !important;
   opacity:0.8;
-  color:#fff;
+  color:#40609d;
 }
 
 #marker {
   height: 6px;
-  background: #40609d	 !important;
+  background: #edf1f8	 !important;
   position: relative;
   bottom: 0;
  
@@ -659,24 +659,28 @@ background: rgba(255, 255, 255, 0.4);
 			
 			<div class="content">
 				<div class="container-fluid">
-					<!--<div class="card">
-						<div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-							<div class="carousel-inner">
-								<div class="carousel-item active">
-									<img class="logotipo" src="{{url('img/logo.png ')}}" style="max-width: 700px; height: 300px;  display: block;margin-left: auto;margin-right: auto;">
-								</div>
-		
-								
-							</div>
-							<a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-								<span class="sr-only">Anterior</span>
-							</a>
-							<a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-								<span class="carousel-control-next-icon" aria-hidden="true"></span>
-								<span class="sr-only">Próximo</span>
-							</a>
-					</div>-->
+				<div class="col-md-8">
+                        <div class="card">
+                            <div class="header">
+                                <h4 class="title">Users Behavior</h4>
+                                <p class="category">24 Hours performance</p>
+                            </div>
+                            <div class="content">
+                                <div id="chartHours" class="ct-chart"><svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="245px" class="ct-chart-line" style="width: 100%; height: 245px;"><g class="ct-grids"><line y1="210" y2="210" x1="50" x2="489" class="ct-grid ct-vertical"></line><line y1="185.625" y2="185.625" x1="50" x2="489" class="ct-grid ct-vertical"></line><line y1="161.25" y2="161.25" x1="50" x2="489" class="ct-grid ct-vertical"></line><line y1="136.875" y2="136.875" x1="50" x2="489" class="ct-grid ct-vertical"></line><line y1="112.5" y2="112.5" x1="50" x2="489" class="ct-grid ct-vertical"></line><line y1="88.125" y2="88.125" x1="50" x2="489" class="ct-grid ct-vertical"></line><line y1="63.75" y2="63.75" x1="50" x2="489" class="ct-grid ct-vertical"></line><line y1="39.375" y2="39.375" x1="50" x2="489" class="ct-grid ct-vertical"></line><line y1="15" y2="15" x1="50" x2="489" class="ct-grid ct-vertical"></line></g><g><g class="ct-series ct-series-a"><path d="M50,210L50,140.044C62.194,140.044,74.389,116.156,86.583,116.156C98.778,116.156,110.972,90.563,123.167,90.563C135.361,90.563,147.556,90.075,159.75,90.075C171.944,90.075,184.139,74.963,196.333,74.963C208.528,74.963,220.722,67.163,232.917,67.163C245.111,67.163,257.306,39.863,269.5,39.863C281.694,39.863,293.889,40.594,306.083,40.594C318.278,40.594,330.472,26.7,342.667,26.7C354.861,26.7,367.056,17.925,379.25,17.925C391.444,17.925,403.639,3.787,415.833,3.787C428.028,3.787,440.222,-20.1,452.417,-20.1L452.417,210Z" class="ct-area"></path></g><g class="ct-series ct-series-b"><path d="M50,210L50,193.669C62.194,193.669,74.389,172.95,86.583,172.95C98.778,172.95,110.972,175.144,123.167,175.144C135.361,175.144,147.556,151.5,159.75,151.5C171.944,151.5,184.139,140.044,196.333,140.044C208.528,140.044,220.722,128.344,232.917,128.344C245.111,128.344,257.306,103.969,269.5,103.969C281.694,103.969,293.889,103.481,306.083,103.481C318.278,103.481,330.472,78.619,342.667,78.619C354.861,78.619,367.056,77.887,379.25,77.887C391.444,77.887,403.639,77.4,415.833,77.4C428.028,77.4,440.222,52.294,452.417,52.294L452.417,210Z" class="ct-area"></path></g><g class="ct-series ct-series-c"><path d="M50,210L50,204.394C62.194,204.394,74.389,182.456,86.583,182.456C98.778,182.456,110.972,193.669,123.167,193.669C135.361,193.669,147.556,183.675,159.75,183.675C171.944,183.675,184.139,163.688,196.333,163.688C208.528,163.688,220.722,151.744,232.917,151.744C245.111,151.744,257.306,135.169,269.5,135.169C281.694,135.169,293.889,134.925,306.083,134.925C318.278,134.925,330.472,102.994,342.667,102.994C354.861,102.994,367.056,110.063,379.25,110.063C391.444,110.063,403.639,110.063,415.833,110.063C428.028,110.063,440.222,85.931,452.417,85.931L452.417,210Z" class="ct-area"></path></g></g><g class="ct-labels"><foreignObject style="overflow: visible;" x="50" y="215" width="36.583333333333336" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;">9:00AM</span></foreignObject><foreignObject style="overflow: visible;" x="86.58333333333334" y="215" width="36.583333333333336" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;">12:00AM</span></foreignObject><foreignObject style="overflow: visible;" x="123.16666666666667" y="215" width="36.58333333333333" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;">3:00PM</span></foreignObject><foreignObject style="overflow: visible;" x="159.75" y="215" width="36.58333333333334" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;">6:00PM</span></foreignObject><foreignObject style="overflow: visible;" x="196.33333333333334" y="215" width="36.58333333333334" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;">9:00PM</span></foreignObject><foreignObject style="overflow: visible;" x="232.91666666666669" y="215" width="36.583333333333314" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;">12:00PM</span></foreignObject><foreignObject style="overflow: visible;" x="269.5" y="215" width="36.58333333333337" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;">3:00AM</span></foreignObject><foreignObject style="overflow: visible;" x="306.08333333333337" y="215" width="36.583333333333314" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;">6:00AM</span></foreignObject><foreignObject style="overflow: visible;" x="342.6666666666667" y="215" width="36.583333333333314" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;"></span></foreignObject><foreignObject style="overflow: visible;" x="379.25" y="215" width="36.58333333333337" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;"></span></foreignObject><foreignObject style="overflow: visible;" x="415.83333333333337" y="215" width="36.583333333333314" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;"></span></foreignObject><foreignObject style="overflow: visible;" x="452.4166666666667" y="215" width="36.583333333333314" height="20"><span class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/" style="width: 37px; height: 20px;"></span></foreignObject><foreignObject style="overflow: visible;" y="185.625" x="10" height="24.375" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 24px; width: 30px;">0</span></foreignObject><foreignObject style="overflow: visible;" y="161.25" x="10" height="24.375" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 24px; width: 30px;">100</span></foreignObject><foreignObject style="overflow: visible;" y="136.875" x="10" height="24.375" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 24px; width: 30px;">200</span></foreignObject><foreignObject style="overflow: visible;" y="112.5" x="10" height="24.375" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 24px; width: 30px;">300</span></foreignObject><foreignObject style="overflow: visible;" y="88.125" x="10" height="24.375" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 24px; width: 30px;">400</span></foreignObject><foreignObject style="overflow: visible;" y="63.75" x="10" height="24.375" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 24px; width: 30px;">500</span></foreignObject><foreignObject style="overflow: visible;" y="39.375" x="10" height="24.375" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 24px; width: 30px;">600</span></foreignObject><foreignObject style="overflow: visible;" y="15" x="10" height="24.375" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 24px; width: 30px;">700</span></foreignObject><foreignObject style="overflow: visible;" y="-15" x="10" height="30" width="30"><span class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/" style="height: 30px; width: 30px;">800</span></foreignObject></g></svg></div>
+                                <div class="footer">
+                                    <div class="legend">
+                                        <i class="fa fa-circle text-info"></i> Open
+                                        <i class="fa fa-circle text-danger"></i> Click
+                                        <i class="fa fa-circle text-warning"></i> Click Second Time
+                                    </div>
+                                    <hr>
+                                    <div class="stats">
+                                        <i class="fa fa-history"></i> Updated 3 minutes ago
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>	
 			</div>
 				
