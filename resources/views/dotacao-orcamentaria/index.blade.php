@@ -1,8 +1,8 @@
 @extends('layouts.app')
 	@section('content')	
 <STYLE>
-.btnDotacao:hover{cursor: pointer}
-.btnDotacao{
+.btnEdicao:hover{cursor: pointer}
+.btnEdicao{
 	display: inline-block;
     background: transparent; outline: none;
     position: relative;
@@ -11,21 +11,21 @@
 	height:20px;
 }
 
-.btnDotacao:hover:before{
+.btnEdicao:hover:before{
 	opacity: 1; 
 	transform: 
 	translate(0,0);
 	width:20px;
 }
 
-.btnDotacao:hover{
+.btnEdicao:hover{
 	opacity: 1; 
 	transform: 
 	translate(0,0);
 	width:65px;
 }
 
-.btnDotacao:before{
+.btnEdicao:before{
     content: attr(data-hover);
     position: absolute;
     left: 0;
@@ -40,15 +40,15 @@
 }
 
 /*button div (button text before hover)*/
-.btnDotacao:hover div{opacity: 0; transform: translate(100%,0); width:10%;}
-.btnDotacao div{
+.btnEdicao:hover div{opacity: 0; transform: translate(100%,0); width:10%;}
+.btnEdicao div{
     text-transform: uppercase;
     font-weight: 600;
     font-size: 16px;
     transition: all .6s ease-in-out;
 }
 
-.btnDotacao:active div {
+.btnEdicao:active div {
 	font-size: 6px;
 }
 
@@ -388,9 +388,9 @@
 																			$indiceA=$indiceA+1;
 																			echo 	"<tr class='treegrid-{$indiceA} treegrid-parent-{$indiceE}'>
 																						<td style='border:0px' align='left' >
-																							<button class='btnDotacao' type='button' data-hover='Cancelar' id='cancelar-{$indiceA}' style='margin-right:-5px;left:0px; display: none;' onclick='cancelar({$indiceA})'><div><i class='fa fa-times'></i></div></button>
-																							<button class='btnDotacao' type='button' data-hover='Salvar'  id='salvar-{$indiceA}' style='margin:-5px;left:2px; display: none;' onclick='salvar({$indiceA})'><div><i class='fa fa-check'></i></div></button> 
-																							<button class='btnDotacao' type='button' data-hover='Alterar' id='alterar-{$indiceA}' style='margin-left:-5px; left:4px;' onclick='alterar({$indiceA})'><div><i class='fa fa-pencil'></i></div></button>
+																							<button class='btnEdicao' type='button' data-hover='Cancelar' id='cancelar-{$indiceA}' style='margin-right:-5px;left:0px; display: none;' onclick='cancelar({$indiceA})'><div><i class='fa fa-times'></i></div></button>
+																							<button class='btnEdicao' type='button' data-hover='Salvar'  id='salvar-{$indiceA}' style='margin:-5px;left:2px; display: none;' onclick='salvar({$indiceA})'><div><i class='fa fa-check'></i></div></button> 
+																							<button class='btnEdicao' type='button' data-hover='Alterar' id='alterar-{$indiceA}' style='margin-left:-5px; left:4px;' onclick='alterar({$indiceA})'><div><i class='fa fa-pencil'></i></div></button>
 																							<input value='{$vinculo_valor['codigo_vinculo']}' id='codigo_vinculo-{$indiceA}' style='display:hidden' name='codigo_vinculo' disabled></input>
 																							<input value='{$vinculo_valor['codigo_dotacao']}' id='codigo_dotacao-{$indiceA}' style='display:hidden' name='codigo_dotacao' disabled></input>
 																							{$vinculo_valor['codigo_vinculo']} - {$vinculo_valor['descricao_vinculo']}
@@ -588,24 +588,6 @@ function formatarMoedaeAtualizarSaldo(x, y)
 	
 }
 
-/*Pode Excluir?
-// função para exibir as unidades executoras ocultas
-
-
-function nextTr(row) {
-    while ((row = row.nextSibling) && row.nodeType != 1);
-    return row;
-}
-
-function toggle_it(item){ 
-     if (/\bopen\b/.test(item.className))
-         item.className = item.className.replace(/\bopen\b/," ");
-	
-     else
-        item.className += " open";
-	
- } 
-*/
 
 // função para ativar os campos do filtro
 function ativarCamposParaFiltro() 

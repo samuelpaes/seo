@@ -26,7 +26,7 @@ class UserController extends Controller
     public function index()
     {	
 	//arquivo retorno original
-	$usuario = DB::select('select * from users where id=1');
+	/*$usuario = DB::select('select * from users where id=1');
 
 	// arquivo codificado para json
 	$usuario = json_encode($usuario, true);
@@ -48,8 +48,14 @@ class UserController extends Controller
 	//return $usuario;
 
 	//return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_cadastrado',$usuario_cadastrado);
-	return view('alterar-usuario', ['usuario'=>$usuario])->with('usuario_cadastrado',$usuario_cadastrado)->with('pre_registro',$pre_registro)->with('usuario_naoLocalizado', $usuario_naoLocalizado);
-		
+	return view('alterar-usuario', ['usuario'=>$usuario])->with('usuario_cadastrado',$usuario_cadastrado)->with('pre_registro',$pre_registro)->with('usuario_naoLocalizado', $usuario_naoLocalizado);*/
+        
+    $usuario_cadastrado ="";
+    $usuario_naoLocalizado = "";
+    $pesquisaFeita = "";
+
+    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita);
+   
     }
 
     /**
@@ -79,14 +85,51 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $pre_registro)
+    public function show(Request $request)
     {
 		
 		//$usuario = User::whereRegistro($reg)->firstOrFail();
-		
-		$registro = $pre_registro->get("pre_registro");
+        //return($request);
+        $usuario_cadastrado ="";
+        $usuario_naoLocalizado = "";
+        $pesquisaFeita = "";
+        
+        if($request->filtro == "REGISTRO")
+        {
+            $usuarios[] =  User::where('registro', '=',$request->pre_registro)->get();	
+            $pesquisaFeita = "ok";
+             
+        }
+        else if($request->filtro == "NOME")
+        {
+            $usuarios[] =  User::where('name', 'like', '%'.$request->nome.'%')->orWhere('sobrenome', 'like', '%'.$request->nome.'%')->get();
+            $pesquisaFeita = "ok";	
+            
+        }
+        else if($request->filtro == "SECRETARIA")
+        {
+            $usuarios[] =  User::where('secretaria', '=', $request->secretaria)->get();	
+            $pesquisaFeita = "ok";
+             
+        }
+        else if($request->filtro == "ESTADO")
+        {
+            $usuarios[] =  User::where('estado', '=', $request->estado)->get();	
+            $pesquisaFeita = "ok";
+            
+        }
+        else if($request->filtro == "TIPO_USUARIO")
+        {
+           
+            $usuarios[] =  User::where('isAdmin', '=', $request->tipoUsuario)->get();	
+            $pesquisaFeita = "ok";
+           
+        }
+        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita);
+
+		/*$registro = $pre_registro->get("pre_registro");
 		$usuario = DB::select("select * from users where registro='$registro'");
-		$usuario_cadastrado=$pre_registro->get("usuario_cadastrado");
+		$usuario_cadastrado=$pre_registro->get("usuario_cadastrado");*/
 		if($usuario <> null)
 		{
 			$usuario_naoLocalizado = "";

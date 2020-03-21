@@ -81,6 +81,7 @@ class DotacaoOrcamentariaController extends Controller
 			$SaldodeDotacaos = SaldodeDotacao::all();
 			$laco = sizeof($data->unidadeExecutora);
 			$mensagem = "";
+			$exercicio = date("Y");
 
 			
 			
@@ -149,7 +150,7 @@ class DotacaoOrcamentariaController extends Controller
 				SaldodeDotacao::whereRaw('exercicio= "'.$exercicioAntigo.'"')->delete();
 			}
 				
-		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('pesquisaFeita', $pesquisaFeita)->with('mensagem', $mensagem)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('indiceA', $indiceA)->with('verificacao', $verificacao);
+		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('pesquisaFeita', $pesquisaFeita)->with('mensagem', $mensagem)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicio', $exercicio);
 
     }
 
@@ -349,6 +350,7 @@ class DotacaoOrcamentariaController extends Controller
 			{	
 				$naturezas_dotacoes_total[$j]['dotacao'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
+				->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $naturezas_dotacoes_total[$j]['codigo_classificacaoFuncionalProgramatica'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
 				->where('exercicio', '=', $request->exercicio)
@@ -356,6 +358,7 @@ class DotacaoOrcamentariaController extends Controller
 				
 				$naturezas_dotacoes_total[$j]['empenhado'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
+				->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $naturezas_dotacoes_total[$j]['codigo_classificacaoFuncionalProgramatica'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
 				->where('exercicio', '=', $request->exercicio)
@@ -363,6 +366,7 @@ class DotacaoOrcamentariaController extends Controller
 				
 				$naturezas_dotacoes_total[$j]['saldo'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
+				->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $naturezas_dotacoes_total[$j]['codigo_classificacaoFuncionalProgramatica'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
 				->where('exercicio', '=', $request->exercicio)
@@ -370,6 +374,7 @@ class DotacaoOrcamentariaController extends Controller
 				
 				$naturezas_dotacoes_total[$j]['reserva'] = DB::table("saldo_de_dotacaos")
 				->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
+				->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $naturezas_dotacoes_total[$j]['codigo_classificacaoFuncionalProgramatica'])
 				->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 				->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
 				->where('exercicio', '=', $request->exercicio)
@@ -556,7 +561,7 @@ class DotacaoOrcamentariaController extends Controller
 		$arquivo = $request->file('arquivo');
 		$nome = $arquivo->getClientOriginalName();
 		$pesquisaFeita='';
-		
+		$exercicio = date("Y");
 		
 		if($arquivo->getClientOriginalExtension() == "xlsx")
 		{
@@ -612,7 +617,7 @@ class DotacaoOrcamentariaController extends Controller
 		foreach ($colecoes as $colecao)
 		{	
 				
-			$count = SaldodeDotacao::where('codigo_dotacao', $colecao['codigo_dotacao'])->where('exercicio', $request->exercicio)->count();
+			$count = SaldodeDotacao::where('codigo_dotacao', $colecao['codigo_dotacao'])->where('exercicio', $request->exercicio)->where('vinculo', $colecao['vinculo'])->count();
 				
 			//Verifica se existe dotacao já cadastrada
 			if ($count == 0) 
@@ -690,7 +695,7 @@ class DotacaoOrcamentariaController extends Controller
 		$exercicioAntigo = min($exercicios);
 		
 		
-		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios);
+		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios)->with('exercicio', $exercicio);
 		
 	
 

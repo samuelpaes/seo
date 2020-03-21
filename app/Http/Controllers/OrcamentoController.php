@@ -18,6 +18,7 @@ class OrcamentoController extends Controller
 {
      public function formularios(Request $request)
     {
+		//return($request);
 		$total_suplementar=0;
 		$total_anular=0;
 		$mensagem = "";
@@ -66,12 +67,51 @@ class OrcamentoController extends Controller
 			}
 		}
 		else if($acao == 'pesquisar')
-		{
+		{	$secretaria = Auth::user()->secretaria;
+			if($request->filtro == "formulario")
+			{
+				
+				if($request->tipoFormulario <> "TODOS")
+				{
+					
+					$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_formulario', '=', $request->tipoFormulario)->get();		
+					//return($formularios);
+				}
+				else{
+					$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->get();
+				}
+			}
+			else if($request->filtro == "instrumento")
+			{
+				if($request->tipoInstrumento == "PROCESSO")
+				{
+					$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+					$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_instrumento', '=', $request->tipoInstrumento)->where('numero_instrumento', '=', $instrumento)->get();
+				}
+				else if($request->tipoInstrumento == "MEMORANDO")
+				{
+					$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+					$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_instrumento', '=', $request->tipoInstrumento)->where('numero_instrumento', '=', $instrumento)->get();		
+				}
+				
+				else{
+					$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+					$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->where('numero_instrumento', '=', $instrumento)->get();
+				}
+			}
+			else if($request->filtro == "data")
+			{	
+				$formularios[] = FormularioAlteracaoOrcamentaria::whereDate('created_at', '=', $request->data)->get();
+				//return($formularios);	
+			}
+			else{
+				$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->get();
+				
+			}
 			
-			$secretaria = Auth::user()->secretaria;
-			$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->get();
+			
 			$pesquisaFeita = 'ok';
-			//return($formularios[0][0]['tipo_formulario']);
+		
 			
 			return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("exercicio", $exercicio)->with("pesquisaFeita", $pesquisaFeita)->with("formularios", $formularios);
 
@@ -1130,10 +1170,12 @@ class OrcamentoController extends Controller
 					
 					$i = $i+1;
 				}
+				//return($naturezas_dotacoes_total);
 			for($j = 0; $j<sizeof($naturezas_dotacoes_total); $j++)
 				{	
 					$naturezas_dotacoes_total[$j]['dotacao'] = DB::table("saldo_de_dotacaos")
 					->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
+					->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $naturezas_dotacoes_total[$j]['codigo_classificacaoFuncionalProgramatica'])
 					->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 					->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
 					->where('exercicio', '=', $exercicio)
@@ -1141,6 +1183,7 @@ class OrcamentoController extends Controller
 					
 					$naturezas_dotacoes_total[$j]['empenhado'] = DB::table("saldo_de_dotacaos")
 					->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
+					->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=',  $naturezas_dotacoes_total[$j]['codigo_classificacaoFuncionalProgramatica'])
 					->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 					->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
 					->where('exercicio', '=', $exercicio)
@@ -1148,6 +1191,7 @@ class OrcamentoController extends Controller
 					
 					$naturezas_dotacoes_total[$j]['saldo'] = DB::table("saldo_de_dotacaos")
 					->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
+					->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $naturezas_dotacoes_total[$j]['codigo_classificacaoFuncionalProgramatica'])
 					->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 					->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
 					->where('exercicio', '=', $exercicio)
@@ -1155,13 +1199,14 @@ class OrcamentoController extends Controller
 					
 					$naturezas_dotacoes_total[$j]['reserva'] = DB::table("saldo_de_dotacaos")
 					->where('saldo_de_dotacaos.natureza_de_despesa', '=', $naturezas_dotacoes_total[$j]['codigo_natureza'])
+					->where('saldo_de_dotacaos.classificacao_funcional_programatica', '=', $naturezas_dotacoes_total[$j]['codigo_classificacaoFuncionalProgramatica'])
 					->where('saldo_de_dotacaos.unidade_executora', '=',  $naturezas_dotacoes_total[$j]['codigo_executora'])
 					->where('saldo_de_dotacaos.unidade_orcamentaria', '=',  $naturezas_dotacoes_total[$j]['codigo_orcamentaria'])
 					->where('exercicio', '=', $exercicio)
 					->sum('reserva');	
 				}
 			$naturezas_dotacoes_total = array_unique($naturezas_dotacoes_total, SORT_REGULAR);
-
+			//return($naturezas_dotacoes_total);
 
 			//filtrando os Vinculos, Código de Dotações, Dotações, Empenhado e Saldo
 			$i=0;
@@ -1541,7 +1586,7 @@ class OrcamentoController extends Controller
 			
 			}
 			else{
-				$mensagem="Já Formulário Gerado!";
+				$mensagem="Já Existe Formulário Gerado!";
 			}
 				
 			
@@ -1881,7 +1926,31 @@ class OrcamentoController extends Controller
 				</table>
 		
 			<br>');
-			$mpdf->Output();
+			//verifica quantos formularios de Credito Adicional Complementar Existem
+			$rtt = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->count();
+			$rtt = $rtt+1;
+			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'"')->count() == 0)
+			{
+				FormularioAlteracaoOrcamentaria::create([
+					'codigo_formulario' => "rtt_".$rtt,
+					'tipo_instrumento' => $request->instrumento,
+					'numero_instrumento' => $request->numeroInstrumento,
+					'tipo_formulario' => $request->tipo_alteracao,	
+					'exercicio' => date("Y"),
+					'secretaria' => $request->secretaria,
+					'valor' => $request->total,
+					'usuario' => Auth::user()->registro,
+					'path' => '123',
+				]);		
+
+				//$mpdf->Output();
+				$mpdf->Output('files/formularios_alteracao_orcamentaria/rtt_'.$rtt.'.pdf','F');
+
+				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
+			}
+			else{
+				$mensagem="Já Existe Formulário Gerado!";
+			}
 		}
 		return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
 	
