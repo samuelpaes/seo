@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<script>
+<style>
 .btnEdicao:hover{cursor: pointer}
 .btnEdicao{
 	display: inline-block;
@@ -193,7 +193,8 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-</script>
+		
+</style>
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
@@ -277,6 +278,7 @@
 										<th></th>
 										<th>Secretaria</th>
 										<th>Nome</th>
+										<th>Sobrenome</th>
 										<th>Registro</th>
 										<th>Email</th>
 										<th>Tipo de Usuário</th>
@@ -287,17 +289,46 @@
 								@foreach($usuarios as $j => $value)
 									@foreach($value as $usuario)
 									<tr>
-										<td>
-											<button class='btnEdicao' type='button' data-hover='Cancelar' id="cancelar-{{$usuario['registro']}}" style='margin-right:-5px;left:0px; display: none;' onclick='cancelar()'><div><i class='fa fa-times'></i></div></button>
-											<button class='btnEdicao' type='button' data-hover='Salvar'  id="salvar-{{$usuario['registro']}}" style='margin:-5px;left:2px; display: none;' onclick='salvar()'><div><i class='fa fa-check'></i></div></button> 
-											<button class='btnEdicao' type='button' data-hover='Alterar' id="alterar-{{$usuario['registro']}}" style='margin-left:-5px; left:4px;' onclick='alterar()'><div><i class='fa fa-pencil'></i></div></button>
+										<td style="width:3%">
+											<button class='btnEdicao' type='button' data-hover='Cancelar' id="cancelar-{{$usuario['registro']}}" style='margin-right:-5px;left:0px; display: none;' onclick="cancelarUsuario({{$usuario['registro']}})"><div><i class='fa fa-times'></i></div></button>
+											<button class='btnEdicao' type='button' data-hover='Salvar'  id="salvar-{{$usuario['registro']}}" style='margin:-5px;left:5px; display: none;' onclick="salvarUsuario({{$usuario['registro']}})"><div><i class='fa fa-check'></i></div></button> 
+											<button class='btnEdicao' type='button' data-hover='Alterar' id="alterar-{{$usuario['registro']}}" style='margin-left:-5px; left:4px;' onclick="alterarUsuario({{$usuario['registro']}})"><div><i class='fa fa-pencil'></i></div></button>
 										</td>
-										<td style="width: 35%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="secretaria-{{$usuario['registro']}}" name='secretaria' value="{{$usuario['secretaria']}}" disabled></td>
-										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="nome-{{$usuario['registro']}}" name='nome' value="{{$usuario['name']}} {{$usuario['sobrenome']}}" disabled></td>
+										<td style="width: 30%">
+											<select class="form-control" name="secretaria" align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="secretaria-{{$usuario['registro']}}" name='secretaria' disabled>
+												<option <?php if ($usuario['secretaria'] == '') echo ' selected="selected"'; ?>></option>
+												<option value="SECRETARIA DE GOVERNO E GESTÃO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE GOVERNO E GESTÃO') echo ' selected="selected"'?>>SECRETARIA DE GOVERNO E GESTÃO</option>
+												<option value="SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS" <?php if ($usuario['secretaria'] == 'SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS') echo ' selected="selected"'?>>SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS</option>
+												<option value="SECRETARIA DE SERVIÇOS URBANOS" <?php if ($usuario['secretaria'] == 'SECRETARIA DE SERVIÇOS URBANOS') echo ' selected="selected"'?>>SECRETARIA DE SERVIÇOS URBANOS</option>
+												<option value="SECRETARIA DE EDUCAÇÃO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE EDUCAÇÃO') echo ' selected="selected"'?>>SECRETARIA DE EDUCAÇÃO</option>
+												<option value="SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA" <?php if ($usuario['secretaria'] == 'SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA') echo ' selected="selected"'?>>SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA</option>
+												<option value="SECRETARIA DE MEIO AMBIENTE" <?php if ($usuario['secretaria'] == 'SECRETARIA DE MEIO AMBIENTE') echo ' selected="selected"'?>>SECRETARIA DE MEIO AMBIENTE</option>
+												<option value="SECRETARIA DE PLANEJAMENTO URBANO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE PLANEJAMENTO URBANO') echo ' selected="selected"'?>>SECRETARIA DE PLANEJAMENTO URBANO</option>
+												<option value="SECRETARIA DE SEGURANÇA E CIDADANIA" <?php if ($usuario['secretaria'] == 'SECRETARIA DE SEGURANÇA E CIDADANIA') echo ' selected="selected"'?>>SECRETARIA DE SEGURANÇA E CIDADANIA</option>
+												<option value="SECRETARIA DE TURISMO, ESPORTE E CULTURA" <?php if ($usuario['secretaria'] == 'SECRETARIA DE TURISMO, ESPORTE E CULTURA') echo ' selected="selected"'?>>SECRETARIA DE TURISMO, ESPORTE E CULTURA</option>
+												<option value="SECRETARIA DE SAÚDE" <?php if ($usuario['secretaria'] == 'SECRETARIA DE SAÚDE') echo ' selected="selected"'?>>SECRETARIA DE SAÚDE</option>
+												<option value="SECRETARIA DE OBRAS E HABITAÇÃO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE OBRAS E HABITAÇÃO') echo ' selected="selected"'?>>SECRETARIA DE OBRAS E HABITAÇÃO</option>
+												<option value="PROCURADORIA GERAL DO MUNICÍPIO" <?php if ($usuario['secretaria'] == 'PROCURADORIA GERAL DO MUNICÍPIO') echo ' selected="selected"'?>>PROCURADORIA GERAL DO MUNICÍPIO</option>
+											</select>
+										</td>
+										<td style="width: 10%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="nome-{{$usuario['registro']}}" name='nome' value="{{$usuario['name']}}" disabled></td>
+										<td style="width: 20%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="sobrenome-{{$usuario['registro']}}" name='nome' value="{{$usuario['sobrenome']}}" disabled></td>
 										<td style="width: 8%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="registro-{{$usuario['registro']}}" name='registro' value="{{$usuario['registro']}}" disabled></td>
 										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="email-{{$usuario['registro']}}" name='email' value="{{$usuario['email']}}" disabled></td>
-										<td style="width: 8%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="isAdmin-{{$usuario['registro']}}" name='isAdmin' value="{{$usuario['isAdmin']}}" disabled></td>
-										<td style="width: 8%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="estado-{{$usuario['registro']}}" name='isAdmin' value="{{$usuario['estado']}}" disabled></td>
+										<td style="width: 8%">
+											<select class="form-control" name="estado"  id="isAdmin-{{$usuario['registro']}}" name='isAdmin' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="estado-{{$usuario['registro']}}" onclick="ativarPesquisar()" disabled>
+												<option <?php if($usuario['estado'] == '') echo 'selected="selected"' ?>></option>
+												<option value="1" <?php if($usuario['isAdmin'] == 1) echo 'selected="selected"' ?>>ADMINISTRADOR</option>
+												<option value="0" <?php if($usuario['isAdmin'] == 0) echo 'selected="selected"' ?>>GESTOR</option>
+											</select>
+										</td>
+										<td style="width: 8%">
+											<select class="form-control" name="estado" style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="estado-{{$usuario['registro']}}" onclick="ativarPesquisar()" disabled>
+												<option <?php if($usuario['estado'] == '') echo 'selected="selected"' ?>></option>
+												<option value="1" <?php if($usuario['estado'] == 1) echo 'selected="selected"' ?>>ATIVO</option>
+												<option value="0" <?php if($usuario['estado'] == 0) echo 'selected="selected"' ?>>INATIVO</option>
+											</select>
+										</td>
 										
 										<!--<td>{{$usuario['secretaria']}}</td>
 										<td>{{$usuario['name']}} {{$usuario['sobrenome']}}</td>
@@ -509,69 +540,123 @@ function ativarCamposParaEdicao()
 		document.getElementById('registro').disabled = false;
 	}
 
-	function alterar(x)
+function alterarUsuario(x)
 {
-	return(x);
-	dotacao_anterior = document.getElementById('dotacao-'+x).value;
-	empenhado_anterior = document.getElementById('empenhado-'+x).value;
-	reserva_anterior = document.getElementById('reserva-'+x).value;
-	saldo_anterior = document.getElementById('saldo-'+x).value;
-
-	/*document.getElementById('dotacao-'+x).disabled = false;
-	document.getElementById('dotacao-'+x).style.background = "#fff";
-	document.getElementById('dotacao-'+x).style.textAlign = "center";
-	document.getElementById('dotacao-'+x).style.removeProperty('border');
-
-	document.getElementById('empenhado-'+x).disabled = false;
-	document.getElementById('empenhado-'+x).style.background = "#fff";
-	document.getElementById('empenhado-'+x).style.textAlign = "center";
-	document.getElementById('empenhado-'+x).style.removeProperty('border');
 	
-	document.getElementById('reserva-'+x).disabled = false;
-	document.getElementById('reserva-'+x).style.background = "#fff";
-	document.getElementById('reserva-'+x).style.textAlign = "center";
-	document.getElementById('reserva-'+x).style.removeProperty('border');
+	secretaria_anterior = document.getElementById('secretaria-'+x).value;
+	nome_anterior = document.getElementById('nome-'+x).value;
+	sobrenome_anterior = document.getElementById('sobrenome-'+x).value;
+	registro_anterior = document.getElementById('registro-'+x).value;
+	email_anterior = document.getElementById('email-'+x).value;
+	isAdmin_anterior = document.getElementById('isAdmin-'+x).value;
+	estado_anterior = document.getElementById('estado-'+x).value;
+
+	document.getElementById('secretaria-'+x).disabled = false;
+	document.getElementById('secretaria-'+x).style.background = "#fff";
+	document.getElementById('secretaria-'+x).style.textAlign = "center";
+	document.getElementById('secretaria-'+x).style.removeProperty('border');
+	document.getElementById('secretaria-'+x).style.MozAppearance = "";
+	document.getElementById('secretaria-'+x).style.webkitAppearance = "";
+
+	document.getElementById('nome-'+x).disabled = false;
+	document.getElementById('nome-'+x).style.background = "#fff";
+	document.getElementById('nome-'+x).style.textAlign = "center";
+	document.getElementById('nome-'+x).style.removeProperty('border');
 	
-	document.getElementById('codigo_vinculo-'+x).disabled = false;
-	document.getElementById('codigo_dotacao-'+x).disabled = false;
+	document.getElementById('sobrenome-'+x).disabled = false;
+	document.getElementById('sobrenome-'+x).style.background = "#fff";
+	document.getElementById('sobrenome-'+x).style.textAlign = "center";
+	document.getElementById('sobrenome-'+x).style.removeProperty('border');
+	
+	document.getElementById('registro-'+x).disabled = false;
+	document.getElementById('registro-'+x).style.background = "#fff";
+	document.getElementById('registro-'+x).style.textAlign = "center";
+	document.getElementById('registro-'+x).style.removeProperty('border');
+	
+	document.getElementById('email-'+x).disabled = false;
+	document.getElementById('email-'+x).style.background = "#fff";
+	document.getElementById('email-'+x).style.textAlign = "center";
+	document.getElementById('email-'+x).style.removeProperty('border');
+	
+	document.getElementById('isAdmin-'+x).disabled = false;
+	document.getElementById('isAdmin-'+x).style.background = "#fff";
+	document.getElementById('isAdmin-'+x).style.textAlign = "center";
+	document.getElementById('isAdmin-'+x).style.removeProperty('border');
+	document.getElementById('isAdmin-'+x).style.MozAppearance = "";
+	document.getElementById('isAdmin-'+x).style.webkitAppearance = "";
+	
+	document.getElementById('estado-'+x).disabled = false;
+	document.getElementById('estado-'+x).style.background = "#fff";
+	document.getElementById('estado-'+x).style.textAlign = "center";
+	document.getElementById('estado-'+x).style.removeProperty('border');
+	document.getElementById('estado-'+x).style.MozAppearance = "";
+	document.getElementById('estado-'+x).style.webkitAppearance = "";
+	
 	document.getElementById('salvar-'+x).style.removeProperty('display');
 	document.getElementById('cancelar-'+x).style.removeProperty('display');
-	document.getElementById('alterar-'+x).style.display = "none";*/
+	document.getElementById('alterar-'+x).style.display = "none";
 }
 
-function cancelar(x)
+function cancelarUsuario(x)
 {
-	document.getElementById('dotacao-'+x).value = dotacao_anterior;
-	document.getElementById('empenhado-'+x).value = empenhado_anterior;
-	document.getElementById('reserva-'+x).value = reserva_anterior;
-	document.getElementById('saldo-'+x).value = saldo_anterior;
+	document.getElementById('secretaria-'+x).value = secretaria_anterior ;
+	document.getElementById('nome-'+x).value = nome_anterior;
+	document.getElementById('sobrenome-'+x).value = sobrenome_anterior;
+	document.getElementById('registro-'+x).value = registro_anterior;
+	document.getElementById('email-'+x).value = email_anterior;
+	document.getElementById('isAdmin-'+x).value = isAdmin_anterior;
+	document.getElementById('estado-'+x).value = estado_anterior;
 	
-	document.getElementById('dotacao-'+x).disabled = true;
-	document.getElementById('dotacao-'+x).style.background = "none";
-	document.getElementById('dotacao-'+x).style.textAlign = "right";
-	document.getElementById('dotacao-'+x).style.border = "none";
+	document.getElementById('secretaria-'+x).disabled = true;
+	document.getElementById('secretaria-'+x).style.background = "none";
+	document.getElementById('secretaria-'+x).style.textAlign = "right";
+	document.getElementById('secretaria-'+x).style.border = "none";
+	document.getElementById('secretaria-'+x).style.MozAppearance = "none";
+	document.getElementById('secretaria-'+x).style.webkitAppearance = "none";
 
-	document.getElementById('empenhado-'+x).disabled = true;
-	document.getElementById('empenhado-'+x).style.background = "none";
-	document.getElementById('empenhado-'+x).style.textAlign = "right";
-	document.getElementById('empenhado-'+x).style.border = "none";
+	document.getElementById('nome-'+x).disabled = true;
+	document.getElementById('nome-'+x).style.background = "#none";
+	document.getElementById('nome-'+x).style.textAlign = "right";
+	document.getElementById('nome-'+x).style.border = "none";
 	
-	document.getElementById('reserva-'+x).disabled = true;
-	document.getElementById('reserva-'+x).style.background = "none";
-	document.getElementById('reserva-'+x).style.textAlign = "right";
-	document.getElementById('reserva-'+x).style.border = "none";
-
-	document.getElementById('saldo-'+x).disabled = true;
-	document.getElementById('saldo-'+x).style.background = "none";
-	document.getElementById('saldo-'+x).style.textAlign = "right";
-	document.getElementById('saldo-'+x).style.border = "none";
+	document.getElementById('sobrenome-'+x).disabled = true;
+	document.getElementById('sobrenome-'+x).style.background = "#none";
+	document.getElementById('sobrenome-'+x).style.textAlign = "right";
+	document.getElementById('sobrenome-'+x).style.border = "none";
+	
+	document.getElementById('registro-'+x).disabled = true;
+	document.getElementById('registro-'+x).style.background = "#none";
+	document.getElementById('registro-'+x).style.textAlign = "right";
+	document.getElementById('registro-'+x).style.border = "none";
+	
+	document.getElementById('email-'+x).disabled = true;
+	document.getElementById('email-'+x).style.background = "#none";
+	document.getElementById('email-'+x).style.textAlign = "right";
+	document.getElementById('email-'+x).style.border = "none";
+	
+	document.getElementById('isAdmin-'+x).disabled = true;
+	document.getElementById('isAdmin-'+x).style.background = "none";
+	document.getElementById('isAdmin-'+x).style.textAlign = "right";
+	document.getElementById('isAdmin-'+x).style.border = "none";
+	document.getElementById('isAdmin-'+x).style.MozAppearance = "none";
+	document.getElementById('isAdmin-'+x).style.webkitAppearance = "none";
+	
+	document.getElementById('estado-'+x).disabled = true;
+	document.getElementById('estado-'+x).style.background = "none";
+	document.getElementById('estado-'+x).style.textAlign = "right";
+	document.getElementById('estado-'+x).style.border = "none";
+	document.getElementById('estado-'+x).style.MozAppearance = "none";
+	document.getElementById('estado-'+x).style.webkitAppearance = "none";
+	
+		
+	/*
 	
 	document.getElementById('salvar-'+x).style.display = "none";
 	document.getElementById('cancelar-'+x).style.display = "none";
 	document.getElementById('alterar-'+x).style.removeProperty('display');
 }
 
-function salvar(x)
+function salvarUsuario(x)
 {
 	saldo = document.getElementById('saldo-'+x).value;
 	saldo = saldo.replace("R$", "");
@@ -586,7 +671,7 @@ function salvar(x)
 	}
 	else
 	{
-	document.getElementById('dotacao-'+x).readOnly = true;
+	/*document.getElementById('dotacao-'+x).readOnly = true;
 	document.getElementById('dotacao-'+x).style.background = "none";
 	document.getElementById('dotacao-'+x).style.textAlign = "right";
 	document.getElementById('dotacao-'+x).style.border = "none";
@@ -613,13 +698,13 @@ function salvar(x)
 	document.getElementById('dotacao-'+x).value = dotacao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 	document.getElementById('empenhado-'+x).value = empenhado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 	document.getElementById('reserva-'+x).value = reserva.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-	document.getElementById('saldo-'+x).value = saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+	document.getElementById('saldo-'+x).value = saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });*/
 	
 	document.getElementById('salvar-'+x).style.display = "none";
 	document.getElementById('cancelar-'+x).style.display = "none";
 	document.getElementById('alterar-'+x).style.removeProperty('display');
 	
-	document.getElementById('atualizar').style.display = '';
+	//document.getElementById('atualizar').style.display = '';
 	
 	}
 }

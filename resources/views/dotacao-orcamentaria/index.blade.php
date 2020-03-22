@@ -1,6 +1,6 @@
 @extends('layouts.app')
 	@section('content')	
-<STYLE>
+<style>
 .btnEdicao:hover{cursor: pointer}
 .btnEdicao{
 	display: inline-block;

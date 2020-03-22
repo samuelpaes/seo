@@ -23,7 +23,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="name">Nome</label>
-										<input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+										<input id="name" style="text-transform: uppercase;" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
 										@if ($errors->has('name'))
 											<span class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="sobrenome">Sobrenome</label>
-										<input type="text" class="form-control" value="" name="sobrenome">
+										<input type="text" class="form-control" value="" style="text-transform: uppercase;" name="sobrenome">
 									</div>
 								</div>
 							</div>
@@ -48,18 +48,18 @@
 										<label>Secretaria</label>
 										<select class="form-control" name="secretaria" id="secretaria">
 											<option selected></option>
-											<option value="Secretaria de Governo e Gestão">Secretaria de Governo e Gestão</option>
-											<option value="Secretaria de Administração e Finanças">Secretaria de Administração e Finanças</option>
-											<option value="Secretaria de Serviços Urbanos">Secretaria de Serviços Urbanos</option>
-											<option value="Secretaria de Educação">Secretaria de Educação</option>
-											<option value="Secretaria de Desenvolvimento Social">Secretaria de Desenvolvimento Social</option>
-											<option value="Secretaria de Meio Ambiente">Secretaria de Meio Ambiente</option>
-											<option value="Secretaria de Planejamento Urbano">Secretaria de Planejamento Urbano</option>
-											<option value="Secretaria de Segurança e Cidadania">Secretaria de Segurança e Cidadania</option>
-											<option value="Secretaria de Turismo, Esporte e Cultura">Secretaria de Turismo, Esporte e Cultura</option>
-											<option value="Secretaria de Saúde">Secretaria de Saúde</option>
-											<option value="Secretaria de Obras e Habitação">Secretaria de Obras e Habitação</option>
-											<option value="Procuradoria Geral do Município">Procuradoria Geral do Município</option>
+											<option value="SECRETARIA DE GOVERNO E GESTÃO">SECRETARIA DE GOVERNO E GESTÃO</option>
+											<option value="SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS">SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS</option>
+											<option value="SECRETARIA DE SERVIÇOS URBANOS">SECRETARIA DE SERVIÇOS URBANOS</option>
+											<option value="SECRETARIA DE EDUCAÇÃO">SECRETARIA DE EDUCAÇÃO</option>
+											<option value="SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA">SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA</option>
+											<option value="SECRETARIA DE MEIO AMBIENTE">SECRETARIA DE MEIO AMBIENTE</option>
+											<option value="SECRETARIA DE PLANEJAMENTO URBANO">SECRETARIA DE PLANEJAMENTO URBANO</option>
+											<option value="SECRETARIA DE SEGURANÇA E CIDADANIA">SECRETARIA DE SEGURANÇA E CIDADANIA</option>
+											<option value="SECRETARIA DE TURISMO, ESPORTE E CULTURA">SECRETARIA DE TURISMO, ESPORTE E CULTURA</option>
+											<option value="SECRETARIA DE SAÚDE">SECRETARIA DE SAÚDE</option>
+											<option value="SECRETARIA DE OBRAS E HABITAÇÃO">SECRETARIA DE OBRAS E HABITAÇÃO</option>
+											<option value="PROCURADORIA GERAL DO MUNICÍPIO">PROCURADORIA GERAL DO MUNICÍPIO</option>
 										</select>
 									</div>
 								</div>
@@ -84,8 +84,8 @@
 									<label>Nível de Acesso</label>
 									<select class="form-control" name="isAdmin">
 										<option selected></option>
-										<option value="0">Gestor</option>
-										<option value="1">Administrador</option>
+										<option value="0">GESTOR</option>
+										<option value="1">ADMINISTRADOR</option>
 									</select>
 								</div>	
 							</div>

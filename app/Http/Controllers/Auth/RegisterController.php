@@ -80,13 +80,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'name' => strtoupper($data['name']),
 			'secretaria' => $data['secretaria'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
 			'registro'=> $data['registro'],
 			'isAdmin'=> $data['isAdmin'],
-			'sobrenome'=> $data['sobrenome'],
+			'sobrenome'=> strtoupper($data['sobrenome']),
         ]);
     }
 }
