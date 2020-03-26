@@ -210,11 +210,11 @@
 											<div class="row" >
 												<div class="col-md-3" >
 													<select class="form-control" id="tipoPesquisa" onclick="filtroPesquisa()">
-														<option value="REGISTRO" selected>REGISTRO</OPTION>
-														<option value="NOME">NOME</OPTION>
-														<option value="SECRETARIA">SECRETARIA</OPTION>
-														<option value="ESTADO">ESTADO</OPTION>
-														<option value="TIPO DE USUÁRIO">TIPO DE USUÁRIO</OPTION>
+														<option value="REGISTRO" <?php if ($filtro == '' || $filtro == 'REGISTRO') echo ' selected="selected"'?>>REGISTRO</OPTION>
+														<option value="NOME" <?php if ($filtro == 'NOME') echo ' selected="selected"'?>>NOME</OPTION>
+														<option value="SECRETARIA" <?php if ($filtro == 'SECRETARIA') echo ' selected="selected"'?>>SECRETARIA</OPTION>
+														<option value="STATUS" <?php if ($filtro == 'STATUS') echo ' selected="selected"'?> >STATUS</OPTION>
+														<option value="TIPO DE USUÁRIO" <?php if ($filtro == 'TIPO_USUARIO') echo ' selected="selected"'?>>TIPO DE USUÁRIO</OPTION>
 													</select>
 												</div>
 												<div class="col-md-7" id="registro">
@@ -240,8 +240,8 @@
 														<option value="PROCURADORIA GERAL DO MUNICÍPIO">PROCURADORIA GERAL DO MUNICÍPIO</option>
 													</select>
 												</div>
-												<div class="col-md-7" id="estado" hidden>
-													<select class="form-control" name="estado" onclick="ativarPesquisar()">
+												<div class="col-md-7" id="status" hidden>
+													<select class="form-control" name="status" onclick="ativarPesquisar()">
 														<option selected></option>
 														<option value="1">ATIVO</option>
 														<option value="0">INATIVO</option>
@@ -274,6 +274,7 @@
                         <div class="content table-responsive table-full-width">
                             <table class="table table-hover table-striped">
                                 <thead>
+								
                                     <tr>
 										<th></th>
 										<th>Secretaria</th>
@@ -282,12 +283,15 @@
 										<th>Registro</th>
 										<th>Email</th>
 										<th>Tipo de Usuário</th>
-										<th>Estado</th>
+										<th>Status</th>
                                		</tr>
 								</thead>
+								<form method="post" action="{{ route('atualizarUsuario') }}">
+								@csrf
+								@method('POST')	
                                 <tbody>
-								@foreach($usuarios as $j => $value)
-									@foreach($value as $usuario)
+								
+								@foreach($usuarios as $usuario)
 									<tr>
 										<td style="width:3%">
 											<button class='btnEdicao' type='button' data-hover='Cancelar' id="cancelar-{{$usuario['registro']}}" style='margin-right:-5px;left:0px; display: none;' onclick="cancelarUsuario({{$usuario['registro']}})"><div><i class='fa fa-times'></i></div></button>
@@ -295,7 +299,7 @@
 											<button class='btnEdicao' type='button' data-hover='Alterar' id="alterar-{{$usuario['registro']}}" style='margin-left:-5px; left:4px;' onclick="alterarUsuario({{$usuario['registro']}})"><div><i class='fa fa-pencil'></i></div></button>
 										</td>
 										<td style="width: 30%">
-											<select class="form-control" name="secretaria" align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="secretaria-{{$usuario['registro']}}" name='secretaria' disabled>
+											<select class="form-control" name="secretaria[]" align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="secretaria-{{$usuario['registro']}}" name='secretaria'  readonly>
 												<option <?php if ($usuario['secretaria'] == '') echo ' selected="selected"'; ?>></option>
 												<option value="SECRETARIA DE GOVERNO E GESTÃO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE GOVERNO E GESTÃO') echo ' selected="selected"'?>>SECRETARIA DE GOVERNO E GESTÃO</option>
 												<option value="SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS" <?php if ($usuario['secretaria'] == 'SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS') echo ' selected="selected"'?>>SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS</option>
@@ -311,35 +315,39 @@
 												<option value="PROCURADORIA GERAL DO MUNICÍPIO" <?php if ($usuario['secretaria'] == 'PROCURADORIA GERAL DO MUNICÍPIO') echo ' selected="selected"'?>>PROCURADORIA GERAL DO MUNICÍPIO</option>
 											</select>
 										</td>
-										<td style="width: 10%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="nome-{{$usuario['registro']}}" name='nome' value="{{$usuario['name']}}" disabled></td>
-										<td style="width: 20%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="sobrenome-{{$usuario['registro']}}" name='nome' value="{{$usuario['sobrenome']}}" disabled></td>
-										<td style="width: 8%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="registro-{{$usuario['registro']}}" name='registro' value="{{$usuario['registro']}}" disabled></td>
-										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;' id="email-{{$usuario['registro']}}" name='email' value="{{$usuario['email']}}" disabled></td>
+										<td style="width: 10%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;text-transform: uppercase;' id="nome-{{$usuario['registro']}}" name='nome[]' value="{{$usuario['name']}}" readonly></td>
+										<td style="width: 20%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;text-transform: uppercase;' id="sobrenome-{{$usuario['registro']}}" name='sobrenome[]' value="{{$usuario['sobrenome']}}" readonly></td>
+										<td style="width: 8%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;text-transform: uppercase;' id="registro-{{$usuario['registro']}}" name='registro[]' value="{{$usuario['registro']}}" readonly></td>
+										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;text-transform: uppercase;' id="email-{{$usuario['registro']}}" name='email[]' value="{{$usuario['email']}}" readonly></td>
 										<td style="width: 8%">
-											<select class="form-control" name="estado"  id="isAdmin-{{$usuario['registro']}}" name='isAdmin' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="estado-{{$usuario['registro']}}" onclick="ativarPesquisar()" disabled>
-												<option <?php if($usuario['estado'] == '') echo 'selected="selected"' ?>></option>
+											<select class="form-control" name="isAdmin[]"  id="isAdmin-{{$usuario['registro']}}" name='isAdmin[]' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
+												<option <?php if($usuario['status'] == '') echo 'selected="selected"' ?>></option>
 												<option value="1" <?php if($usuario['isAdmin'] == 1) echo 'selected="selected"' ?>>ADMINISTRADOR</option>
 												<option value="0" <?php if($usuario['isAdmin'] == 0) echo 'selected="selected"' ?>>GESTOR</option>
 											</select>
 										</td>
 										<td style="width: 8%">
-											<select class="form-control" name="estado" style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="estado-{{$usuario['registro']}}" onclick="ativarPesquisar()" disabled>
-												<option <?php if($usuario['estado'] == '') echo 'selected="selected"' ?>></option>
-												<option value="1" <?php if($usuario['estado'] == 1) echo 'selected="selected"' ?>>ATIVO</option>
-												<option value="0" <?php if($usuario['estado'] == 0) echo 'selected="selected"' ?>>INATIVO</option>
+											<select class="form-control" name="status[]" style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
+												<option <?php if($usuario['status'] == '') echo 'selected="selected"' ?>></option>
+												<option value="1" <?php if($usuario['status'] == 0) echo 'selected="selected"' ?>>ATIVO</option>
+												<option value="0" <?php if($usuario['status'] == 1) echo 'selected="selected"' ?>>INATIVO</option>
 											</select>
-										</td>
-										
-										<!--<td>{{$usuario['secretaria']}}</td>
-										<td>{{$usuario['name']}} {{$usuario['sobrenome']}}</td>
-										<td>{{$usuario['registro']}}</td>
-                                       	<td>{{$usuario['email']}}</td>
-                                       	<td>{{$usuario['isAdmin']}}</td>
-										<td>{{$usuario['estado']}}</td>-->
+										</td>	
                                     </tr>
+								
 									@endforeach
-								@endforeach
+									<tr style='background:none;'>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td><input value='Atualizar' id='btnAtualizar' type='submit' class='btn btn-info btn-fill pull-right' style='position:relative; margin-bottom:-25px;  background:#a1e82c; border-color:#a1e82c; display:none'></td>
+									</tr>
                                 </tbody>
+								</form>
 							</table>
 							
     						
@@ -385,11 +393,11 @@
 	
 
 		<!--  Verifica se o usuário foi cadastrado com suceso e chama o modal -->
-		@if ( $usuario_cadastrado == "ok" )
+		@if ( $usuario_atualizado == "ok" )
 			<script>
 				$(document).ready(function()
 				{
-					$('#modalCadastroComSucesso').modal({
+					$('#modalAtualizadoComSucesso').modal({
 						show: true,
 					})
 				});
@@ -417,7 +425,7 @@
 <!--  Modal Usuário Sem Acesso -->
 <div class="modal"  id="modalUsuarioSemAcesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
 	<div class="modal-dialog" role="document">
-		<div class="alert alert-success" style="border-radius: 5px">
+		<div class="alert alert-warning" style="border-radius: 5px">
 			<button type="button" aria-hidden="true" class="close" data-dismiss="modal">×</button>
 			<span><b> Atenção! - </b> Usuário sem permissão de acesso. Contate o administrador do sistema. </span>
 		</div>
@@ -426,11 +434,11 @@
 
 
 <!-- Modal Cadastrado com Sucesso -->
-<div class="modal"  id="modalCadastroComSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
+<div class="modal"  id="modalAtualizadoComSucesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
 	<div class="modal-dialog" role="document">
 		<div class="alert alert-success" style="border-radius: 5px">
 			<button type="button" aria-hidden="true" class="close" data-dismiss="modal">×</button>
-			<span><b> Sucesso! - </b> Cadastro de usuário concluído com sucesso. </span>
+			<span><b> Sucesso! - </b> Usuário atualizado concluído com sucesso. </span>
 		</div>
 	</div>
 </div>
@@ -438,14 +446,12 @@
 <!-- Modal Usuário não Localizado-->
 <div class="modal"  id="modalUsuarioNaoLocalizado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
 	<div class="modal-dialog" role="document">
-		<div class="alert alert-success" style="border-radius: 5px">
+		<div class="alert alert-warning" style="border-radius: 5px">
 			<button type="button" aria-hidden="true" class="close" data-dismiss="modal">×</button>
 			<span><b> Erro! - </b> Usuário não Localizado. </span>
 		</div>
 	</div>
 </div>
-
-
 
 <!--Habilita campos 'Input' para alteração -->
 <script>
@@ -467,7 +473,7 @@ function filtroPesquisa()
 		document.getElementById('registro').hidden = false;
 		document.getElementById('nome').hidden = true;
 		document.getElementById('secretaria').hidden = true;
-		document.getElementById('estado').hidden = true;
+		document.getElementById('status').hidden = true;
 		document.getElementById('tipoUsuario').hidden = true;
 
 		document.getElementById('filtro').value = "REGISTRO";
@@ -476,7 +482,7 @@ function filtroPesquisa()
 		document.getElementById('registro').hidden = true;
 		document.getElementById('nome').hidden = false;
 		document.getElementById('secretaria').hidden = true;
-		document.getElementById('estado').hidden = true;
+		document.getElementById('status').hidden = true;
 		document.getElementById('tipoUsuario').hidden = true;
 
 		document.getElementById('filtro').value = "NOME";
@@ -486,27 +492,27 @@ function filtroPesquisa()
 		document.getElementById('registro').hidden = true;
 		document.getElementById('nome').hidden = true;
 		document.getElementById('secretaria').hidden = false;
-		document.getElementById('estado').hidden = true;
+		document.getElementById('status').hidden = true;
 		document.getElementById('tipoUsuario').hidden = true;
 
 		document.getElementById('filtro').value = "SECRETARIA";
 
 	}
-	else if(opcao == "ESTADO"){
+	else if(opcao == "STATUS"){
 		document.getElementById('registro').hidden = true;
 		document.getElementById('nome').hidden = true;
 		document.getElementById('secretaria').hidden = true;
-		document.getElementById('estado').hidden = false;
+		document.getElementById('status').hidden = false;
 		document.getElementById('tipoUsuario').hidden = true;
 
-		document.getElementById('filtro').value = "ESTADO";
+		document.getElementById('filtro').value = "STATUS";
 
 	}
 	else if(opcao == "TIPO DE USUÁRIO"){
 		document.getElementById('registro').hidden = true;
 		document.getElementById('nome').hidden = true;
 		document.getElementById('secretaria').hidden = true;
-		document.getElementById('estado').hidden = true;
+		document.getElementById('status').hidden = true;
 		document.getElementById('tipoUsuario').hidden = false;
 
 		document.getElementById('filtro').value = "TIPO_USUARIO";
@@ -516,7 +522,7 @@ function filtroPesquisa()
 		document.getElementById('registro').hidden = false;
 		document.getElementById('nome').hidden = true;
 		document.getElementById('secretaria').hidden = true;
-		document.getElementById('estado').hidden = true;
+		document.getElementById('status').hidden = true;
 		document.getElementById('tipoUsuario').hidden = true;
 
 		document.getElementById('filtro').value = "TODOS";
@@ -531,7 +537,7 @@ function ativarCamposParaEdicao()
 		document.getElementById('secretaria').disabled = false;
 		document.getElementById('password').disabled = false;
 		document.getElementById('password-confirm').disabled = false;
-		document.getElementById('estado').disabled = false;
+		document.getElementById('status').disabled = false;
 		document.getElementById('isAdmin').disabled = false;
 	}
 	function ativarCamposParaEdicao2() 
@@ -549,48 +555,48 @@ function alterarUsuario(x)
 	registro_anterior = document.getElementById('registro-'+x).value;
 	email_anterior = document.getElementById('email-'+x).value;
 	isAdmin_anterior = document.getElementById('isAdmin-'+x).value;
-	estado_anterior = document.getElementById('estado-'+x).value;
+	estado_anterior = document.getElementById('status-'+x).value;
 
-	document.getElementById('secretaria-'+x).disabled = false;
+	document.getElementById('secretaria-'+x).readOnly = false;
 	document.getElementById('secretaria-'+x).style.background = "#fff";
 	document.getElementById('secretaria-'+x).style.textAlign = "center";
 	document.getElementById('secretaria-'+x).style.removeProperty('border');
 	document.getElementById('secretaria-'+x).style.MozAppearance = "";
 	document.getElementById('secretaria-'+x).style.webkitAppearance = "";
 
-	document.getElementById('nome-'+x).disabled = false;
+	document.getElementById('nome-'+x).readOnly = false;
 	document.getElementById('nome-'+x).style.background = "#fff";
 	document.getElementById('nome-'+x).style.textAlign = "center";
 	document.getElementById('nome-'+x).style.removeProperty('border');
 	
-	document.getElementById('sobrenome-'+x).disabled = false;
+	document.getElementById('sobrenome-'+x).readOnly = false;
 	document.getElementById('sobrenome-'+x).style.background = "#fff";
 	document.getElementById('sobrenome-'+x).style.textAlign = "center";
 	document.getElementById('sobrenome-'+x).style.removeProperty('border');
 	
-	document.getElementById('registro-'+x).disabled = false;
+	document.getElementById('registro-'+x).readOnly = false;
 	document.getElementById('registro-'+x).style.background = "#fff";
 	document.getElementById('registro-'+x).style.textAlign = "center";
 	document.getElementById('registro-'+x).style.removeProperty('border');
 	
-	document.getElementById('email-'+x).disabled = false;
+	document.getElementById('email-'+x).readOnly = false;
 	document.getElementById('email-'+x).style.background = "#fff";
 	document.getElementById('email-'+x).style.textAlign = "center";
 	document.getElementById('email-'+x).style.removeProperty('border');
 	
-	document.getElementById('isAdmin-'+x).disabled = false;
+	document.getElementById('isAdmin-'+x).readOnly = false;
 	document.getElementById('isAdmin-'+x).style.background = "#fff";
 	document.getElementById('isAdmin-'+x).style.textAlign = "center";
 	document.getElementById('isAdmin-'+x).style.removeProperty('border');
 	document.getElementById('isAdmin-'+x).style.MozAppearance = "";
 	document.getElementById('isAdmin-'+x).style.webkitAppearance = "";
 	
-	document.getElementById('estado-'+x).disabled = false;
-	document.getElementById('estado-'+x).style.background = "#fff";
-	document.getElementById('estado-'+x).style.textAlign = "center";
-	document.getElementById('estado-'+x).style.removeProperty('border');
-	document.getElementById('estado-'+x).style.MozAppearance = "";
-	document.getElementById('estado-'+x).style.webkitAppearance = "";
+	document.getElementById('status-'+x).readOnly = false;
+	document.getElementById('status-'+x).style.background = "#fff";
+	document.getElementById('status-'+x).style.textAlign = "center";
+	document.getElementById('status-'+x).style.removeProperty('border');
+	document.getElementById('status-'+x).style.MozAppearance = "";
+	document.getElementById('status-'+x).style.webkitAppearance = "";
 	
 	document.getElementById('salvar-'+x).style.removeProperty('display');
 	document.getElementById('cancelar-'+x).style.removeProperty('display');
@@ -605,52 +611,53 @@ function cancelarUsuario(x)
 	document.getElementById('registro-'+x).value = registro_anterior;
 	document.getElementById('email-'+x).value = email_anterior;
 	document.getElementById('isAdmin-'+x).value = isAdmin_anterior;
-	document.getElementById('estado-'+x).value = estado_anterior;
+	document.getElementById('status-'+x).value = estado_anterior;
 	
-	document.getElementById('secretaria-'+x).disabled = true;
+	document.getElementById('secretaria-'+x).readOnly = true;
 	document.getElementById('secretaria-'+x).style.background = "none";
 	document.getElementById('secretaria-'+x).style.textAlign = "right";
 	document.getElementById('secretaria-'+x).style.border = "none";
 	document.getElementById('secretaria-'+x).style.MozAppearance = "none";
 	document.getElementById('secretaria-'+x).style.webkitAppearance = "none";
 
-	document.getElementById('nome-'+x).disabled = true;
-	document.getElementById('nome-'+x).style.background = "#none";
+	document.getElementById('nome-'+x).readOnly = true;
+	document.getElementById('nome-'+x).style.background = "none";
 	document.getElementById('nome-'+x).style.textAlign = "right";
 	document.getElementById('nome-'+x).style.border = "none";
+	document.getElementById('nome-'+x).style.textAlign = "left";
 	
-	document.getElementById('sobrenome-'+x).disabled = true;
-	document.getElementById('sobrenome-'+x).style.background = "#none";
+	document.getElementById('sobrenome-'+x).readOnly = true;
+	document.getElementById('sobrenome-'+x).style.background = "none";
 	document.getElementById('sobrenome-'+x).style.textAlign = "right";
 	document.getElementById('sobrenome-'+x).style.border = "none";
+	document.getElementById('sobrenome-'+x).style.textAlign = "left";
 	
-	document.getElementById('registro-'+x).disabled = true;
-	document.getElementById('registro-'+x).style.background = "#none";
+	document.getElementById('registro-'+x).readOnly = true;
+	document.getElementById('registro-'+x).style.background = "none";
 	document.getElementById('registro-'+x).style.textAlign = "right";
 	document.getElementById('registro-'+x).style.border = "none";
+	document.getElementById('registro-'+x).style.textAlign = "left";
 	
-	document.getElementById('email-'+x).disabled = true;
-	document.getElementById('email-'+x).style.background = "#none";
+	document.getElementById('email-'+x).readOnly = true;
+	document.getElementById('email-'+x).style.background = "none";
 	document.getElementById('email-'+x).style.textAlign = "right";
 	document.getElementById('email-'+x).style.border = "none";
+	document.getElementById('email-'+x).style.textAlign = "left";
 	
-	document.getElementById('isAdmin-'+x).disabled = true;
+	document.getElementById('isAdmin-'+x).readOnly = true;
 	document.getElementById('isAdmin-'+x).style.background = "none";
 	document.getElementById('isAdmin-'+x).style.textAlign = "right";
 	document.getElementById('isAdmin-'+x).style.border = "none";
 	document.getElementById('isAdmin-'+x).style.MozAppearance = "none";
 	document.getElementById('isAdmin-'+x).style.webkitAppearance = "none";
 	
-	document.getElementById('estado-'+x).disabled = true;
-	document.getElementById('estado-'+x).style.background = "none";
-	document.getElementById('estado-'+x).style.textAlign = "right";
-	document.getElementById('estado-'+x).style.border = "none";
-	document.getElementById('estado-'+x).style.MozAppearance = "none";
-	document.getElementById('estado-'+x).style.webkitAppearance = "none";
-	
-		
-	/*
-	
+	document.getElementById('status-'+x).readOnly = true;
+	document.getElementById('status-'+x).style.background = "none";
+	document.getElementById('status-'+x).style.textAlign = "right";
+	document.getElementById('status-'+x).style.border = "none";
+	document.getElementById('status-'+x).style.MozAppearance = "none";
+	document.getElementById('status-'+x).style.webkitAppearance = "none";
+
 	document.getElementById('salvar-'+x).style.display = "none";
 	document.getElementById('cancelar-'+x).style.display = "none";
 	document.getElementById('alterar-'+x).style.removeProperty('display');
@@ -658,54 +665,63 @@ function cancelarUsuario(x)
 
 function salvarUsuario(x)
 {
-	saldo = document.getElementById('saldo-'+x).value;
-	saldo = saldo.replace("R$", "");
+	secretaria = document.getElementById('secretaria-'+x).value;
+	nome = document.getElementById('nome-'+x).value;
+	sobrenome = document.getElementById('sobrenome-'+x).value;
+	registro = document.getElementById('registro-'+x).value;
+	email = document.getElementById('email-'+x).value;
+	isAdmin = document.getElementById('isAdmin-'+x).value;
+	estado = document.getElementById('status-'+x).value;
 	
-	if (saldo.includes("-") == true)
-	{
-		
-		$("#modalSaldoNegativo").modal({
-		show: true
-		});
-		
-	}
-	else
-	{
-	/*document.getElementById('dotacao-'+x).readOnly = true;
-	document.getElementById('dotacao-'+x).style.background = "none";
-	document.getElementById('dotacao-'+x).style.textAlign = "right";
-	document.getElementById('dotacao-'+x).style.border = "none";
+	document.getElementById('secretaria-'+x).readOnly = true;
+	document.getElementById('secretaria-'+x).style.background = "none";
+	document.getElementById('secretaria-'+x).style.textAlign = "right";
+	document.getElementById('secretaria-'+x).style.border = "none";
+	document.getElementById('secretaria-'+x).style.MozAppearance = "none";
+	document.getElementById('secretaria-'+x).style.webkitAppearance = "none";
 
-
-	document.getElementById('empenhado-'+x).readOnly = true;
-	document.getElementById('empenhado-'+x).style.background = "none";
-	document.getElementById('empenhado-'+x).style.textAlign = "right";
-	document.getElementById('empenhado-'+x).style.border = "none";
-
+	document.getElementById('nome-'+x).readOnly = true;
+	document.getElementById('nome-'+x).style.background = "none";
+	document.getElementById('nome-'+x).style.textAlign = "right";
+	document.getElementById('nome-'+x).style.border = "none";
+	document.getElementById('nome-'+x).style.textAlign = "left";
 	
-	document.getElementById('reserva-'+x).readOnly = true;
-	document.getElementById('reserva-'+x).style.background = "none";
-	document.getElementById('reserva-'+x).style.textAlign = "right";
-	document.getElementById('reserva-'+x).style.border = "none";
-
-
-	document.getElementById('saldo-'+x).readOnly = true;
-	document.getElementById('saldo-'+x).style.background = "none";
-	document.getElementById('saldo-'+x).style.textAlign = "right";
-	document.getElementById('saldo-'+x).style.border = "none";
-
+	document.getElementById('sobrenome-'+x).readOnly = true;
+	document.getElementById('sobrenome-'+x).style.background = "none";
+	document.getElementById('sobrenome-'+x).style.textAlign = "right";
+	document.getElementById('sobrenome-'+x).style.border = "none";
+	document.getElementById('sobrenome-'+x).style.textAlign = "left";
 	
-	document.getElementById('dotacao-'+x).value = dotacao.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-	document.getElementById('empenhado-'+x).value = empenhado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-	document.getElementById('reserva-'+x).value = reserva.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-	document.getElementById('saldo-'+x).value = saldo.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });*/
+	document.getElementById('registro-'+x).readOnly = true;
+	document.getElementById('registro-'+x).style.background = "none";
+	document.getElementById('registro-'+x).style.textAlign = "right";
+	document.getElementById('registro-'+x).style.border = "none";
+	document.getElementById('registro-'+x).style.textAlign = "left";
 	
+	document.getElementById('email-'+x).readOnly = true;
+	document.getElementById('email-'+x).style.background = "none";
+	document.getElementById('email-'+x).style.textAlign = "right";
+	document.getElementById('email-'+x).style.border = "none";
+	document.getElementById('email-'+x).style.textAlign = "left";
+	
+	document.getElementById('isAdmin-'+x).readOnly = true;
+	document.getElementById('isAdmin-'+x).style.background = "none";
+	document.getElementById('isAdmin-'+x).style.textAlign = "right";
+	document.getElementById('isAdmin-'+x).style.border = "none";
+	document.getElementById('isAdmin-'+x).style.MozAppearance = "none";
+	document.getElementById('isAdmin-'+x).style.webkitAppearance = "none";
+	
+	document.getElementById('status-'+x).readOnly = true;
+	document.getElementById('status-'+x).style.background = "none";
+	document.getElementById('status-'+x).style.textAlign = "right";
+	document.getElementById('status-'+x).style.border = "none";
+	document.getElementById('status-'+x).style.MozAppearance = "none";
+	document.getElementById('status-'+x).style.webkitAppearance = "none";
+
 	document.getElementById('salvar-'+x).style.display = "none";
 	document.getElementById('cancelar-'+x).style.display = "none";
 	document.getElementById('alterar-'+x).style.removeProperty('display');
-	
-	//document.getElementById('atualizar').style.display = '';
-	
-	}
+
+	document.getElementById('btnAtualizar').style.removeProperty('display');
 }
 </script>

@@ -1580,12 +1580,15 @@ class OrcamentoController extends Controller
 				]);		
 
 				//$mpdf->Output();
-				$mpdf->Output('files/formularios_alteracao_orcamentaria/cas_'.$cas.'.pdf','F');
+				//$mpdf->Output('files/formularios_alteracao_orcamentaria/cas_'.$cas.'.pdf');
+				$mpdf->Output();
+
 
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
 			
 			}
 			else{
+				$mpdf->Output();
 				$mensagem="Já Existe Formulário Gerado!";
 			}
 				

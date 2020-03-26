@@ -226,13 +226,14 @@ function abrirFormularioPDF(codigo_formulario)
 
 	var valor = "http://127.0.0.1/seo/public/files/formularios_alteracao_orcamentaria/"+codigo_formulario+".pdf";
 	//alert(codigo_formulario)		;
-	var sub = "{{url('files/formularios_alteracao_orcamentaria/cas_1.pdf')}}";
-					
+	var sub = "{{url('files/formularios_alteracao_orcamentaria/arquivo.pdf')}}";
+	sub = sub.replace("arquivo", codigo_formulario);
+	//alert(sub);				
 	object += "Exibição indisponível!";
    // object += " or download <a target = \"_blank\" href = \"http://get.adobe.com/reader/\">Adobe PDF Reader</a> to view the file.";
     object += "</object>";
 					
-    object = object.replace(/{FileName}/g, valor);
+    object = object.replace(/{FileName}/g, sub);
 					
     $("#body").html(object);
 					

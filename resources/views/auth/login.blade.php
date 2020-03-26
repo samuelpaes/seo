@@ -34,10 +34,31 @@
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="{{ asset ('css/pe-icon-7-stroke.css') }}" rel="stylesheet" />
+	<link href="{{ asset ('css/pe-icon-7-stroke.css') }}" rel="stylesheet" />
+	
+	<!--   Core JS Files   -->
+    <script src="{{ asset('js/jquery.3.2.1.min.js') }}" type="text/javascript"></script>
+	<script src="{{ asset('js/bootstrap.min.js') }}"type="text/javascript"></script>
+
+	<!--  Charts Plugin -->
+	<script src="{{ asset('js/chartist.min.js') }}"></script>
+
+    <!--  Notifications Plugin    -->
+    <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
+
+    <!--  Google Maps Plugin    -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+
+    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+	<script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}" ></script>
+
+	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
+	<script src="{{ asset('js/demo.js') }}"></script>
+	
+	<script src="{{ asset('js/polygonizr.min.js') }}"type="text/javascript"></script>
 	
 	<style>
-
+/*
 body {
 	width:100%;
     height: 100%;
@@ -47,7 +68,7 @@ body {
     animation-direction: alternate;
 
 }
-
+*/
 @keyframes gradient {
     0% {background-position: 0%}
     100% {background-position: 100%}
@@ -177,17 +198,33 @@ body {
 
 }
 
+html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+    }
+    #site-landing {
+        position:relative;
+        height: 100%;
+        width: 100%;
+		
+        background-color:#fff;
+    }
 	</style>
 
 </head>
-<body>
-	<div class="container" style=" width: 100vw; height: 100vh; background: none; display: flex; flex-direction: row;justify-content: center; align-items: center">
-		<div class="box" style="width: 30%; background: none">
+<body id="site-landing">
+	<script>
+    				$('#site-landing').polygonizr();
+  	</script>
+	<div class="container" style="width: 100vw; height: 100vh; background: none; display: flex; flex-direction: row;justify-content: center; align-items: center">
+	
+	<div class="box" style="width: 30%; background: none">
 			<form method="POST" action="{{ route('login') }}">
 				<div class="content" style="">
 					<div class="container-fluid" >
 					<div class="row">
-  						<img class="logotipo" src="{{url('img/logo.png ')}}" style="max-width: 700px; height: 130px;  display: block;margin-left: auto;margin-right: auto; ">
+  						<img class="logotipo" src="{{url('img/logo.png ')}}" style=" max-width: 700px; height: 130px;  display: block;margin-left: auto;margin-right: auto; ">
 					<div>
 				</div>
 			@csrf
@@ -244,7 +281,7 @@ body {
 										</div>
 									</div>
 											
-									<button type="submit" class="btn btn-info btn-fill pull-right" value="entrar" style="background-color:#2e4b86; border-color:#21345b;">Logar</button>
+									<button type="submit" class="btn btn-info btn-fill pull-right" value="entrar" style="background-color:#2e4b86; border-color:#21345b;z-index:3">Logar</button>
 											
 									@if (Route::has('password.request'))
 									<!--<a class="btn btn-default btn-block" style="width: 40%;" href="{{ route('password.request') }}">
@@ -263,24 +300,8 @@ body {
 			</form>
 		</div>
 	</div>
+	
 </body>
 
- <!--   Core JS Files   -->
-    <script src="{{ asset('js/jquery.3.2.1.min.js') }}" type="text/javascript"></script>
-	<script src="{{ asset('js/bootstrap.min.js') }}"type="text/javascript"></script>
-
-	<!--  Charts Plugin -->
-	<script src="{{ asset('js/chartist.min.js') }}"></script>
-
-    <!--  Notifications Plugin    -->
-    <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
-
-    <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}" ></script>
-
-	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="{{ asset('js/demo.js') }}"></script>
+ 
 </html>

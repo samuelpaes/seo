@@ -2,6 +2,9 @@
 
 namespace SEO\Http\Controllers;
 
+use DB;
+use Illuminate\Support\Facades\Auth;
+use SEO\UnidadeOrcamentaria;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -25,7 +28,18 @@ class HomeController extends Controller
 	
 	public function index()
 	{
-		return view('home');
+        $secretaria = Auth::user()->secretaria;
+        $unidade_orcamentaria = UnidadeOrcamentaria::where('unidade', '=', $secretaria)->firstOrFail('codigo');		
+       
+        $exercicio = date("Y");
+       
+        $dotacao = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('dotacao');	
+        $reserva = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('reserva');
+        $saldo = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('saldo');	;
+        $empenhado = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('empenhado');	
+
+        //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
+		return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado);
 	}
 	
 	public function admin()

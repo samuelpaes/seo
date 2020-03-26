@@ -104,7 +104,7 @@ Route::middleware(['auth'])->group(function () {
 
 //chamar o método do controller User
 Route::get('show','UserController@show')->name('show')->middleware('admin');
-Route::put('update/{idRegistro}','UserController@update')->name('update')->middleware('admin');;
+Route::any('update','UserController@update')->name('atualizarUsuario')->middleware('admin');;
 
 
 Route::get('/home', 'HomeController@index')->name('home');

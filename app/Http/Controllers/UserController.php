@@ -53,8 +53,9 @@ class UserController extends Controller
     $usuario_cadastrado ="";
     $usuario_naoLocalizado = "";
     $pesquisaFeita = "";
-
-    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita);
+    $filtro = "";
+    $usuario_atualizado = "";
+    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado);
    
     }
 
@@ -87,49 +88,59 @@ class UserController extends Controller
      */
     public function show(Request $request)
     {
-		
 		//$usuario = User::whereRegistro($reg)->firstOrFail();
         //return($request);
         $usuario_cadastrado ="";
         $usuario_naoLocalizado = "";
+        $usuario_atualizado = "";
         $pesquisaFeita = "";
+        $usuarios = array();
+        $filtro = "";
         
         if($request->filtro == "REGISTRO")
         {
-            $usuarios[] =  User::where('registro', '=',$request->pre_registro)->get();	
-            $pesquisaFeita = "ok";
-             
+            $usuarios =  User::where('registro', '=',$request->pre_registro)->get();	
+            $filtro = "REGISTRO";   
+            $pesquisaFeita="ok";
         }
-        else if($request->filtro == "NOME")
+        else if($request->filtro == "NOME" && $request->nome != null || $request->sobrenome != null)
         {
-            $usuarios[] =  User::where('name', 'like', '%'.$request->nome.'%')->orWhere('sobrenome', 'like', '%'.$request->nome.'%')->get();
-            $pesquisaFeita = "ok";	
-            
+            $usuarios =  User::where('name', 'like', '%'.$request->nome.'%')->orWhere('sobrenome', 'like', '%'.$request->nome.'%')->get();
+            $filtro = "NOME";   
+            $pesquisaFeita="ok";
         }
         else if($request->filtro == "SECRETARIA")
         {
-            $usuarios[] =  User::where('secretaria', '=', $request->secretaria)->get();	
-            $pesquisaFeita = "ok";
+            $usuarios =  User::where('secretaria', '=', $request->secretaria)->get();	
+            $filtro = "SECRETARIA";
+            $pesquisaFeita="ok";
              
         }
-        else if($request->filtro == "ESTADO")
+        else if($request->filtro == "STATUS")
         {
-            $usuarios[] =  User::where('estado', '=', $request->estado)->get();	
-            $pesquisaFeita = "ok";
-            
+            $usuarios =  User::where('estado', '=', $request->status)->get();	
+            $filtro = "STATUS";
+            $pesquisaFeita="ok";
+
         }
         else if($request->filtro == "TIPO_USUARIO")
-        {
-           
-            $usuarios[] =  User::where('isAdmin', '=', $request->tipoUsuario)->get();	
-            $pesquisaFeita = "ok";
-           
+        {   
+            $usuarios =  User::where('isAdmin', '=', $request->tipoUsuario)->get();	
+            $filtro = "TIPO_USUARIO";
+            $pesquisaFeita="ok";
         }
-        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita);
+       
+        if(sizeof($usuarios) <1)
+        {
+            $pesquisaFeita="";
+            $usuario_naoLocalizado="ok";
+        }
+        //return(sizeof($usuarios));
+        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado);
 
 		/*$registro = $pre_registro->get("pre_registro");
 		$usuario = DB::select("select * from users where registro='$registro'");
-		$usuario_cadastrado=$pre_registro->get("usuario_cadastrado");*/
+		$usuario_cadastrado=$pre_registro->get("usuario_cadastrado");
 		if($usuario <> null)
 		{
 			$usuario_naoLocalizado = "";
@@ -146,7 +157,7 @@ class UserController extends Controller
 		else
 		{	$usuario_naoLocalizado = "ok" ;
 			return view('alterar-usuario', ['usuario'=>$usuario])->with('usuario_cadastrado',$usuario_cadastrado)->with('pre_registro',$registro)->with('usuario_naoLocalizado', $usuario_naoLocalizado);
-		};
+		};*/
     }
 
     /**
@@ -167,33 +178,50 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $idRegistro)
+    public function update(Request $request)
     {
-		
-		$usuario = User::whereRegistro($idRegistro)->firstOrFail();
+       //return($request);
+        $i=0;
+        $filtro="";
+        $pesquisaFeita="";
+        foreach($request->registro as $registro)
+        {
+            $usuario = User::whereRegistro($registro)->firstOrFail();
+
+            //Set user object attributes
+            $usuario->name = $request->nome[$i];
+            $usuario->sobrenome = $request->sobrenome[$i];
+            $usuario->secretaria = $request->secretaria[$i];
+            $usuario->isAdmin = $request->isAdmin[$i];
+            $usuario->estado = $request->status[$i];
+            // Save/update user. 
+            // This will will update your the row in ur db.
+            $usuario->save();
+
+            $usuario_atualizado = "ok";
+            $i=$i+1;
+        }
+      
+
+            
+
+        
+		//$usuario = User::whereRegistro($idRegistro)->firstOrFail();
 		$usuario_naoLocalizado = "" ;
 		
         //$request contain your post data sent from your edit from
         //$user is an object which contains the column names of your table
 
-        //Set user object attributes
-        $usuario->name = $request['name'];
-        $usuario->sobrenome = $request['sobrenome'];
-        $usuario->secretaria = $request['secretaria'];
-		$usuario->isAdmin = $request['isAdmin'];
-		$usuario->estado = $request['estado'];
-        // Save/update user. 
-        // This will will update your the row in ur db.
-        $usuario->save();
+       
 		
-		$registro = $request['registro'];
+		/*$registro = $request['registro'];
 		$usuario = DB::select("select * from users where registro='$registro'");
 		$usuario = json_encode($usuario, true);
-		$usuario = json_decode($usuario, true);
+		$usuario = json_decode($usuario, true);*/
 		$usuario_cadastrado = "";
 	
-		
-       return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_cadastrado', $usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado);
+        
+       return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita);
 	   //return ($usuario);
     }
 
