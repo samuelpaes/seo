@@ -284,6 +284,7 @@ background: rgba(255, 255, 255, 0.4);
 								<li><a href="{{ url('natureza-de-despesa/index') }}">Natureza de Despesa</a></li>
 								<li><a href="{{ url('vinculos/index') }}">Vínculos</a></li>
 								<li><a href="{{ url('dotacao-orcamentaria/index') }}">Dotação Orçamentária</a></li>  
+								<li><a href="{{ url('dotacao-orcamentaria/index') }}">Informações</a></li> 
 							</ul>
 						</li>
 						

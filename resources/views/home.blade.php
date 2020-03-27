@@ -420,6 +420,7 @@ background: rgba(255, 255, 255, 0.4);
 												<li><a href="{{ url('natureza-de-despesa/index') }}" style="all: unset;">Natureza de Despesa</a></li>
 												<li><a href="{{ url('vinculos/index') }}" style="all: unset;">Vínculos</a></li>
 												<li><a href="{{ url('dotacao-orcamentaria/index') }}" style="all: unset;">Dotação Orçamentária</a></li>  
+												<li><a href="{{ url('informacao/index') }}" style="all: unset;">Informações</a></li>  
 											</div>
 										</ul>
 									</div>
@@ -564,6 +565,7 @@ background: rgba(255, 255, 255, 0.4);
 									<li><a href="{{ url('natureza-de-despesa/index') }}">Natureza de Despesa</a></li>
 									<li><a href="{{ url('vinculos/index') }}">Vínculos</a></li>
 									<li><a href="{{ url('dotacao-orcamentaria/index') }}">Dotação Orçamentária</a></li>  
+									<li><a href="{{ url('dotacao-orcamentaria/index') }}">Informações</a></li>  
 								</ul>
 							</li>
 							
@@ -665,67 +667,99 @@ background: rgba(255, 255, 255, 0.4);
 			
 			<div class="content">
 				<div class="container-fluid">
-				<div class="col-md-6">
-                        <div class="card">
-                            <div class="header">
-                                <h4 class="title" style="text-align:center"><?php echo Auth::user()->secretaria; ?></h4>
-                                <p class="category">Saldo de Dotações</p>
-                            </div>
-                            <div class="content">
-							<canvas id="myChart" width="400" height="200"></canvas>
-<script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['DOTAÇÃO', 'EMPENHADO', 'RESERVA', 'SALDO'],
-        datasets: [{
-           
-            data: [{{$dotacao}}, {{$empenhado}}, {{$reserva}}, {{$saldo}},],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-            ],
-            borderWidth: 1
-        }]
-    },
-	options: {
-      tooltips: {
-         callbacks: {
-            label: function(t, d) {
-			   var yLabel = t.yLabel.toLocaleString("pt-BR",{style:"currency", currency:"BRL"});
-               return yLabel;
-            }
-         }
-      },
-      scales: {
-         yAxes: [{
-            ticks: {
-               callback: function(value, index, values) {
-                  if (parseInt(value) >= 1000) {
-                     return 'R$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                  } else {
-                     return 'R$' + value;
-                  }
-               }
-            }
-         }]
-      }
-   }
-});
-</script>
-                            </div>
-                        </div>
-                    </div>
+					<div class="row" >
+						<div class="col-md-6" >
+							<div class="card" style="height:430px">
+								<div class="header">
+									<h4 class="title" style="text-align:center"><?php echo Auth::user()->secretaria; ?></h4>
+									<p class="category">Saldo de Dotações</p>
+								</div>
+								<div class="content">
+								<canvas id="myChart" width="400" ></canvas>
+									<script>
+										var ctx = document.getElementById('myChart').getContext('2d');
+										var myChart = new Chart(ctx, {
+											type: 'bar',
+											data: {
+												labels: ['DOTAÇÃO', 'EMPENHADO', 'RESERVA', 'SALDO'],
+												datasets: [{
+													label: "2020",
+													data: [{{$dotacao}}, {{$empenhado}}, {{$reserva}}, {{$saldo}}],
+													backgroundColor: [
+														'rgba(255, 99, 132, 0.2)',
+														'rgba(54, 162, 235, 0.2)',
+														'rgba(255, 206, 86, 0.2)',
+														'rgba(75, 192, 192, 0.2)',
+													],
+													borderColor: [
+														'rgba(255, 99, 132, 1)',
+														'rgba(54, 162, 235, 1)',
+														'rgba(255, 206, 86, 1)',
+														'rgba(75, 192, 192, 1)',
+													],
+													borderWidth: 2
+												}]
+											},
+											options: {
+											tooltips: {
+												callbacks: {
+													label: function(t, d) {
+													var yLabel = t.yLabel.toLocaleString("pt-BR",{style:"currency", currency:"BRL"});
+													return yLabel;
+													}
+												}
+											},
+											scales: {
+												yAxes: [{
+													ticks: {
+													callback: function(value, index, values) {
+														if (parseInt(value) >= 1000) {
+															return 'R$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+														} else {
+															return 'R$' + value;
+														}
+													}
+													}
+												}]
+											}
+										}
+										});
+									</script>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="card" style="height:430px">
+								<div class="header">
+								<h4 class="title" style="text-align:center">PAINEL DE INFORMAÇÕES</h4>
+									<p class="category"></p>
+								</div>
+								<div class="content">
+									<div class="table-full-width">
+										<table class="table">
+											<tbody>
+											@foreach($informacoes as $informacao)
+												<tr>
+													<td><h6><?php echo $informacao->titulo ?></h6></td>
+													<td class="td-actions text-left">
+														<?php echo $informacao->descricao ?>
+													</td>
+												</tr>
+											@endforeach   
+											</tbody>
+										</table>
+									</div>
+
+									<div class="footer">
+										<hr>
+										<div class="stats">
+											
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>	
 			</div>
 				

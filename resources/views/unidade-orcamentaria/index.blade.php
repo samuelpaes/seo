@@ -41,19 +41,15 @@
 					<div class="col-md-12">
 						<div class="card">
 							<div class="header">
-								<form method="get" action="{{ route('showUnidadeOrcamentaria') }}">
+								<form method="get" action="{{ }}">
 									<div class="row">
 										<div class="col-md-6">
-											<h4 class="title">Unidade Orçamentária/Executora</h4>	
+											<h4 class="title">Informações</h4>	
 										</div>
 										<div class="col-md-6" >
 											<div class="row">
 												<div class="col-md-5" style="margin-right:-4px;">
-													<select class="form-control" id="filtro" name="filtro" onchange="ativarCamposParaFiltro()">
-														<option value="" selected></option>
-														<option value="ORCAMENTARIA">Unidade Orçamentária</option>
-														<option value="EXECUTORA">Unidade Executora</option>
-													</select>
+													
 												</div>
 												<div class="col-md-3" style="margin-right:-4px;">
 													<input class="form-control" name="codigo" id="codigo" maxlength="8"  onkeyup="mascaraCodigoDespesa( this, cDespesa );" placeholder="Código"  autofocus disabled>

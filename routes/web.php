@@ -102,6 +102,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('comite-gestor/index', 'ComiteGestorController@index', function () {})->name('comite_gestor');
 });
 
+//Rotas Informações
+Route::middleware(['auth'])->group(function () {
+	Route::any('informacao/index', 'InformacaoController@index', function () {})->name('indexInformacao');
+	Route::any('informacao/cadastrar', 'InformacaoController@create', function () {})->name('createInformacao');
+	Route::any('informacao/store', 'InformacaoController@store', function () {})->name('criarInformacao');
+	Route::get('informacao/show', 'InformacaoController@show', function () {})->name('showInformacao');
+	Route::any('informacao/remover', 'InformacaoController@destroy', function () {})->name('removerInformacao');
+});
+
 //chamar o método do controller User
 Route::get('show','UserController@show')->name('show')->middleware('admin');
 Route::any('update','UserController@update')->name('atualizarUsuario')->middleware('admin');;

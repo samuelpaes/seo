@@ -6,6 +6,7 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use SEO\UnidadeOrcamentaria;
 use Illuminate\Http\Request;
+use SEO\Informacao;
 
 class HomeController extends Controller
 {
@@ -38,8 +39,10 @@ class HomeController extends Controller
         $saldo = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('saldo');	;
         $empenhado = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('empenhado');	
 
+        $informacoes = Informacao::all()->take(10);
+
         //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
-		return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado);
+		return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes);
 	}
 	
 	public function admin()
