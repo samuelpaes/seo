@@ -89,11 +89,12 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::any('orcamento/formularios', 'OrcamentoController@formularios', function () {})->name('orcamento_formularios');
 	Route::get('orcamento/manual', 'OrcamentoController@manual', function () {})->name('orcamento_manual');
-	Route::get('orcamento/leis_decretos', 'OrcamentoController@leis_decretos', function () {})->name('orcamento_leis_decretos');
+	Route::any('orcamento/leis_decretos', 'OrcamentoController@leis_decretos', function () {})->name('orcamento_leis_decretos');
 	Route::get('orcamento/saldo_dotacoes', 'OrcamentoController@saldo_dotacoes', function () {})->name('orcamento_saldo_dotacoes');
 	Route::get('orcamento/agenda_orcamentaria', 'OrcamentoController@agenda_orcamentaria', function () {})->name('orcamento_agenda_orcamentaria');
 	Route::any('orcamento/show', 'OrcamentoController@show', function () {})->name('orcamento_show');
 	Route::any('orcamento/criar_pdf', 'OrcamentoController@criar_pdf', function () {})->name('orcamento_criar_pdf');
+	
 	//Route::any('orcamento/formularios/credito_adicional_suplementar', 'OrcamentoController@formularios', function () {})->name('orcamento_formularios');
 });
 

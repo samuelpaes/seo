@@ -20,7 +20,8 @@
 									</div>
 									<div class="col-md-4">
 										<select class="form-control" id="pesquisa" name="pesquisa" onclick="ativarPesquisa()">
-											<option value="" selected></option>
+											<option value="" selected></option>					
+											@if(auth()->user()->isAdmin == 1)(<option value="SECRETARIA">SECRETARIA</option>@endif
 											<option value="TIPO DE FORMULARIO">TIPO DE FORMULÁRIO</option>
 											<option value="TIPO DE INSTRUMENTO">TIPO DE INSTRUMENTO</option>
 											<option value="DATA">DATA</option>
@@ -88,17 +89,20 @@
     						
                         </div>
 					</div>
-	 
+
 				@endif	
-				<!--<div class="card">
-					<div class="content">
-						<div style="font-size:16px;  text-align: justify;text-justify: inter-word;">
-							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Nesta seção você encontra os formulários para as solicitações de Crédito Adicional Suplementar e REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA. Os formulários deverão ser preenchidos e devidamente assinados pelos respectivos responsáveis bem como encaminhados posteriormente para a unidade encarregada pela gestão do orçamento público municipal,  conforme instituído pelo Manual de Alterações Orçamentárias 2019 – 1º Edição – Decreto nº 3.098/19.<h6>
-						</div>
-						<br>
-						<br> 
-                    </div>	
-				</div>	-->
+				<!--  Verifica se há alguma mensagem -->
+				@if ( $mensagem != "" )
+					<script>
+						$(document).ready(function()
+						{
+							
+							$('#modalMensagem').modal({
+								show: true,
+							})
+						});
+					</script>
+				@endif	
 				
 			</div>
 		</div>
@@ -114,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function()
 		//var exercicio = new Date().getFullYear()
 		//$("#exercicio").attr("placeholder", exercicio);
 		
-
+		
 		exercicio = "<?php echo $exercicio ?>";
 		exercicio = parseInt(exercicio);
 	
@@ -154,8 +158,20 @@ function ativarPesquisa()
 	var e = document.getElementById("pesquisa");
 	var opcao = e.options[e.selectedIndex].value;
 	//
-	if(opcao == "TIPO DE FORMULARIO")
+	if(opcao == "SECRETARIA")
 	{
+		document.getElementById("secretaria").hidden = false;
+		document.getElementById("tipoFormulario").hidden = true;
+		document.getElementById("tipoInstrumento").hidden = true;
+		document.getElementById("data").hidden = true;
+		document.getElementById("texto").hidden = true;
+
+		document.getElementById('filtro').value = "secretaria";
+		document.getElementById('btnPesquisar').disabled = false;
+	}
+	else if(opcao == "TIPO DE FORMULARIO")
+	{
+		document.getElementById("secretaria").hidden = true;
 		document.getElementById("tipoFormulario").hidden = false;
 		document.getElementById("tipoInstrumento").hidden = true;
 		document.getElementById("data").hidden = true;
@@ -164,11 +180,10 @@ function ativarPesquisa()
 		document.getElementById('filtro').value = "formulario";
 		document.getElementById('btnPesquisar').disabled = false;
 		//document.getElementById('btnPesquisar2').disabled = false;
-
-
 	}
 	else if(opcao == "TIPO DE INSTRUMENTO")
 	{
+		document.getElementById("secretaria").hidden = true;
 		document.getElementById("tipoInstrumento").hidden = false;
 		document.getElementById("tipoFormulario").hidden = true;
 		document.getElementById("data").hidden = true;
@@ -180,6 +195,7 @@ function ativarPesquisa()
 	}
 	else if(opcao == "DATA")
 	{
+		document.getElementById("secretaria").hidden = true;
 		document.getElementById("data").hidden = false;
 		document.getElementById("texto").hidden = true;
 		document.getElementById("tipoFormulario").hidden = true;
@@ -248,12 +264,12 @@ function abrirFormularioPDF(codigo_formulario)
 
 
 <!-- Modal Mensagem-->
-<div class="modal"  id="modalMensagemSemSucesso" tabindex="-1" role="dialog" >
+<div class="modal"  id="modalMensagem" tabindex="-1" role="dialog" >
 	<div class="modal-dialog" role="document">
 		
-		<div class="alert alert-danger" style="border-radius: 5px; width:auto; white-space: nowrap;">
-            <button type="button" aria-hidden="true" data-toggle="modal" data-target="#formulario_credito_adicional_suplementar" data-dismiss="modal" data-dismiss="modal" class="close">×</button>
-            <span><b> Atenção! - </b><input class="form-control" value="" id="mensagem" style=" white-space: nowrap; display: inline-block; width:100%; border:none; background:none; color:#fff" readonly></input></span>
+		<div class="alert alert-danger" style="border-radius: 5px; width:115%; white-space: nowrap;">
+            <button type="button" aria-hidden="true" style="position:relative; left:5px; top:20px;" data-toggle="modal" data-target="#formulario_credito_adicional_suplementar" data-dismiss="modal" data-dismiss="modal" class="close">×</button>
+            <span><b> Atenção! - </b><input class="form-control" value="{{$mensagem}}" id="mensagem" style=" white-space: nowrap; display: inline-block; width:100%; border:none; background:none; color:#fff" readonly></input></span>
          </div>
 	
 	</div>
@@ -313,6 +329,23 @@ function abrirFormularioPDF(codigo_formulario)
 						
 				<div class="modal-body">
 						<div class="row">
+							<div class="col-md-12" style="margin-right:-4px;"  id="secretaria"   hidden>
+								<select class="form-control" name="secretaria">
+									<option selected></option>
+									<option value="SECRETARIA DE GOVERNO E GESTÃO">SECRETARIA DE GOVERNO E GESTÃO</option>
+									<option value="SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS">SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS</option>
+									<option value="SECRETARIA DE SERVIÇOS URBANOS">SECRETARIA DE SERVIÇOS URBANOS</option>
+									<option value="SECRETARIA DE EDUCAÇÃO">SECRETARIA DE EDUCAÇÃO</option>
+									<option value="SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA">SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA</option>
+									<option value="SECRETARIA DE MEIO AMBIENTE">SECRETARIA DE MEIO AMBIENTE</option>
+									<option value="SECRETARIA DE PLANEJAMENTO URBANO">SECRETARIA DE PLANEJAMENTO URBANO</option>
+									<option value="SECRETARIA DE SEGURANÇA E CIDADANIA">SECRETARIA DE SEGURANÇA E CIDADANIA</option>
+									<option value="SECRETARIA DE TURISMO, ESPORTE E CULTURA">SECRETARIA DE TURISMO, ESPORTE E CULTURA</option>
+									<option value="SECRETARIA DE SAÚDE">SECRETARIA DE SAÚDE</option>
+									<option value="SECRETARIA DE OBRAS E HABITAÇÃO">SECRETARIA DE OBRAS E HABITAÇÃO</option>
+									<option value="PROCURADORIA GERAL DO MUNICÍPIO">PROCURADORIA GERAL DO MUNICÍPIO</option>
+								</select>
+							</div>
 							<div class="col-md-12" style="margin-right:-4px;"  id="tipoFormulario"   hidden>
 								<select class="form-control" name="tipoFormulario">
 									<option value="TODOS" selected>TODOS</option>

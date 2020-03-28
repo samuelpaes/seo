@@ -10,6 +10,7 @@ use SEO\UnidadeExecutora;
 use SEO\ClassificacaoFuncionalProgramatica;
 use SEO\NaturezaDeDespesa;
 use SEO\FormularioAlteracaoOrcamentaria;
+use SEO\Legislacao;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
 
@@ -68,9 +69,20 @@ class OrcamentoController extends Controller
 		}
 		else if($acao == 'pesquisar')
 		{	$secretaria = Auth::user()->secretaria;
-			if($request->filtro == "formulario")
+			
+			if($request->filtro == "secretaria")
 			{
-				
+				if($request->tipoFormulario <> "TODOS")
+				{
+					$formularios[] =  Informacao::all();		
+				}
+				else{
+					$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$request->secretaria'")->get();
+				}
+			}
+			else if($request->filtro == "formulario")
+			{
+			
 				if($request->tipoFormulario <> "TODOS")
 				{
 					
@@ -127,10 +139,61 @@ class OrcamentoController extends Controller
 		return view ('orcamento/manual');
 	}
 	
-	public function leis_decretos()
+	public function leis_decretos(Request $request)
     {
 	
-		return view ('orcamento/leis_decretos');
+		$pesquisaFeita="";
+		$mensagem="";
+		if($request->acao == "cadastrar")
+		{
+			
+			if (Legislacao::whereRaw('instrumento = "'.$request->instrumento.'" and numero ="'.$request->numero.'" and esfera = "'.$request->esfera.'"')->count() == 0)
+			{
+				Legislacao::create([
+					'instrumento' => $request->instrumento,
+					'classificacao' => $request->classificacao,
+					'numero' => $request->numero,
+					'ano' => $request->ano,	
+					'esfera' => $request->esfera,
+					'observacao' => $request->observacao,
+					'link' => $request->link,
+				]);		
+				
+				$mensagem="Legislação ".$request->instrumento."/".$request->numero." cadastrada!";
+				return($mensagem);
+			}
+			else{
+
+			}
+
+
+		}
+		else if($request->acao == "pesquisar")
+		{
+			//return($request);
+			if($request->filtro == "instrumento")
+			{
+				$legislacoes[] = Legislacao::whereRaw("instrumento = '$request->instrumento'")->get();
+			}
+			else if($request->filtro == "classificacao")
+			{
+				$legislacoes[] = Legislacao::whereRaw("classificacao = '$request->classificacao'")->get();
+			}
+			else if($request->filtro == "numero/ano")
+			{
+				$legislacoes[] = Legislacao::where('numero', '=', $request->numero)->where('ano', '=', $request->ano)->get();
+			}
+			else if($request->filtro == "esfera")
+			{
+				$legislacoes[] = Legislacao::whereRaw("esfera = '$request->esfera'")->get();
+			}
+			$pesquisaFeita="ok";
+			return view ('orcamento/leis_decretos')->with("legislacoes", $legislacoes)->with("pesquisaFeita", $pesquisaFeita);
+		}	
+		else
+		{
+			return view ('orcamento/leis_decretos')->with("pesquisaFeita", $pesquisaFeita);
+		}
 	}
 	
 	public function agenda_orcamentaria()
@@ -1248,7 +1311,7 @@ class OrcamentoController extends Controller
 		$acao = "";
 		$pesquisaFeita = "";
 		$exercicio = date("Y"); 
-		//return($request);
+		$mensagem="";
 		if($request->tipo_alteracao == "CREDITO ADICIONAL SUPLEMENTAR")
 		{
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
@@ -1565,7 +1628,7 @@ class OrcamentoController extends Controller
 			//verifica quantos formularios de Credito Adicional Complementar Existem
 			$cas = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->count();
 			$cas = $cas+1;
-			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'"')->count() == 0)
+			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
 				FormularioAlteracaoOrcamentaria::create([
 					'codigo_formulario' => "cas_".$cas,
@@ -1579,19 +1642,17 @@ class OrcamentoController extends Controller
 					'path' => '123',
 				]);		
 
-				//$mpdf->Output();
-				//$mpdf->Output('files/formularios_alteracao_orcamentaria/cas_'.$cas.'.pdf');
+				$mpdf->Output('files/formularios_alteracao_orcamentaria/cas_'.$cas.'.pdf');
 				$mpdf->Output();
 
 
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
-			
 			}
 			else{
-				$mpdf->Output();
-				$mensagem="Já Existe Formulário Gerado!";
-			}
 				
+				$mensagem="Já Existe Formulário Gerado Para Esta Alteração Orçamentária - ".$request->instrumento." ".$request->numeroInstrumento;
+			}
+			
 			
 		}
 		else if ($request->tipo_alteracao == "REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA")
@@ -1932,7 +1993,7 @@ class OrcamentoController extends Controller
 			//verifica quantos formularios de Credito Adicional Complementar Existem
 			$rtt = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->count();
 			$rtt = $rtt+1;
-			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'"')->count() == 0)
+			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
 				FormularioAlteracaoOrcamentaria::create([
 					'codigo_formulario' => "rtt_".$rtt,
@@ -1946,15 +2007,20 @@ class OrcamentoController extends Controller
 					'path' => '123',
 				]);		
 
-				//$mpdf->Output();
+				
 				$mpdf->Output('files/formularios_alteracao_orcamentaria/rtt_'.$rtt.'.pdf','F');
+				$mpdf->Output();
 
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
+				
+
 			}
 			else{
-				$mensagem="Já Existe Formulário Gerado!";
+				$mensagem="Já Existe Formulário Gerado Para Esta Alteração Orçamentária - ".$request->instrumento." ".$request->numeroInstrumento;
+
 			}
 		}
+	
 		return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
 	
 	}

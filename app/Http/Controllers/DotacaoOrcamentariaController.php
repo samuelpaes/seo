@@ -618,7 +618,8 @@ class DotacaoOrcamentariaController extends Controller
 		{	
 				
 			$count = SaldodeDotacao::where('codigo_dotacao', $colecao['codigo_dotacao'])->where('exercicio', $request->exercicio)->where('vinculo', $colecao['vinculo'])->count();
-				
+			//$teste = SaldodeDotacao::where('codigo_dotacao', $colecao['codigo_dotacao'])->where('exercicio', $request->exercicio)->where('vinculo', $colecao['vinculo'])->get();
+			//return($colecao);
 			//Verifica se existe dotacao já cadastrada
 			if ($count == 0) 
 			{
@@ -654,7 +655,7 @@ class DotacaoOrcamentariaController extends Controller
 			else
 			{
 				
-				$dotacao = SaldodeDotacao::whereCodigo_dotacao($colecao['codigo_dotacao'])->firstOrFail();
+				$dotacao = SaldodeDotacao::whereCodigo_dotacao($colecao['codigo_dotacao'])->where('vinculo', $colecao['vinculo'])->firstOrFail();
 										 
 				
 				$dotacao->dotacao = $colecao['dotacao'];

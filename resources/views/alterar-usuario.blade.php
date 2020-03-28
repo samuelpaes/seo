@@ -210,7 +210,7 @@
 											<div class="row" >
 												<div class="col-md-3" >
 													<select class="form-control" id="tipoPesquisa" onclick="filtroPesquisa()">
-														<option value="" <?php if ($filtro == '' ) echo ' selected="selected"'?>>REGISTRO</OPTION>
+														<option value="" <?php if ($filtro == '' ) echo ' selected="selected"'?>></OPTION>
 														<option value="REGISTRO" <?php if ($filtro == 'REGISTRO') echo ' selected="selected"'?>>REGISTRO</OPTION>
 														<option value="NOME" <?php if ($filtro == 'NOME') echo ' selected="selected"'?>>NOME</OPTION>
 														<option value="SECRETARIA" <?php if ($filtro == 'SECRETARIA') echo ' selected="selected"'?>>SECRETARIA</OPTION>
