@@ -925,6 +925,7 @@
 				}
 			}
 			
+			document.getElementById('total').value = valor_total;
 			valor_total = valor_total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 			if(document.getElementById('total_suplementar') != null)
 			{
@@ -1860,7 +1861,7 @@
 			
 			
 			
-			document.getElementById('total_suplementar2').value = valor_total;
+			document.getElementById('total').value = valor_total;
 			valor_total = valor_total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 			document.getElementById('total_suplementar').value = valor_total;
 			document.getElementById('valor_sup_total').value = valor_total;

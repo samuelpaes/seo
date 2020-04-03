@@ -65,9 +65,6 @@
 	<script src="{{ asset('js/jquery.treegrid.min.js') }}"type="text/javascript"></script>
 	
 	<script src="{{ asset('js/alterar-saldo-dotacao.js') }}"type="text/javascript"></script>
-	<script src="{{ asset('js/background_login.js') }}"type="text/javascript"></script>
-	
-	
 
 	<!--  Charts Plugin -->
 	<script src="{{ asset('js/chartist.min.js') }}"type="text/javascript"></script>
@@ -253,7 +250,7 @@ background: rgba(255, 255, 255, 0.4);
 							</label>
 						</li>
 
-						@if(auth()->user()->isAdmin == 1)
+						@if(auth()->user()->isAdmin == 0)
 							
 						
 						<li>
@@ -384,7 +381,7 @@ background: rgba(255, 255, 255, 0.4);
 			
 				<main class="py-4"  style="z-index:0">
 					<br>
-					@if(auth()->user()->isAdmin == 1)
+					@if(auth()->user()->isAdmin == 0 || auth()->user()->isAdmin == 1 || auth()->user()->isAdmin == 2)
 						@yield('content')
 					@else<!-- Se o usuário não tem acesso, chama o modal sem acesso -->	
 					<script>

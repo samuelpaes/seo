@@ -234,14 +234,6 @@
 						@if($pesquisaFeita == "ok")
 						<div class="card">
 							<div class="content">
-								<div style="font-size:16px;  text-align: justify;text-justify: inter-word;">
-									&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Nesta seção você encontra as Leis e Decretos, documento que serve como guia de instrução e padronização à gestão do Orçamento do Poder Público Municipal e suas unidades subordinadas.<h6>
-								</div>
-								<br>
-								<ul>
-									<li style="font-size:16px"><a href="{{url('exported_files/manual_2019.pdf')}}" target="_blank">Manual de Alterações Orçamentárias - 2019</a></li>
-								</ul>
-								<br>
 							</div>
 							<div class="content table-responsive table-full-width">
                             <table class="table table-hover table-striped">
@@ -253,7 +245,7 @@
 										<th>Ano</th>
 										<th>Esfera</th>
 										<th>Observação</th>
-										<th>Link</th>
+										<th></th>
 
                                		</tr>
 								</thead>
@@ -268,7 +260,10 @@
                                        	<td>{{$legislacao['ano']}}</td>
                                        	<td>{{$legislacao['esfera']}}</td>
 										<td>{{$legislacao['observacao']}}</td>
-										<td>{{$legislacao['link']}}</td>
+										<td align="center">
+											<button type="button" value="{{$legislacao['link']}}" onclick="abrirLegislacaoPDF(this)"><i class="pe-7s-file" style="font-size:24px; text-align:center"></i></button>
+										</td>
+										<!--<td>{{$legislacao['link']}}</td>-->
 										
                                     </tr>
 									@endforeach
@@ -280,9 +275,18 @@
                         </div>
 						@endif	
 						</div>			
-					
-												
-						
+						<!--  Verifica se há alguma mensagem -->
+						@if ( $mensagem != "" )
+							<script>
+								$(document).ready(function()
+								{
+							
+									$('#modalMensagem').modal({
+										show: true,
+									})
+								});
+							</script>
+						@endif	
 					</div>
 				</div>
 			</div>	
@@ -304,7 +308,9 @@ function ativarPesquisa()
 	{
 		document.getElementById("instrumento2").hidden = false;
 		document.getElementById("classificacao2").hidden = true;
-		document.getElementById("numero/ano").hidden = true;
+		document.getElementById("numero").hidden = true;
+		document.getElementById("/").hidden = true;
+		document.getElementById("ano").hidden = true;
 		document.getElementById("esfera2").hidden = true;
 
 		document.getElementById('filtro').value = "instrumento";
@@ -315,7 +321,9 @@ function ativarPesquisa()
 	{
 		document.getElementById("instrumento2").hidden = true;
 		document.getElementById("classificacao2").hidden = false;
-		document.getElementById("numero/ano").hidden = true;
+		document.getElementById("numero").hidden = true;
+		document.getElementById("/").hidden = true;
+		document.getElementById("ano").hidden = true;
 		document.getElementById("esfera2").hidden = true;
 
 		document.getElementById('filtro').value = "classificacao";
@@ -327,7 +335,9 @@ function ativarPesquisa()
 	{
 		document.getElementById("instrumento2").hidden = true;
 		document.getElementById("classificacao2").hidden = true;
-		document.getElementById("numero/ano").hidden = false;
+		document.getElementById("numero").hidden = false;
+		document.getElementById("/").hidden = false;
+		document.getElementById("ano").hidden = false;
 		document.getElementById("esfera2").hidden = true;
 
 		document.getElementById('filtro').value = "numero/ano";
@@ -339,7 +349,9 @@ function ativarPesquisa()
 	{
 		document.getElementById("instrumento2").hidden = true;
 		document.getElementById("classificacao2").hidden = true;
-		document.getElementById("numero/ano").hidden = true;
+		document.getElementById("numero").hidden = true;
+		document.getElementById("/").hidden = true;
+		document.getElementById("ano").hidden = true;
 		document.getElementById("esfera2").hidden = false;
 
 		document.getElementById('filtro').value = "esfera";
@@ -351,7 +363,9 @@ function ativarPesquisa()
 	else{
 		document.getElementById("instrumento2").hidden = true;
 		document.getElementById("classificacao2").hidden = true;
-		document.getElementById("numero/ano").hidden = true;
+		document.getElementById("numero").hidden = true;
+		document.getElementById("/").hidden = true;
+		document.getElementById("ano").hidden = true;
 		document.getElementById("esfera2").hidden = true;
 
 		document.getElementById('btnPesquisar').disabled = true;
@@ -360,7 +374,36 @@ function ativarPesquisa()
 
 	}
 }
+
+function abrirLegislacaoPDF(link)
+{
+	alert(link.value);
+	var sub = link.value;
+	var object = "<object data=\"{FileName}\" type=\"application/pdf\"  style=\"width: 100%; margin: 0 auto;\" height=\"1000px\">";
+
+	object += "Exibição indisponível!";
+  
+    object += "</object>";
+					
+    object = object.replace(/{FileName}/g, sub);
+					
+    $("#body").html(object);
+	$('#abrirLegislacaoPDF').modal('show'); 
+	//alert(valor);
+}
 </script>
+
+<!-- Modal Mensagem-->
+<div class="modal"  id="modalMensagem" tabindex="-1" role="dialog" >
+	<div class="modal-dialog" role="document">
+		
+		<div class="alert alert-danger" style="border-radius: 5px; width:115%; white-space: nowrap;">
+            <button type="button" aria-hidden="true" style="position:relative; left:5px; top:20px;" data-toggle="modal" data-target="#formulario_credito_adicional_suplementar" data-dismiss="modal" data-dismiss="modal" class="close">×</button>
+            <span><b> Atenção! - </b><input class="form-control" value="{{$mensagem}}" id="mensagem" style=" white-space: nowrap; display: inline-block; width:100%; border:none; background:none; color:#fff" readonly></input></span>
+         </div>
+	
+	</div>
+</div>
 
 
 <!-- Modal Cadastrar Nova Lei/Decreto-->
@@ -464,7 +507,22 @@ function ativarPesquisa()
 </div>
 
 
-
+<!--abre Legislação em PDF -->
+<div class="modal" id="abrirLegislacaoPDF" trole="dialog">
+    <div class="modal-dialog" style="width:1250px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+			<div class="modal-body" id="body" style="align:center; text-align: center;">
+				
+	
+			</div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

@@ -136,15 +136,21 @@
 											<ul>
 												<li>
 													<a href="#">Secretaria de Governo <br>e Gestão</a>
+													@foreach($usuarios as $usuario)
+														@if($usuario->secretaria == "SECRETARIA DE GOVERNO E GESTÃO")
+															@if($usuario->isAdmin == 1)
+															<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif
 													<ul>
 														<li>
-															<a href="#">Paulo da Silva <br>Reg: x.xxx</a>
+															<!--<a href="#">Paulo da Silva <br>Reg: x.xxx</a>-->
 														</li>
 														<li>
-															<a href="#">Juliana Carvalho <br> Reg: x.xxx</a>
+															<!--<a href="#">Juliana Carvalho <br> Reg: x.xxx</a>-->
 														</li>
-
 													</ul>
+														@endif
+													@endforeach
 												</li>
 											</ul>
 										</div>

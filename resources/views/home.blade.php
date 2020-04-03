@@ -397,7 +397,7 @@ background: rgba(255, 255, 255, 0.4);
 										<div style="position:relative; top:5px; font-size:14px"><i class="pe-7s-help1" style="position:relative;font-weight:bold; top:1.5px"></i></b> AJUDA</div>	
 									</div>
 								</li>
-								@if(auth()->user()->isAdmin == 1)
+								@if(auth()->user()->isAdmin == 0)
 								<li>
 									<div class="btn from-top">
 										<div style="position:relative; top:5px; font-size:14px"><i class="pe-7s-users" style="position:relative;font-weight:bold; top:1.5px"></i></b> USUÁRIOS</div>
@@ -534,7 +534,7 @@ background: rgba(255, 255, 255, 0.4);
 								</label>
 							</li>
 
-							@if(auth()->user()->isAdmin == 1)
+							@if(auth()->user()->isAdmin == 0)
 								
 							
 							<li>

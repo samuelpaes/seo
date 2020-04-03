@@ -84,8 +84,10 @@
 									<label>Nível de Acesso</label>
 									<select class="form-control" name="isAdmin">
 										<option selected></option>
-										<option value="0">GESTOR</option>
-										<option value="1">ADMINISTRADOR</option>
+										<option value="0">ADMINISTRADOR</option>
+										<option value="1">SECRETARIO</option>
+										<option value="2">GESTOR</option>
+										<option value="3">COMUM</option>
 									</select>
 								</div>	
 							</div>

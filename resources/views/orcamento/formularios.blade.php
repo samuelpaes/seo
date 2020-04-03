@@ -21,7 +21,7 @@
 									<div class="col-md-4">
 										<select class="form-control" id="pesquisa" name="pesquisa" onclick="ativarPesquisa()">
 											<option value="" selected></option>					
-											@if(auth()->user()->isAdmin == 1)(<option value="SECRETARIA">SECRETARIA</option>@endif
+											@if(auth()->user()->isAdmin == 0)(<option value="SECRETARIA">SECRETARIA</option>@endif
 											<option value="TIPO DE FORMULARIO">TIPO DE FORMULÁRIO</option>
 											<option value="TIPO DE INSTRUMENTO">TIPO DE INSTRUMENTO</option>
 											<option value="DATA">DATA</option>

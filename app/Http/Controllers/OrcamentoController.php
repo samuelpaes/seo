@@ -160,10 +160,11 @@ class OrcamentoController extends Controller
 				]);		
 				
 				$mensagem="Legislação ".$request->instrumento."/".$request->numero." cadastrada!";
-				return($mensagem);
+				return view ('orcamento/leis_decretos')->with("legislacoes", $legislacoes)->with("pesquisaFeita", $pesquisaFeita)->with("mensagem", $mensagem);
 			}
 			else{
-
+				$mensagem="Legislação ".$request->instrumento."/".$request->numero." já esta cadastrada!";
+				return view ('orcamento/leis_decretos')->with("pesquisaFeita", $pesquisaFeita)->with("mensagem", $mensagem);
 			}
 
 
@@ -492,7 +493,46 @@ class OrcamentoController extends Controller
 			}
 			$dotacoes_suplementacao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
 		
+			//
+			if(!empty($dotacoes_anulacao))
+			{
+				foreach($dotacoes_anulacao as $dotacao)
+				{
+					//resultado da consulta de vinculos no banco de dados
+					$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();;
+					//verifica se o vinculo selecionado no formulário esta em branco e ignora se for o caso
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						//insere junto ao resultado da consulta de vinculos o vinculo selecionado no formulário
+						$resultadoConsulta[] = array('codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo);
+					}
+					// converte o objeto em array
+					$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+					// remove os valore duplicados
+					$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+					//copia o resultado para o objeto de vinculos
+					$dotacoes_anulacao_vinculos[] = $resultadoConsulta;
+					
+					/*$dotacoes_suplementacao_vinculos[] = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();
+				
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						$dotacoes_suplementacao_vinculos[] = array_splice($dotacoes_suplementacao_vinculos, 3, 0, 'more');
+						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
+					}*/
+				}
+				$dotacoes_anulacao_vinculos = array_unique($dotacoes_anulacao_vinculos, SORT_REGULAR);
+				
+			}
+			else{
+			}
+			$dotacoes_anulacao_vinculos = array_unique($dotacoes_anulacao_vinculos, SORT_REGULAR);
+
+
+
+
 			//return($dotacoes_suplementacao);
+			/*apagar
 			if(!empty($dotacoes_anulacao))
 			{
 				foreach($dotacoes_anulacao as $dotacao)
@@ -503,6 +543,7 @@ class OrcamentoController extends Controller
 			}
 			else{
 			}
+			$dotacoes_anulacao_vinculos = array_unique($dotacoes_anulacao_vinculos, SORT_REGULAR);*/
 			
 			$mensagem = "ok";
 
@@ -583,6 +624,34 @@ class OrcamentoController extends Controller
 				
 			}
 
+
+			if(!empty($dotacoes_suplementacao))
+			{
+				foreach($dotacoes_suplementacao as $dotacao)
+				{
+					//resultado da consulta de vinculos no banco de dados
+					$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();;
+					//verifica se o vinculo selecionado no formulário esta em branco e ignora se for o caso
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						//insere junto ao resultado da consulta de vinculos o vinculo selecionado no formulário
+						$resultadoConsulta[] = array('codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo);
+					}
+					// converte o objeto em array
+					$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+					// remove os valore duplicados
+					$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+					//copia o resultado para o objeto de vinculos
+					$dotacoes_suplementacao_vinculos[] = $resultadoConsulta;
+				}
+				$dotacoes_suplementacao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				
+			}
+			else{
+			}
+			$dotacoes_suplementacao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+
+			/*
 			if(!empty($dotacoes_suplementacao))
 			{
 				foreach($dotacoes_suplementacao as $dotacao)
@@ -593,6 +662,7 @@ class OrcamentoController extends Controller
 			}
 			else{
 			}
+			$dotacoes_suplementacao_vinculos= array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);*/
 			
 			//Remanejar
 			foreach ($request->rmj_codigo_dotacao as $dotacao)
@@ -623,12 +693,46 @@ class OrcamentoController extends Controller
 			{
 				foreach($dotacoes_remanejamento as $dotacao)
 				{
+					//resultado da consulta de vinculos no banco de dados
+					$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();;
+					//verifica se o vinculo selecionado no formulário esta em branco e ignora se for o caso
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						//insere junto ao resultado da consulta de vinculos o vinculo selecionado no formulário
+						$resultadoConsulta[] = array('codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo);
+					}
+					// converte o objeto em array
+					$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+					// remove os valore duplicados
+					$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+					//copia o resultado para o objeto de vinculos
+					$dotacoes_remanejamento_vinculos[] = $resultadoConsulta;
+					
+					/*$dotacoes_suplementacao_vinculos[] = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();
+				
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						$dotacoes_suplementacao_vinculos[] = array_splice($dotacoes_suplementacao_vinculos, 3, 0, 'more');
+						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
+					}*/
+				}
+				$dotacoes_remanejamento_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				
+			}
+			else{
+			}
+			$dotacoes_remanejamento_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+
+			/*if(!empty($dotacoes_remanejamento))
+			{
+				foreach($dotacoes_remanejamento as $dotacao)
+				{
 					$dotacoes_remanejamento_vinculos[] = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();
 				}
 				$dotacoes_remanejamento_vinculos= array_unique($dotacoes_remanejamento_vinculos, SORT_REGULAR);
 			}
 			else{
-			}
+			}*/
 			
 			//Transpor
 			foreach ($request->tnp_codigo_dotacao as $dotacao)
@@ -650,8 +754,42 @@ class OrcamentoController extends Controller
 				}
 				
 			}
-		
+			
 			if(!empty($dotacoes_transposicao))
+			{
+				foreach($dotacoes_transposicao as $dotacao)
+				{
+					//resultado da consulta de vinculos no banco de dados
+					$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();;
+					//verifica se o vinculo selecionado no formulário esta em branco e ignora se for o caso
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						//insere junto ao resultado da consulta de vinculos o vinculo selecionado no formulário
+						$resultadoConsulta[] = array('codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo);
+					}
+					// converte o objeto em array
+					$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+					// remove os valore duplicados
+					$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+					//copia o resultado para o objeto de vinculos
+					$dotacoes_transposicao_vinculos[] = $resultadoConsulta;
+					
+					/*$dotacoes_suplementacao_vinculos[] = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();
+				
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						$dotacoes_suplementacao_vinculos[] = array_splice($dotacoes_suplementacao_vinculos, 3, 0, 'more');
+						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
+					}*/
+				}
+				$dotacoes_transposicao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				
+			}
+			else{
+			}
+			$dotacoes_transposicao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+			
+			/*if(!empty($dotacoes_transposicao))
 			{
 				foreach($dotacoes_transposicao as $dotacao)
 				{
@@ -660,7 +798,7 @@ class OrcamentoController extends Controller
 				$dotacoes_transposicao_vinculos= array_unique($dotacoes_transposicao_vinculos, SORT_REGULAR);
 			}
 			else{
-			}
+			}*/
 			
 			//Transferir
 			foreach ($request->tnf_codigo_dotacao as $dotacao)
@@ -683,8 +821,41 @@ class OrcamentoController extends Controller
 				
 			}
 			
-
 			if(!empty($dotacoes_transferencia))
+			{
+				foreach($dotacoes_transferencia as $dotacao)
+				{
+					//resultado da consulta de vinculos no banco de dados
+					$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();;
+					//verifica se o vinculo selecionado no formulário esta em branco e ignora se for o caso
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						//insere junto ao resultado da consulta de vinculos o vinculo selecionado no formulário
+						$resultadoConsulta[] = array('codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo);
+					}
+					// converte o objeto em array
+					$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+					// remove os valore duplicados
+					$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+					//copia o resultado para o objeto de vinculos
+					$dotacoes_transferencia_vinculos[] = $resultadoConsulta;
+					
+					/*$dotacoes_suplementacao_vinculos[] = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();
+				
+					if($dotacao->vinculo != " " && $dotacao->vinculo != null)
+					{
+						$dotacoes_suplementacao_vinculos[] = array_splice($dotacoes_suplementacao_vinculos, 3, 0, 'more');
+						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
+					}*/
+				}
+				$dotacoes_transferencia_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				
+			}
+			else{
+			}
+			$dotacoes_transferencia_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+
+			/*if(!empty($dotacoes_transferencia))
 			{
 				foreach($dotacoes_transferencia as $dotacao)
 				{
@@ -693,7 +864,7 @@ class OrcamentoController extends Controller
 				$dotacoes_transferencia_vinculos= array_unique($dotacoes_transferencia_vinculos, SORT_REGULAR);
 			}
 			else{
-			}
+			}*/
 
 
 			//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1312,6 +1483,10 @@ class OrcamentoController extends Controller
 		$pesquisaFeita = "";
 		$exercicio = date("Y"); 
 		$mensagem="";
+		$exercicioLei = $exercicio-1;
+		
+		$loa = Legislacao::whereRaw('classificacao = "LOA" and ano ="'.$exercicioLei.'" ')->firstOrFail("numero");
+		$ldo = Legislacao::whereRaw('classificacao = "LDO" and ano ="'.$exercicioLei.'" ')->firstOrFail("numero");
 		if($request->tipo_alteracao == "CREDITO ADICIONAL SUPLEMENTAR")
 		{
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
@@ -1352,7 +1527,7 @@ class OrcamentoController extends Controller
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao2.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
-													<p style="text-align:right; font-size:10px;  font-family: Arial;"> Lei Municipal nº1331/2018, Artº4</p>									
+													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$loa->numero.'/'.$exercicioLei.'</p>									
 												</div>
 												<div>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
@@ -1696,7 +1871,7 @@ class OrcamentoController extends Controller
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao2.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
-													<p style="text-align:right; font-size:10px;  font-family: Arial;"> Lei Municipal nº1331/2018, Artº4</p>									
+													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$ldo->numero.'/'.$exercicioLei.'</p>									
 												</div>
 												<div>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
