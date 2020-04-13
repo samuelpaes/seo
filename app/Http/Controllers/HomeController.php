@@ -29,18 +29,20 @@ class HomeController extends Controller
 	
 	public function index()
 	{
+      
         $secretaria = Auth::user()->secretaria;
+       // return('oi');
         $unidade_orcamentaria = UnidadeOrcamentaria::where('unidade', '=', $secretaria)->firstOrFail('codigo');		
        
         $exercicio = date("Y");
-       
+      
         $dotacao = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('dotacao');	
         $reserva = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('reserva');
         $saldo = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('saldo');	;
         $empenhado = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('empenhado');	
 
         $informacoes = Informacao::all()->take(10);
-
+        
         //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
 		return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes);
 	}

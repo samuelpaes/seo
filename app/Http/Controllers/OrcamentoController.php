@@ -11,6 +11,7 @@ use SEO\ClassificacaoFuncionalProgramatica;
 use SEO\NaturezaDeDespesa;
 use SEO\FormularioAlteracaoOrcamentaria;
 use SEO\Legislacao;
+use SEO\Contrato;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
 
@@ -74,7 +75,7 @@ class OrcamentoController extends Controller
 			{
 				if($request->tipoFormulario <> "TODOS")
 				{
-					$formularios[] =  Informacao::all();		
+					$formularios[] = FormularioAlteracaoOrcamentaria::all();		
 				}
 				else{
 					$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$request->secretaria'")->get();
@@ -141,7 +142,7 @@ class OrcamentoController extends Controller
 	
 	public function leis_decretos(Request $request)
     {
-	
+		
 		$pesquisaFeita="";
 		$mensagem="";
 		if($request->acao == "cadastrar")
@@ -189,11 +190,11 @@ class OrcamentoController extends Controller
 				$legislacoes[] = Legislacao::whereRaw("esfera = '$request->esfera'")->get();
 			}
 			$pesquisaFeita="ok";
-			return view ('orcamento/leis_decretos')->with("legislacoes", $legislacoes)->with("pesquisaFeita", $pesquisaFeita);
+			return view ('orcamento/leis_decretos')->with("legislacoes", $legislacoes)->with("pesquisaFeita", $pesquisaFeita)->with("mensagem", $mensagem);
 		}	
 		else
 		{
-			return view ('orcamento/leis_decretos')->with("pesquisaFeita", $pesquisaFeita);
+			return view ('orcamento/leis_decretos')->with("pesquisaFeita", $pesquisaFeita)->with("mensagem", $mensagem);
 		}
 	}
 	
@@ -201,6 +202,89 @@ class OrcamentoController extends Controller
     {
 	
 		return view ('orcamento/agenda_orcamentaria');
+	}
+
+	public function contratos(Request $request)
+    {
+	
+		$acao = "";
+		$pesquisaFeita = "";
+		$mensagem = "";
+		$sucesso="";
+
+
+		if($request->acao == "cadastrar")
+		{
+			
+			if (Contrato::whereRaw('numero_processo = "'.$request->numero_processo.'" and ano_processo ="'.$request->ano_processo.'" and numero_contrato = "'.$request->numero_contrato.'" and ano_contrato ="'.$request->ano_contrato.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
+			{
+				$request->valor = str_replace("R$","",$request->valor);
+				Contrato::create([
+					'secretaria' => $request->secretaria,
+					'numero_processo' => $request->numero_processo,
+					'ano_processo' => $request->ano_processo,
+					'numero_contrato' => $request->numero_contrato,
+					'ano_contrato' => $request->ano_contrato,
+					'valor' => str_replace(array(".",","),array("", "."),$request->valor),
+					'objeto' => $request->objeto,
+					'observacao' => $request->observacao,
+					'link' => $request->link,
+					'usuario' => Auth::user()->registro,
+				]);
+				$sucesso="ok";
+				$mensagem="Contrato ".$request->numero_contrato."/".$request->ano_contrato." cadastrado!";
+				return view ('orcamento/contratos')->with("pesquisaFeita", $pesquisaFeita)->with("acao", $acao)->with("mensagem", $mensagem)->with("sucesso", $sucesso);
+			}
+			else{
+				$sucesso="";
+				$mensagem="Contrato ".$request->numero_contrato."/".$request->ano_contrato." não cadastrado. Contrato já consta no sistema!";
+				return view ('orcamento/contratos')->with("pesquisaFeita", $pesquisaFeita)->with("acao", $acao)->with("mensagem", $mensagem)->with("sucesso", $sucesso);
+			}
+			
+		}
+		else if($request->acao == "pesquisar")
+		{
+			if($request->filtro == "contrato")
+			{
+				$contratos[] = Contrato::where('numero_contrato', '=', $request->numero_contrato)->where('ano_contrato', '=', $request->ano_contrato)->get();
+				$pesquisaFeita = "ok";
+			}
+			else if($request->filtro == "processo")
+			{
+				$contratos[] = Contrato::where('numero_processo', '=', $request->numero_contrato)->where('ano_processo', '=', $request->ano_contrato)->get();
+				$pesquisaFeita = "ok";
+			}
+			else if($request->filtro == "secretaria")
+			{
+				$contratos[] = Contrato::whereRaw("secretaria = '$request->secretaria'")->get();
+				$pesquisaFeita = "ok";
+			}
+			else if($request->filtro == "todos")
+			{
+				if(auth()->user()->isAdmin != 0 )
+				{
+					$contratos[] = Contrato::whereRaw("secretaria = '$request->secretaria'")->get();
+				}
+				else{
+					$contratos[] = Contrato::all();
+				}
+				$pesquisaFeita = "ok";
+				
+			}
+			else
+			{
+				$sucesso="";
+				$mensagem="Contrato não Localizado!";
+			}
+
+			return view ('orcamento/contratos')->with("pesquisaFeita", $pesquisaFeita)->with("acao", $acao)->with("mensagem", $mensagem)->with("sucesso", $sucesso)->with("contratos", $contratos)->with("pesquisaFeita", $pesquisaFeita);
+		}
+		else{
+			return view ('orcamento/contratos')->with("pesquisaFeita", $pesquisaFeita)->with("acao", $acao)->with("mensagem", $mensagem)->with("sucesso", $sucesso);
+		}
+		
+
+		
 	}
 	
 	public function show(Request $request)

@@ -202,7 +202,7 @@ background: rgba(255, 255, 255, 0.4);
 							</div>
 							<ul class="submenu">
 									<li><a href="{{ route('orcamento_saldo_dotacoes') }}">Saldo de Dotações</a></li>
-									<li><a href="#">Contratos</a></li>
+									<li><a href="{{ route('orcamento_contratos') }}">Contratos</a></li>
 									<li><a href="{{ route('orcamento_agenda_orcamentaria') }}">Agenda Orçamentária</a></li>
 									<li><a href="{{ route('orcamento_formularios') }}">Formulários</a></li>
 									<li><a href="{{ route('orcamento_manual') }}">Manual de Alterações</a></li>

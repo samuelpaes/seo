@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
 			'sobrenome' => 'Administrador',
             'email' => 'admin@bertioga.sp.gov.br',
             'password' => bcrypt('admin123456'),
-			'secretaria' => 'SA',
+			'secretaria' => 'SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS',
 			'estado' => '1',
 			'registro' => '0000',
-			'isAdmin' => '1',
+			'isAdmin' => '0',
         ]);
 		
 		DB::table('users')->insert([
@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
 			'sobrenome' => 'Usuario',
             'email' => 'user@bertioga.sp.gov.br',
             'password' => bcrypt('user123456'),
-			'secretaria' => 'SA',
+			'secretaria' => 'SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS',
 			'estado' => '1',
 			'registro' => '9999',
 			'isAdmin' => '0',

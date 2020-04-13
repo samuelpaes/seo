@@ -323,10 +323,10 @@
 										<td style="width: 8%">
 											<select class="form-control" name="isAdmin[]"  id="isAdmin-{{$usuario['registro']}}" name='isAdmin[]' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
 												<option <?php if($usuario['status'] == '') echo 'selected="selected"' ?>></option>
-												<option value="0" <?php if($usuario['isAdmin'] == 1) echo 'selected="selected"' ?>>ADMINISTRADOR</option>
-												<option value="1" <?php if($usuario['isAdmin'] == 0) echo 'selected="selected"' ?>>SECRETÁRIO</option>
-												<option value="2" <?php if($usuario['isAdmin'] == 0) echo 'selected="selected"' ?>>GESTOR</option>
-												<option value="3" <?php if($usuario['isAdmin'] == 0) echo 'selected="selected"' ?>>COMUM</option>
+												<option value="0" <?php if($usuario['isAdmin'] == 0) echo 'selected="selected"' ?>>ADMINISTRADOR</option>
+												<option value="1" <?php if($usuario['isAdmin'] == 1) echo 'selected="selected"' ?>>SECRETÁRIO</option>
+												<option value="2" <?php if($usuario['isAdmin'] == 2) echo 'selected="selected"' ?>>GESTOR</option>
+												<option value="3" <?php if($usuario['isAdmin'] == 3) echo 'selected="selected"' ?>>COMUM</option>
 											</select>
 										</td>
 										<td style="width: 8%">

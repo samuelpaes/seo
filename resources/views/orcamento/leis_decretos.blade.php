@@ -219,7 +219,7 @@
 												<button type="submit" id="btnPesquisar" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;" data-toggle="modal" data-target="#complementarPesquisa" disabled>Pesquisar</button>
 											</div>	
 											<div class="col-md-2">
-											@if(auth()->user()->isAdmin == 1)
+											@if(auth()->user()->isAdmin == 0)
 												<a class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#cadastrarLeiDecreto">
 													Novo
 												</a>
@@ -391,6 +391,19 @@ function abrirLegislacaoPDF(link)
 	$('#abrirLegislacaoPDF').modal('show'); 
 	//alert(valor);
 }
+
+function habilitarBtnCadastrar()
+{
+    if(document.getElementById('instrumento').value != "" && document.getElementById('classificacao').value != "" && document.getElementById('numero').value != "" && document.getElementById('ano').value != "" && document.getElementById('esfera').value != "" && document.getElementById('observacao').value != "" && document.getElementById('link').value != "")
+    {
+        document.getElementById('btnCadastrar').disabled = false;
+    }
+    else{
+        document.getElementById('btnCadastrar').disabled = true;
+    }
+
+
+}
 </script>
 
 <!-- Modal Mensagem-->
@@ -407,7 +420,7 @@ function abrirLegislacaoPDF(link)
 
 
 <!-- Modal Cadastrar Nova Lei/Decreto-->
-<div id="cadastrarLeiDecreto" class="modal fade" role="dialog">
+<div id="cadastrarLeiDecreto" class="modal fade" role="dialog" onmousemove="habilitarBtnCadastrar()">
 	<div class="modal-dialog">
 
     <!-- Modal content-->
@@ -425,7 +438,7 @@ function abrirLegislacaoPDF(link)
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Instrumento</label>
-										<select class="form-control" name="instrumento" id="instrumento">
+										<select class="form-control" name="instrumento" id="instrumento" onkeypress="habilitarBtnCadastrar()" onclick="habilitarBtnCadastrar()">
 											<option selected></option>
 											<option value="DECRETO">DECRETO</option>
 											<option value="LEI">LEI</option>
@@ -435,7 +448,7 @@ function abrirLegislacaoPDF(link)
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Classificação</label>
-										<select class="form-control" name="classificacao" id="classificacao">
+										<select class="form-control" name="classificacao" id="classificacao" onkeypress="habilitarBtnCadastrar()" onclick="habilitarBtnCadastrar()">
 											<option selected></option>
 											<option value="PPA">PLANO PLURIANUAL</option>
 											<option value="LDO">LEI DE DIRETRIZES ORÇAMENTÁRIAS</option>
@@ -449,7 +462,7 @@ function abrirLegislacaoPDF(link)
 								<div class="col-md-5">
 									<div class="form-group">
 										<label>Número</label>
-										<input type="number" min="0" class="form-control" value=""  name="numero">
+										<input type="number" min="0" class="form-control" value=""  id="numero" name="numero" onkeypress="habilitarBtnCadastrar()" onclick="habilitarBtnCadastrar()">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -459,7 +472,7 @@ function abrirLegislacaoPDF(link)
 								<div class="col-md-5">
 									<div class="form-group">
 										<label>Ano</label>
-										<input type="number" min="0" class="form-control" value=""  name="ano">
+										<input type="number" min="0" class="form-control" value="" id="ano" name="ano" onkeypress="habilitarBtnCadastrar()" onclick="habilitarBtnCadastrar()">
 									</div>
 								</div>
 							</div>
@@ -467,7 +480,7 @@ function abrirLegislacaoPDF(link)
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Esfera</label>
-										<select class="form-control" name="esfera" id="esfera">
+										<select class="form-control" name="esfera" id="esfera" onkeypress="habilitarBtnCadastrar()" onclick="habilitarBtnCadastrar()">
 											<option selected></option>
 											<option value="MUNICIPAL">MUNICIPAL</option>
 											<option value="ESTADUAL">ESTADUAL</option>
@@ -478,7 +491,7 @@ function abrirLegislacaoPDF(link)
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Observação</label>
-										<input type="text" class="form-control" name="observacao"></input>
+										<input type="text" class="form-control" id="observacao" name="observacao" onkeypress="habilitarBtnCadastrar()" onclick="habilitarBtnCadastrar()"></input>
 									</div>
 								</div>
 							</div>
@@ -486,7 +499,7 @@ function abrirLegislacaoPDF(link)
 								<div class="col-md-12">
 									<div class="form-group">
 										<label>Link</label>
-										<input type="text" class="form-control" name="link"></input>
+										<input type="text" class="form-control" id="link" name="link" onkeypress="habilitarBtnCadastrar()" onclick="habilitarBtnCadastrar()"></input>
 									</div>
 								</div>
 							</div>
@@ -498,7 +511,7 @@ function abrirLegislacaoPDF(link)
 					
 			<div class="modal-footer">		
 			<input name="acao" class="form control" value="cadastrar"></input>
-			<input value="Cadastrar" type="submit" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;">
+			<input value="Cadastrar" id="btnCadastrar" type="submit" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;" disabled>
 			</div>
 		</form>	
 		</div>

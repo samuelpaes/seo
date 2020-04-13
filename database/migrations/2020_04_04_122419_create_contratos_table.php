@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class FormularioAlteracaoOrcamentaria extends Migration
+class CreateContratosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class FormularioAlteracaoOrcamentaria extends Migration
      */
     public function up()
     {
-        Schema::create('formulario_alteracao_orcamentarias', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('codigo_formulario');
-            $table->string('tipo_instrumento');
-            $table->string('numero_instrumento');
-            $table->string('tipo_formulario');
-            $table->string('exercicio');
+        Schema::create('contratos', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('secretaria');
+            $table->string('numero_processo');
+            $table->string('ano_processo');
+            $table->integer('numero_contrato');
+            $table->integer('ano_contrato');
             $table->decimal('valor');
+            $table->string('objeto');
+            $table->string('observacao');
             $table->string('usuario');
-            $table->string('path');
             $table->timestamps();
         });
     }
@@ -35,6 +35,6 @@ class FormularioAlteracaoOrcamentaria extends Migration
      */
     public function down()
     {
-        Schema::drop('formulario_alteracao_orcamentarias');
+        Schema::dropIfExists('contratos');
     }
 }

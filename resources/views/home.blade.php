@@ -359,7 +359,7 @@ background: rgba(255, 255, 255, 0.4);
 										<ul class="drop" style="width:108.5%;">
 											<div>
 												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset;">Saldo de Dotações</a></li>
-												<li><a href="#" style="all: unset;">Contratos</a></li>
+												<li><a href="{{ route('orcamento_contratos') }}" style="all: unset;">Contratos</a></li>
 												<li><a href="{{ route('orcamento_agenda_orcamentaria') }}" style="all: unset;">Agenda Orçamentária</a></li>
 												<li><a href="{{ route('orcamento_formularios') }}" style="all: unset;">Formulários</a></li>
 												<li><a href="{{ route('orcamento_manual') }}" style="all: unset;">Manual de Alterações</a></li>

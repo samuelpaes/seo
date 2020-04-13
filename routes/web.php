@@ -90,6 +90,7 @@ Route::middleware(['auth'])->group(function () {
     Route::any('orcamento/formularios', 'OrcamentoController@formularios', function () {})->name('orcamento_formularios');
 	Route::get('orcamento/manual', 'OrcamentoController@manual', function () {})->name('orcamento_manual');
 	Route::any('orcamento/leis_decretos', 'OrcamentoController@leis_decretos', function () {})->name('orcamento_leis_decretos');
+	Route::any('orcamento/contratos', 'OrcamentoController@contratos', function () {})->name('orcamento_contratos');
 	Route::get('orcamento/saldo_dotacoes', 'OrcamentoController@saldo_dotacoes', function () {})->name('orcamento_saldo_dotacoes');
 	Route::get('orcamento/agenda_orcamentaria', 'OrcamentoController@agenda_orcamentaria', function () {})->name('orcamento_agenda_orcamentaria');
 	Route::any('orcamento/show', 'OrcamentoController@show', function () {})->name('orcamento_show');
@@ -117,6 +118,6 @@ Route::get('show','UserController@show')->name('show')->middleware('admin');
 Route::any('update','UserController@update')->name('atualizarUsuario')->middleware('admin');;
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::any('/home', 'HomeController@index')->name('home');
 
 Route::get('admin/routes', 'HomeController@admin')->middleware('admin');

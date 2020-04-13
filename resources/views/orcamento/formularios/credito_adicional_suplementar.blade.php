@@ -415,8 +415,8 @@ $total_suplementar = 'R$ ' . number_format($total_suplementar, 2, ',', '.')?>
                                         </div>
                                         
                                         <div class="col-md-12" align="center" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap;">
-                                            <sh>
-                                                        <th><label style="flexabel for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
+                                            <span>
+                                                <label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
                                                 <input class="form-control"  onclick="ativarBotao(id)" onkeydown="ativarBotao(id)" onkeyup="ativarBotao(id)" onkeypress="ativarBotao(id)" min="0" type="number" name="anl_codigo_dotacao[]" id="anl_codigo_dotacao"style="display: inline-block; width:80px;"></input>
                                                 <input class="form-control" type="hidden" placeholder="R$ 0,00" name="sup_valor[]" style="display: inline-block; width:80px;"></input>
                                                 <button value="anular" id="anular" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
@@ -516,8 +516,8 @@ $total_anular = 'R$ ' . number_format($total_anular, 2, ',', '.')?>
                                 <?php
 $i = 0;
 ?>
-                               <div class="content">
-                                    <div class="row flex-nowrap">
+                               <div class="content" >
+                                    <div class="row flex-nowrap" >
                                         <div class="col-md-2">
                                         </div>
                                         <div class="col-md-8 col-md-center" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap;">
