@@ -623,6 +623,7 @@ class DotacaoOrcamentariaController extends Controller
 			//Verifica se existe dotacao já cadastrada
 			if ($count == 0) 
 			{
+				return($colecao);
 				$unidadeExecutora = $colecao['unidade_executora'];
 				$unidadeOrcamentaria = DB::select("select unidade_orcamentaria from unidade_executoras where codigo='$unidadeExecutora'");
 				$unidade_orcamentaria = $unidadeOrcamentaria[0]->unidade_orcamentaria;

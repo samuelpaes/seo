@@ -73,12 +73,6 @@
 	<script src="{{ asset('js/charts/chart.bundle.min.js') }}"type="text/javascript"></script>
 	<script src="{{ asset('js/charts/chart.js') }}"type="text/javascript"></script>
 	<script src="{{ asset('js/charts/chart.min.js') }}"type="text/javascript"></script>
-	
-	
-
-
-
-
 
     <!--  Notifications Plugin    -->
 	<script src="{{ asset('js/bootstrap-notify.js') }}"type="text/javascript"></script>
@@ -97,6 +91,11 @@
 	<script src="{{ asset('fullcalendar/packages/google-calendar/main.js') }}"type="text/javascript"></script>
 	<script src="{{ asset('fullcalendar/packages/core/locales/pt-br.js') }}"type="text/javascript"></script>
 	
+
+    <link rel="stylesheet" href="{{ asset('css/chat.css') }}" />
+    <script>
+        var base_url = '{{ url("/") }}';
+    </script>
 	
 
 

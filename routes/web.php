@@ -117,6 +117,11 @@ Route::middleware(['auth'])->group(function () {
 Route::get('show','UserController@show')->name('show')->middleware('admin');
 Route::any('update','UserController@update')->name('atualizarUsuario')->middleware('admin');;
 
+//Rotas chat
+Route::get('/load-latest-messages', 'MessagesController@getLoadLatestMessages');
+Route::post('/send', 'MessagesController@postSendMessage');
+Route::get('/fetch-old-messages', 'MessagesController@getOldMessages');
+
 
 Route::any('/home', 'HomeController@index')->name('home');
 
