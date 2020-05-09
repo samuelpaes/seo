@@ -20,6 +20,10 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
+    protected $subscribe = [
+        'SEO\Listeners\UserEventSubscriber',
+    ];
+
     /**
      * Register any events for your application.
      *
@@ -31,4 +35,6 @@ class EventServiceProvider extends ServiceProvider
 
         //
     }
+
+   
 }

@@ -225,6 +225,27 @@ class UserController extends Controller
 	   //return ($usuario);
     }
 
+    public function updatePassword(Request $request)
+    {
+      
+        $this->validate($request, [
+            'password'     => ['required', 'string', 'min:6', 'confirmed'],
+            'password_confirmation' => ['required', 'string', 'min:6', 'confirmed',],
+            ],
+        );
+        
+       
+
+        $data = $request->all();
+          
+       
+        auth()->user()->update([
+            'password' => Hash::make($request->password)
+        ]);
+
+        
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -236,10 +257,19 @@ class UserController extends Controller
         //
     }
 
+    public function isOnline()
+    {
+
+        return Cache::has('user-is-online-' . $this->id);
+
+    }
+
     public function showProfile(Request $request, $id)
     {
         $value = $request->session()->get('key');
 
         //
     }
+
+   
 }

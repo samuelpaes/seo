@@ -22,6 +22,7 @@ Route::get('/teste', 'HomeController@teste')->name('teste');
 Auth::routes();
 
 Route::get('alterar-usuario', 'UserController@index');
+Route::post('alterar-senha', 'UserController@updatePassword')->name('alterar-senha');
 
 /*Rotas Natureza de Despesa*/
 Route::middleware(['auth'])->group(function () {

@@ -131,250 +131,360 @@
 								
 								<div class="row" style="align-content: center;">
 									
-									<div class="col-md-4" style="align-content: center;">
+									<div class="col-md-4" style="align-content: left;">
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#">Secretaria de Governo <br>e Gestão</a>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Governo <br>e Gestão</a>
 													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
 														@if($usuario->secretaria == "SECRETARIA DE GOVERNO E GESTÃO")
 															@if($usuario->isAdmin == 1)
-															<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif
-													<ul>
-														<li>
-															<!--<a href="#">Paulo da Silva <br>Reg: x.xxx</a>-->
-														</li>
-														<li>
-															<!--<a href="#">Juliana Carvalho <br> Reg: x.xxx</a>-->
-														</li>
-													</ul>
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
 														@endif
 													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
+													<ul>
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE GOVERNO E GESTÃO")
+															<li>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
+													</ul>
+													
 												</li>
 											</ul>
 										</div>
 									</div>
+
 									<div class="col-md-4" style="align-content: center;">
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#">Secretaria de Administração <br>e Finanças</a>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Administração <br>e Finanças</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
-														<li>
-															<a href="#">Patrícia Baisi <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Márcio Ricardo Alves <br> Reg: x.xxx</a>
-														</li>
-
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS")
+															<li>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
 													</ul>
+													
 												</li>
 											</ul>
 										</div>
 									</div>
-									
-									<div class="col-md-4" style="align-content: center;">
+
+									<div class="col-md-4" style="align-content: right;">
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#">Secretaria de Serviços <br>Urbanos</a>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Serviços <br>Urbanos</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE SERVIÇOS URBANOS")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
-														<li>
-															<a href="#">Dimas Rossi <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Marco Sant'Anna <br> Reg: x.xxx</a>
-														</li>
-
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SERVIÇOS URBANOS")
+															<li>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
 													</ul>
+													
 												</li>
 											</ul>
 										</div>
-									
 									</div>
-									
+
 								</div>
+								<div class="row" style="align-content: center;">
+									<div class="col-md-4" style="align-content: left;">
+										 <div class="organigrama" style="align-content: center;">
+											<ul>
+												<li>
+												<a href="#" style="width:250px; margin: auto;">Secretaria <br>de Educação </a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE EDUCAÇÃO")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
+													<ul>
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE EDUCAÇÃO")
+															<li>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
+													</ul>
+													
+												</li>
+											</ul>
+										</div>
+									</div>
+
+									<div class="col-md-4" style="align-content: center;">
+										 <div class="organigrama" style="align-content: center;">
+											<ul>
+												<li>
+													<a href="#" style="width:250px; margin: auto;" >Secretaria de Desenvolvimento <br>Social, Trabalho e Renda</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE DESENVOLVIMENTO SOCIAL E RENDA")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
+													<ul>
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA")
+															<li>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
+													</ul>
+													
+												</li>
+											</ul>
+										</div>
+									</div>
+
+									<div class="col-md-4" style="align-content: right;">
+										 <div class="organigrama" style="align-content: center;">
+											<ul>
+												<li>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Meio <br>Ambiente</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE MEIO AMBIENTE")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
+													<ul>
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE MEIO AMBIENTE")
+															<li>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
+													</ul>
+													
+												</li>
+											</ul>
+										</div>
+									</div>
+
+								</div>
+								<div class="row" style="align-content: center;">
+									<div class="col-md-4" style="align-content: center;">
+										 <div class="organigrama" style="align-content: center;">
+											<ul>
+												<li>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Planejamento <br>Urbano</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE PLANEJAMENTO URBANO")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
+													<ul>
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE PLANEJAMENTO URBANO")
+															<li>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
+													</ul>
+													
+												</li>
+											</ul>
+										</div>
+									</div>
+
+									<div class="col-md-4" style="align-content: center;">
+										 <div class="organigrama" style="align-content: center;">
+											<ul>
+												<li>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Segurança <br>e Cidadania</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE SEGURANÇA E CIDADANIA")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
+													<ul>
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SEGURANÇA E CIDADANIA")
+															<li>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
+													</ul>
+													
+												</li>
+											</ul>
+										</div>
+									</div>
+
+									<div class="col-md-4" style="align-content: center;">
+										 <div class="organigrama" style="align-content: center;">
+											<ul>
+												<li>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Turismo, <br>Esporte e Cultura</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE TURISMO, ESPORTE E CULTURA")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
+													<ul>
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE TURISMO, ESPORTE E CULTURA")
+															<li>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
+													</ul>
+													
+												</li>
+											</ul>
+										</div>
+									</div>
 								
-								<div class="row" style="align-content: center;">
-									
-									<div class="col-md-4" style="align-content: center;">
-										 <div class="organigrama" style="align-content: center;">
-											<ul>
-												<li>
-													<a href="#">Secretaria de Educação </a>
-													<ul>
-														<li>
-															<a href="#">Daniele Jorgetti <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Cássio Abdallah <br> Reg: x.xxx</a>
-														</li>
-
-													</ul>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="col-md-4" style="align-content: center;">
-										 <div class="organigrama" style="align-content: center;">
-											<ul>
-												<li>
-													<a href="#">Secretaria de Desenvolvimento <br>Social, Trabalho <br>e Renda</a>
-													<ul>
-														<li>
-															<a href="#">Iza Maria Lartcha <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Tayná <br> Reg: x.xxx</a>
-														</li>
-
-													</ul>
-												</li>
-											</ul>
-										</div>
-									</div>
-									
-									<div class="col-md-4" style="align-content: center;">
-										 <div class="organigrama" style="align-content: center;">
-											<ul>
-												<li>
-													<a href="#">Secretaria de Meio <br>Ambiente</a>
-													<ul>
-														<li>
-															<a href="#">Cátia <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Fernando Poyatos <br> Reg: x.xxx</a>
-														</li>
-
-													</ul>
-												</li>
-											</ul>
-										</div>
-									
-									</div>
-									
 								</div>
 								<div class="row" style="align-content: center;">
-									
+
 									<div class="col-md-4" style="align-content: center;">
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#">Secretaria de Planejamento <br>Urbano</a>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Saúde</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE SAÚDE")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
-														<li>
-															<a href="#">Renato Louzada <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Leonardo Ferrari <br> Reg: x.xxx</a>
-														</li>
-
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SAÚDE")
+															<li>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
 													</ul>
+													
 												</li>
 											</ul>
 										</div>
 									</div>
+
 									<div class="col-md-4" style="align-content: center;">
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#">Secretaria de Segurança <br>e Cidadania</a>
+													<a href="#" style="width:250px; margin: auto;">Secretaria de Obras <br>e Habitação</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "SECRETARIA DE OBRAS E HABITAÇÃO")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
-														<li>
-															<a href="#">Alex Dias <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Roberto Teixeira <br> Reg: x.xxx</a>
-														</li>
-
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE OBRAS E HABITAÇÃO")
+															<li>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
 													</ul>
+													
 												</li>
 											</ul>
 										</div>
 									</div>
-									
+
 									<div class="col-md-4" style="align-content: center;">
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#">Secretaria de Turismo, <br>Esporte e Cultura</a>
+													<a href="#" style="width:250px; margin: auto;">Procuradoria Geral do Município</a>
+													@foreach($usuarios as $usuario)
+													<!--Verifica se o usuário é da Secretaria em questão -->
+														@if($usuario->secretaria == "PROCURADORIA GERAL DO MUNICÍPIO")
+															@if($usuario->isAdmin == 1)
+																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+															@endif	
+														@endif
+													@endforeach
+													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
-														<li>
-															<a href="#">Adriana <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Danilo Lerne <br> Reg: x.xxx</a>
-														</li>
-
+													@foreach($usuarios as $usuario)
+														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "PROCURADORIA GERAL DO MUNICÍPIO")
+															<li>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+															</li>
+														@endif
+													@endforeach
 													</ul>
-												</li>
-											</ul>
-										</div>
-									
-									</div>
-									
-								</div>
-								<div class="row" style="align-content: center;">
-									
-									<div class="col-md-4" style="align-content: center;">
-										 <div class="organigrama" style="align-content: center;">
-											<ul>
-												<li>
-													<a href="#">Secretaria de Saúde</a>
-													<ul>
-														<li>
-															<a href="#">Rosimaire <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Milene Chaddad <br> Reg: x.xxx</a>
-														</li>
-
-													</ul>
+													
 												</li>
 											</ul>
 										</div>
 									</div>
-									<div class="col-md-4" style="align-content: center;">
-										 <div class="organigrama" style="align-content: center;">
-											<ul>
-												<li>
-													<a href="#">Secretaria de Obras <br>e Habitação</a>
-													<ul>
-														<li>
-															<a href="#">Luizilda <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Ana Luchesi <br> Reg: x.xxx</a>
-														</li>
-
-													</ul>
-												</li>
-											</ul>
-										</div>
-									</div>
-									
-									<div class="col-md-4" style="align-content: center;">
-										 <div class="organigrama" style="align-content: center;">
-											<ul>
-												<li>
-													<a href="#">Procuradoria Geral do Município</a>
-													<ul>
-														<li>
-															<a href="#">Márcio Zitei <br>Reg: x.xxx</a>
-														</li>
-														<li>
-															<a href="#">Camila Santos <br> Reg: x.xxx</a>
-														</li>
-
-													</ul>
-												</li>
-											</ul>
-										</div>
-									
-									</div>
-									
 								</div>
 							</div>
                         </div>

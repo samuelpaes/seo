@@ -900,9 +900,12 @@ function checaResolucao()
                                             <br>
                                             <span style="font-size:12px;">{{ $user->secretaria }}</span>
                                         </p>
-                                        <div class="status available"></div>
-                                        <!--<div class="status away"></div>
-                                        <div class="status inactive"></div>-->
+										@if($user->isOnline())
+                                       		<div class="status available"></div>
+										@else
+                                        	<!--<div class="status away"></div>-->
+                                        	<div class="status inactive"></div>
+										@endif
                                     </div>
                                 </a>
                             @endforeach

@@ -38,12 +38,19 @@ class DotacaoOrcamentariaController extends Controller
 		// pega todos os exercícios
 		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
 		//return(sizeof($exercicios));
+		$exercicios = array();
 		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
 		{
 			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
 		}
-		$exercicioAntigo = min($exercicios);
-
+		
+		//Conta a quantidade de exercício e só seleciona o mais antigo se existirem exercícios na tabela base
+		if(count($exercicios) > 0)
+		{
+			//seleciona o mais antigo
+			$exercicioAntigo = min($exercicios);
+		}
+	
 		$pesquisaFeita = '';
 		$unidade_naoLocalizada= '';
 		$verificacao = "";
@@ -58,10 +65,9 @@ class DotacaoOrcamentariaController extends Controller
 		{
 			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
 		}
-		//seleciona o mais antigo
-		$exercicioAntigo = min($exercicios);
+		
 		$exercicio = date("Y");
-
+	
 	//return($natureza_dotacao_total);
 	return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios)->with('exercicio', $exercicio);
     }
@@ -137,12 +143,17 @@ class DotacaoOrcamentariaController extends Controller
 			// pega todos os exercícios
 			$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
 			//return(sizeof($exercicios));
+			$exercicios = array();
 			for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
 			{
 				$exercicios[] = $exerciciosRetorno[$i]->exercicio;
 			}
 			
-			$exercicioAntigo = min($exercicios);
+			if(count($exercicios) > 0)
+			{
+				//seleciona o mais antigo
+				$exercicioAntigo = min($exercicios);
+			}
 
 			//deleta o úlimo exercicio caso haja mais de 4 exercícicio
 			if(count($exercicios) > 4)
@@ -419,12 +430,18 @@ class DotacaoOrcamentariaController extends Controller
 		$totalExercicio = SaldodeDotacao::distinct('exercicio')->count('exercicio');
 		//seleciona uma vez cada um dos exercícios
 		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
+		$exercicios = array();
 		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
 		{
 			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
 		}
-		//seleciona o mais antigo
-		$exercicioAntigo = min($exercicios);
+		
+		if(count($exercicios) > 0)
+		{
+			//seleciona o mais antigo
+			$exercicioAntigo = min($exercicios);
+		}
+
 		//return($SaldodeDotacaos)
 		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('verificacao', $verificacao)->with('SaldodeDotacaos', $SaldodeDotacaos)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionais', $classificacoesFuncionais)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('vinculos_valores',$vinculos_valores)->with('indiceA',$indiceA)->with('exercicios', $exercicios)->with('exercicio', $exercicio);
     }
@@ -461,11 +478,16 @@ class DotacaoOrcamentariaController extends Controller
 		// pega todos os exercícios
 		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
 		//return(sizeof($exercicios));
+		$exercicios = array();
 		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
 		{
 			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
 		}
-		$exercicioAntigo = min($exercicios);
+		if(count($exercicios) > 0)
+		{
+			//seleciona o mais antigo
+			$exercicioAntigo = min($exercicios);
+		}
 
 		$SaldodeDotacaos = SaldodeDotacao::all();
 		
@@ -623,13 +645,37 @@ class DotacaoOrcamentariaController extends Controller
 			//Verifica se existe dotacao já cadastrada
 			if ($count == 0) 
 			{
-				return($colecao);
+					
+				
 				$unidadeExecutora = $colecao['unidade_executora'];
 				$unidadeOrcamentaria = DB::select("select unidade_orcamentaria from unidade_executoras where codigo='$unidadeExecutora'");
-				$unidade_orcamentaria = $unidadeOrcamentaria[0]->unidade_orcamentaria;
-				$unidadeOrcamentaria = DB::select("select codigo from unidade_orcamentarias where unidade='$unidade_orcamentaria'");
-				$unidade_orcamentaria = $unidadeOrcamentaria[0]->codigo;
-				
+				if(count($unidadeOrcamentaria) > 0){
+					//return(count($unidadeOrcamentaria).' '.$unidadeExecutora);
+					$unidade_orcamentaria = $unidadeOrcamentaria[0]->unidade_orcamentaria;
+					$unidadeOrcamentaria = DB::select("select codigo from unidade_orcamentarias where unidade='$unidade_orcamentaria'");
+					$unidade_orcamentaria = $unidadeOrcamentaria[0]->codigo;
+				}
+				else
+				{
+					//verifica a quantidade de exercicio cadastrados na base de dados
+					$totalExercicio = SaldodeDotacao::distinct('exercicio')->count('exercicio');
+					// pega todos os exercícios
+					$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
+					//return(sizeof($exercicios));
+					$exercicios = array();
+					for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
+					{
+						$exercicios[] = $exerciciosRetorno[$i]->exercicio;
+					}
+					if(count($exercicios) > 0)
+					{
+						//seleciona o mais antigo
+						$exercicioAntigo = min($exercicios);
+					}
+
+					$mensagem='Dotações não inseridas no sistema. A Unidade Executora "'.$unidadeExecutora.'" não existe. Por favor, verifique a existência da Unidade Executora e de sua respectiva Unidade Orçamentária e cadestre-as na base dados!';
+					return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios)->with('exercicio', $exercicio);
+				}	
 			//caso contrario insere dotação
 				SaldodeDotacao::create([
 					'exercicio' =>$request->exercicio,
@@ -690,11 +736,16 @@ class DotacaoOrcamentariaController extends Controller
 		// pega todos os exercícios
 		$exerciciosRetorno = SaldodeDotacao::distinct('exercicio')->get('exercicio');
 		//return(sizeof($exercicios));
+		$exercicios = array();
 		for ($i = 0; $i < sizeof($exerciciosRetorno) ; $i++ )
 		{
 			$exercicios[] = $exerciciosRetorno[$i]->exercicio;
 		}
-		$exercicioAntigo = min($exercicios);
+		if(count($exercicios) > 0)
+		{
+			//seleciona o mais antigo
+			$exercicioAntigo = min($exercicios);
+		}
 		
 		
 		return view ('dotacao-orcamentaria/index')->with('pesquisaFeita', $pesquisaFeita)->with('unidade_naoLocalizada', $unidade_naoLocalizada)->with('mensagem', $mensagem)->with('indiceA', $indiceA)->with('verificacao', $verificacao)->with('exercicios', $exercicios)->with('exercicio', $exercicio);

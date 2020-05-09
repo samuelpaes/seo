@@ -78,7 +78,7 @@
 													</select>
 												</div>
 												<div class="col-md-2">
-													<button type="button" id="btnImportar2" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivoExecutora">Importar</button>
+													<button type="button" id="btnImportar2" class="btn btn-info btn-fill pull-right" data-toggle="modal" data-target="#importarArquivoExecutora" disabled>Importar</button>
 												</div>
 											</div>
 										</div>	
@@ -103,7 +103,7 @@
 											</div>
 											<div class="col-md-2">
 												<label><input style="border:none; background-color: transparent;" disabled></input></label>
-												<button id="btnCadastrar" type="submit" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c; margin-left:70px" disabled>Cadastrar</button>
+												<button id="btnCadastrar" type="submit" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c; margin-left:70px">Cadastrar</button>
 											</div>	
 											
 										</div>
@@ -246,14 +246,22 @@ function ativarCamposParaFiltro()
 			document.getElementById('btnCadastrar').disabled = true;
 		}
 		else{
-			document.getElementById('codigo').disabled=false;
-			document.getElementById('codigo').required=true;
-			document.getElementById('unidade').disabled=false;
-			document.getElementById('unidade').required=true;
-			document.getElementById('btnImportar').disabled=false;
-			document.getElementById('btnImportar').required=true;
-			document.getElementById('btnCadastrar').disabled=false;
-			document.getElementById('btnCadastrar').required=true;
+			
+				document.getElementById('codigo').disabled=false;
+				document.getElementById('codigo').required=true;			
+				document.getElementById('unidade').disabled=false;
+				document.getElementById('unidade').required=true;
+
+				document.getElementById('btnImportar2').disabled=false;
+					
+		
+/*
+			if(document.getElementById('btnCadastrar') != null and document.getElementById('codigo').value != null and document.getElementById('unidade').value != null)
+			{
+				document.getElementById('btnCadastrar').disabled=false;
+				document.getElementById('btnCadastrar').required=true;
+			}
+			else{}*/
 		}
 	}		
 </script>

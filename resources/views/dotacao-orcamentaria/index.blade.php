@@ -10,21 +10,18 @@
     overflow: hidden;
 	height:20px;
 }
-
 .btnEdicao:hover:before{
 	opacity: 1; 
 	transform: 
 	translate(0,0);
 	width:20px;
 }
-
 .btnEdicao:hover{
 	opacity: 1; 
 	transform: 
 	translate(0,0);
 	width:65px;
 }
-
 .btnEdicao:before{
     content: attr(data-hover);
     position: absolute;
@@ -38,7 +35,6 @@
     transform: translate(-100%,0);
     transition: all .6s ease-in-out;
 }
-
 /*button div (button text before hover)*/
 .btnEdicao:hover div{opacity: 0; transform: translate(100%,0); width:10%;}
 .btnEdicao div{
@@ -47,32 +43,26 @@
     font-size: 16px;
     transition: all .6s ease-in-out;
 }
-
 .btnEdicao:active div {
 	font-size: 6px;
 }
-
 @media (min-width: 992px) {
 	.col-md-center {
 		margin-left: auto;
 		margin-right: auto;
 	}
 	}
-
 	.outer {
 	position: relative;
 	margin: auto;
 	width: 15px;
 	margin-top: 0px;
 	cursor: pointer;
-
 	}
-
 	.inner {
 	width: inherit;
 	text-align: center;
 	}
-
 	.label_remove { 
 	font-size: .7em; 
 	line-height: 3em;
@@ -84,7 +74,6 @@
 	left:-42px;
 	top:2px;
 	}
-
 	.inner:before, .inner:after {
 	position: absolute;
 	content: '';
@@ -94,34 +83,27 @@
 	left: 0;
 	transition: all .3s ease-in;
 	}
-
 	.inner:before {
 	top: 50%; 
 	transform: rotate(45deg);  
 	}
-
 	.inner:after {  
 	bottom: 50%;
 	transform: rotate(-45deg);  
 	}
-
 	.outer:hover label {
 	opacity: 1;
 	}
-
 	.outer:hover .inner:before,
 	.outer:hover .inner:after {
 	transform: rotate(0);
 	}
-
 	.outer:hover .inner:before {
 	top: 0;
 	}
-
 	.outer:hover .inner:after {
 	bottom: 0;
 	}
-
 /* The container */
 .container {
   display: block;
@@ -138,7 +120,6 @@
   height:15px;
   font-weight:normal;
 }
-
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
@@ -147,7 +128,6 @@
   height: 0;
   width: 0;
 }
-
 /* Create a custom checkbox */
 .checkmark {
   border-radius: 3px;
@@ -158,29 +138,24 @@
   width: 15px;
   background-color: #eee;
 }
-
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
   background-color: #49cfed;
 }
-
 /* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
   background-color: #49cfed;
 }
-
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "";
   position: absolute;
   display: none;
 }
-
 /* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
   display: block;
 }
-
 /* Style the checkmark/indicator */
 .container .checkmark:after {
   left: 5px;
@@ -273,7 +248,6 @@
 												</div>
 									
 											";
-
 									
 										foreach($unidadesOrcamentarias as $orcamentaria)
 										{	
@@ -539,7 +513,6 @@
 		
 		<script type="text/javascript">
 		com_github_culmat_jsTreeTable.register(this)
-
 		treeTable($('#table'))
 		</script>
 			
@@ -548,7 +521,6 @@
 
 
 <script>
-
 	
 function formatarMoedaeAtualizarSaldo(x, y) 
 {
@@ -583,12 +555,9 @@ function formatarMoedaeAtualizarSaldo(x, y)
 	document.getElementById('saldo-'+y).value = saldo;
 	});
 	
-
 	
 	
 }
-
-
 // função para ativar os campos do filtro
 function ativarCamposParaFiltro() 
 	{
@@ -601,12 +570,10 @@ function ativarCamposParaFiltro()
 			document.getElementById('codigo').required=true;
 		}
 	}
-
 /*Pode exluir?
 function submitForm(sub) {
 document.forms[sub].submit();
 }*/
-
 /* Máscaras Código da Unidade Orcamentaria */
 	
 function mascaraCodigo(o,f){
@@ -625,7 +592,6 @@ function execmascara()
 {
 	v_obj.value=v_fun(v_obj.value)
 }
-
 function c(v)
 {
 			
@@ -634,13 +600,10 @@ function c(v)
 						
 	//Coloca um ponto entre o terceiro e o quinto
 	v=v.replace(/(\d{2})(\d)/,"$1.$2")
-
 	//Coloca um ponto entre o quinto e o sétimo 
 	v=v.replace(/(\d{2})(\d)/,"$1.$2")
-
 	return v;
 }
-
 function informaExercicioSelecionado()
 {
 	document.getElementById('exercicio2').value = document.getElementById('exercicio').value;
@@ -653,7 +616,6 @@ document.addEventListener('DOMContentLoaded', function()
 		//var exercicio = new Date().getFullYear()
 		//$("#exercicio").attr("placeholder", exercicio);
 		
-
 		exercicio = "<?php echo $exercicio ?>";
 		exercicio = parseInt(exercicio);
 	
@@ -672,20 +634,15 @@ document.addEventListener('DOMContentLoaded', function()
 			select.selectedIndex = "1";
 		}
 	}, false);
-
 function ativarContinuar()
 {
-
 	if ($('#chk_aceito').is(':checked')) {
 		document.getElementById("btnContinuar").disabled = false;
 	}
 	else{
 		document.getElementById("btnContinuar").disabled = true;
 	}
-
 }
-
-
 </script>
 
 <!-- Modal Importar Dotação Atualizada-->
@@ -766,7 +723,17 @@ function ativarContinuar()
 	<div class="modal-dialog" role="document">
 		<div class="alert alert-danger" style="border-radius: 5px">
 			<br>
-            <p style="text-align: center;" ><b> Atenção! - </b> Ao iniciar a implementação do saldo de dotações do exercício de <input id="exercicio2" class="form-control" style="all: unset; width:36px;" /> você estará removendo da base de dados todo o saldo de dotações do exercício de {{min($exercicios)}}! 
+            <p style="text-align: center;" ><b> Atenção! - </b> 
+				Ao iniciar a implementação do saldo de dotações do exercício de 
+				<input id="exercicio2" class="form-control" style="all: unset; width:36px;" /> 
+				você estará removendo da base de dados todo o saldo de dotações do exercício de 
+				<?php 
+					if(count($exercicios)>0){
+						echo min($exercicios);
+					} 
+				?>
+				!
+			</p> 
 			<br>
 			<br> 
 			Tem certeza que deseja continuar?</p>

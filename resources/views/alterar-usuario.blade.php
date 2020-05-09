@@ -193,9 +193,33 @@
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 }
-		
+
+/*botão senha */
+#alterar_senha{
+	position:relative; 
+	font-size:20px; 
+	font-weight:bold; 
+	padding: 0px; 
+	margin: 0px; 
+	background: none; 
+	border:none; 
+	color:#333333;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	transition: transform .2s; /* Animation */
+}		
+#alterar_senha:hover{
+
+	transform: scale(1.3);
+
+}
+#alterar_senha:active{
+
+transform: scale(1.0);
+
+}
 </style>
-		<div class="content">
+		<div class="content" onmousemove="filtroPesquisa()">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
@@ -219,7 +243,7 @@
 													</select>
 												</div>
 												<div class="col-md-7" id="registro">
-													<input onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="4" class="form-control" name="pre_registro" autofocus>
+													<input onkeyup="this.value=this.value.replace(/[^\d]/,'')" maxlength="4" class="form-control"  name="pre_registro" autofocus>
 												</div>
 												<div class="col-md-7" id="nome" hidden>
 													<input class="form-control" name="nome" onclick="ativarPesquisar()">
@@ -273,7 +297,7 @@
                              <p class="category">Here is a subtitle for this table</p>
                         </div>-->
                         <div class="content table-responsive table-full-width">
-                            <table class="table table-hover table-striped">
+                            <table class="table table-hover table-striped" style="font-size:8px;">
                                 <thead>
 								
                                     <tr>
@@ -285,6 +309,8 @@
 										<th>Email</th>
 										<th>Tipo de Usuário</th>
 										<th>Status</th>
+										<th></th>
+										<th></th>
                                		</tr>
 								</thead>
 								<form method="post" action="{{ route('atualizarUsuario') }}">
@@ -300,7 +326,7 @@
 											<button class='btnEdicao' type='button' data-hover='Alterar' id="alterar-{{$usuario['registro']}}" style='margin-left:-5px; left:4px;' onclick="alterarUsuario({{$usuario['registro']}})"><div><i class='fa fa-pencil'></i></div></button>
 										</td>
 										<td style="width: 30%">
-											<select class="form-control" name="secretaria[]" align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="secretaria-{{$usuario['registro']}}" name='secretaria'  readonly>
+											<select class="form-control" name="secretaria[]" align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="secretaria-{{$usuario['registro']}}" name='secretaria'  readonly>
 												<option <?php if ($usuario['secretaria'] == '') echo ' selected="selected"'; ?>></option>
 												<option value="SECRETARIA DE GOVERNO E GESTÃO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE GOVERNO E GESTÃO') echo ' selected="selected"'?>>SECRETARIA DE GOVERNO E GESTÃO</option>
 												<option value="SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS" <?php if ($usuario['secretaria'] == 'SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS') echo ' selected="selected"'?>>SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS</option>
@@ -316,12 +342,12 @@
 												<option value="PROCURADORIA GERAL DO MUNICÍPIO" <?php if ($usuario['secretaria'] == 'PROCURADORIA GERAL DO MUNICÍPIO') echo ' selected="selected"'?>>PROCURADORIA GERAL DO MUNICÍPIO</option>
 											</select>
 										</td>
-										<td style="width: 10%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;text-transform: uppercase;' id="nome-{{$usuario['registro']}}" name='nome[]' value="{{$usuario['name']}}" readonly></td>
-										<td style="width: 20%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;text-transform: uppercase;' id="sobrenome-{{$usuario['registro']}}" name='sobrenome[]' value="{{$usuario['sobrenome']}}" readonly></td>
-										<td style="width: 8%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;text-transform: uppercase;' id="registro-{{$usuario['registro']}}" name='registro[]' value="{{$usuario['registro']}}" readonly></td>
-										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;text-transform: uppercase;' id="email-{{$usuario['registro']}}" name='email[]' value="{{$usuario['email']}}" readonly></td>
+										<td style="width: 10%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="nome-{{$usuario['registro']}}" name='nome[]' value="{{$usuario['name']}}" readonly></td>
+										<td style="width: 20%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="sobrenome-{{$usuario['registro']}}" name='sobrenome[]' value="{{$usuario['sobrenome']}}" readonly></td>
+										<td style="width: 8%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="registro-{{$usuario['registro']}}" name='registro[]' value="{{$usuario['registro']}}" readonly></td>
+										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="email-{{$usuario['registro']}}" name='email[]' value="{{$usuario['email']}}" readonly></td>
 										<td style="width: 8%">
-											<select class="form-control" name="isAdmin[]"  id="isAdmin-{{$usuario['registro']}}" name='isAdmin[]' style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
+											<select class="form-control" name="isAdmin[]"  id="isAdmin-{{$usuario['registro']}}" name='isAdmin[]' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
 												<option <?php if($usuario['status'] == '') echo 'selected="selected"' ?>></option>
 												<option value="0" <?php if($usuario['isAdmin'] == 0) echo 'selected="selected"' ?>>ADMINISTRADOR</option>
 												<option value="1" <?php if($usuario['isAdmin'] == 1) echo 'selected="selected"' ?>>SECRETÁRIO</option>
@@ -330,16 +356,21 @@
 											</select>
 										</td>
 										<td style="width: 8%">
-											<select class="form-control" name="status[]" style='padding: 0px; margin: 0px; background: none; border:none; font-size:16px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
+											<select class="form-control" name="status[]" style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
 												<option <?php if($usuario['status'] == '') echo 'selected="selected"' ?>></option>
 												<option value="1" <?php if($usuario['status'] == 0) echo 'selected="selected"' ?>>ATIVO</option>
 												<option value="0" <?php if($usuario['status'] == 1) echo 'selected="selected"' ?>>INATIVO</option>
 											</select>
 										</td>	
+										<td style="width: 8%">
+											<i class="pe-7s-key" id="alterar_senha" data-toggle="modal" data-target="#alterar-senha"></i>
+										<td>
                                     </tr>
 								
 									@endforeach
 									<tr style='background:none;'>
+										<td></td>
+										<td></td>
 										<td></td>
 										<td></td>
 										<td></td>
@@ -393,7 +424,13 @@
 			)
 		});
 		</script>
-	
+
+		<!--  Ativa a função 'filtroPesquisa()' -->
+		<script>
+		window.onload = function() {
+  			filtroPesquisa();
+		};
+		</script>
 
 		<!--  Verifica se o usuário foi cadastrado com suceso e chama o modal -->
 		@if ( $usuario_atualizado == "ok" )
@@ -422,7 +459,69 @@
 @endsection	
 
 
+<!-- Modal Alterar Senha-->
+<div id="alterar-senha" class="modal fade" role="dialog">
+	<div class="modal-dialog">
 
+    <!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<!--<button data-balloon="O arquivo a ser importado precisa ser um arquivo 'xlsx' contendo as colunas com os indices 'codigo_dotacao', 'unidade_executora', 'classificacao_funcional_programatica', 'natureza_de_despesa', 'vinculo', 'dotacao', 'empenhado', 'saldo' e 'reserva'  na primeira linha tabela." data-balloon-pos="down" data-balloon-length='xlarge' class="close"><i class="pe-7s-help1" style="font-size: 20px; font-weight: bold;word-wrap:break-word"></i></button>-->
+		
+	
+		
+				<h5 class="modal-title">Alterar Senha de Usuário</h5>
+			</div>
+			<form action="{{ route('alterar-senha') }}" method="post" enctype="multipart/form-data"  files="true">
+			{{ csrf_field() }}
+			<input id="exercicio2" name="exercicio" hidden/>
+				<div class="modal-body">
+					<div class="row">
+						
+						<div class="col-md-12">	
+							<input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"  placeholder="Nova senha" required>
+							@if ($errors->has('password'))
+								<script src="{{ asset('js/jquery-3.4.1.min.js') }}" type="text/javascript"></script>
+									<script>
+										$(document).ready(function()
+										{
+											$('#modalSenhaNaoAlterada').modal({
+												show: true,
+											})
+										});
+									</script>
+								<span class="invalid-feedback" role="alert" >
+									<strong>{{ $errors->first('password') }}</strong>
+								</span>
+							@else
+							<script src="{{ asset('js/jquery-3.4.1.min.js') }}" type="text/javascript"></script>
+								<script>
+									$(document).ready(function()
+									{
+										$('#modalSenhaAlterada').modal({
+											show: true,
+										})
+									});
+								</script>
+							@endif		
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-md-12">
+							<input id="password-confirm" type="password" class="form-control" name="password_confirmation" placeholder="Repita a senha" required>
+						</div>  
+					</div>	
+				</div>
+				<div class="modal-footer">	
+					<button type="submit" id="btnSalvar" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right" >Salvar</button>	
+				</div>
+			</form>		
+		</div>
+		
+	</div>
+</div>
 
 
 <!--  Modal Usuário Sem Acesso -->
@@ -456,6 +555,26 @@
 	</div>
 </div>
 
+<!-- Modal Senha Alterada-->
+<div class="modal"  id="modalSenhaAlterada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
+	<div class="modal-dialog" role="document">
+		<div class="alert alert-success" style="border-radius: 5px">
+			<button type="button" aria-hidden="true" class="close" data-dismiss="modal">×</button>
+			<span><b> Sucesso! - </b> A senha foi alterada com sucesso. </span>
+		</div>
+	</div>
+</div>
+
+<!-- Modal Senha não Alterada-->
+<div class="modal"  id="modalSenhaNaoAlterada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
+	<div class="modal-dialog" role="document">
+		<div class="alert alert-danger" style="border-radius: 5px">
+			<button type="button" aria-hidden="true" class="close" data-dismiss="modal">×</button>
+			<span><b> Erro! - </b> Senha não alterada. Senhas não conferem ou não possuem o mínimo de caracteres exigido! </span>
+		</div>
+	</div>
+</div>
+
 <!--Habilita campos 'Input' para alteração -->
 <script>
 
@@ -468,6 +587,7 @@
 
 function filtroPesquisa()
 {
+
 	var e = document.getElementById("tipoPesquisa");
 	var opcao = e.options[e.selectedIndex].value;
 	
@@ -480,6 +600,8 @@ function filtroPesquisa()
 		document.getElementById('tipoUsuario').hidden = true;
 
 		document.getElementById('filtro').value = "REGISTRO";
+		document.getElementById("registro").focus();
+
 	}
 	else if(opcao == "NOME"){
 		document.getElementById('registro').hidden = true;
@@ -489,6 +611,7 @@ function filtroPesquisa()
 		document.getElementById('tipoUsuario').hidden = true;
 
 		document.getElementById('filtro').value = "NOME";
+		document.getElementById("nome").focus();
 
 	}
 	else if(opcao == "SECRETARIA"){
@@ -499,6 +622,7 @@ function filtroPesquisa()
 		document.getElementById('tipoUsuario').hidden = true;
 
 		document.getElementById('filtro').value = "SECRETARIA";
+		document.getElementById("secretaria").focus();
 
 	}
 	else if(opcao == "STATUS"){
@@ -509,6 +633,7 @@ function filtroPesquisa()
 		document.getElementById('tipoUsuario').hidden = true;
 
 		document.getElementById('filtro').value = "STATUS";
+		document.getElementById("status").focus();
 
 	}
 	else if(opcao == "TIPO DE USUÁRIO"){
@@ -519,6 +644,7 @@ function filtroPesquisa()
 		document.getElementById('tipoUsuario').hidden = false;
 
 		document.getElementById('filtro').value = "TIPO_USUARIO";
+		document.getElementById("tipoUsuario").focus();
 
 	}
 	else{
@@ -726,5 +852,20 @@ function salvarUsuario(x)
 	document.getElementById('alterar-'+x).style.removeProperty('display');
 
 	document.getElementById('btnAtualizar').style.removeProperty('display');
+}
+
+function ativarSalvar(x)
+{
+
+if(document.getElementById("senha01").value == document.getElementById("senha02").value)
+{
+	document.getElementById('btnSalvar').disabled = false;
+
+}
+else{
+
+}
+
+
 }
 </script>
