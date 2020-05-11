@@ -1,99 +1,105 @@
 <style>
-.load{
-      width:100px;
-      height:100px;
-      position:absolute;
-      top:30%;
-      left:45%;
-      color:blue;
-	  z-index:1000;
- }
+#loader_background{
 
- .gooey {
+	position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background:rgba(255,255,255,0.9);
+	z-index:3001;
+
+	 /* Add the blur effect */
+	 filter: blur(20px);
+
+  -webkit-filter: blur(25px);
+
+}
+
+#loader {
+  /* Uncomment this to make it run! */
+  /*
+     animation: loader 5s linear infinite; 
+  */
+
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 142px;
-  height: 40px;
-  margin: -20px 0 0 -71px;
-  background: #fff;
-  filter: contrast(20);
+  top: calc(50% - 20px);
+  left: calc(50% - 20px);
+  z-index:3001;
+ 
+ 
 }
-.gooey .dot {
+@keyframes loader {
+  0% {
+    left: -100px;
+  }
+  100% {
+    left: 110%;
+  }
+}
+#box {
+  width: 50px;
+  height: 50px;
+  background: #25385b;
+  animation: animate 0.5s linear infinite;
   position: absolute;
-  width: 16px;
-  height: 16px;
-  top: 12px;
-  left: 15px;
-  filter: blur(4px);
+  top: 0;
+  left: 0;
+  border-radius: 3px;
+}
+@keyframes animate {
+  17% {
+    border-bottom-right-radius: 3px;
+  }
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
+  }
+  50% {
+    transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+    border-bottom-right-radius: 40px;
+  }
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+}
+#shadow {
+  width: 50px;
+  height: 5px;
   background: #000;
+  opacity: 0.1;
+  position: absolute;
+  top: 59px;
+  left: 0;
   border-radius: 50%;
-  transform: translateX(0);
-  animation: dot 2.8s infinite;
+  animation: shadow 0.5s linear infinite;
 }
-.gooey .dots {
-  transform: translateX(0);
-  margin-top: 12px;
-  margin-left: 31px;
-  animation: dots 2.8s infinite;
-}
-.gooey .dots span {
-  display: block;
-  float: left;
-  width: 16px;
-  height: 16px;
-  margin-left: 16px;
-  filter: blur(4px);
-  background: #000;
-  border-radius: 50%;
-}
-@-moz-keyframes dot {
+@keyframes shadow {
   50% {
-    transform: translateX(96px);
+    transform: scale(1.2, 1);
   }
 }
-@-webkit-keyframes dot {
-  50% {
-    transform: translateX(96px);
-  }
-}
-@-o-keyframes dot {
-  50% {
-    transform: translateX(96px);
-  }
-}
-@keyframes dot {
-  50% {
-    transform: translateX(96px);
-  }
-}
-@-moz-keyframes dots {
-  50% {
-    transform: translateX(-31px);
-  }
-}
-@-webkit-keyframes dots {
-  50% {
-    transform: translateX(-31px);
-  }
-}
-@-o-keyframes dots {
-  50% {
-    transform: translateX(-31px);
-  }
-}
-@keyframes dots {
-  50% {
-    transform: translateX(-31px);
-  }
-}
+
 
 </style>
-
+<div id="loader_background"></div>
+<div id="loader">
+  <div id="shadow"></div>
+  <div id="box"></div>
+  <p style="color:#25385b; position:relative; left:-23px;top:65px;font-size:20px;"><b>Aguarde...</b></p>
+</div>
 @extends('layouts.app')
 	@section('content')
 	
 		<div class="content">
+			
+
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
@@ -160,12 +166,16 @@
 		
 		<script>
    			$(document).ready(function() {
-			  $('.load').hide(); });
+			  $('#loader').hide();
+			  $('#loader_background').hide();
+			  });
 		</script>
 
 		<script>
 			function load(){
-				$('.load').show(); 
+				$('#loader').show();  
+				$('#loader_background').show();
+				$('#importarArquivo').modal('toggle');
 			  }
 		</script>
 		
@@ -284,16 +294,8 @@ function ativarCamposParaFiltro()
 				<input id="exercicio2" name="exercicio" hidden/>
 				<div class="modal-body" onclick="ativarEnviar()" onmouseover="ativarEnviar()" onmousemove="ativarEnviar()">
 
-				<div class="load"> 
-		<div class="gooey">
-  			<span class="dot"></span>
-			<div class="dots">
-				<span></span>
-				<span></span>
-				<span></span>
-			</div>
-		</div>
-	</div>
+					
+						
 
 					<div class="row">
 						<div class="col-md-9">

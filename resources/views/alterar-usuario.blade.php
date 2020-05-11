@@ -387,6 +387,8 @@ transform: scale(1.0);
     						
                         </div>
 						@endif 
+						teste {{ Session::get('flash_success') }}
+					
 					</div>
 					</div>	
 				</div>
@@ -494,7 +496,7 @@ transform: scale(1.0);
 								<span class="invalid-feedback" role="alert" >
 									<strong>{{ $errors->first('password') }}</strong>
 								</span>
-							@else
+							@elseif (Session::has('successful_message'))
 							<script src="{{ asset('js/jquery-3.4.1.min.js') }}" type="text/javascript"></script>
 								<script>
 									$(document).ready(function()
@@ -522,7 +524,6 @@ transform: scale(1.0);
 		
 	</div>
 </div>
-
 
 <!--  Modal Usuário Sem Acesso -->
 <div class="modal"  id="modalUsuarioSemAcesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
