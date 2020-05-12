@@ -224,7 +224,7 @@ html, body {
 				<div class="content" style="">
 					<div class="container-fluid" >
 					<div class="row">
-  						<img class="logotipo" src="{{url('img/logo.png ')}}" style=" max-width: 700px; height: 130px;  display: block;margin-left: auto;margin-right: auto; ">
+  						<img class="logotipo" src="{{url('img/logo.png ')}}" style=" max-width: 680px; height: 120px;  display: block;margin-left: auto;margin-right: auto; ">
 					<div>
 				</div>
 			@csrf

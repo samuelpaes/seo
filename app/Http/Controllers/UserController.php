@@ -8,6 +8,9 @@ use DB;
 use SEO\Quotation;
 use SEO\Http\Controllers\Controller;
 use SEO\User;
+use Illuminate\Support\Facades\Hash;
+
+use Auth;
 
 class UserController extends Controller
 {
@@ -55,7 +58,8 @@ class UserController extends Controller
     $pesquisaFeita = "";
     $filtro = "";
     $usuario_atualizado = "";
-    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado);
+    $usuario_senhaAtualizada = "";
+    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada);
    
     }
 
@@ -93,6 +97,7 @@ class UserController extends Controller
         $usuario_cadastrado ="";
         $usuario_naoLocalizado = "";
         $usuario_atualizado = "";
+        $usuario_senhaAtualizada = "";
         $pesquisaFeita = "";
         $usuarios = array();
         $filtro = "";
@@ -136,7 +141,7 @@ class UserController extends Controller
             $usuario_naoLocalizado="ok";
         }
         //return(sizeof($usuarios));
-        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado);
+        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada);
 
 		/*$registro = $pre_registro->get("pre_registro");
 		$usuario = DB::select("select * from users where registro='$registro'");
@@ -219,31 +224,36 @@ class UserController extends Controller
 		$usuario = json_encode($usuario, true);
 		$usuario = json_decode($usuario, true);*/
 		$usuario_cadastrado = "";
-	
+        $usuario_senhaAtualizada = "";
         
-       return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita);
+       return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada);
 	   //return ($usuario);
     }
 
     public function updatePassword(Request $request)
     {
       
-        $this->validate($request, [
+        
+       if($request->password>6 && $request->password == $request->password_confirmation)
+       {
+        $usuario = User::whereRegistro($request->registro_alterarSenha)->firstOrFail();
+        $usuario->password = Hash::make($request->get('password'));
+        $usuario->save();
+        $usuario_senhaAtualizada = "ok";
+        
+        $usuario_cadastrado ="";
+        $usuario_naoLocalizado = "";
+        $pesquisaFeita = "";
+        $filtro = "";
+        $usuario_atualizado = "";
+        return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada);
+    }
+    else{
+       $this->validate($request, [
             'password'     => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required', 'string', 'min:6', 'confirmed',],
-            ],
-        );
-        
-       
-
-        $data = $request->all();
-          
-       
-        auth()->user()->update([
-            'password' => Hash::make($request->password)
         ]);
-
-        
+       }
     }
 
     /**

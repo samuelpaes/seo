@@ -363,7 +363,7 @@ transform: scale(1.0);
 											</select>
 										</td>	
 										<td style="width: 8%">
-											<i class="pe-7s-key" id="alterar_senha" data-toggle="modal" data-target="#alterar-senha"></i>
+											<i class="pe-7s-key" id="alterar_senha" data-toggle="modal" data-target="#alterar-senha" onclick="enviarUserRegistro(<?php echo $usuario['registro'];?>)"></i>
 										<td>
                                     </tr>
 								
@@ -387,7 +387,7 @@ transform: scale(1.0);
     						
                         </div>
 						@endif 
-						teste {{ Session::get('flash_success') }}
+					
 					
 					</div>
 					</div>	
@@ -496,7 +496,7 @@ transform: scale(1.0);
 								<span class="invalid-feedback" role="alert" >
 									<strong>{{ $errors->first('password') }}</strong>
 								</span>
-							@elseif (Session::has('successful_message'))
+							@elseif($usuario_senhaAtualizada=="ok")
 							<script src="{{ asset('js/jquery-3.4.1.min.js') }}" type="text/javascript"></script>
 								<script>
 									$(document).ready(function()
@@ -517,6 +517,7 @@ transform: scale(1.0);
 					</div>	
 				</div>
 				<div class="modal-footer">	
+					<input name="registro_alterarSenha" id="registro_alterarSenha" hidden></input>
 					<button type="submit" id="btnSalvar" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right" >Salvar</button>	
 				</div>
 			</form>		
@@ -579,12 +580,11 @@ transform: scale(1.0);
 <!--Habilita campos 'Input' para alteração -->
 <script>
 
-/*function ativarPesquisar()
-{
 
-	if(document.getElementById="")
+function enviarUserRegistro(x){
 
-}*/
+	document.getElementById("registro_alterarSenha").value=x;
+}
 
 function filtroPesquisa()
 {

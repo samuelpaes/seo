@@ -756,8 +756,8 @@ background: rgba(255, 255, 255, 0.4);
 									<h4 class="title" style="text-align:center"><?php echo Auth::user()->secretaria; ?></h4>
 									<p class="category">Saldo de Dotações</p>
 								</div>
-								<div class="content">
-								<canvas id="myChart" width="400" ></canvas>
+								<div class="content" >
+								<canvas id="myChart" width="400" height="150"></canvas>
 									<script>
 										var ctx = document.getElementById('myChart').getContext('2d');
 										var myChart = new Chart(ctx, {
