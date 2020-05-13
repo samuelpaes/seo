@@ -333,7 +333,7 @@ background: rgba(255, 255, 255, 0.4);
 							<ul class="nav navbar-nav navbar-right">
 								<li>
 								   <a href="">
-									   <p>{{ Auth::user()->name }}</p>
+									   {{ Auth::user()->name }}
 									</a>
 								</li>
 								

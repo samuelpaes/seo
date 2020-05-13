@@ -14,6 +14,7 @@ use SEO\Legislacao;
 use SEO\Contrato;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
+use SEO\User;
 
 
 class OrcamentoController extends Controller
@@ -161,7 +162,7 @@ class OrcamentoController extends Controller
 				]);		
 				
 				$mensagem="Legislação ".$request->instrumento."/".$request->numero." cadastrada!";
-				return view ('orcamento/leis_decretos')->with("legislacoes", $legislacoes)->with("pesquisaFeita", $pesquisaFeita)->with("mensagem", $mensagem);
+				return view ('orcamento/leis_decretos')->with("pesquisaFeita", $pesquisaFeita)->with("mensagem", $mensagem);
 			}
 			else{
 				$mensagem="Legislação ".$request->instrumento."/".$request->numero." já esta cadastrada!";
@@ -1569,8 +1570,10 @@ class OrcamentoController extends Controller
 		$mensagem="";
 		$exercicioLei = $exercicio-1;
 		
+		//Antes da geração de qualquer formulário para o novo exercício é obrigatório constar na tabela Legislação o número da LOA e da LDO.
 		$loa = Legislacao::whereRaw('classificacao = "LOA" and ano ="'.$exercicioLei.'" ')->firstOrFail("numero");
 		$ldo = Legislacao::whereRaw('classificacao = "LDO" and ano ="'.$exercicioLei.'" ')->firstOrFail("numero");
+		
 		if($request->tipo_alteracao == "CREDITO ADICIONAL SUPLEMENTAR")
 		{
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
@@ -1850,20 +1853,22 @@ class OrcamentoController extends Controller
 					</body>
 					</html>';
 			
-					
+			$gestores =  User::where("secretaria", "=" , $request->secretaria)->where("isAdmin", "=", "2")->get();
+			//$secretario = User::where("secretaria", "=" , $request->secretaria)->where("isAdmin", "=", "1")->get();	
+			//return($secretario)		;
 			$mpdf->WriteHTML($html);
 			$mpdf->SetHTMLFooter('
-
+													
 				<table align="center" width="50%" style="">											
 					<tr style="text-align:center">
 						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
-						NOME<br>
+						'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
 						GESTOR(A) ORÇAMENTÁRIO(A)
 						</td>
 						<td style="width:50px">
 						</td>
 						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
-						NOME<br>
+						'.strtoupper($gestores[1]['name']).' '.strtoupper($gestores[1]['sobrenome']).'<br>
 						GESTOR(A) ORÇAMENTÁRIO(A)
 						</td>
 						

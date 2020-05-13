@@ -83,11 +83,12 @@
 
  
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<!-- <script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}"type="text/javascript"></script> -->
+	<script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}"type="text/javascript"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<!-- <script src="{{ asset('js/demo.js') }}"type="text/javascript"></script> -->
-	
+	<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+
 	<!-- Calendar! -->
 
  	<script src="{{ asset('fullcalendar/packages/core/main.js') }}"type="text/javascript"></script>
@@ -509,7 +510,7 @@ background: rgba(255, 255, 255, 0.4);
 								@endif
 								<li>
 								   <a href="">
-									   <p>{{ Auth::user()->name }}</p>
+									   {{ Auth::user()->name }}
 									</a>
 								</li>
 
@@ -530,7 +531,7 @@ background: rgba(255, 255, 255, 0.4);
 				</nav>
 		
 			<!-- estilo alternativo para página responsiva -->
-			<div class="wrapper" style="position:relative; z-index:1;" id="barraAlternativa" hidden>
+			<div class="wrapper" style="position:relative; z-index:1;" id="barraAlternativa" >
 				<div class="sidebar" data-color="blue" data-image="{{ asset('img/sidebar-1.jpg') }}" >
 
 				<!--
@@ -698,8 +699,8 @@ background: rgba(255, 255, 255, 0.4);
 
 								<ul class="nav navbar-nav navbar-right">
 									<li>
-									<a href="">
-										<p>{{ Auth::user()->name }}</p>
+										<a href="">
+											{{ Auth::user()->name }}
 										</a>
 									</li>
 									
@@ -754,10 +755,10 @@ background: rgba(255, 255, 255, 0.4);
 							<div class="card" style="height:430px">
 								<div class="header">
 									<h4 class="title" style="text-align:center"><?php echo Auth::user()->secretaria; ?></h4>
-									<p class="category">Saldo de Dotações</p>
+									<p class="category" style="text-align:center">Saldo de Dotações</p>
 								</div>
 								<div class="content" >
-								<canvas id="myChart" width="400" height="150"></canvas>
+								<canvas id="myChart" width="400" height="330"></canvas>
 									<script>
 										var ctx = document.getElementById('myChart').getContext('2d');
 										var myChart = new Chart(ctx, {
@@ -783,28 +784,30 @@ background: rgba(255, 255, 255, 0.4);
 												}]
 											},
 											options: {
-											tooltips: {
-												callbacks: {
-													label: function(t, d) {
-													var yLabel = t.yLabel.toLocaleString("pt-BR",{style:"currency", currency:"BRL"});
-													return yLabel;
-													}
-												}
-											},
-											scales: {
-												yAxes: [{
-													ticks: {
-													callback: function(value, index, values) {
-														if (parseInt(value) >= 1000) {
-															return 'R$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-														} else {
-															return 'R$' + value;
+												responsive: true,
+            									maintainAspectRatio: false,
+												tooltips: {
+													callbacks: {
+														label: function(t, d) {
+														var yLabel = t.yLabel.toLocaleString("pt-BR",{style:"currency", currency:"BRL"});
+														return yLabel;
 														}
 													}
-													}
-												}]
+												},
+												scales: {
+													yAxes: [{
+														ticks: {
+														callback: function(value, index, values) {
+															if (parseInt(value) >= 1000) {
+																return 'R$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+															} else {
+																return 'R$' + value;
+															}
+														}
+														}
+													}]
+												}
 											}
-										}
 										});
 									</script>
 								</div>
@@ -853,12 +856,8 @@ background: rgba(255, 255, 255, 0.4);
 function checaResolucao()
 {
 	
-		var screenWidth = window.screen.width;
-		var screenHeight = window.screen.height;
-		
-		//alert(window.screen.width);
 		//ajuste de tela
-		if(screenWidth < 1199)
+		if($(window).width() < 1199)
 		{
 			document.getElementById('barraAlternativa').hidden=false;
 			document.getElementById('barraOficial').hidden=true;
@@ -873,7 +872,7 @@ function checaResolucao()
 
             <div class="content">
                 <div class="container-fluid">
-                    <span class="dot" style="float:right;" data-toggle="collapse" data-target="#chatbox" >
+                    <span class="dot" style="position:absolute; bottom:10px; right:10px;" data-toggle="collapse" data-target="#chatbox" >
                         <img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
                     </span>
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
