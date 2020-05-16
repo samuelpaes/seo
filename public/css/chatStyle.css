@@ -57,29 +57,36 @@ body {
 	top:0;
 	left:0;
 	width:290px;
-	height:500px;
+	height:450px;
 }
 #topmenu{
 	height:69px;
 	width:290px;
 	border-bottom:1px solid #d8dfe3;	
+	position:fixed;
+	background:#fff;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	z-index:10;
 }
 #topmenu span{
 	float:left;	
 	width: 96px;
     height: 70px;
-    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/top-menu.png") -3px -118px no-repeat;
+	background: url("../img/chat/top-menu.png") -3px -118px no-repeat;
+	
 }
 #topmenu span.friends{margin-bottom:-1px;}
 #topmenu span.chats{background-position:-95px 25px; cursor:pointer;}
 #topmenu span.chats:hover{background-position:-95px -46px; cursor:pointer;}
-#topmenu span.history{background-position:-190px 24px; cursor:pointer;}
-#topmenu span.history:hover{background-position:-190px -47px; cursor:pointer;}
+#topmenu span.close{background-position:-190px 24px; cursor:pointer;}
+#topmenu span.close:hover{background-position:-190px -47px; cursor:pointer;}
 .friend{
 	margin-left:-10px;
 	height:80px;
 	border-bottom:1px solid #e7ebee;		
 	position:relative;	
+	top:65px;
 }
 .friend:hover{
 	background:#f1f4f6;
@@ -134,9 +141,9 @@ body {
 	background:#e3e9ed url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/245657/search.png") -11px 0 no-repeat;
 	height:60px;
 	width:290px;
-	position:relative;
-	bottom:0px;
-	left:0;
+	bottom:10px;
+	right:14px;
+	position:fixed;
 
 }
 #searchfield{
@@ -169,7 +176,7 @@ body {
 	color:#fff;
 }
 .p1 #profile{
-	background:#fff url("../img/chat_background.png") 0 0 no-repeat;
+	background:#fff url("../img/chat/chat_background.png") 0 0 no-repeat;
 	
 
 

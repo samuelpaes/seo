@@ -14,11 +14,14 @@
 
    
     <!-- Styles -->
-    <!--<link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
-	<link href="{{ asset('css/seo-style.css') }}" rel="stylesheet">
+    <!--<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/seo-style.css') }}" rel="stylesheet">-->
 	
 	<!-- Bootstrap core CSS     -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
+	
+	<link rel="stylesheet" media="screen" href="{{ asset('css/polygon/polygon_bg.css') }}">
+
 
     <!-- Animation library for notifications   -->
     <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet"/>
@@ -46,29 +49,20 @@
     <!--  Notifications Plugin    -->
     <script src="{{ asset('js/bootstrap-notify.js') }}"></script>
 
-    <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}" ></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<script src="{{ asset('js/demo.js') }}"></script>
 	
-	<script src="{{ asset('js/polygonizr.min.js') }}"type="text/javascript"></script>
+
+
+	
+
+	
 	
 	<style>
-/*
-body {
-	width:100%;
-    height: 100%;
-    background: linear-gradient(45deg,#fff, #edf1f8, #fff,#edf1f8, #fff);
-    background-size: 600% 100%;
-    animation: gradient 16s linear infinite;
-    animation-direction: alternate;
 
-}
-*/
 @keyframes gradient {
     0% {background-position: 0%}
     100% {background-position: 100%}
@@ -209,22 +203,59 @@ html, body {
         width: 100%;
 		
         background-color:#fff;
-    }
+	}
+	
+	
+	
 	</style>
 
 </head>
-<body id="site-landing">
+<body>
+	<!-- polygon_bg -->
+
+	<!-- count particles -->
+	<div class="count-particles" hidden>
+	<span class="js-count-particles" hidden>--</span> particles
+	</div>
+
+	<!-- particles.js container -->
+	<div id="particles-js" style="position:relative; z-index:1;"></div>
+	<!-- scripts -->
+
+	<script src="{{ asset('js/polygon/particles.js') }}"></script>
+	<script src="{{ asset('js/polygon/polygon_bg.js') }}"></script>
+	<script src="{{ asset('js/polygon/lib/stats.js') }}"></script>
 	<script>
-    				$('#site-landing').polygonizr();
-  	</script>
-	<div class="container" style="width: 100vw; height: 100vh; background: none; display: flex; flex-direction: row;justify-content: center; align-items: center">
+	var count_particles, stats, update;
+	stats = new Stats;
+	stats.setMode(0);
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.left = '0px';
+	stats.domElement.style.top = '0px';
+	document.body.appendChild(stats.domElement);
+	count_particles = document.querySelector('.js-count-particles');
+	update = function() {
+		stats.begin();
+		stats.end();
+		if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) {
+		count_particles.innerText = window.pJSDom[0].pJS.particles.array.length;
+		}
+		requestAnimationFrame(update);
+	};
+	requestAnimationFrame(update);
+	</script>
 	
-	<div class="box" style="width: 30%; background: none">
+	<!--end bg polygon -->
+
+
+	<div class="container" style="position:absolute;width: 100vw; height: 100vh; background: none; display: flex; flex-direction: row;justify-content: center; align-items: center; z-index:1;position: absolute;top: 0;left: 0;">
+	
+	<div class="box" style="width: 30%; background: none; ">
 			<form method="POST" action="{{ route('login') }}">
 				<div class="content" style="">
 					<div class="container-fluid" >
 					<div class="row">
-  						<img class="logotipo" src="{{url('img/logo.png ')}}" style=" max-width: 680px; height: 120px;  display: block;margin-left: auto;margin-right: auto; ">
+  						<img class="logotipo" src="{{url('img/logo.png ')}}" style=" max-width: 700px; height: 140px;  display: block;margin-left: auto;margin-right: auto; ">
 					<div>
 				</div>
 			@csrf
@@ -268,7 +299,8 @@ html, body {
 											</div>
 										</div>	
 									</div>
-											
+										
+									<!--
 									<div class="form-group row">
 										<div class="col-md-6 offset-md-4">
 											<div class="form-check">
@@ -280,7 +312,8 @@ html, body {
 											</div>
 										</div>
 									</div>
-											
+									-->
+									
 									<button type="submit" class="btn btn-info btn-fill pull-right" value="entrar" style="background-color:#2e4b86; border-color:#21345b;z-index:3">Logar</button>
 											
 									@if (Route::has('password.request'))

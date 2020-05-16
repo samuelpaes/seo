@@ -531,7 +531,7 @@ background: rgba(255, 255, 255, 0.4);
 				</nav>
 		
 			<!-- estilo alternativo para página responsiva -->
-			<div class="wrapper" style="position:relative; z-index:1;" id="barraAlternativa" >
+			<div class="wrapper" style="position:relative; z-index:1;" id="barraAlternativa" hidden>
 				<div class="sidebar" data-color="blue" data-image="{{ asset('img/sidebar-1.jpg') }}" >
 
 				<!--
@@ -880,16 +880,16 @@ function checaResolucao()
 
                     <div id="chatbox" onclick="openChat()" hidden>
                         <div id="friendslist">
-                            <div id="topmenu" style="height:35px">
+                            <!--<div id="topmenu" style="height:35px;">
                                 <button class="btnFechar" data-toggle="collapse" data-target="#chatbox"></button>
-                            </div>
-                            <div id="topmenu">
+                            </div>-->
+                            <div id="topmenu" >
                                 <span class="friends"></span>
                                 <span class="chats"></span>
-                                <span class="history"></span>
+                                <span class="close" data-toggle="collapse" data-target="#chatbox"></span>
                             </div>
                             
-                            <div id="friends">
+                            <div id="friends" style="height:100px;">
                             @foreach($users as $user)
                                 <a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}">
                                     <div class="friend">

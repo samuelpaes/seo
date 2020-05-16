@@ -218,31 +218,6 @@
 transform: scale(1.0);
 
 }
-
-#alterar_secretaria{
-	position:relative; 
-	font-size:20px; 
-	font-weight:bold; 
-	padding: 0px; 
-	margin: 0px; 
-	background: none; 
-	border:none; 
-	color:#333333;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	transition: transform .2s; /* Animation */
-}		
-
-#alterar_secretaria:hover{
-
-transform: scale(1.3);
-
-}
-#alterar_secretaria:active{
-
-transform: scale(1.0);
-
-}
 </style>
 		<div class="content" onmousemove="filtroPesquisa()">
 			<div class="container-fluid">
@@ -327,6 +302,7 @@ transform: scale(1.0);
 								
                                     <tr>
 										<th></th>
+										<th>Secretaria</th>
 										<th>Nome</th>
 										<th>Sobrenome</th>
 										<th>Registro</th>
@@ -349,11 +325,28 @@ transform: scale(1.0);
 											<button class='btnEdicao' type='button' data-hover='Salvar'  id="salvar-{{$usuario['registro']}}" style='margin:-5px;left:5px; display: none;' onclick="salvarUsuario({{$usuario['registro']}})"><div><i class='fa fa-check'></i></div></button> 
 											<button class='btnEdicao' type='button' data-hover='Alterar' id="alterar-{{$usuario['registro']}}" style='margin-left:-5px; left:4px;' onclick="alterarUsuario({{$usuario['registro']}})"><div><i class='fa fa-pencil'></i></div></button>
 										</td>
-										<td style="width: 15%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="nome-{{$usuario['registro']}}" name='nome[]' value="{{$usuario['name']}}" readonly></td>
-										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="sobrenome-{{$usuario['registro']}}" name='sobrenome[]' value="{{$usuario['sobrenome']}}" readonly></td>
+										<td style="width: 30%">
+											<select class="form-control" name="secretaria[]" align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="secretaria-{{$usuario['registro']}}" name='secretaria'  readonly>
+												<option <?php if ($usuario['secretaria'] == '') echo ' selected="selected"'; ?>></option>
+												<option value="SECRETARIA DE GOVERNO E GESTÃO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE GOVERNO E GESTÃO') echo ' selected="selected"'?>>SECRETARIA DE GOVERNO E GESTÃO</option>
+												<option value="SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS" <?php if ($usuario['secretaria'] == 'SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS') echo ' selected="selected"'?>>SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS</option>
+												<option value="SECRETARIA DE SERVIÇOS URBANOS" <?php if ($usuario['secretaria'] == 'SECRETARIA DE SERVIÇOS URBANOS') echo ' selected="selected"'?>>SECRETARIA DE SERVIÇOS URBANOS</option>
+												<option value="SECRETARIA DE EDUCAÇÃO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE EDUCAÇÃO') echo ' selected="selected"'?>>SECRETARIA DE EDUCAÇÃO</option>
+												<option value="SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA" <?php if ($usuario['secretaria'] == 'SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA') echo ' selected="selected"'?>>SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA</option>
+												<option value="SECRETARIA DE MEIO AMBIENTE" <?php if ($usuario['secretaria'] == 'SECRETARIA DE MEIO AMBIENTE') echo ' selected="selected"'?>>SECRETARIA DE MEIO AMBIENTE</option>
+												<option value="SECRETARIA DE PLANEJAMENTO URBANO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE PLANEJAMENTO URBANO') echo ' selected="selected"'?>>SECRETARIA DE PLANEJAMENTO URBANO</option>
+												<option value="SECRETARIA DE SEGURANÇA E CIDADANIA" <?php if ($usuario['secretaria'] == 'SECRETARIA DE SEGURANÇA E CIDADANIA') echo ' selected="selected"'?>>SECRETARIA DE SEGURANÇA E CIDADANIA</option>
+												<option value="SECRETARIA DE TURISMO, ESPORTE E CULTURA" <?php if ($usuario['secretaria'] == 'SECRETARIA DE TURISMO, ESPORTE E CULTURA') echo ' selected="selected"'?>>SECRETARIA DE TURISMO, ESPORTE E CULTURA</option>
+												<option value="SECRETARIA DE SAÚDE" <?php if ($usuario['secretaria'] == 'SECRETARIA DE SAÚDE') echo ' selected="selected"'?>>SECRETARIA DE SAÚDE</option>
+												<option value="SECRETARIA DE OBRAS E HABITAÇÃO" <?php if ($usuario['secretaria'] == 'SECRETARIA DE OBRAS E HABITAÇÃO') echo ' selected="selected"'?>>SECRETARIA DE OBRAS E HABITAÇÃO</option>
+												<option value="PROCURADORIA GERAL DO MUNICÍPIO" <?php if ($usuario['secretaria'] == 'PROCURADORIA GERAL DO MUNICÍPIO') echo ' selected="selected"'?>>PROCURADORIA GERAL DO MUNICÍPIO</option>
+											</select>
+										</td>
+										<td style="width: 10%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="nome-{{$usuario['registro']}}" name='nome[]' value="{{$usuario['name']}}" readonly></td>
+										<td style="width: 20%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="sobrenome-{{$usuario['registro']}}" name='sobrenome[]' value="{{$usuario['sobrenome']}}" readonly></td>
 										<td style="width: 8%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="registro-{{$usuario['registro']}}" name='registro[]' value="{{$usuario['registro']}}" readonly></td>
 										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="email-{{$usuario['registro']}}" name='email[]' value="{{$usuario['email']}}" readonly></td>
-										<td style="width: 15%">
+										<td style="width: 8%">
 											<select class="form-control" name="isAdmin[]"  id="isAdmin-{{$usuario['registro']}}" name='isAdmin[]' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
 												<option <?php if($usuario['status'] == '') echo 'selected="selected"' ?>></option>
 												<option value="0" <?php if($usuario['isAdmin'] == 0) echo 'selected="selected"' ?>>ADMINISTRADOR</option>
@@ -362,16 +355,13 @@ transform: scale(1.0);
 												<option value="3" <?php if($usuario['isAdmin'] == 3) echo 'selected="selected"' ?>>COMUM</option>
 											</select>
 										</td>
-										<td style="width: 10%">
+										<td style="width: 8%">
 											<select class="form-control" name="status[]" style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;-moz-appearance: none;-webkit-appearance: none;' id="status-{{$usuario['registro']}}" onclick="ativarPesquisar()" readonly>
 												<option <?php if($usuario['status'] == '') echo 'selected="selected"' ?>></option>
 												<option value="1" <?php if($usuario['status'] == 0) echo 'selected="selected"' ?>>ATIVO</option>
 												<option value="0" <?php if($usuario['status'] == 1) echo 'selected="selected"' ?>>INATIVO</option>
 											</select>
 										</td>	
-										<td style="width: 8%">
-											<i class="pe-7s-albums" id="alterar_secretaria" data-toggle="modal" data-target="#alterar-secretaria" onclick="enviarUserRegistro(<?php echo $usuario['registro'];?>)"></i>
-										</td>
 										<td style="width: 8%">
 											<i class="pe-7s-key" id="alterar_senha" data-toggle="modal" data-target="#alterar-senha" onclick="enviarUserRegistro(<?php echo $usuario['registro'];?>)"></i>
 										<td>
@@ -536,61 +526,6 @@ transform: scale(1.0);
 	</div>
 </div>
 
-<!-- Modal Alterar Secretaria-->
-<div id="alterar-secretaria" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-
-    <!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<!--<button data-balloon="O arquivo a ser importado precisa ser um arquivo 'xlsx' contendo as colunas com os indices 'codigo_dotacao', 'unidade_executora', 'classificacao_funcional_programatica', 'natureza_de_despesa', 'vinculo', 'dotacao', 'empenhado', 'saldo' e 'reserva'  na primeira linha tabela." data-balloon-pos="down" data-balloon-length='xlarge' class="close"><i class="pe-7s-help1" style="font-size: 20px; font-weight: bold;word-wrap:break-word"></i></button>-->
-		
-	
-		
-				<h5 class="modal-title">Secretarias</h5>
-			</div>
-			<form action="{{ route('alterar-senha') }}" method="post" enctype="multipart/form-data"  files="true">
-			{{ csrf_field() }}
-			<input id="exercicio2" name="exercicio" hidden/>
-				<div class="modal-body">
-					<table class="table"  id="tabela_secretarias"  align="center" face="arial" style="width:550px" >
-						<tbody>
-					
-						@foreach($secretarias as $secretaria)
-							@if($secretaria['registro'] == $usuario['registro'])
-								<?php $secretarias_explode = explode(';', $secretaria['secretarias']);?>			
-								@for($i = 0; $i < count($secretarias_explode); $i++)	
-								<tr>	
-									<td style='width:10px;'><button type="button" onclick="removerLinha(this)"><div><i style="font-weight:bold; font-size:18px;" class="pe-7s-close"></i></div></button></td>
-									<td><input style="border:none; background:none; width:100%;" name="secretaria[]" class="form-control" value="{{$secretarias_explode[$i]}}"></input></td>
-								</tr>
-								@endfor
-							@endif
-						@endforeach
-					
-							</tbody>
-					</table>
-					<!--@foreach($secretarias as $secretaria)
-						@if($secretaria['registro'] == $usuario['registro'])
-							<?php $secretarias_explode = explode(';', $secretaria['secretarias']);?>
-							@for($i = 0; $i < count($secretarias_explode); $i++)
-								<input class="form-control">{{$secretarias_explode[$i]}}</input>
-							@endfor
-						@endif
-					@endforeach-->
-				
-				</div>
-				<div class="modal-footer">	
-					<input name="registro_alterarSenha" id="registro_alterarSenha" hidden></input>
-					<button type="submit" id="btnSalvar" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right" >Salvar</button>	
-				</div>
-			</form>		
-		</div>
-		
-	</div>
-</div>
-
 <!--  Modal Usuário Sem Acesso -->
 <div class="modal"  id="modalUsuarioSemAcesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
 	<div class="modal-dialog" role="document">
@@ -743,8 +678,6 @@ function ativarCamposParaEdicao()
 
 function alterarUsuario(x)
 {
-	document.getElementById('celula_secretariaAtual').hidden=true;
-	document.getElementById('celula_secretaria').hidden=false;
 	
 	secretaria_anterior = document.getElementById('secretaria-'+x).value;
 	nome_anterior = document.getElementById('nome-'+x).value;
@@ -936,16 +869,4 @@ else{
 
 
 }
-
-function removerLinha(obj){
- 
- // Capturamos a referência da TR (linha) pai do objeto
- var objTR = obj.parentNode.parentNode;
- // Capturamos a referência da TABLE (tabela) pai da linha
- var objTable = objTR.parentNode;
- // Capturamos o índice da linha
- var indexTR = objTR.rowIndex;
- // Chamamos o método de remoção de linha nativo do JavaScript, passando como parâmetro o índice da linha  
- objTable.deleteRow(indexTR);
- } 
 </script>

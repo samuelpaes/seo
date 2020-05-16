@@ -59,7 +59,8 @@ class UserController extends Controller
     $filtro = "";
     $usuario_atualizado = "";
     $usuario_senhaAtualizada = "";
-    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada);
+    $secretarias = array();
+    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias);
    
     }
 
@@ -107,25 +108,55 @@ class UserController extends Controller
             $usuarios =  User::where('registro', '=',$request->pre_registro)->get();	
             $filtro = "REGISTRO";   
             $pesquisaFeita="ok";
+            $i=0;
+            foreach($usuarios as $usuario)
+            {   
+                $secretarias[$i]['registro'] = $usuario['registro'];
+                $secretarias[$i]['secretarias'] =  $usuario['secretaria'];     
+                $i=$i+1;
+            }
         }
         else if($request->filtro == "NOME" && $request->nome != null || $request->sobrenome != null)
         {
             $usuarios =  User::where('name', 'like', '%'.$request->nome.'%')->orWhere('sobrenome', 'like', '%'.$request->nome.'%')->get();
             $filtro = "NOME";   
             $pesquisaFeita="ok";
+            $i=0;
+            foreach($usuarios as $usuario)
+            {   
+                $secretarias[$i]['registro'] = $usuario['registro'];
+                $secretarias[$i]['secretarias'] =  $usuario['secretaria'];         
+                $i=$i+1;
+            }
+          
         }
         else if($request->filtro == "SECRETARIA")
         {
             $usuarios =  User::where('secretaria', '=', $request->secretaria)->get();	
             $filtro = "SECRETARIA";
             $pesquisaFeita="ok";
-             
+            $i=0;
+            foreach($usuarios as $usuario)
+            {   
+                $secretarias[$i]['registro'] = $usuario['registro'];
+                $secretarias[$i]['secretarias'] =  $usuario['secretaria'];        
+                $i=$i+1;
+            }
+            
+          
         }
         else if($request->filtro == "STATUS")
         {
             $usuarios =  User::where('estado', '=', $request->status)->get();	
             $filtro = "STATUS";
             $pesquisaFeita="ok";
+            $i=0;
+            foreach($usuarios as $usuario)
+            {   
+                $secretarias[$i]['registro'] = $usuario['registro'];
+                $secretarias[$i]['secretarias'] =  $usuario['secretaria'];      
+                $i=$i+1;
+            }
 
         }
         else if($request->filtro == "TIPO_USUARIO")
@@ -133,15 +164,29 @@ class UserController extends Controller
             $usuarios =  User::where('isAdmin', '=', $request->tipoUsuario)->get();	
             $filtro = "TIPO_USUARIO";
             $pesquisaFeita="ok";
+            $i=0;
+            foreach($usuarios as $usuario)
+            {   
+                $secretarias[$i]['registro'] = $usuario['registro'];
+                $secretarias[$i]['secretarias'] =  $usuario['secretaria'];       
+                $i=$i+1;
+            }
         }
        
         if(sizeof($usuarios) <1)
         {
             $pesquisaFeita="";
             $usuario_naoLocalizado="ok";
+            $i=0;
+            foreach($usuarios as $usuario)
+            {   
+                $secretarias[$i]['registro'] = $usuario['registro'];
+                $secretarias[$i]['secretarias'] =  $usuario['secretaria'];        
+                $i=$i+1;
+            }
         }
-        //return(sizeof($usuarios));
-        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada);
+        //return($secretarias);
+        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias);
 
 		/*$registro = $pre_registro->get("pre_registro");
 		$usuario = DB::select("select * from users where registro='$registro'");
