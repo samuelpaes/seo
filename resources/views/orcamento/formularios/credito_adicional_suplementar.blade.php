@@ -157,7 +157,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h4 style=" text-align:center"><b>CRÉDITO ADICIONAL SUPLEMENTAR</b></h4>
-                                <div style="text-align:center">{{ Auth::user()->secretaria }}</div>
+                                <div style="text-align:center">{{ $secretaria}}</div>
                                 <br>
                             </div>
                         </div>
@@ -324,9 +324,7 @@ if ($excesso === true)
                                                 <tbody>
                                                 
                                                     @if ($mensagem <> "" and !empty($dotacoes_suplementacao))
-                                                    <?php
-$i = 0;
-?>
+                                                    <?php $i = 0;?>
                                                    @foreach($dotacoes_suplementacao as $dotacao)
                                                             
                                                     <tr style="height:80%;">
@@ -340,10 +338,7 @@ $i = 0;
                                                                 @foreach($dotacoes_suplementacao_vinculos as $j => $value)
                                                                     @foreach($value as $vinculo)
                                                                         @if($vinculo['codigo_dotacao'] == $dotacao['codigo_dotacao'])
-                                                                            <option value="{{$vinculo['vinculo']}}" <?php
-if ($dotacao['vinculo'] == $vinculo['vinculo'])
-    echo ' selected="selected"';
-?>>{{$vinculo['vinculo']}}</option>
+                                                                            <option value="{{$vinculo['vinculo']}}" <?php if ($dotacao['vinculo'] == $vinculo['vinculo']) echo ' selected="selected"';?>>{{$vinculo['vinculo']}}</option>
                                                                         @endif
                                                                     @endforeach
                                                                 @endforeach
@@ -356,14 +351,14 @@ if ($dotacao['vinculo'] == $vinculo['vinculo'])
                                                         <td style="align:center;"><button type="button" style="width:100%; color:#000" id="rem_suplementar" onclick="removerLinha(this, this.id)"><div class="outer"><div class="inner"><label class="label_remove">Excluir</label></div></div></input></td>
                                                         <td hidden><input class="form-control" name='sup_dotacao[{{$i}}]' value="{{'R$ '.number_format($dotacao['dotacao'], 2, ',', '.')}}" style='display:hidden; border:none; background:none; color:#000; font-weight:normal;width:auto; text-align:center;'></input></td>
                                                     </tr>
-                                                    <?php
-$total_suplementar = $dotacao['dotacao'] + $total_suplementar;
-$i++;
-?>
-                                                       
+                                                    <?php 
+                                                        $total_suplementar = $dotacao['dotacao'] + $total_suplementar; 
+                                                        $i++;
+                                                    ?>
                                                     @endforeach
                                                     <?php
-$total_suplementar = 'R$ ' . number_format($total_suplementar, 2, ',', '.')?>
+                                                        $total_suplementar = 'R$ ' . number_format($total_suplementar, 2, ',', '.')
+                                                    ?>
                                                    @endif
                                                         
                                                     <tr style="display : table-row;" height="10">
@@ -381,7 +376,7 @@ $total_suplementar = 'R$ ' . number_format($total_suplementar, 2, ',', '.')?>
                                                         <p style="margin:10px; font-size:12px; flex-wrap:nowrap"><b>TOTAL:</b></p> 
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <b><input id="valor_sup_total" class="form-control" style='font-size:12px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
+                                                        <b><input id="valor_sup_total" class="form-control" style='font-size:12px; position:relative; top:4px;  padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
                                                     </div>
                                                     <div class="col-md-3">
                                                     </div>
@@ -497,7 +492,7 @@ $total_anular = 'R$ ' . number_format($total_anular, 2, ',', '.')?>
                                                         <p style="margin:10px; font-size:12px; flex-wrap:nowrap"><b>TOTAL:</b></p> 
                                                     </div>
                                                     <div class="col-md-6">
-                                                        <b><input id="valor_anl_total" class="form-control" style='font-size:12px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
+                                                        <b><input id="valor_anl_total" class="form-control" style='font-size:12px; position:relative; top:4px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
                                                     </div>
                                                     <div class="col-md-3">
                                                     </div>
@@ -585,7 +580,7 @@ $i++;
                                                 <p style="margin:10px; font-size:12px; flex-wrap:nowrap"><b>TOTAL:</b></p> 
                                             </div>
                                             <div class="col-md-6">
-                                                <b><input id="valor_spt_total" class="form-control" style='font-size:12px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
+                                                <b><input id="valor_spt_total" class="form-control" style='font-size:12px; position:relative; top:4px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
                                             </div>
                                             <div class="col-md-3">
                                             </div>
@@ -672,7 +667,7 @@ $i++;
                                                 <p style="margin:10px; font-size:12px; flex-wrap:nowrap"><b>TOTAL:</b></p> 
                                             </div>
                                             <div class="col-md-6">
-                                                <b><input id="valor_exc_total" class="form-control" style='font-size:12px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
+                                                <b><input id="valor_exc_total" class="form-control" style='font-size:12px; position:relative; top:4px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
                                             </div>
                                             <div class="col-md-3">
                                             </div>

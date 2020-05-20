@@ -1,7 +1,7 @@
-function openChat()
+/*function openChat()
 {
     document.getElementById("chat").hidden = false;
-}
+}*/
 
 
 
@@ -88,3 +88,18 @@ $(document).ready(function(){
           });
       });			
   });
+
+  function change(x)
+  {
+    if(x == "chats")
+    {
+        document.getElementById('friends').hidden=true;
+        document.getElementById('chats').hidden=false;
+    }
+    else if(x == "friends")
+    {
+        document.getElementById('friends').hidden=false;
+        document.getElementById('chats').hidden=true;
+    }
+       
+  }

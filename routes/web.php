@@ -15,14 +15,23 @@
     return view('welcome');
 });*/
 
-Route::get('/', 'HomeController@index')->name('home');
+Auth::routes();
+
+Route::get('/', 'HomeController@pre_index');
 Route::get('/icons', 'HomeController@icon')->name('icons');
 Route::get('/teste', 'HomeController@teste')->name('teste');
 
-Auth::routes();
+
+Route::any('/home', 'HomeController@index')->name('home');
+Route::any('/pre_home', 'HomeController@pre_index')->name('pre_home');
+Route::get('admin/routes', 'HomeController@admin')->middleware('admin');
+
+
+
 
 Route::get('alterar-usuario', 'UserController@index');
 Route::post('alterar-senha', 'UserController@updatePassword')->name('alterar-senha');
+Route::post('alterar-secretaria', 'UserController@updateSecretaria')->name('alterar-secretaria');
 
 /*Rotas Natureza de Despesa*/
 Route::middleware(['auth'])->group(function () {
@@ -123,7 +132,3 @@ Route::get('/load-latest-messages', 'MessagesController@getLoadLatestMessages');
 Route::post('/send', 'MessagesController@postSendMessage');
 Route::get('/fetch-old-messages', 'MessagesController@getOldMessages');
 
-
-Route::any('/home', 'HomeController@index')->name('home');
-
-Route::get('admin/routes', 'HomeController@admin')->middleware('admin');

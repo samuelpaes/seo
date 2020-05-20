@@ -467,6 +467,18 @@ transform: scale(1.0);
 				});
 			</script>
 		@endif	
+
+		<!--  Verifica se o usuário teve a secretaria atualizada -->
+		@if ( $usuario_secretariaAtualizada == "ok" )
+			<script>
+				$(document).ready(function()
+				{
+					$('#modalSecretariaAtualizada').modal({
+						show: true,
+					})
+				});
+			</script>
+		@endif
 	
 @endsection	
 
@@ -550,27 +562,59 @@ transform: scale(1.0);
 		
 				<h5 class="modal-title">Secretarias</h5>
 			</div>
-			<form action="{{ route('alterar-senha') }}" method="post" enctype="multipart/form-data"  files="true">
+			<form action="{{ route('alterar-secretaria') }}" method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
 			<input id="exercicio2" name="exercicio" hidden/>
 				<div class="modal-body">
-					<table class="table"  id="tabela_secretarias"  align="center" face="arial" style="width:550px" >
+					<table id="tabela_secretarias"  align="center" face="arial" style="width:550px" >
 						<tbody>
 					
 						@foreach($secretarias as $secretaria)
 							@if($secretaria['registro'] == $usuario['registro'])
 								<?php $secretarias_explode = explode(';', $secretaria['secretarias']);?>			
 								@for($i = 0; $i < count($secretarias_explode); $i++)	
-								<tr>	
-									<td style='width:10px;'><button type="button" onclick="removerLinha(this)"><div><i style="font-weight:bold; font-size:18px;" class="pe-7s-close"></i></div></button></td>
-									<td><input style="border:none; background:none; width:100%;" name="secretaria[]" class="form-control" value="{{$secretarias_explode[$i]}}"></input></td>
-								</tr>
+									@if($secretarias_explode[$i] != "")
+										<tr>	
+											<td style='width:10px;'><button type="button" onclick="removerLinha(this)"><div><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></div></button></td>
+											<td><input style="border:none; background:none; width:100%;" name="secretaria[]" class="form-control" value="{{$secretarias_explode[$i]}}"></input></td>
+										</tr>
+									@endif
 								@endfor
 							@endif
 						@endforeach
 					
 							</tbody>
 					</table>
+					<br>
+					<hr>
+					<div class="row">
+						<div class="col-md-1">
+						</div>
+						<div class="col-md-8">
+							<select class="form-control" id="vincular_secretaria">
+								<option selected></option>
+								<option value="SECRETARIA DE GOVERNO E GESTÃO">SECRETARIA DE GOVERNO E GESTÃO</option>
+								<option value="SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS">SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS</option>
+								<option value="SECRETARIA DE SERVIÇOS URBANOS">SECRETARIA DE SERVIÇOS URBANOS</option>
+								<option value="SECRETARIA DE EDUCAÇÃO">SECRETARIA DE EDUCAÇÃO</option>
+								<option value="SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA">SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA</option>
+								<option value="SECRETARIA DE MEIO AMBIENTE">SECRETARIA DE MEIO AMBIENTE</option>
+								<option value="SECRETARIA DE PLANEJAMENTO URBANO">SECRETARIA DE PLANEJAMENTO URBANO</option>
+								<option value="SECRETARIA DE SEGURANÇA E CIDADANIA">SECRETARIA DE SEGURANÇA E CIDADANIA</option>
+								<option value="SECRETARIA DE TURISMO, ESPORTE E CULTURA">SECRETARIA DE TURISMO, ESPORTE E CULTURA</option>
+								<option value="SECRETARIA DE SAÚDE">SECRETARIA DE SAÚDE</option>
+								<option value="SECRETARIA DE OBRAS E HABITAÇÃO">SECRETARIA DE OBRAS E HABITAÇÃO</option>
+								<option value="PROCURADORIA GERAL DO MUNICÍPIO">PROCURADORIA GERAL DO MUNICÍPIO</option>
+							</select>	
+						</div>
+						<div class="col-md-2">
+							<button type="button" class="btn btn-info btn-fill pull-right" onclick="vincularSecretaria()">Inserir</button>
+						</div>
+						<div class="col-md-1">
+						</div>
+					</div>
+						
+								
 					<!--@foreach($secretarias as $secretaria)
 						@if($secretaria['registro'] == $usuario['registro'])
 							<?php $secretarias_explode = explode(';', $secretaria['secretarias']);?>
@@ -582,7 +626,7 @@ transform: scale(1.0);
 				
 				</div>
 				<div class="modal-footer">	
-					<input name="registro_alterarSenha" id="registro_alterarSenha" hidden></input>
+					<input name="registro_alterarSecretaria" id="registro_alterarSecretaria" hidden></input>
 					<button type="submit" id="btnSalvar" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right" >Salvar</button>	
 				</div>
 			</form>		
@@ -642,6 +686,16 @@ transform: scale(1.0);
 	</div>
 </div>
 
+<!-- Modal Secretaria Atualizada-->
+<div class="modal"  id="modalSecretariaAtualizada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
+	<div class="modal-dialog" role="document">
+		<div class="alert alert-success" style="border-radius: 5px">
+			<button type="button" aria-hidden="true" class="close" data-dismiss="modal">×</button>
+			<span><b> Sucesso! - </b> Os vinculos do usuário com as Unidades Orçamentárias foram atualizados. </span>
+		</div>
+	</div>
+</div>
+
 <!--Habilita campos 'Input' para alteração -->
 <script>
 
@@ -649,6 +703,7 @@ transform: scale(1.0);
 function enviarUserRegistro(x){
 
 	document.getElementById("registro_alterarSenha").value=x;
+	document.getElementById("registro_alterarSecretaria").value=x;
 }
 
 function filtroPesquisa()
@@ -743,10 +798,10 @@ function ativarCamposParaEdicao()
 
 function alterarUsuario(x)
 {
-	document.getElementById('celula_secretariaAtual').hidden=true;
-	document.getElementById('celula_secretaria').hidden=false;
+	//document.getElementById('celula_secretariaAtual').hidden=true;
+	//document.getElementById('celula_secretaria').hidden=false;
 	
-	secretaria_anterior = document.getElementById('secretaria-'+x).value;
+	//secretaria_anterior = document.getElementById('secretaria-'+x).value;
 	nome_anterior = document.getElementById('nome-'+x).value;
 	sobrenome_anterior = document.getElementById('sobrenome-'+x).value;
 	registro_anterior = document.getElementById('registro-'+x).value;
@@ -754,12 +809,12 @@ function alterarUsuario(x)
 	isAdmin_anterior = document.getElementById('isAdmin-'+x).value;
 	estado_anterior = document.getElementById('status-'+x).value;
 
-	document.getElementById('secretaria-'+x).readOnly = false;
+	/*document.getElementById('secretaria-'+x).readOnly = false;
 	document.getElementById('secretaria-'+x).style.background = "#fff";
 	document.getElementById('secretaria-'+x).style.textAlign = "center";
 	document.getElementById('secretaria-'+x).style.removeProperty('border');
 	document.getElementById('secretaria-'+x).style.MozAppearance = "";
-	document.getElementById('secretaria-'+x).style.webkitAppearance = "";
+	document.getElementById('secretaria-'+x).style.webkitAppearance = "";*/
 
 	document.getElementById('nome-'+x).readOnly = false;
 	document.getElementById('nome-'+x).style.background = "#fff";
@@ -802,7 +857,7 @@ function alterarUsuario(x)
 
 function cancelarUsuario(x)
 {
-	document.getElementById('secretaria-'+x).value = secretaria_anterior ;
+	//document.getElementById('secretaria-'+x).value = secretaria_anterior ;
 	document.getElementById('nome-'+x).value = nome_anterior;
 	document.getElementById('sobrenome-'+x).value = sobrenome_anterior;
 	document.getElementById('registro-'+x).value = registro_anterior;
@@ -810,12 +865,12 @@ function cancelarUsuario(x)
 	document.getElementById('isAdmin-'+x).value = isAdmin_anterior;
 	document.getElementById('status-'+x).value = estado_anterior;
 	
-	document.getElementById('secretaria-'+x).readOnly = true;
+	/*document.getElementById('secretaria-'+x).readOnly = true;
 	document.getElementById('secretaria-'+x).style.background = "none";
 	document.getElementById('secretaria-'+x).style.textAlign = "right";
 	document.getElementById('secretaria-'+x).style.border = "none";
 	document.getElementById('secretaria-'+x).style.MozAppearance = "none";
-	document.getElementById('secretaria-'+x).style.webkitAppearance = "none";
+	document.getElementById('secretaria-'+x).style.webkitAppearance = "none";*/
 
 	document.getElementById('nome-'+x).readOnly = true;
 	document.getElementById('nome-'+x).style.background = "none";
@@ -862,7 +917,7 @@ function cancelarUsuario(x)
 
 function salvarUsuario(x)
 {
-	secretaria = document.getElementById('secretaria-'+x).value;
+	//secretaria = document.getElementById('secretaria-'+x).value;
 	nome = document.getElementById('nome-'+x).value;
 	sobrenome = document.getElementById('sobrenome-'+x).value;
 	registro = document.getElementById('registro-'+x).value;
@@ -870,12 +925,12 @@ function salvarUsuario(x)
 	isAdmin = document.getElementById('isAdmin-'+x).value;
 	estado = document.getElementById('status-'+x).value;
 	
-	document.getElementById('secretaria-'+x).readOnly = true;
+	/*document.getElementById('secretaria-'+x).readOnly = true;
 	document.getElementById('secretaria-'+x).style.background = "none";
 	document.getElementById('secretaria-'+x).style.textAlign = "right";
 	document.getElementById('secretaria-'+x).style.border = "none";
 	document.getElementById('secretaria-'+x).style.MozAppearance = "none";
-	document.getElementById('secretaria-'+x).style.webkitAppearance = "none";
+	document.getElementById('secretaria-'+x).style.webkitAppearance = "none";*/
 
 	document.getElementById('nome-'+x).readOnly = true;
 	document.getElementById('nome-'+x).style.background = "none";
@@ -936,6 +991,24 @@ else{
 
 
 }
+
+function vincularSecretaria()
+	{
+
+		var e = document.getElementById("vincular_secretaria");
+		var opcao = e.options[e.selectedIndex].value;
+		//document.getElementById('secretaria2').value = opcao;
+
+		
+		var local=document.getElementById('tabela_secretarias');
+		tblBody = local.tBodies[0];
+		var newRow1 = tblBody.insertRow(-1);
+		var newCell0 = newRow1.insertCell(0);
+		newCell0.innerHTML = '<td style="width:10px;"><button type="button" onclick="removerLinha(this)"><div><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></div></button></td>';
+		var newCell1 = newRow1.insertCell(1);
+		newCell1.innerHTML = '<td><input style="border:none; background:none; width:100%;" name="secretaria[]" class="form-control" value="'+opcao+'"></input></td>';
+		
+	}
 
 function removerLinha(obj){
  

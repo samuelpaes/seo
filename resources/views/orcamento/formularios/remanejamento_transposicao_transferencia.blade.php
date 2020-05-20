@@ -156,7 +156,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<h4 style=" text-align:center"><b>REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA</b></h4>
-								<div style="text-align:center">{{ Auth::user()->secretaria }}</div>
+								<div style="text-align:center">{{ $secretaria }}</div>
 								<br>
 							</div>
 						</div>
@@ -350,7 +350,7 @@
                                         				<p style="margin:10px; font-size:12px; flex-wrap:nowrap"><b>TOTAL:</b></p> 
 													</div>
 													<div class="col-md-6">
-														<b><input id="valor_sup_total" class="form-control" style='font-size:12px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
+														<b><input id="valor_sup_total" class="form-control" style='font-size:12px; padding:0px;position:relative; top:4px; position:relative; top:4px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
 													</div>
 													<div class="col-md-3">
 													</div>
@@ -446,7 +446,7 @@
                                         				<p style="margin:10px; font-size:12px; flex-wrap:nowrap"><b>TOTAL:</b></p> 
 													</div>
 													<div class="col-md-6">
-														<b><input id="valor_rmj_total" class="form-control" style='font-size:12px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
+														<b><input id="valor_rmj_total" class="form-control" style='font-size:12px; padding:0px; position:relative; top:4px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
 													</div>
 													<div class="col-md-3">
 													</div>
@@ -477,7 +477,7 @@
 											<table class="table table-hover table-striped" id="tabela_transpor" name="tabela_transpor" style="font-size:98%; table-layout: fixed;border-collapse: collapse;width: 100%;margin-left: auto;margin-right: auto;text-align: center;padding-top: 16px;padding-bottom: 16px;">
 												<thead>
 													<tr style="height:100px">
-														<			<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></label></th>
+														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></label></th>
 														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></label></th>
 														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></label></th>
 														<th><label style="flex-wrap:nowrap; display: inline-block; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></label></th>
@@ -541,7 +541,7 @@
                                         				<p style="margin:10px; font-size:12px; flex-wrap:nowrap"><b>TOTAL:</b></p> 
 													</div>
 													<div class="col-md-6">
-														<b><input id="valor_tnp_total" class="form-control" style='font-size:12px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
+														<b><input id="valor_tnp_total" class="form-control" style='font-size:12px; padding:0px;position:relative; top:4px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
 													</div>
 													<div class="col-md-3">
 													</div>
@@ -633,7 +633,7 @@
                                         				<p style="margin:10px; font-size:12px; flex-wrap:nowrap"><b>TOTAL:</b></p> 
 													</div>
 													<div class="col-md-6">
-														<b><input id="valor_tnf_total" class="form-control" style='font-size:12px; padding:0px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
+														<b><input id="valor_tnf_total" class="form-control" style='font-size:12px; padding:0px;position:relative; top:4px; margin:0px; display:hidden; border:none; background:none; color:#000;'></input></b>
 													</div>
 													<div class="col-md-3">
 													</div>

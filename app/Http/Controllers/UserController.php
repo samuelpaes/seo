@@ -59,8 +59,9 @@ class UserController extends Controller
     $filtro = "";
     $usuario_atualizado = "";
     $usuario_senhaAtualizada = "";
+    $usuario_secretariaAtualizada = "";
     $secretarias = array();
-    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias);
+    return view('alterar-usuario')->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias)->with('usuario_secretariaAtualizada', $usuario_secretariaAtualizada);
    
     }
 
@@ -99,6 +100,7 @@ class UserController extends Controller
         $usuario_naoLocalizado = "";
         $usuario_atualizado = "";
         $usuario_senhaAtualizada = "";
+        $usuario_secretariaAtualizada = "";
         $pesquisaFeita = "";
         $usuarios = array();
         $filtro = "";
@@ -186,7 +188,7 @@ class UserController extends Controller
             }
         }
         //return($secretarias);
-        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias);
+        return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias)->with('usuario_secretariaAtualizada', $usuario_secretariaAtualizada);
 
 		/*$registro = $pre_registro->get("pre_registro");
 		$usuario = DB::select("select * from users where registro='$registro'");
@@ -241,7 +243,7 @@ class UserController extends Controller
             //Set user object attributes
             $usuario->name = $request->nome[$i];
             $usuario->sobrenome = $request->sobrenome[$i];
-            $usuario->secretaria = $request->secretaria[$i];
+            //$usuario->secretaria = $request->secretaria[$i];
             $usuario->isAdmin = $request->isAdmin[$i];
             $usuario->estado = $request->status[$i];
             // Save/update user. 
@@ -251,11 +253,9 @@ class UserController extends Controller
             $usuario_atualizado = "ok";
             $i=$i+1;
         }
-      
-
-            
-
-        
+       
+        $secretarias= array();
+           
 		//$usuario = User::whereRegistro($idRegistro)->firstOrFail();
 		$usuario_naoLocalizado = "" ;
 		
@@ -270,8 +270,9 @@ class UserController extends Controller
 		$usuario = json_decode($usuario, true);*/
 		$usuario_cadastrado = "";
         $usuario_senhaAtualizada = "";
+        $usuario_secretariaAtualizada = "";
         
-       return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada);
+       return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias)->with('usuario_secretariaAtualizada', $usuario_secretariaAtualizada);
 	   //return ($usuario);
     }
 
@@ -286,12 +287,21 @@ class UserController extends Controller
         $usuario->save();
         $usuario_senhaAtualizada = "ok";
         
+
+        $secretarias = array();
+        $usuario = User::whereRegistro($request->registro_alterarSenha)->firstOrFail();
+        $secretarias[0]['registro'] = $usuario['registro'];
+        $secretarias[0]['secretarias'] =  $usuario['secretaria']; 
+
+        $usuario_secretariaAtualizada = "";
         $usuario_cadastrado ="";
         $usuario_naoLocalizado = "";
         $pesquisaFeita = "";
         $filtro = "";
         $usuario_atualizado = "";
-        return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada);
+
+
+        return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias)->with('usuario_secretariaAtualizada', $usuario_secretariaAtualizada);
     }
     else{
        $this->validate($request, [
@@ -299,6 +309,37 @@ class UserController extends Controller
             'password_confirmation' => ['required', 'string', 'min:6', 'confirmed',],
         ]);
        }
+    }
+
+    public function updateSecretaria(Request $request)
+    {
+        $secretarias = "";
+        $request["secretaria"] = array_unique($request["secretaria"]);
+        foreach($request["secretaria"] as $secretaria){
+            $secretarias =  $secretaria.";".$secretarias;
+        }
+
+       
+        $usuario = User::whereRegistro($request->registro_alterarSecretaria)->firstOrFail();
+        $usuario->secretaria = $secretarias;
+        
+        $usuario->save();
+       
+        $secretarias = array();
+        $usuario = User::whereRegistro($request->registro_alterarSecretaria)->firstOrFail();
+        $secretarias[0]['registro'] = $usuario['registro'];
+        $secretarias[0]['secretarias'] =  $usuario['secretaria']; 
+        
+        $usuario_senhaAtualizada = "";
+        $usuario_secretariaAtualizada = "ok";
+        $usuario_cadastrado ="";
+        $usuario_naoLocalizado = "";
+       
+        $pesquisaFeita = "";
+        $filtro = "";
+        $usuario_atualizado = "";
+        
+        return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias)->with('usuario_secretariaAtualizada', $usuario_secretariaAtualizada);     
     }
 
     /**

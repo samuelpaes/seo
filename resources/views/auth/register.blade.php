@@ -234,7 +234,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<table class="table"  id="tabela_secretarias"  align="center" face="arial" style="width:800px" >
+								<table id="tabela_secretarias"  align="center" face="arial" style="width:800px" >
 									<tbody>
 										
 									</tbody>
@@ -278,7 +278,7 @@
 		tblBody = local.tBodies[0];
 		var newRow1 = tblBody.insertRow(-1);
 		var newCell0 = newRow1.insertCell(0);
-		newCell0.innerHTML = '<td width= "30px" align="center"><button class="btnEdicao" type="button" data-hover="Remover" style="margin-right:-5px;left:0px; " onclick="removerLinha(this)"><div><i class="fa fa-times"></i></div></button></td>';
+		newCell0.innerHTML = '<td width= "30px" align="center"><button type="button" onclick="removerLinha(this)"><div><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></div></button></td>';
 		var newCell1 = newRow1.insertCell(1);
 		newCell1.innerHTML = '<td width= "300px"  align="right"><input style="border:none" name="secretaria[]" class="form-control" value="'+opcao+'"></input></td>';
 		

@@ -107,12 +107,8 @@
 
 
 	<style>
-
-
 /* ~~~~~~~ INIT. BTN ~~~~~~~ */
-
 /* ~~~~~~~ INIT. BTN ~~~~~~~ */
-
 .btn {		
 	position: relative;	
 	padding: 1.4rem 0.6rem;
@@ -123,12 +119,12 @@
 	user-select: none;
 	border:none;
 	height:60px;
-	width:100%x;;
+	width:100%;;
+
 	top:-15px;
 	
 	
 }
-
 .btn:before, .btn:after {
 	content: '';
 	position: absolute;	
@@ -136,47 +132,39 @@
 	z-index: -1;
 	
 }
-
 .btn:hover {
 	color: #fff;
 	transition-delay: .6s;
 }
-
 .btn:hover:before {
 	transition-delay: 0s;
 }
-
 .btn:hover:after {
 	background: #40609d;
 	transition-delay: .4s;
 }
-
 /* From Top */
-
 .from-top:before, 
 .from-top:after {
 	left: 0;
 	height: 0;
 	width: 100%;
 }
-
 .from-top:before {
 	bottom: 0;	
 	border: 1px solid #40609d;
 	border-top: 0;
 	border-bottom: 0;
 }
-
 .from-top:after {
 	top: 0;
 	height: 0;
 }
-
 .from-top:hover:before,
 .from-top:hover:after {
 	height: 100%;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
-
 .drop {
   overflow: hidden;
   list-style: none;
@@ -187,9 +175,8 @@
   left:-6px;
   margin: auto;
   
-
+  
 }
-
 .drop div {
   -webkit-transform: translate(0, -100%);
   -moz-transform: translate(0, -100%);
@@ -200,33 +187,31 @@
   -ms-transition: all 0.9s;
   transition: all 0.9s;
   position: relative;
-  background:#a4b7da;
-   color:#fff;
+  background:#fff;
+  color:#40609d;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  border:1px;
+  
   
 }
 
 .drop li:hover {
-
   padding: 0;
   width: 100%;
-  background: #edf1f8	 !important;
-  opacity:0.8;
-  color:#40609d;
+  background: #40609d	 !important;
+  color:#fff;
 }
-
 #marker {
   height: 6px;
   background: #edf1f8	 !important;
   position: relative;
   bottom: 0;
- 
   z-index: 2;
   -webkit-transition: all 0.35s;
   -moz-transition: all 0.35s;
   -ms-transition: all 0.35s;
   transition: all 0.35s;
 }
-
 #main li:nth-child(1):hover ul div {
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -239,7 +224,6 @@
   -ms-transform: translate(0px, 0);
   transform: translate(0px, 0);
 }
-
 #main li:nth-child(2):hover ul div {
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -252,7 +236,6 @@
   -ms-transform: translate(120px, 0);
   transform: translate(120px, 0);
 }
-
 #main li:nth-child(3):hover ul div {
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -265,7 +248,6 @@
   -ms-transform: translate(240px, 0);
   transform: translate(240px, 0);
 }
-
 #main li:nth-child(4):hover ul div {
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -278,7 +260,6 @@
   -ms-transform: translate(360px, 0);
   transform: translate(360px, 0);
 }
-
 #main li:nth-child(5):hover ul div {
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -291,7 +272,6 @@
   -ms-transform: translate(360px, 0);
   transform: translate(360px, 0);
 }
-
 #main li:nth-child(6):hover ul div {
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -304,7 +284,6 @@
   -ms-transform: translate(360px, 0);
   transform: translate(360px, 0);
 }
-
 #main li:nth-child(7):hover ul div {
   -webkit-transform: translate(0, 0);
   -moz-transform: translate(0, 0);
@@ -317,15 +296,10 @@
   -ms-transform: translate(360px, 0);
   transform: translate(360px, 0);
 }
-
-
-
-
 /* width */
 ::-webkit-scrollbar {
   width: 5px;
 }
-
 /* Track */
 ::-webkit-scrollbar-track {
   box-shadow: inset 0 0 1px grey; 
@@ -338,14 +312,11 @@ background: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
   opacity:0.5;
 }
-
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
  background: rgba(255, 255, 255, 0.9);
 }
-
 /*Botão Fechar */
-
 .btnFechar {
   background: none;
   border: 0;
@@ -367,7 +338,6 @@ background: rgba(255, 255, 255, 0.4);
   transition: all 0.2s ease-in;
   width: 100%;
 }
-
 .btnFechar::before,
 .btnFechar::after {
   background-color: #ff4d4d;
@@ -382,24 +352,20 @@ background: rgba(255, 255, 255, 0.4);
   width:100%;
   z-index: -1;
 }
-
 .btnFechar::before {
   top: 0;
   transform: rotate(45deg);
 }
-
 .btnFechar::after {
   bottom: 0;
   transform: rotate(-45deg);
   
 }
-
 .btnFechar:hover {
   height: 20px;
   margin: auto;
   width: 50%;
 }
-
 .btnFechar:hover::before{
 	
 	transform: rotate(45deg);
@@ -407,13 +373,9 @@ background: rgba(255, 255, 255, 0.4);
 	
 }
 .btnFechar:hover::after {
-
   transform: rotate(-45deg);
-
   
 }
-
-
 </style>
 
 
@@ -471,14 +433,14 @@ background: rgba(255, 255, 255, 0.4);
 								</li>
 								<li>
 									<div class="btn from-top" >
-										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-network" style="position:relative;font-weight:bold; top:1.5px"></i></b> COMITÊ GESTOR</div>	
+										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-network" style="position:relative;font-weight:bold; top:1.5px" ></i></b><a href="{{ route('comite_gestor') }}" style="font:inherit; color: inherit; text-decoration: inherit;">COMITÊ GESTOR</a></div>	
 									</div>
 								</li>
-								<li>
+								<!--<li>
 									<div class="btn from-top" >
 										<div style="position:relative; top:5px; font-size:14px"><i class="pe-7s-help1" style="position:relative;font-weight:bold; top:1.5px"></i></b> AJUDA</div>	
 									</div>
-								</li>
+								</li>-->
 								@if(auth()->user()->isAdmin == 0)
 								<li>
 									<div class="btn from-top">
@@ -535,10 +497,8 @@ background: rgba(255, 255, 255, 0.4);
 				<div class="sidebar" data-color="blue" data-image="{{ asset('img/sidebar-1.jpg') }}" >
 
 				<!--
-
 					Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
 					Tip 2: you can also add an image using data-image tag
-
 				-->
 
 					<div class="sidebar-wrapper" style=" overflow-x:hidden; overflow-y: scroll;">
@@ -710,7 +670,6 @@ background: rgba(255, 255, 255, 0.4);
 													Dropdown
 													<b class="caret"></b>
 												</p>
-
 										</a>
 										<ul class="dropdown-menu">
 											<li><a href="#">Action</a></li>
@@ -754,7 +713,7 @@ background: rgba(255, 255, 255, 0.4);
 						<div class="col-md-6" >
 							<div class="card" style="height:430px">
 								<div class="header">
-									<h4 class="title" style="text-align:center"><?php echo Auth::user()->secretaria; ?></h4>
+									<h4 class="title" style="text-align:center">{{$secretaria}}</h4>
 									<p class="category" style="text-align:center">Saldo de Dotações</p>
 								</div>
 								<div class="content" >
@@ -852,7 +811,6 @@ background: rgba(255, 255, 255, 0.4);
 		
 		
 		<script>
-
 function checaResolucao()
 {
 	
@@ -878,14 +836,14 @@ function checaResolucao()
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
-                    <div id="chatbox" onclick="openChat()" hidden>
+                    <div id="chatbox"  hidden>
                         <div id="friendslist">
                             <!--<div id="topmenu" style="height:35px;">
                                 <button class="btnFechar" data-toggle="collapse" data-target="#chatbox"></button>
                             </div>-->
                             <div id="topmenu" >
-                                <span class="friends"></span>
-                                <span class="chats"></span>
+                                <span class="friends" onclick="change('friends')"></span>
+                                <span class="chats" onclick="change('chats')"></span>
                                 <span class="close" data-toggle="collapse" data-target="#chatbox"></span>
                             </div>
                             
@@ -908,19 +866,56 @@ function checaResolucao()
                                     </div>
                                 </a>
                             @endforeach
-                                <div id="search">
+                                <!--<div id="search">
                                     <input type="text" class="form-control" id="searchfield" style="position:relative; top:10px;"  value="Procurar contatos..." />
-                                </div>   
+                                </div>   -->
                             </div>                
-                            
+                            <div id="chats" style="height:100px;" hidden>
+							<?php $usuario_existente = array('usuario'=>array(),'contador'=>array()); ?>
+							@foreach($users as $user)
+								@foreach($messages_read as $message)
+									@if($user->id == $message['from_user'])
+										@if(!in_array($message['from_user'], $usuario_existente))
+											<?php $usuario_existente['usuario'] = $message['from_user']; 
+												  $usuario_existente['contador'] = 1; 
+											?>
+											<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}">
+												<div class="friend">
+													<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
+													<p>
+													
+														<strong>{{ $user->name }}</strong>
+														<br>
+														<span style="font-size:12px;">{{ $user->secretaria }}</span>
+														
+														
+													</p>
+													<span style="position:relative;right:5px;top:30%; background:red; color:#fff" class="badge" id="contador"></span></a><br>
+												</div>
+											</a>
+											
+										@else
+											<?php $usuario_existente['usuario'] = $message['from_user']; 
+												  $usuario_existente['contador'] = $usuario_existente['contador'] + 1; 
+											?>
+										@endif
+									@endif
+								@endforeach
+                            @endforeach
+                                <!--<div id="search">
+                                    <input type="text" class="form-control" id="searchfield" style="position:relative; top:10px;"  value="Procurar contatos..." />
+                                </div>   -->
+                            </div>                
                         </div>	
+						<script>
+							window.onload = function() {
+								var a = <?php echo  json_encode($usuario_existente['contador']);  ?>;
+								document.getElementById('contador').value = a;
+								};
+						</script>
                         
                         <div id="chatview" class="p1" >    	
                             <div id="profile">
-                                <!--<div id="close">
-									<div class="cy"></div>
-                                   	<div class="cx"></div>	
-                                </div>-->
                                 <p></p>
                                 <span></span>
                             </div>

@@ -736,7 +736,7 @@ function ativarContinuar()
 			</p> 
 			<br>
 			<br> 
-			Tem certeza que deseja continuar?</p>
+			<p style="text-align: center;">Tem certeza que deseja continuar?</p>
 			<br>
 			<br>
 			<label class="container"  style="text-align: center; line-height: normal; background:none;left:0px;">

@@ -135,21 +135,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Governo <br>e Gestão</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE GOVERNO E GESTÃO")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Governo <br>e Gestão <br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE GOVERNO E GESTÃO")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE GOVERNO E GESTÃO")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -164,21 +165,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Administração <br>e Finanças</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Administração <br>e Finanças<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -193,21 +195,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Serviços <br>Urbanos</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE SERVIÇOS URBANOS")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Serviços <br>Urbanos<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE SERVIÇOS URBANOS")
+																@if($usuario->isAdmin == 1)
+																<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SERVIÇOS URBANOS")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -224,21 +227,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-												<a href="#" style="width:250px; margin: auto;">Secretaria <br>de Educação </a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE EDUCAÇÃO")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria <br>de Educação<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE EDUCAÇÃO")
+																@if($usuario->isAdmin == 1)
+																<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE EDUCAÇÃO")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -253,21 +257,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;" >Secretaria de Desenvolvimento <br>Social, Trabalho e Renda</a>
+													<a href="#" style="width:300px; margin: auto;" >Secretaria de Desenvolvimento <br>Social, Trabalho e Renda<br>
 													@foreach($usuarios as $usuario)
 													<!--Verifica se o usuário é da Secretaria em questão -->
 														@if($usuario->secretaria == "SECRETARIA DE DESENVOLVIMENTO SOCIAL E RENDA")
 															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
+																<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
 															@endif	
 														@endif
 													@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -282,21 +287,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Meio <br>Ambiente</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE MEIO AMBIENTE")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Meio <br>Ambiente<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE MEIO AMBIENTE")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE MEIO AMBIENTE")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -313,21 +319,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Planejamento <br>Urbano</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE PLANEJAMENTO URBANO")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Planejamento <br>Urbano<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE PLANEJAMENTO URBANO")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE PLANEJAMENTO URBANO")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -342,21 +349,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Segurança <br>e Cidadania</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE SEGURANÇA E CIDADANIA")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Segurança <br>e Cidadania<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE SEGURANÇA E CIDADANIA")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SEGURANÇA E CIDADANIA")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -371,21 +379,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Turismo, <br>Esporte e Cultura</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE TURISMO, ESPORTE E CULTURA")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Turismo, <br>Esporte e Cultura<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE TURISMO, ESPORTE E CULTURA")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE TURISMO, ESPORTE E CULTURA")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -403,21 +412,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Saúde</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE SAÚDE")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Saúde<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE SAÚDE")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SAÚDE")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -432,21 +442,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Secretaria de Obras <br>e Habitação</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "SECRETARIA DE OBRAS E HABITAÇÃO")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Secretaria de Obras <br>e Habitação<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "SECRETARIA DE OBRAS E HABITAÇÃO")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE OBRAS E HABITAÇÃO")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -461,21 +472,22 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:250px; margin: auto;">Procuradoria Geral do Município</a>
-													@foreach($usuarios as $usuario)
-													<!--Verifica se o usuário é da Secretaria em questão -->
-														@if($usuario->secretaria == "PROCURADORIA GERAL DO MUNICÍPIO")
-															@if($usuario->isAdmin == 1)
-																<?php echo $usuario->name.' '.$usuario->sobrenome ; ?>
-															@endif	
-														@endif
-													@endforeach
+													<a href="#" style="width:300px; margin: auto;">Procuradoria Geral do Município<br>
+														@foreach($usuarios as $usuario)
+														<!--Verifica se o usuário é da Secretaria em questão -->
+															@if($usuario->secretaria == "PROCURADORIA GERAL DO MUNICÍPIO")
+																@if($usuario->isAdmin == 1)
+																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																@endif	
+															@endif
+														@endforeach
+													</a>
 													<!--Verifica quais usuários estão ativos e se são gestores -->
 													<ul>
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "PROCURADORIA GERAL DO MUNICÍPIO")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo $usuario->name.' '.$usuario->sobrenome ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach

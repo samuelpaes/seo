@@ -267,9 +267,9 @@ function abrirFormularioPDF(codigo_formulario)
 <div class="modal"  id="modalMensagem" tabindex="-1" role="dialog" >
 	<div class="modal-dialog" role="document">
 		
-		<div class="alert alert-danger" style="border-radius: 5px; width:115%; white-space: nowrap;">
+		<div class="alert alert-danger" style="border-radius: 5px; width:115%; height:auto;">
             <button type="button" aria-hidden="true" style="position:relative; left:5px; top:20px;" data-toggle="modal" data-target="#formulario_credito_adicional_suplementar" data-dismiss="modal" data-dismiss="modal" class="close">×</button>
-            <span><b> Atenção! - </b><input class="form-control" value="{{$mensagem}}" id="mensagem" style=" white-space: nowrap; display: inline-block; width:100%; border:none; background:none; color:#fff" readonly></input></span>
+            <span style="text-align: center;"><b> Atenção! </b></span><textarea class="form-control" id="mensagem" style="height:auto;resize: none;width:100%; border:none; background:none; color:#fff" readonly>{{$mensagem}}</textarea>
          </div>
 	
 	</div>

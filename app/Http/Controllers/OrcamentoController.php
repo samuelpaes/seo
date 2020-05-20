@@ -15,6 +15,8 @@ use SEO\Contrato;
 use Illuminate\Support\Facades\Auth;
 use Dompdf\Dompdf;
 use SEO\User;
+use SEO\Access;
+
 
 
 class OrcamentoController extends Controller
@@ -40,6 +42,11 @@ class OrcamentoController extends Controller
 		$excesso_valor_recurso = array();
 		$formulario = "";
 		$exercicio = date("Y");
+
+		$id=Auth::user()->id;
+		$access = Access::where('user_id', $id)->get()->last();
+		$saldoDeDotacoes = array();
+		$secretaria = $access['secretaria'];
 		
 		
 		if($request->formulario <> null)
@@ -59,14 +66,14 @@ class OrcamentoController extends Controller
 				$anulacao = false;
 				$superavit = false;
 				$excesso = false;
-				return view ('orcamento/formularios/credito_adicional_suplementar')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
+				return view ('orcamento/formularios/credito_adicional_suplementar')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria);
 			}
 			else if ($formulario == "remanejamento_transposicao_transferencia")
 			{
 				$remanejamento = false;
 				$transposicao = false;
 				$transferencia = false;
-				return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("pesquisaFeita", $pesquisaFeita);
+				return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("pesquisaFeita", $pesquisaFeita)->with("secretaria", $secretaria);
 			}
 		}
 		else if($acao == 'pesquisar')
@@ -331,17 +338,20 @@ class OrcamentoController extends Controller
 		$anl_recurso = array();
 		$anl_vinculo= array();
 		
-		//$formulario= "";
-			
+		//Verifica a unidade Orçamentária do Gestor
+		$id=Auth::user()->id;
+		$access = Access::where('user_id', $id)->get()->last();
+		$saldoDeDotacoes = array();
+		$unidade_orcamentaria = DB::table('unidade_orcamentarias')->where('unidade', $access['secretaria'])->value('codigo');
+		$secretaria = $access['secretaria'];;
+		
 			
 		//Verifica qual o tipo de formulario
 				
 		if($request->formulario == "credito_adicional_suplementar")
 		{
-		
-			//Verifica a unidade Orçamentária do Gestor
-			$unidade_orcamentaria = $request->unidade_orcamentaria;
-			$unidade_orcamentaria = DB::table('unidade_orcamentarias')->where('unidade', $request->unidade_orcamentaria)->value('codigo');
+			/*$unidade_orcamentaria = $request->unidade_orcamentaria;
+			$unidade_orcamentaria = DB::table('unidade_orcamentarias')->where('unidade', $request->unidade_orcamentaria)->value('codigo');*/
 			
 		
 			//return($request);
@@ -612,23 +622,6 @@ class OrcamentoController extends Controller
 			else{
 			}
 			$dotacoes_anulacao_vinculos = array_unique($dotacoes_anulacao_vinculos, SORT_REGULAR);
-
-
-
-
-			//return($dotacoes_suplementacao);
-			/*apagar
-			if(!empty($dotacoes_anulacao))
-			{
-				foreach($dotacoes_anulacao as $dotacao)
-				{
-				$dotacoes_anulacao_vinculos[] = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $dotacao->codigo_dotacao)->get();
-				}
-				$dotacoes_anulacao_vinculos= array_unique($dotacoes_anulacao_vinculos, SORT_REGULAR);
-			}
-			else{
-			}
-			$dotacoes_anulacao_vinculos = array_unique($dotacoes_anulacao_vinculos, SORT_REGULAR);*/
 			
 			$mensagem = "ok";
 
@@ -640,7 +633,7 @@ class OrcamentoController extends Controller
 			//reordena as dotacoes
 			asort($dotacoes_anulacao);
 			asort($dotacoes_suplementacao);
-			return view ('orcamento/formularios/credito_adicional_suplementar')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
+			return view ('orcamento/formularios/credito_adicional_suplementar')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria);
 			
 		}
 		else if ($request->formulario =="remanejamento_transposicao_transferencia")
@@ -648,8 +641,8 @@ class OrcamentoController extends Controller
 	
 			
 			//Verifica a unidade Orçamentária do Gestor
-			$unidade_orcamentaria = $request->unidade_orcamentaria;
-			$unidade_orcamentaria = DB::table('unidade_orcamentarias')->where('unidade', $request->unidade_orcamentaria)->value('codigo');
+			/*$unidade_orcamentaria = $request->unidade_orcamentaria;
+			$unidade_orcamentaria = DB::table('unidade_orcamentarias')->where('unidade', $request->unidade_orcamentaria)->value('codigo');*/
 			
 			
 			if($request->tipo_remanejamento == "ok")
@@ -1305,16 +1298,17 @@ class OrcamentoController extends Controller
 			asort($dotacoes_transferencia);
 			asort($dotacoes_transposicao);
 			asort($dotacoes_remanejamento);
-			return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with("dotacoes_remanejamento", $dotacoes_remanejamento)->with('dotacoes_remanejamento_vinculos', $dotacoes_remanejamento_vinculos)->with("dotacoes_transposicao", $dotacoes_transposicao)->with('dotacoes_transposicao_vinculos', $dotacoes_transposicao_vinculos)->with("dotacoes_transferencia", $dotacoes_transferencia)->with('dotacoes_transferencia_vinculos', $dotacoes_transferencia_vinculos)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
+			return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with("dotacoes_remanejamento", $dotacoes_remanejamento)->with('dotacoes_remanejamento_vinculos', $dotacoes_remanejamento_vinculos)->with("dotacoes_transposicao", $dotacoes_transposicao)->with('dotacoes_transposicao_vinculos', $dotacoes_transposicao_vinculos)->with("dotacoes_transferencia", $dotacoes_transferencia)->with('dotacoes_transferencia_vinculos', $dotacoes_transferencia_vinculos)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria);
 		}
 		
 		//return view ('orcamento/formularios')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
 	}
 	public function saldo_dotacoes(Request $request)
     {
-		
+		$id=Auth::user()->id;
+		$access = Access::where('user_id', $id)->get()->last();
 		$saldoDeDotacoes = array();
-		$secretaria = auth()->user()->secretaria;
+		$secretaria = $access['secretaria'];
 		//$teste = DB::select("select codigo from unidade_orcamentarias where unidade='".$secretaria."'");
 		//$secretaria = DB::table('unidade_orcamentarias')->where('unidade', $secretaria)->first();
 		$secretaria =  UnidadeOrcamentaria::where('unidade', '=', ''.$secretaria.'')->first('codigo');
@@ -1571,9 +1565,17 @@ class OrcamentoController extends Controller
 		$exercicioLei = $exercicio-1;
 		
 		//Antes da geração de qualquer formulário para o novo exercício é obrigatório constar na tabela Legislação o número da LOA e da LDO.
-		$loa = Legislacao::whereRaw('classificacao = "LOA" and ano ="'.$exercicioLei.'" ')->firstOrFail("numero");
-		$ldo = Legislacao::whereRaw('classificacao = "LDO" and ano ="'.$exercicioLei.'" ')->firstOrFail("numero");
+		$loa = Legislacao::whereRaw('classificacao = "LOA" and ano ="'.$exercicioLei.'" ')->first("numero");
+		$ldo = Legislacao::whereRaw('classificacao = "LDO" and ano ="'.$exercicioLei.'" ')->first("numero");
 		
+		if($loa == null || $ldo == null){
+			$mensagem="É necessário ter registrado na base de dados a Lei de Diretrizes Orçamentárias e a Lei Orçamentária Anual do exercício corrente, para efetivar o pedido de alteração orçamentária. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
+			return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
+		}
+		else{
+
+		}
+
 		if($request->tipo_alteracao == "CREDITO ADICIONAL SUPLEMENTAR")
 		{
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
@@ -1853,22 +1855,28 @@ class OrcamentoController extends Controller
 					</body>
 					</html>';
 			
-			$gestores =  User::where("secretaria", "=" , $request->secretaria)->where("isAdmin", "=", "2")->get();
-			//$secretario = User::where("secretaria", "=" , $request->secretaria)->where("isAdmin", "=", "1")->get();	
-			//return($secretario)		;
 			$mpdf->WriteHTML($html);
-			$mpdf->SetHTMLFooter('
-													
+			$gestores =  User::where("secretaria", "=" , $request->secretaria)->where("isAdmin", "=", "2")->get();
+			$secretario = User::where("secretaria", "=" , $request->secretaria)->where("isAdmin", "=", "1")->get();	
+			
+			if(count($secretario)<1){
+				$mensagem="A Unidade Orçamentária precisa ter cadastrado secretário(a) responsável pela pasta. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
+				return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
+			}
+			else if(count($secretario)>1 && count($gestores)<1)
+			{
+				$mpdf->SetHTMLFooter('
+
 				<table align="center" width="50%" style="">											
 					<tr style="text-align:center">
 						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
-						'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+						NOME<br>
 						GESTOR(A) ORÇAMENTÁRIO(A)
 						</td>
 						<td style="width:50px">
 						</td>
 						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
-						'.strtoupper($gestores[1]['name']).' '.strtoupper($gestores[1]['sobrenome']).'<br>
+						NOME<br>
 						GESTOR(A) ORÇAMENTÁRIO(A)
 						</td>
 						
@@ -1880,6 +1888,7 @@ class OrcamentoController extends Controller
 				<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
 					<tr style="text-align:center">
 						<td style="text-align:center">
+						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
 						Data______/______/_______
 						</td>
@@ -1887,7 +1896,75 @@ class OrcamentoController extends Controller
 				</table>
 		
 			<br>');
-					
+			}
+			else if(count($secretario)>1 && count($gestores)==1){
+
+				$mpdf->SetHTMLFooter('
+													
+				<table align="center" width="50%" style="">											
+					<tr style="text-align:center">
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+						<td style="width:50px">
+						</td>
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						NOME<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+					</tr>
+				</table>
+				<br>
+				<br>
+				<br>
+				<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+					<tr style="text-align:center">
+						<td style="text-align:center">
+						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+						SECRETARIO(A) <br>
+						Data______/______/_______
+						</td>
+					</tr>
+				</table>
+		
+			<br>');
+			}
+			else if(count($secretario)>1 && count($gestores)>1){
+
+				$mpdf->SetHTMLFooter('
+														
+					<table align="center" width="50%" style="">											
+						<tr style="text-align:center">
+							<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+							'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+							GESTOR(A) ORÇAMENTÁRIO(A)
+							</td>
+							<td style="width:50px">
+							</td>
+							<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+							'.strtoupper($gestores[1]['name']).' '.strtoupper($gestores[1]['sobrenome']).'<br>
+							GESTOR(A) ORÇAMENTÁRIO(A)
+							</td>
+							
+						</tr>
+					</table>
+					<br>
+					<br>
+					<br>
+					<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+						<tr style="text-align:center">
+							<td style="text-align:center">
+							'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+							SECRETARIO(A) <br>
+							Data______/______/_______
+							</td>
+						</tr>
+					</table>
+			
+				<br>');
+			}
+			else{};		
 			
 			//verifica quantos formularios de Credito Adicional Complementar Existem
 			$cas = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->count();

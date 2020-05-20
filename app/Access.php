@@ -17,7 +17,7 @@ class Access extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'datetime',
+        'user_id', 'datetime'
     ];
    
 }
