@@ -876,9 +876,17 @@ function checaResolucao()
 								@foreach($messages_read as $message)
 									@if($user->id == $message['from_user'])
 										@if(!in_array($message['from_user'], $usuario_existente))
-											<?php $usuario_existente['usuario'] = $message['from_user']; 
-												  $usuario_existente['contador'] = 1; 
+										<?php for($i = 0; $i== count($messages_read); $i++)
+													{
+														if($messages_read[$i]['from_user'] == $message['from_user'])
+														{
+															echo $messages_read[$i]['from_user'];
+														}
+														
+													};
+												echo count($messages_read);
 											?>
+												 
 											<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}">
 												<div class="friend">
 													<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
@@ -895,9 +903,7 @@ function checaResolucao()
 											</a>
 											
 										@else
-											<?php $usuario_existente['usuario'] = $message['from_user']; 
-												  $usuario_existente['contador'] = $usuario_existente['contador'] + 1; 
-											?>
+											
 										@endif
 									@endif
 								@endforeach
@@ -907,12 +913,7 @@ function checaResolucao()
                                 </div>   -->
                             </div>                
                         </div>	
-						<script>
-							window.onload = function() {
-								var a = <?php echo  json_encode($usuario_existente['contador']);  ?>;
-								document.getElementById('contador').value = a;
-								};
-						</script>
+					
                         
                         <div id="chatview" class="p1" >    	
                             <div id="profile">
