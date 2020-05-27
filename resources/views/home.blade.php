@@ -872,20 +872,12 @@ function checaResolucao()
                             </div>                
                             <div id="chats" style="height:100px;" hidden>
 							<?php $usuario_existente = array('usuario'=>array(),'contador'=>array()); ?>
+						
 							@foreach($users as $user)
 								@foreach($messages_read as $message)
 									@if($user->id == $message['from_user'])
 										@if(!in_array($message['from_user'], $usuario_existente))
-										<?php for($i = 0; $i== count($messages_read); $i++)
-													{
-														if($messages_read[$i]['from_user'] == $message['from_user'])
-														{
-															echo $messages_read[$i]['from_user'];
-														}
-														
-													};
-												echo count($messages_read);
-											?>
+										
 												 
 											<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}">
 												<div class="friend">
@@ -898,7 +890,7 @@ function checaResolucao()
 														
 														
 													</p>
-													<span style="position:relative;right:5px;top:30%; background:red; color:#fff" class="badge" id="contador"></span></a><br>
+													<span style="position:relative;right:0px;top:30%; background:red; color:#fff" class="badge" id="contador">{{ $user->mensagensNaoLidas }}</span></a><br>
 												</div>
 											</a>
 											

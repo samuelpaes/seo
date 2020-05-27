@@ -50,6 +50,30 @@ class HomeController extends Controller
             $access->save();
                   
             $users = User::where('id', '!=', Auth::user()->id)->get();
+
+
+            for($i = 0; $i<sizeof($users); $i++)
+			{	
+                  
+                $users[$i]['mensagensNaoLidas'] =  0;
+                
+            };
+
+            for($i = 0; $i<sizeof($users); $i++)
+			{	
+                for($j = 0; $j < count($messages_read); $j++)
+                {
+                    if($messages_read[$j]['from_user'] == $users[$i]['id'])
+                    {    
+                        $users[$i]['mensagensNaoLidas'] =  $users[$i]['mensagensNaoLidas'] + 1;
+                    }
+                   
+                    
+                }
+            }
+            
+            //return($users[0]);
+            
             $unidade_orcamentaria = UnidadeOrcamentaria::where('unidade', '=', $secretaria)->firstOrFail('codigo');		
             $exercicio = date("Y");
             
@@ -80,6 +104,27 @@ class HomeController extends Controller
             }
            
             $users = User::where('id', '!=', Auth::user()->id)->get();
+
+            for($i = 0; $i<sizeof($users); $i++)
+			{	
+                  
+                $users[$i]['mensagensNaoLidas'] =  0;
+                
+            };
+
+            for($i = 0; $i<sizeof($users); $i++)
+			{	
+                for($j = 0; $j < count($messages_read); $j++)
+                {
+                    if($messages_read[$j]['from_user'] == $users[$i]['id'])
+                    {    
+                        $users[$i]['mensagensNaoLidas'] =  $users[$i]['mensagensNaoLidas'] + 1;
+                    }
+                   
+                    
+                }
+            }
+
             $unidade_orcamentaria = UnidadeOrcamentaria::where('unidade', '=', $secretaria)->firstOrFail('codigo');		
             $exercicio = date("Y");
         
