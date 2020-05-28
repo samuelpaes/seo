@@ -20,6 +20,6 @@ class Admin
 			return $next($request);
 		}
 		
-		return redirect('home')->with('error','SEM ACESSO. CONTATE O ADMINISTRADOR DO SISTEMA!');
+		return redirect('/pre_home')->with('error','SEM ACESSO. CONTATE O ADMINISTRADOR DO SISTEMA!');
 	}
 }

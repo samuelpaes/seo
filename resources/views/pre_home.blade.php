@@ -105,10 +105,10 @@
 </head>
 	<body onmouseover="checaResolucao()" onmousemove="checaResolucao()" onwheel="checaResolucao()" style="background:#25385b">
 			
-
+	
 <!-- Modal Alterar Secretaria-->
-<div id="definir-secretaria" class="modal fade" role="dialog" style=" position: absolute;left: 0%;top: 50%; margin-top: -150px;">
-	<div class="modal-dialog">
+<div id="definir-secretaria" class="modal fade" tabindex="-1" role="dialog" style=" position: absolute;left: 0%;top: 50%; margin-top: -150px;  backdrop:static">
+	<div class="modal-dialog" role="document">
 
     <!-- Modal content-->
 		<div class="modal-content">
@@ -151,6 +151,8 @@ $(document).ready(function()
 				{
 					$('#definir-secretaria').modal({
 						show: true,
+						backdrop:'static', 
+						keyboard: false,
 					})
 				});
 
