@@ -17,6 +17,22 @@ $(function () {
        let user_id = ele.attr("data-id");
 
        let username = ele.attr("data-user");
+
+     
+        
+        
+       //muda o status da mensagem para lida
+        $.ajax({
+        
+        url:  base_url + '/status_message',
+        data:{_token: $("meta[name='csrf-token']").attr("content"),username: user_id,},
+        method: 'post',
+        success: function () 
+            {
+            //alert('form was submitted');
+            }
+        });
+  
        cloneChatBox(user_id, username, function () {
 
            let chatBox = $("#chat_box_" + user_id);
@@ -222,6 +238,7 @@ function fetchOldMessages(to_user, old_message_id)
 {
     let chat_box = $("#chat_box_" + to_user);
     let chat_area = chat_box.find(".chat-area");
+   
 
     $.ajax({
         url: base_url + "/fetch-old-messages",
@@ -251,6 +268,7 @@ function fetchOldMessages(to_user, old_message_id)
  */
 function getMessageSenderHtml(message)
 {
+    
     return `
            <div class="row msg_container base_sent" data-message-id="${message.id}">
         <div class="col-md-10 col-xs-10">
@@ -298,6 +316,8 @@ function getMessageReceiverHtml(message)
  */
 function displayMessage(message)
 {
+    
+    
     let alert_sound = document.getElementById("chat-alert-sound");
 
     if($("#current_user").val() == message.from_user_id) {

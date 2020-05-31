@@ -22,6 +22,20 @@ class MessagesController extends Controller
      *
      * @param Request $request
      */
+
+    public function status_message(Request $request)
+	{ 
+        $messages = Message::Where('to_user',Auth::user()->id)->where('from_user', '=', $request->username)->orderBy('created_at', 'ASC')->get(); 
+       
+        
+        foreach($messages as $message)
+        {
+            $message->message_read = 1;
+            $message->save();
+        }
+       
+    }
+    
     public function getLoadLatestMessages(Request $request)
     {
        
@@ -128,4 +142,8 @@ class MessagesController extends Controller
 
         return response()->json(['state' => 1, 'data' => $return]);
     }
+
+    	
+	
+
 }

@@ -39,7 +39,7 @@ $(document).ready(function(){
           $(this).click(function(){
               var childOffset = $(this).offset();
               var parentOffset = $(this).parent().parent().offset();
-              var childTop = childOffset.top - parentOffset.top;
+              var childmenu = childOffset.top - parentOffset.top;
               var clone = $(this).find('img').eq(0).clone();
               var top = childTop+12+"px";
               
@@ -93,8 +93,10 @@ $(document).ready(function(){
   {
     if(x == "chats")
     {
-        document.getElementById('friends').hidden=true;
+        document.getElementById('friends').hidden=true;        
         document.getElementById('chats').hidden=false;
+        document.getElementById('topmenu span').style.backgroundPosition= '-95px -118px no-repeat';
+
     }
     else if(x == "friends")
     {

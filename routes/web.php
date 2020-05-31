@@ -131,4 +131,4 @@ Route::any('update','UserController@update')->name('atualizarUsuario')->middlewa
 Route::get('/load-latest-messages', 'MessagesController@getLoadLatestMessages');
 Route::post('/send', 'MessagesController@postSendMessage');
 Route::get('/fetch-old-messages', 'MessagesController@getOldMessages');
-
+Route::post('/status_message', 'MessagesController@status_message')->name('status_message');
