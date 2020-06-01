@@ -76,14 +76,12 @@ body {
 	background: url("../img/chat/top-menu.png") -3px -118px no-repeat;
 	
 }
-#topmenu span.friends{margin-bottom:-1px 25px; cursor:pointer;}
-#topmenu span.friends:hover{background-position:-1px -46px; cursor:pointer;}
+#topmenu span.friends{margin-bottom:-1px;}
 #topmenu span.chats{background-position:-95px 25px; cursor:pointer;}
 #topmenu span.chats:hover{background-position:-95px -46px; cursor:pointer;}
 #topmenu span.chats:active{background-position:-95px -118px; cursor:pointer;}
 #topmenu span.close{background-position:-190px 24px; cursor:pointer;}
 #topmenu span.close:hover{background-position:-190px -47px; cursor:pointer;}
-#topmenu span.close:active{background-position:-190px -118px; cursor:pointer;}
 .friend{
 	margin-left:-10px;
 	height:80px;

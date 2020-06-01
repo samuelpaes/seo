@@ -39,7 +39,7 @@ $(document).ready(function(){
           $(this).click(function(){
               var childOffset = $(this).offset();
               var parentOffset = $(this).parent().parent().offset();
-              var childmenu = childOffset.top - parentOffset.top;
+              var childTop= childOffset.top - parentOffset.top;
               var clone = $(this).find('img').eq(0).clone();
               var top = childTop+12+"px";
               
@@ -95,13 +95,35 @@ $(document).ready(function(){
     {
         document.getElementById('friends').hidden=true;        
         document.getElementById('chats').hidden=false;
-        document.getElementById('topmenu span').style.backgroundPosition= '-95px -118px no-repeat';
+
+        $(".chats").css({ 
+            'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+           
+        });
+       $(".chats").css({backgroundPosition: '-95px -118px'});
+       
+       $(".friends").css({ 
+        'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+        });
+        $(".friends").css({backgroundPosition: '-3px 25px'});
+
 
     }
     else if(x == "friends")
     {
         document.getElementById('friends').hidden=false;
         document.getElementById('chats').hidden=true;
+
+        $(".chats").css({ 
+            'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+           
+        });
+       $(".chats").css({backgroundPosition: '-95px 25px'});
+       
+       $(".friends").css({ 
+        'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+        });
+        $(".friends").css({backgroundPosition: '-3px -118px'});
     }
        
   }
