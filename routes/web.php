@@ -20,6 +20,18 @@ Auth::routes();
 Route::get('/', 'HomeController@pre_index');
 Route::get('/icons', 'HomeController@icon')->name('icons');
 Route::get('/teste', 'HomeController@teste')->name('teste');
+Route::get('/welcome', 'HomeController@teste')->name('welcome');
+
+Route::any('/welcome', function () {
+	
+	return view('welcome');
+});
+
+Route::any('test', function () {
+
+    event(new SEO\Events\StatusLiked('Someone'));
+    return "Event has been sent!";
+});
 
 
 Route::any('/home', 'HomeController@index')->name('home');
