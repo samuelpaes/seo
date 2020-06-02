@@ -301,6 +301,8 @@ if ($excesso === true)
                                                 <label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
                                                 <input class="form-control" type="number" onclick="ativarBotao(id)" onkeydown="ativarBotao(id)" onkeyup="ativarBotao(id)" onkeypress="ativarBotao(id)"min="0" name="sup_codigo_dotacao[]" id="sup_codigo_dotacao" style="display: inline-block; width:80px;"></input>
                                                 <input class="form-control" type="hidden" placeholder="R$ 0,00" name="sup_valor[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="sup_justificativa[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="sup_vinculo[]" style="display: inline-block; width:80px;"></input>
                                                 <button value="suplementar" id="suplementar" align="center" name="acao" type="submit" class="btn btn-info btn-fill"   disabled>+</button>
                                             </span>
                                         </div>
@@ -413,7 +415,9 @@ if ($excesso === true)
                                             <span>
                                                 <label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
                                                 <input class="form-control"  onclick="ativarBotao(id)" onkeydown="ativarBotao(id)" onkeyup="ativarBotao(id)" onkeypress="ativarBotao(id)" min="0" type="number" name="anl_codigo_dotacao[]" id="anl_codigo_dotacao"style="display: inline-block; width:80px;"></input>
-                                                <input class="form-control" type="hidden" placeholder="R$ 0,00" name="sup_valor[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="R$ 0,00" name="anl_valor[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="anl_recurso[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="anl_vinculo[]" style="display: inline-block; width:80px;"></input>
                                                 <button value="anular" id="anular" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
                                             </span>
                                         </div>

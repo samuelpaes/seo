@@ -449,15 +449,19 @@ class OrcamentoController extends Controller
 			
 			if($request->acao == "suplementar")
 			{
+			
 				$sup_valor = $request->sup_valor;
+				
 				if(!empty($sup_valor))
 				{
 					array_splice($sup_valor, 0, 0, "R$ 0,00");
 				}
 				
 				$sup_justificativa = $request->sup_justificativa;
+				
 				if(!empty($sup_justificativa))
 				{
+					
 					array_splice($sup_justificativa, 0, 0, "");
 					
 				}

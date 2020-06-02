@@ -278,6 +278,8 @@
 												<label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
 												<input class="form-control" type="number" onclick="ativarBotao(id)" onkeydown="ativarBotao(id)" onkeyup="ativarBotao(id)" onkeypress="ativarBotao(id)" min="0" name="sup_codigo_dotacao[]" id="sup_codigo_dotacao" style="display: inline-block; width:80px;" ></input>
 												<input class="form-control" type="hidden" placeholder="R$ 0,00" name="sup_valor[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="sup_justificativa[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="sup_vinculo[]" style="display: inline-block; width:80px;"></input>
 												<button value="suplementar" id="suplementar" align="center" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
 											</span>
 										</div>
@@ -374,6 +376,8 @@
 												<label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
 												<input class="form-control" type="number" onclick="ativarBotao(id)" onkeydown="ativarBotao(id)" onkeyup="ativarBotao(id)" onkeypress="ativarBotao(id)" min="0" name="rmj_codigo_dotacao[]" id="rmj_codigo_dotacao" style="display: inline-block; width:80px;"></input>
 												<input class="form-control" type="hidden" placeholder="R$ 0,00" name="rmj_valor[]" style="display: inline-block; width:80px;"></input>
+												<input class="form-control" type="hidden" placeholder="" name="rmj_recurso[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="rmj_vinculo[]" style="display: inline-block; width:80px;"></input>
 												<button value="remanejar" id="remanejar" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
 											</span>
 										</div>
@@ -469,6 +473,8 @@
 												<label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
 												<input class="form-control" type="number" onclick="ativarBotao(id)" onkeydown="ativarBotao(id)" onkeyup="ativarBotao(id)" onkeypress="ativarBotao(id)" min="0" name="tnp_codigo_dotacao[]" id="tnp_codigo_dotacao" style="display: inline-block; width:80px;"></input>
 												<input class="form-control" type="hidden" placeholder="R$ 0,00" name="tnp_valor[]" style="display: inline-block; width:80px;"></input>
+												<input class="form-control" type="hidden" placeholder="" name="tnp_recurso[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="tnp_vinculo[]" style="display: inline-block; width:80px;"></input>
 												<button  value="transpor" id="transpor" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
 											</span>
 										</div>
@@ -564,6 +570,8 @@
 												<label for="dotacao" style="color:#000; flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto;  text-transform: capitalize">Dotação</label>
 												<input  class="form-control" type="number" onclick="ativarBotao(id)" onkeydown="ativarBotao(id)" onkeyup="ativarBotao(id)" onkeypress="ativarBotao(id)" min="0" name="tnf_codigo_dotacao[]" id="tnf_codigo_dotacao" style="display: inline-block; width:80px;"></input>
 												<input class="form-control" type="hidden" placeholder="R$ 0,00" name="tnf_valor[]" style="display: inline-block; width:80px;"></input>
+												<input class="form-control" type="hidden" placeholder="" name="tnf_recurso[]" style="display: inline-block; width:80px;"></input>
+                                                <input class="form-control" type="hidden" placeholder="" name="tnf_vinculo[]" style="display: inline-block; width:80px;"></input>
 												<button value="transferir" id="transferir" align="left" name="acao" type="submit" class="btn btn-info btn-fill" disabled>+</button>
 											</span>
 										</div>
