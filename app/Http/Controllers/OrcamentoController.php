@@ -585,12 +585,12 @@ class OrcamentoController extends Controller
 						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
 					}*/
 				}
-				$dotacoes_suplementacao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				$dotacoes_suplementacao_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_suplementacao_vinculos)));
 				
 			}
 			else{
 			}
-			$dotacoes_suplementacao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+			$dotacoes_suplementacao_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_suplementacao_vinculos)));
 		
 			//
 			if(!empty($dotacoes_anulacao))
@@ -620,12 +620,14 @@ class OrcamentoController extends Controller
 						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
 					}*/
 				}
-				$dotacoes_anulacao_vinculos = array_unique($dotacoes_anulacao_vinculos, SORT_REGULAR);
+				
+				$dotacoes_anulacao_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_anulacao_vinculos)));
 				
 			}
 			else{
 			}
-			$dotacoes_anulacao_vinculos = array_unique($dotacoes_anulacao_vinculos, SORT_REGULAR);
+			$dotacoes_anulacao_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_anulacao_vinculos)));
+			
 			
 			$mensagem = "ok";
 
@@ -726,12 +728,12 @@ class OrcamentoController extends Controller
 					//copia o resultado para o objeto de vinculos
 					$dotacoes_suplementacao_vinculos[] = $resultadoConsulta;
 				}
-				$dotacoes_suplementacao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				$dotacoes_suplementacao_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_suplementacao_vinculos)));
 				
 			}
 			else{
 			}
-			$dotacoes_suplementacao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+			$dotacoes_suplementacao_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_suplementacao_vinculos)));
 
 			/*
 			if(!empty($dotacoes_suplementacao))
@@ -798,12 +800,12 @@ class OrcamentoController extends Controller
 						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
 					}*/
 				}
-				$dotacoes_remanejamento_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				$dotacoes_remanejamento_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_remanejamento_vinculos)));
 				
 			}
 			else{
 			}
-			$dotacoes_remanejamento_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+			$dotacoes_remanejamento_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_remanejamento_vinculos)));
 
 			/*if(!empty($dotacoes_remanejamento))
 			{
@@ -864,12 +866,12 @@ class OrcamentoController extends Controller
 						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
 					}*/
 				}
-				$dotacoes_transposicao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				$dotacoes_transposicao_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_transposicao_vinculos)));
 				
 			}
 			else{
 			}
-			$dotacoes_transposicao_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+			$dotacoes_transposicao_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_transposicao_vinculos)));
 			
 			/*if(!empty($dotacoes_transposicao))
 			{
@@ -930,12 +932,13 @@ class OrcamentoController extends Controller
 						//array_push($dotacoes_suplementacao_vinculos, [['codigo_dotacao' => $dotacao->codigo_dotacao, 'vinculo' => $dotacao->vinculo]]);
 					}*/
 				}
-				$dotacoes_transferencia_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+				
+				$dotacoes_transferencia_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_transferencia_vinculos)));
 				
 			}
 			else{
 			}
-			$dotacoes_transferencia_vinculos = array_unique($dotacoes_suplementacao_vinculos, SORT_REGULAR);
+			$dotacoes_transferencia_vinculos = array_map('unserialize', array_unique(array_map('serialize', $dotacoes_transferencia_vinculos)));
 
 			/*if(!empty($dotacoes_transferencia))
 			{
@@ -1568,6 +1571,11 @@ class OrcamentoController extends Controller
 		$mensagem="";
 		$exercicioLei = $exercicio-1;
 		
+		//Verifica em qual secretaria o usuário esta logado
+		$id=Auth::user()->id;
+		$access = Access::where('user_id', $id)->get()->last();
+		$secretaria = $access['secretaria'];
+		
 		//Antes da geração de qualquer formulário para o novo exercício é obrigatório constar na tabela Legislação o número da LOA e da LDO.
 		$loa = Legislacao::whereRaw('classificacao = "LOA" and ano ="'.$exercicioLei.'" ')->first("numero");
 		$ldo = Legislacao::whereRaw('classificacao = "LDO" and ano ="'.$exercicioLei.'" ')->first("numero");
@@ -1579,7 +1587,7 @@ class OrcamentoController extends Controller
 		else{
 
 		}
-
+		
 		if($request->tipo_alteracao == "CREDITO ADICIONAL SUPLEMENTAR")
 		{
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
@@ -1616,7 +1624,7 @@ class OrcamentoController extends Controller
 													<br>
 													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>CRÉDITO ADICIONAL SUPLEMENTAR</b></h3>
-													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$request->secretaria.'</b></h3>
+													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao2.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
@@ -1858,16 +1866,17 @@ class OrcamentoController extends Controller
 
 					</body>
 					</html>';
-			
+					
 			$mpdf->WriteHTML($html);
-			$gestores =  User::where("secretaria", "=" , $request->secretaria)->where("isAdmin", "=", "2")->get();
-			$secretario = User::where("secretaria", "=" , $request->secretaria)->where("isAdmin", "=", "1")->get();	
+			$gestores =  User::where("secretaria", "=" , $secretaria)->where("isAdmin", "=", "2")->get();
+			$secretario = User::where("secretaria", "=" , $secretaria)->where("isAdmin", "=", "1")->get();	
 			
-			if(count($secretario)<1){
+			if(count($secretario)<0){
+				
 				$mensagem="A Unidade Orçamentária precisa ter cadastrado secretário(a) responsável pela pasta. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
 				return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
 			}
-			else if(count($secretario)>1 && count($gestores)<1)
+			else if(count($secretario)>=1 && count($gestores)<=1)
 			{
 				$mpdf->SetHTMLFooter('
 
@@ -1901,8 +1910,8 @@ class OrcamentoController extends Controller
 		
 			<br>');
 			}
-			else if(count($secretario)>1 && count($gestores)==1){
-
+			else if(count($secretario)>=1 && count($gestores)==1){
+				
 				$mpdf->SetHTMLFooter('
 													
 				<table align="center" width="50%" style="">											
@@ -1934,8 +1943,8 @@ class OrcamentoController extends Controller
 		
 			<br>');
 			}
-			else if(count($secretario)>1 && count($gestores)>1){
-
+			else if(count($secretario)>=1 && count($gestores)>=1){
+				
 				$mpdf->SetHTMLFooter('
 														
 					<table align="center" width="50%" style="">											
@@ -1968,7 +1977,9 @@ class OrcamentoController extends Controller
 			
 				<br>');
 			}
-			else{};		
+			else{
+				
+			};		
 			
 			//verifica quantos formularios de Credito Adicional Complementar Existem
 			$cas = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->count();
@@ -2002,7 +2013,7 @@ class OrcamentoController extends Controller
 		}
 		else if ($request->tipo_alteracao == "REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA")
 		{
-			//return($request);
+
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
 			
 			$total = number_format($request->total,2,",",".");
@@ -2037,7 +2048,7 @@ class OrcamentoController extends Controller
 													<br>
 													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA</b></h3>
-													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$request->secretaria.'</b></h3>
+													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao2.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
@@ -2162,10 +2173,10 @@ class OrcamentoController extends Controller
 														
 													</table>';
 													};
-													
+												
 													if(!empty($request->tnp_codigo_dotacao))
 													{
-				
+														
 														$html .='<h4 class="title" style="text-align: center; font-family: Arial;"><b>TRANSPOSIÇÃO</b></h4>
 														<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
 															<thead>
@@ -2213,7 +2224,7 @@ class OrcamentoController extends Controller
 														$html .='</tbody>
 														</table>';
 													};
-													
+												
 													if(!empty($request->tnf_codigo_dotacao))
 													{
 														
@@ -2303,9 +2314,18 @@ class OrcamentoController extends Controller
 					</body>
 					</html>';
 			
-					
 			$mpdf->WriteHTML($html);
-			$mpdf->SetHTMLFooter('
+			$gestores =  User::where("secretaria", "=" , $secretaria)->where("isAdmin", "=", "2")->get();
+			$secretario = User::where("secretaria", "=" , $secretaria)->where("isAdmin", "=", "1")->get();	
+			
+			if(count($secretario)<0){
+				
+				$mensagem="A Unidade Orçamentária precisa ter cadastrado secretário(a) responsável pela pasta. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
+				return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
+			}
+			else if(count($secretario)>=1 && count($gestores)<=1)
+			{
+				$mpdf->SetHTMLFooter('
 
 				<table align="center" width="50%" style="">											
 					<tr style="text-align:center">
@@ -2328,6 +2348,7 @@ class OrcamentoController extends Controller
 				<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
 					<tr style="text-align:center">
 						<td style="text-align:center">
+						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
 						Data______/______/_______
 						</td>
@@ -2335,6 +2356,77 @@ class OrcamentoController extends Controller
 				</table>
 		
 			<br>');
+			}
+			else if(count($secretario)>=1 && count($gestores)==1){
+				
+				$mpdf->SetHTMLFooter('
+													
+				<table align="center" width="50%" style="">											
+					<tr style="text-align:center">
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+						<td style="width:50px">
+						</td>
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						NOME<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+					</tr>
+				</table>
+				<br>
+				<br>
+				<br>
+				<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+					<tr style="text-align:center">
+						<td style="text-align:center">
+						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+						SECRETARIO(A) <br>
+						Data______/______/_______
+						</td>
+					</tr>
+				</table>
+		
+			<br>');
+			}
+			else if(count($secretario)>=1 && count($gestores)>=1){
+				
+				$mpdf->SetHTMLFooter('
+														
+					<table align="center" width="50%" style="">											
+						<tr style="text-align:center">
+							<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+							'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+							GESTOR(A) ORÇAMENTÁRIO(A)
+							</td>
+							<td style="width:50px">
+							</td>
+							<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+							'.strtoupper($gestores[1]['name']).' '.strtoupper($gestores[1]['sobrenome']).'<br>
+							GESTOR(A) ORÇAMENTÁRIO(A)
+							</td>
+							
+						</tr>
+					</table>
+					<br>
+					<br>
+					<br>
+					<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+						<tr style="text-align:center">
+							<td style="text-align:center">
+							'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+							SECRETARIO(A) <br>
+							Data______/______/_______
+							</td>
+						</tr>
+					</table>
+			
+				<br>');
+			}
+			else{
+	
+			};
 			//verifica quantos formularios de Credito Adicional Complementar Existem
 			$rtt = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->count();
 			$rtt = $rtt+1;

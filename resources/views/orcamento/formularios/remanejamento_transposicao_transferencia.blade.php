@@ -705,7 +705,7 @@
 
 									<!--Transposição-->
 									<?php $i=0; ?>
-									@foreach($dotacoes_remanejamento as $dotacao)
+									@foreach($dotacoes_transposicao as $dotacao)
 										<tr style="height:auto;">
 											<td style="width:100px"><input class="form-control" name="tnp_unidade_executora[{{$i}}]" value="{{$dotacao['unidade_executora']}}" type="hidden"></input></td>
 											<td style="width:150px"><input class="form-control" name="tnp_classificacao_funcional[{{$i}}]" value="{{$dotacao['classificacao_funcional_programatica']}}" type="hidden"></input></td>
@@ -721,7 +721,7 @@
 
 									<!--Transferência-->
 									<?php $i=0; ?>
-									@foreach($dotacoes_remanejamento as $dotacao)
+									@foreach($dotacoes_transferencia as $dotacao)
 										<tr style="height:auto;">
 											<td style="width:100px"><input class="form-control" name="tnf_unidade_executora[{{$i}}]" value="{{$dotacao['unidade_executora']}}" type="hidden"></input></td>
 											<td style="width:150px"><input class="form-control" name="tnf_classificacao_funcional[{{$i}}]" value="{{$dotacao['classificacao_funcional_programatica']}}" type="hidden"></input></td>
