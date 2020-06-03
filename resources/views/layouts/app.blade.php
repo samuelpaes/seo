@@ -187,7 +187,7 @@ background: rgba(255, 255, 255, 0.4);
 							<input id="check01" type="checkbox" name="menu"/>
 							<label for="check01">
 								<i class="pe-7s-news-paper" style="position:relative; top:6px;"></i>
-								<p style="position:relative; top:6px;"><a href="{{ route('home') }}" style="font:inherit; color: inherit; text-decoration: inherit;">PORTAL</a></p>
+								<p style="position:relative; top:2px;"><a href="{{ route('home') }}" style="font:inherit; color: inherit; text-decoration: inherit;">PORTAL</a></p>
 							</label>
 						</li>
 					
@@ -196,7 +196,7 @@ background: rgba(255, 255, 255, 0.4);
 							<div class="arrow-down" onclick="this.classList.toggle('active')">
 								<label for="check02">
 									<i class="pe-7s-graph2" style="position:relative; top:6px;"></i>
-									<p style="position:relative; top:6px;">ORÇAMENTO</p>
+									<p style="position:relative; top:2px;">ORÇAMENTO</p>
 								</label>
 							</div>
 							<ul class="submenu">
@@ -214,7 +214,7 @@ background: rgba(255, 255, 255, 0.4);
 							<div class="arrow-down" onclick="this.classList.toggle('active')">
 								<label for="check03">
 									<i class="pe-7s-calculator" style="position:relative; top:6px;"></i>
-									<p style="position:relative; top:6px;">CONTABILIDADE</p>
+									<p style="position:relative; top:2px;">CONTABILIDADE</p>
 								</label>
 							</div>
 							<ul class="submenu">
@@ -227,7 +227,7 @@ background: rgba(255, 255, 255, 0.4);
 							<input id="check04" type="checkbox" name="menu"/>
 							<label for="check04">
 								<i class="pe-7s-study" style="position:relative; top:6px;"></i>
-								<p style="position:relative; top:6px;">CAPACITAÇÕES</p>
+								<p style="position:relative; top:2px;">CAPACITAÇÕES</p>
 							</label>
 						</li>
 						
@@ -236,7 +236,7 @@ background: rgba(255, 255, 255, 0.4);
 								<input id="check05" type="checkbox" name="menu"/>
 								<label for="check05">
 									<i class="pe-7s-network" style="position:relative; top:6px;"></i>
-									<p style="position:relative; top:6px;"><a href="{{ route('comite_gestor') }}" style="font:inherit; color: inherit; text-decoration: inherit;">COMITÊ GESTOR</a></p>
+									<p style="position:relative; top:2px;"><a href="{{ route('comite_gestor') }}" style="font:inherit; color: inherit; text-decoration: inherit;">COMITÊ GESTOR</a></p>
 								</label>
 							
 						</li>
@@ -245,7 +245,7 @@ background: rgba(255, 255, 255, 0.4);
 							<input id="check06" type="checkbox" name="menu"/>
 							<label for="check06">
 								<i class="pe-7s-help1" style="position:relative; top:6px;"></i>
-								<p style="position:relative; top:6px;">PODEMOS AJUDAR?</p>
+								<p style="position:relative; top:2px;">PODEMOS AJUDAR?</p>
 							</label>
 						</li>
 
@@ -257,7 +257,7 @@ background: rgba(255, 255, 255, 0.4);
 							<div class="arrow-down" onclick="this.classList.toggle('active')">
 								<label for="check07">
 									<i class="pe-7s-users" style="position:relative; top:6px;"></i>
-									<p style="position:relative; top:6px;">USUÁRIOS</p>
+									<p style="position:relative; top:2px;">USUÁRIOS</p>
 								</label>
 							</div>
 							<ul class="submenu">
@@ -271,7 +271,7 @@ background: rgba(255, 255, 255, 0.4);
 							<div class="arrow-down" onclick="this.classList.toggle('active')">
 								<label for="check08">
 									<i class="pe-7s-config" style="position:relative; top:6px;"></i>
-									<p style="position:relative; top:6px;">CONFIGURAÇÕES</p>
+									<p style="position:relative; top:2px;">CONFIGURAÇÕES</p>
 								</label>
 							</div>
 							<ul class="submenu">

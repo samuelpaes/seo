@@ -18,6 +18,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@pre_index');
+Route::get('/home', 'HomeController@pre_index');
 Route::get('/icons', 'HomeController@icon')->name('icons');
 Route::get('/teste', 'HomeController@teste')->name('teste');
 Route::get('/welcome', 'HomeController@teste')->name('welcome');

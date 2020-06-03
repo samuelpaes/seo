@@ -199,7 +199,7 @@
   padding: 0;
   width: 100%;
   background: #40609d	 !important;
-  color:#fff;
+  color:#fff;5--------
 }
 #marker {
   height: 6px;
@@ -827,18 +827,11 @@ function checaResolucao()
 		}
 	}
 </script>
-			<?php $mensagensNovas = 0 ?>
-			@foreach($users as $user)
-				<?php
-					$mensagensNovas = $user->mensagensNaoLidas + $mensagensNovas;	
-				?>
-			@endforeach
+
             <div class="content">
                 <div class="container-fluid">
-					
                     <span class="dot" style="position:absolute; bottom:10px; right:10px;" data-toggle="collapse" data-target="#chatbox" >
                         <img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
-						<span style="position:relative;right:15px;top:30%; background:red; color:#fff" class="badge" id="contador">{{ $mensagensNovas }}</span></a><br>
                     </span>
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
@@ -862,12 +855,7 @@ function checaResolucao()
                                         <p>
                                             <strong>{{ $user->name }}</strong>
                                             <br>
-                                            <span style="font-size:12px;">
-												<?php
-												$secretaria = explode(';', $user->secretaria);   
-												?>
-												{{ $secretaria[0]}}</span>
-											</span>
+                                            <span style="font-size:12px;">{{ $user->secretaria }}</span>
                                         </p>
 										@if($user->isOnline())
                                        		<div class="status available"></div>
@@ -898,11 +886,7 @@ function checaResolucao()
 													
 														<strong>{{ $user->name }}</strong>
 														<br>
-														<span style="font-size:12px;">
-														<?php
-															 $secretaria = explode(';', $user->secretaria);   
-														?>
-														{{$secretaria[0]}}</span>
+														<span style="font-size:12px;">{{ $user->secretaria }}</span>
 														
 														
 													</p>

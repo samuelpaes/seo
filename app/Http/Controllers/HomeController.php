@@ -34,7 +34,7 @@ class HomeController extends Controller
   
 	
 	public function index(Request $request)
-	{
+	{    
         //verifica as mensagens não lidas
         $messages_read = Message::Where('to_user',Auth::user()->id)->where('message_read','=' , 0)->orderBy('created_at', 'ASC')->get(); 
         //return($messages_read);
@@ -88,21 +88,24 @@ class HomeController extends Controller
             return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read);
         }
         else{
-       
+            //return redirect()->action('HomeController@pre_index');
             $id=Auth::user()->id;
             $access = Access::where('user_id', $id)->get()->last();
            
             if(Auth::user()->isAdmin == 0 || Auth::user()->isAdmin == 1)
             {
                 $secretaria = $access['secretaria'];
+                
             }
-            else{
+            else if(Auth::user()->isAdmin == 2 || Auth::user()->isAdmin == 3)
+            {
                 $secretaria = Auth::user()->secretaria;
                 $secretaria = str_replace(";", "", $secretaria);
                 $access->secretaria = $secretaria;
                 $access->save();
             }
-           
+                   
+
             $users = User::where('id', '!=', Auth::user()->id)->get();
 
             for($i = 0; $i<sizeof($users); $i++)
@@ -124,7 +127,7 @@ class HomeController extends Controller
                     
                 }
             }
-
+            
             $unidade_orcamentaria = UnidadeOrcamentaria::where('unidade', '=', $secretaria)->firstOrFail('codigo');		
             $exercicio = date("Y");
         
@@ -143,7 +146,7 @@ class HomeController extends Controller
     public function pre_index()
 	{ 
         //Verifica o tipo de usuário
-       
+      
         $isAdmin = Auth::user()->isAdmin;
         if($isAdmin == 0 || $isAdmin == 1)
         {
