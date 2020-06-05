@@ -29,6 +29,7 @@
 
 	<!-- Bootstrap Notify CSS     -->
 	<link href="{{ asset('css/bootstrap-notify.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('css/bootstrap-notifications.css') }}" rel="stylesheet" />
 	
 
     <!-- Animation library for notifications   -->
@@ -80,6 +81,7 @@
     <!--  Notifications Plugin    -->
 	<script src="{{ asset('js/bootstrap-notify.js') }}"type="text/javascript"></script>
 
+
  
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
 	<script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}"type="text/javascript"></script>
@@ -94,20 +96,15 @@
 	<script src="{{ asset('fullcalendar/packages/google-calendar/main.js') }}"type="text/javascript"></script>
 	<script src="{{ asset('fullcalendar/packages/core/locales/pt-br.js') }}"type="text/javascript"></script>
 	
-
+	<!--Chat -->
     <link rel="stylesheet" href="{{ asset('css/chat.css') }}" />
     <script>
         var base_url = '{{ url("/") }}';
     </script>
-	
     
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
-	
-
+	<!--Pusher -->
+	<script src="{{ asset('js/pusher.min.js') }}"type="text/javascript"></script>
+  
 <style>
 
 .arrow 
@@ -169,7 +166,11 @@ background: rgba(255, 255, 255, 0.4);
 </style>
 
 </head>
-<body  style=" overflow-x:scroll; overflow-y: scroll;">
+@if (Auth::check())
+<body style="overflow-x:scroll; overflow-y:scroll;" data-user-id="{{ Auth::user()->id }}">
+@else
+<body style="overflow-x:scroll; overflow-y:scroll;">
+@endif
     <div id="app">
 		<div class="wrapper" style="position:relative; z-index:1">
 			<div class="sidebar" data-color="blue" data-image="{{ asset('img/sidebar-1.jpg') }}" >
@@ -311,27 +312,6 @@ background: rgba(255, 255, 255, 0.4);
 								<div class="arrow left" onclick="goBack()"></div>
 								<div class="arrow right" onclick="goForward()"></div>
 								
-								
-							
-								<!--<li class="dropdown">
-									  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-											<i class="fa fa-globe"></i>
-											<b class="caret hidden-sm hidden-xs"></b>
-											<span class="notification hidden-sm hidden-xs">5</span>
-											<p class="hidden-lg hidden-md">
-												5 Notifications
-												<b class="caret"></b>
-											</p>
-									  </a>
-									  <ul class="dropdown-menu">
-										<li><a href="#">Notification 1</a></li>
-										<li><a href="#">Notification 2</a></li>
-										<li><a href="#">Notification 3</a></li>
-										<li><a href="#">Notification 4</a></li>
-										<li><a href="#">Another notification</a></li>
-									  </ul>
-								</li>
-								<li>
 								   <a href="">
 										<i class="fa fa-search"></i>
 										<p class="hidden-lg hidden-md">Search</p>
@@ -341,41 +321,23 @@ background: rgba(255, 255, 255, 0.4);
 
 							<ul class="nav navbar-nav navbar-right">
 								<!-- teste-->
-								<li class="dropdown dropdown-notifications">
-									<a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
-										<i data-count="0" class="fa fa-globe"></i>
-									</a>
-
-									<div class="dropdown-container">
-										<div class="dropdown-toolbar">
-										<div class="dropdown-toolbar-actions">
-											<a href="#">Mark all as read</a>
-										</div>
-										<h3 class="dropdown-toolbar-title">Notifications (<span class="notif-count">0</span>)</h3>
-										</div>
-										<ul class="dropdown-menu">
-										</ul>
-										<div class="dropdown-footer text-center">
-										<a href="#">View All</a>
-										</div>
-									</div>
-								</li>
-
+								
 								<li class="dropdown" style="position:relative; top:2px;">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-										<i class="fa fa-globe"></i>
+									<a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
+										<i class="fa fa-globe" data-count="0"></i>
 										<b class="caret hidden-lg hidden-md"></b>
 										<p class="hidden-lg hidden-md">
-											5 Notifications
 											<b class="caret"></b>
 										</p>
+										<span class="notif-count">0</span>
 									</a>
-									<ul class="dropdown-menu">
-										<li><a href="#">Notification 1</a></li>
-										<li><a href="#">Notification 2</a></li>
-										<li><a href="#">Notification 3</a></li>
-										<li><a href="#">Notification 4</a></li>
-										<li><a href="#">Another notification</a></li>
+									<ul class="dropdown-menu" id="notificacoes">
+										@foreach ($notificacoes_naoLidas as $notificacao)
+											<li><a href="#">{{$notificacao['data']}}<button type="button"><i style="position:relative; top:4px; color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>
+										@endforeach
+										
+										<li><a href="#">LIMPAR</a></li>
+										
 									</ul>
 								</li>
 								<li>
@@ -427,6 +389,10 @@ background: rgba(255, 255, 255, 0.4);
 			
 				<main class="py-4"  style="z-index:0">
 					<br>
+
+					<div class="alert alert-primary" role="alert">
+  This is a primary alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
 					@if(auth()->user()->isAdmin == 0 || auth()->user()->isAdmin == 1 || auth()->user()->isAdmin == 2)
 						@yield('content')
 					@else<!-- Se o usuário não tem acesso, chama o modal sem acesso -->	
@@ -463,48 +429,48 @@ function goForward() {
   window.history.forward();
 }
 
-      var notificationsWrapper   = $('.dropdown-notifications');
+$(document).ready(function() {
+	var notificationsCount = (document.querySelectorAll("#notificacoes li").length)-1;
+
+	var notificationsWrapper   = $('.dropdown');
+    var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
+    var notificationsCountElem = notificationsToggle.find('i[data-count]');
+    var notifications          = notificationsWrapper.find('ul.dropdown-menu');
+	notificationsCountElem.attr('data-count', notificationsCount);
+    notificationsWrapper.find('.notif-count').text(notificationsCount);
+});
+</script>
+
+    <script type="text/javascript">
+      var notificationsWrapper   = $('.dropdown');
       var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
       var notificationsCountElem = notificationsToggle.find('i[data-count]');
-      var notificationsCount     = parseInt(notificationsCountElem.data('count'));
+      //var notificationsCount     = parseInt(notificationsCountElem.data('count'));
+	  var notificationsCount = (document.querySelectorAll("#notificacoes li").length)-1;
       var notifications          = notificationsWrapper.find('ul.dropdown-menu');
-
-      if (notificationsCount <= 0) {
-        notificationsWrapper.hide();
-      }
-
+		
       // Enable pusher logging - don't include this in production
       // Pusher.logToConsole = true;
-
-      var pusher = new Pusher('0b70ac05978b5bac6245', {
-        cluster: 'us2',
+	 
+      var pusher = new Pusher("{{env('PUSHER_APP_KEY')}}", {
+        cluster: "{{env('PUSHER_APP_CLUSTER')}}",
         encrypted: true
-      });
+	  });
+	  
+	  
 
       // Subscribe to the channel we specified in our Laravel Event
-      var channel = pusher.subscribe('status-liked');
-
+      var channel = pusher.subscribe('notificar');
+	 
       // Bind a function to a Event (the full Laravel class)
-      channel.bind('SEO\\Events\\StatusLiked', function(data) {
+      channel.bind('SEO\\Events\\Notificacao', function(data) {
+	
+		var notificacao = String(Object.values(data));
+		notificacao = notificacao.substr(1);
         var existingNotifications = notifications.html();
-        var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
+        //var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
         var newNotificationHtml = `
-          <li class="notification active">
-              <div class="media">
-                <div class="media-left">
-                  <div class="media-object">
-                    <img src="https://api.adorable.io/avatars/71/`+avatar+`.png" class="img-circle" alt="50x50" style="width: 50px; height: 50px;">
-                  </div>
-                </div>
-                <div class="media-body">
-                  <strong class="notification-title">`+data.message+`</strong>
-                  <!--p class="notification-desc">Extra description can go here</p-->
-                  <div class="notification-meta">
-                    <small class="timestamp">about a minute ago</small>
-                  </div>
-                </div>
-              </div>
-          </li>
+			<li><a href="#">`+notificacao+`<button type="button"><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>				
         `;
         notifications.html(newNotificationHtml + existingNotifications);
 
@@ -512,5 +478,7 @@ function goForward() {
         notificationsCountElem.attr('data-count', notificationsCount);
         notificationsWrapper.find('.notif-count').text(notificationsCount);
         notificationsWrapper.show();
+
+		$('#alert alert-info').show();
       });
     </script>

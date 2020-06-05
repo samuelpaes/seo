@@ -171,10 +171,15 @@ return [
          */
         SEO\Providers\AppServiceProvider::class,
         SEO\Providers\AuthServiceProvider::class,
-        // SEO\Providers\BroadcastServiceProvider::class,
+        SEO\Providers\BroadcastServiceProvider::class,
         SEO\Providers\EventServiceProvider::class,
         SEO\Providers\RouteServiceProvider::class,
-		Maatwebsite\Excel\ExcelServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        
+       
+        // Other Service Providers...
+       SEO\Providers\ComposerServiceProvider::class,
+        
 
     ],
 

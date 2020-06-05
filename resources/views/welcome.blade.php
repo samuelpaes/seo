@@ -57,7 +57,7 @@
     </nav>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="//js.pusher.com/3.1/pusher.min.js"></script>
+  
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
@@ -84,6 +84,7 @@
 
       // Bind a function to a Event (the full Laravel class)
       channel.bind('SEO\\Events\\StatusLiked', function(data) {
+        alert('oi');
         var existingNotifications = notifications.html();
         var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
         var newNotificationHtml = `

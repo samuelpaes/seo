@@ -34,6 +34,12 @@ Route::any('test', function () {
     return "Event has been sent!";
 });
 
+Route::get('/notify', function(){
+	Auth::user()->notify(new \SEO\Notifications\StatusLiked('Someone'));
+	// Notification::send(Auth::user(), new \App\Notifications\StatusLiked('Someone'));
+	return "Notification has been sent!";
+  });
+
 
 Route::any('/home', 'HomeController@index')->name('home');
 Route::any('/pre_home', 'HomeController@pre_index')->name('pre_home');

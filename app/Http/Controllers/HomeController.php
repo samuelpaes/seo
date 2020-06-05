@@ -9,6 +9,7 @@ use SEO\UnidadeOrcamentaria;
 use Illuminate\Http\Request;
 use SEO\Informacao;
 use SEO\Access;
+use SEO\Notification;
 
 use SEO\Lib\PusherFactory;
 use SEO\Message;
@@ -37,7 +38,20 @@ class HomeController extends Controller
 	{    
         //verifica as mensagens não lidas
         $messages_read = Message::Where('to_user',Auth::user()->id)->where('message_read','=' , 0)->orderBy('created_at', 'ASC')->get(); 
-        //return($messages_read);
+        
+        //captura todas as notificações do bd
+        $notificacoes = Notification::all();
+        
+
+        //verifica quais não foram lidas pelo usuário
+        foreach($notificacoes as $notificacao)
+        {
+            $notificacao_lida = explode(';', $notificacao['user_read']);    
+            if (in_array(Auth::user()->registro, $notificacao_lida)) { 
+                $notificacoes_naoLidas[] = $notificacao;
+            }
+        }
+           
         if($request['secretaria'] != null)
         {
             
@@ -85,7 +99,7 @@ class HomeController extends Controller
             $informacoes = Informacao::all()->take(10);
             
             //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
-            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read);
+            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read)->with('notificacoes_naoLidas', $notificacoes_naoLidas);
         }
         else{
             //return redirect()->action('HomeController@pre_index');
@@ -139,7 +153,7 @@ class HomeController extends Controller
             $informacoes = Informacao::all()->take(10);
             
             //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
-            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read);
+            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read)->with('notificacoes_naoLidas', $notificacoes_naoLidas);
         }
 	}
     
