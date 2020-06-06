@@ -1630,7 +1630,7 @@ class OrcamentoController extends Controller
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao2.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
-													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$loa->numero.'/'.$exercicioLei.'</p>									
+													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$ldo->numero.'/'.$exercicioLei.'</p>									
 												</div>
 												<div>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
@@ -1878,7 +1878,7 @@ class OrcamentoController extends Controller
 				$mensagem="A Unidade Orçamentária precisa ter cadastrado secretário(a) responsável pela pasta. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
 				return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
 			}
-			else if(count($secretario)>=1 && count($gestores)<=1)
+			else if(count($secretario)>=1 && count($gestores)<1)
 			{
 				$mpdf->SetHTMLFooter('
 
@@ -2008,9 +2008,10 @@ class OrcamentoController extends Controller
 				Notification::create([
 					'type' =>'Formulário de Alteração Orçamentária',
 					'data' => $secretaria." gerou o formulário CAS".$cas."/".$exercicio." de Crédito Adicional Suplementar",
-				]);
-			
+				]);			
 				
+				$notificacao_id = Notification::get('id')->last();
+			
 				//testa conexão com a interner antes de enviar uma notificação via pusher
 				if(!$sock = @fsockopen('www.google.com', 80))
 				{
@@ -2018,11 +2019,8 @@ class OrcamentoController extends Controller
 				}
 				else
 				{
-					event(new Notificacao($secretaria." gerou o formulário CAS".$cas."/".$exercicio." de Crédito Adicional Suplementar"));
+					event(new Notificacao($notificacao_id, $secretaria." gerou o formulário CAS".$cas."/".$exercicio." de Crédito Adicional Suplementar"));
 				}
-					
-				
-					
 				
 				
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
@@ -2079,7 +2077,7 @@ class OrcamentoController extends Controller
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao2.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
-													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$ldo->numero.'/'.$exercicioLei.'</p>									
+													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$loa->numero.'/'.$exercicioLei.'</p>									
 												</div>
 												<div>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
@@ -2350,7 +2348,7 @@ class OrcamentoController extends Controller
 				$mensagem="A Unidade Orçamentária precisa ter cadastrado secretário(a) responsável pela pasta. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
 				return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
 			}
-			else if(count($secretario)>=1 && count($gestores)<=1)
+			else if(count($secretario)>=1 && count($gestores)<1)
 			{
 				$mpdf->SetHTMLFooter('
 
@@ -2469,7 +2467,7 @@ class OrcamentoController extends Controller
 					'numero_instrumento' => $request->numeroInstrumento,
 					'tipo_formulario' => $request->tipo_alteracao,	
 					'exercicio' => date("Y"),
-					'secretaria' => $request->secretaria,
+					'secretaria' => $secretaria,
 					'valor' => $request->total,
 					'usuario' => Auth::user()->registro,
 					'path' => '123',
@@ -2481,6 +2479,8 @@ class OrcamentoController extends Controller
 					'data' => $secretaria.' gerou o formulário "RTT'.$rtt."/".$exercicio.'", de Remanejamento, Transferência e Transposição',
 				]);
 				
+				$notificacao_id = Notification::get('id')->last();
+			
 				//testa conexão com a interner antes de enviar uma notificação via pusher
 				if(!$sock = @fsockopen('www.google.com', 80))
 				{
@@ -2488,7 +2488,7 @@ class OrcamentoController extends Controller
 				}
 				else
 				{
-					event(new Notificacao($secretaria.' gerou o formulário "RTT'.$rtt."/".$exercicio.'", de Remanejamento, Transferência e Transposição'));
+					event(new Notificacao($notificacao_id, $secretaria.' gerou o formulário "RTT'.$rtt."/".$exercicio.'", de Remanejamento, Transferência e Transposição'));
 				}
 
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";

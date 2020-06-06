@@ -23,7 +23,14 @@ Route::get('/icons', 'HomeController@icon')->name('icons');
 Route::get('/teste', 'HomeController@teste')->name('teste');
 Route::get('/welcome', 'HomeController@teste')->name('welcome');
 
-Route::any('/welcome', function () {
+Route::any('/removerNotificacao', 'NotificationController@removeNotification');
+
+/*Route::any('/removerNotificacao', function () {
+	
+	return ('welcome');
+});*/
+
+/*Route::any('/welcome', function () {
 	
 	return view('welcome');
 });
@@ -38,7 +45,7 @@ Route::get('/notify', function(){
 	Auth::user()->notify(new \SEO\Notifications\StatusLiked('Someone'));
 	// Notification::send(Auth::user(), new \App\Notifications\StatusLiked('Someone'));
 	return "Notification has been sent!";
-  });
+  });*/
 
 
 Route::any('/home', 'HomeController@index')->name('home');

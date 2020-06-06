@@ -104,6 +104,10 @@
     
 	<!--Pusher -->
 	<script src="{{ asset('js/pusher.min.js') }}"type="text/javascript"></script>
+
+	<!--Ajax-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   
 <style>
 
@@ -333,7 +337,7 @@ background: rgba(255, 255, 255, 0.4);
 									</a>
 									<ul class="dropdown-menu" id="notificacoes">
 										@foreach ($notificacoes_naoLidas as $notificacao)
-											<li><a href="#">{{$notificacao['data']}}<button type="button"><i style="position:relative; top:4px; color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>
+											<li><a href="#" >{{$notificacao['data']}}<button type="button" class="remover" id="{{$notificacao['id']}}"><i style="position:relative; top:4px; color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>
 										@endforeach
 										
 										<li><a href="#">LIMPAR</a></li>
@@ -436,6 +440,35 @@ $(document).ready(function() {
 	notificationsCountElem.attr('data-count', notificationsCount);
     notificationsWrapper.find('.notif-count').text(notificationsCount);
 });
+
+
+// Remove notificação
+$(document).on("click", ".remover" , function() {
+	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+	
+
+  var notificacao_id = String($(this).attr('id'));
+  var user_id = String(<?php echo auth()->user()->registro ?>);
+ 
+ 
+
+  if(notificacao_id != '' && user_id != ''){
+    
+	$.ajax({
+	  type: 'POST',
+	  url: '../removerNotificacao',
+	  dataType: 'json',
+      data: {_token: CSRF_TOKEN, _method: 'POST', notificacao_id: notificacao_id, user_id: user_id},
+      success: function(response){
+        alert(response);
+      }
+    });
+	console.log(data);
+  }else{
+    alert('Fill all fields');
+  }
+});
+
 </script>
 
     <script type="text/javascript">
@@ -461,13 +494,15 @@ $(document).ready(function() {
 	 
       // Bind a function to a Event (the full Laravel class)
       channel.bind('SEO\\Events\\Notificacao', function(data) {
-	
-		var notificacao = String(Object.values(data));
-		notificacao = notificacao.substr(1);
+		
+		//console.log(data);
+		//alert(data.notification.id);
+		var notificacao_id = data.notification.id;
+		var notificacao = data.message;
         var existingNotifications = notifications.html();
         //var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
         var newNotificationHtml = `
-			<li><a href="#">`+notificacao+`<button type="button"><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>				
+			<li><a href="#">`+notificacao+`<button type="button" class="remover" id="`+notificacao_id+`"><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>				
         `;
         notifications.html(newNotificationHtml + existingNotifications);
 

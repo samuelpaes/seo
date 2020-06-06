@@ -20,10 +20,11 @@ class Notificacao implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($notification)
+    public function __construct($notification, $message)
     {
      
-        $this->message  = $notification;
+        $this->notification  = $notification;
+        $this->message  = $message;
    
      
     }

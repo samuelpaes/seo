@@ -14,13 +14,14 @@ class ComposerServiceProvider extends ServiceProvider {
             //captura todas as notificações do bd
             $notificacoes = Notification::all();
             
-
-            //verifica quais não foram lidas pelo usuário
-            foreach($notificacoes as $notificacao)
-            {
-                $notificacao_lida = explode(';', $notificacao['user_read']);    
-                if (in_array(Auth::user()->registro, $notificacao_lida)) { 
-                    $notificacoes_naoLidas[] = $notificacao;
+            if (Auth::check()) {
+                //verifica quais não foram lidas pelo usuário
+                foreach($notificacoes as $notificacao)
+                {
+                    $notificacao_lida = explode(';', $notificacao['user_read']);    
+                    if (in_array(Auth::user()->registro, $notificacao_lida)) { 
+                        $notificacoes_naoLidas[] = $notificacao;
+                    }
                 }
             }
            

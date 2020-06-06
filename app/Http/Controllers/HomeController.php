@@ -36,9 +36,11 @@ class HomeController extends Controller
 	
 	public function index(Request $request)
 	{    
+     
         //verifica as mensagens não lidas
         $messages_read = Message::Where('to_user',Auth::user()->id)->where('message_read','=' , 0)->orderBy('created_at', 'ASC')->get(); 
         
+        $notificacoes_naoLidas = array();
         //captura todas as notificações do bd
         $notificacoes = Notification::all();
         
