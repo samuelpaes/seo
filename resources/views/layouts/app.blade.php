@@ -419,7 +419,8 @@ background: rgba(255, 255, 255, 0.4);
 		</div>
 	</div>
 </div>
-  
+
+</form>
 </html>
 <script>
 function goBack() {
@@ -446,19 +447,17 @@ $(document).ready(function() {
 $(document).on("click", ".remover" , function() {
 	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 	
+	var notificacao_id = String($(this).attr('id'));
+ 	var user_registro = String(<?php echo auth()->user()->registro ?>);
 
-  var notificacao_id = String($(this).attr('id'));
-  var user_id = String(<?php echo auth()->user()->registro ?>);
- 
- 
-
-  if(notificacao_id != '' && user_id != ''){
-    
+	
+  if(notificacao_id != '' && user_registro != ''){
+    alert(notificacao_id);
 	$.ajax({
 	  type: 'POST',
-	  url: '../removerNotificacao',
+	  url: '{{ route("removerNotificacao") }}',
 	  dataType: 'json',
-      data: {_token: CSRF_TOKEN, _method: 'POST', notificacao_id: notificacao_id, user_id: user_id},
+      data: {_token: CSRF_TOKEN, _method: 'POST', 'id_notificacao': notificacao_id, 'registro_user': user_registro},
       success: function(response){
         alert(response);
       }

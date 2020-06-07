@@ -23,7 +23,11 @@ Route::get('/icons', 'HomeController@icon')->name('icons');
 Route::get('/teste', 'HomeController@teste')->name('teste');
 Route::get('/welcome', 'HomeController@teste')->name('welcome');
 
-Route::any('/removerNotificacao', 'NotificationController@removeNotification');
+
+
+Route::post('/removerNotificacao', 'NotificationController@removeNotification')->name('removerNotificacao');
+
+
 
 /*Route::any('/removerNotificacao', function () {
 	
