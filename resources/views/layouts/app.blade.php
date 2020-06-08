@@ -28,7 +28,7 @@
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
 
 	<!-- Bootstrap Notify CSS     -->
-	<link href="{{ asset('css/bootstrap-notify.min.css') }}" rel="stylesheet" />
+	<!--<link href="{{ asset('css/bootstrap-notify.min.css') }}" rel="stylesheet" />-->
 	<link href="{{ asset('css/bootstrap-notifications.css') }}" rel="stylesheet" />
 	
 
@@ -393,7 +393,6 @@ background: rgba(255, 255, 255, 0.4);
 			
 				<main class="py-4"  style="z-index:0">
 					<br>
-
 					@if(auth()->user()->isAdmin == 0 || auth()->user()->isAdmin == 1 || auth()->user()->isAdmin == 2)
 						@yield('content')
 					@else<!-- Se o usuário não tem acesso, chama o modal sem acesso -->	
@@ -433,7 +432,7 @@ function goForward() {
 
 $(document).ready(function() {
 	var notificationsCount = (document.querySelectorAll("#notificacoes li").length)-1;
-
+	//alert(notificationsCount);
 	var notificationsWrapper   = $('.dropdown');
     var notificationsToggle    = notificationsWrapper.find('a[data-toggle]');
     var notificationsCountElem = notificationsToggle.find('i[data-count]');
@@ -452,17 +451,22 @@ $(document).on("click", ".remover" , function() {
 
 	
   if(notificacao_id != '' && user_registro != ''){
-    alert(notificacao_id);
 	$.ajax({
 	  type: 'POST',
 	  url: '{{ route("removerNotificacao") }}',
 	  dataType: 'json',
       data: {_token: CSRF_TOKEN, _method: 'POST', 'id_notificacao': notificacao_id, 'registro_user': user_registro},
       success: function(response){
-        alert(response);
+        //alert(response);
       }
     });
 	console.log(data);
+	$(this).closest('li').remove();
+	
+	notificationsCount -= 1	;
+	notificationsCountElem.attr('data-count', notificationsCount);
+    notificationsWrapper.find('.notif-count').text(notificationsCount);
+    notificationsWrapper.show();
   }else{
     alert('Fill all fields');
   }
@@ -515,7 +519,7 @@ $(document).on("click", ".remover" , function() {
 			//icon: 'glyphicon glyphicon-warning-sign',
 			title: 'AVISO',
 			message: notificacao,
-			//url: 'https://github.com/mouse0270/bootstrap-notify',
+			url: 'https://github.com/mouse0270/bootstrap-notify',
 			//target: '_blank'
 		},
 			{
