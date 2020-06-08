@@ -9,8 +9,6 @@
 	
 	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
 
-
-
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -25,85 +23,17 @@
 
 	<!-- Bootstrap core CSS     -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-	
 
-	
-    <!-- Animation library for notifications   -->
-    <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet"/>
-	
-	<link href="{{ asset('css/balloon.css') }}" rel="stylesheet"/>
-
-	<link href="{{ asset('css/arrows.css') }}" rel="stylesheet">
-	
-	<link href="{{ asset('css/jquery.treegrid.css') }}" rel="stylesheet">
-    
-    <!--  Chat CSS    -->
-    <link rel="stylesheet" href="{{ asset('css/chat.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/chatStyle.css') }}" />
-	
     <!--  Light Bootstrap Table core CSS    -->
     <link href="{{ asset('css/light-bootstrap-dashboard-home.css?v=1.4.0') }}"rel="stylesheet"/>
 
-	
-	<!--Calendar-->
-	<link href="{{ asset('fullcalendar/packages/core/main.css') }}"rel="stylesheet"/>
-	<link href="{{ asset('fullcalendar/packages/daygrid/main.css') }}"rel="stylesheet"/>
-	
-
-    <!--     Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="{{ asset ('css/pe-icon-7-stroke.css') }}" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-
 	<!--   Core JS Files   -->
 
-    <script src="{{ asset('js/jquery-3.4.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('js/bootstrap.min.js') }}"type="text/javascript"></script>
-	<script src="{{ asset('js/jquery.email-autocomplete.min.js') }}"type="text/javascript"></script>
 	
-	
-	<script src="{{ asset('js/jquery.treegrid.min.js') }}"type="text/javascript"></script>
-	
-	<script src="{{ asset('js/alterar-saldo-dotacao.js') }}"type="text/javascript"></script>
-	
-	
-
-	<!--  Charts Plugin -->
-	<script src="{{ asset('js/chartist.min.js') }}"type="text/javascript"></script>
-
-	<script src="{{ asset('js/charts/chart.bundle.js') }}"type="text/javascript"></script>
-	<script src="{{ asset('js/charts/chart.bundle.min.js') }}"type="text/javascript"></script>
-	<script src="{{ asset('js/charts/chart.js') }}"type="text/javascript"></script>
-	<script src="{{ asset('js/charts/chart.min.js') }}"type="text/javascript"></script>
-
-    <!--  Notifications Plugin    -->
-	<script src="{{ asset('js/bootstrap-notify.js') }}"type="text/javascript"></script>
-
- 
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}"type="text/javascript"></script>
-
-	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<!-- <script src="{{ asset('js/demo.js') }}"type="text/javascript"></script> -->
-	<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-
-	<!-- Calendar! -->
-
- 	<script src="{{ asset('fullcalendar/packages/core/main.js') }}"type="text/javascript"></script>
-	<script src="{{ asset('fullcalendar/packages/daygrid/main.js') }}"type="text/javascript"></script>
-	<script src="{{ asset('fullcalendar/packages/google-calendar/main.js') }}"type="text/javascript"></script>
-	<script src="{{ asset('fullcalendar/packages/core/locales/pt-br.js') }}"type="text/javascript"></script>
-
-    <!-- Chat scripts -->
-    <script src="{{ asset('js/chatStyle.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/chat.js') }}"type="text/javascript"></script>
-    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
-
-   
 </head>
-	<body onmouseover="checaResolucao()" onmousemove="checaResolucao()" onwheel="checaResolucao()" style="background:#25385b">
+	<body style="background:#25385b">
 			
 	
 <!-- Modal Alterar Secretaria-->
@@ -156,21 +86,7 @@ $(document).ready(function()
 					})
 				});
 
-function checaResolucao()
-{
-	
-	//ajuste de tela
-	if($(window).width() < 1199)
-	{
-		document.getElementById('barraAlternativa').hidden=false;
-		document.getElementById('barraOficial').hidden=true;
-	}
-	else{
-			
-		document.getElementById('barraAlternativa').hidden=true;
-		document.getElementById('barraOficial').hidden=false;
-	}
-}
+
 </script>
    
 </body>

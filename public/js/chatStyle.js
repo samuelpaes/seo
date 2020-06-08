@@ -8,7 +8,8 @@
 $(document).ready(function(){
 	
    var preloadbg = document.createElement("img");
-   preloadbg.src = "{{url('img/chat_background.png')}}";
+   preloadbg.src = "../public/img/chat/chat_background.png";
+
     
       $("#searchfield").focus(function(){
           if($(this).val() == "Procurar contatos..."){

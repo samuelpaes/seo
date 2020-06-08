@@ -8,6 +8,9 @@ use SEO\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use SEO\Notification;
+use SEO\Events\Notificacao;
+
 class MessagesController extends Controller
 {
     public function __construct()
@@ -96,6 +99,27 @@ class MessagesController extends Controller
         $message->to_user_id = $request->to_user;
 
         PusherFactory::make()->trigger('chat', 'send', ['data' => $message]);
+        
+        $registro =  User::where("id",  $request->to_user)->value('registro');
+
+        Notification::create([
+            'type' =>'Nova Mensagem Recebida',
+            'data' => "Nova Mensagem de ".Auth::user()->name." ". Auth::user()->sobrenome,
+            'to_user' => $registro,
+        ]);			
+        
+        $notificacao_id = Notification::get('id')->last();
+    
+        //testa conexão com a interner antes de enviar uma notificação via pusher
+        if(!$sock = @fsockopen('www.google.com', 80))
+        {
+            
+        }
+        else
+        {
+            event(new Notificacao($notificacao_id, "Você recebeu uma nova mensagem de ".Auth::user()->name." ". Auth::user()->sobrenome));
+        }
+        
 
         return response()->json(['state' => 1, 'data' => $message]);
     }

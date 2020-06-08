@@ -11,7 +11,7 @@ class Notification extends Model
 {
     use Notifiable;
     protected $fillable = [
-       'type', 'data', 
+       'type', 'data', 'to_user',
    ];
 
    /*public static function removerNotificacao($notificacao_id,$user_registro){

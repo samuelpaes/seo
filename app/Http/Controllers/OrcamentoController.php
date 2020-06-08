@@ -2008,6 +2008,7 @@ class OrcamentoController extends Controller
 				Notification::create([
 					'type' =>'Formulário de Alteração Orçamentária',
 					'data' => $secretaria." gerou o formulário CAS".$cas."/".$exercicio." de Crédito Adicional Suplementar",
+					'to_user' => "administrador",
 				]);			
 				
 				$notificacao_id = Notification::get('id')->last();
@@ -2477,6 +2478,7 @@ class OrcamentoController extends Controller
 				Notification::create([
 					'type' =>'Formulário de Alteração Orçamentária',
 					'data' => $secretaria.' gerou o formulário "RTT'.$rtt."/".$exercicio.'", de Remanejamento, Transferência e Transposição',
+					'to_user' => "administrador",
 				]);
 				
 				$notificacao_id = Notification::get('id')->last();

@@ -59,7 +59,7 @@
 
 	<!--   Core JS Files   -->
 
-    <script src="{{ asset('js/jquery-3.4.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/jquery-3.5.1.min.js') }}" type="text/javascript"></script>
 	<script src="{{ asset('js/bootstrap.min.js') }}"type="text/javascript"></script>
 	<script src="{{ asset('js/jquery.email-autocomplete.min.js') }}"type="text/javascript"></script>
 	
@@ -83,7 +83,7 @@
 
  
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}"type="text/javascript"></script>
+	<!--<script src="{{ asset('js/light-bootstrap-dashboard.js?v=1.4.0') }}"type="text/javascript"></script>-->
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
 	<!-- <script src="{{ asset('js/demo.js') }}"type="text/javascript"></script> -->
@@ -809,29 +809,46 @@ background: rgba(255, 255, 255, 0.4);
 				
 			
 		
-		
-		<script>
+<script>
 function checaResolucao()
 {
-	
-		//ajuste de tela
-		if($(window).width() < 1199)
-		{
-			document.getElementById('barraAlternativa').hidden=false;
-			document.getElementById('barraOficial').hidden=true;
-		}
-		else{
-			
-			document.getElementById('barraAlternativa').hidden=true;
-			document.getElementById('barraOficial').hidden=false;
-		}
+	//ajuste de tela
+	if($(window).width() < 1199)
+	{
+		document.getElementById('barraAlternativa').hidden=false;
+		document.getElementById('barraOficial').hidden=true;
 	}
+	else{	
+		document.getElementById('barraAlternativa').hidden=true;
+		document.getElementById('barraOficial').hidden=false;
+	}
+}
 </script>
 
             <div class="content">
                 <div class="container-fluid">
                     <span class="dot" style="position:absolute; bottom:10px; right:10px;" data-toggle="collapse" data-target="#chatbox" >
-                        <img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
+						<span style="position:relative;right:-35px;top:50px; background:red; color:#fff; z-index:5                                                                          " class="badge" id="contador">
+						<?php 
+						$usuario_existente = array('usuario'=>array(),'contador'=>array()); 
+						$contador_totalMNLidas=0;
+							foreach($users as $user)
+								{
+									foreach($messages_read as $message)
+									{
+										if($user->id == $message['from_user'])
+										{
+											if(!in_array($message['from_user'], $usuario_existente))
+											{
+												$contador_totalMNLidas = $contador_totalMNLidas + 1;
+											}
+										}
+									}
+								}
+								echo $contador_totalMNLidas;
+						?>					
+						</span></a><br>
+						<img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
                     </span>
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
@@ -855,7 +872,7 @@ function checaResolucao()
                                         <p>
                                             <strong>{{ $user->name }}</strong>
                                             <br>
-                                            <span style="font-size:12px;">{{ $user->secretaria }}</span>
+                                            <span style="font-size:12px;">{{ $user->sobrenome }}</span>
                                         </p>
 										@if($user->isOnline())
                                        		<div class="status available"></div>
@@ -886,7 +903,7 @@ function checaResolucao()
 													
 														<strong>{{ $user->name }}</strong>
 														<br>
-														<span style="font-size:12px;">{{ $user->secretaria }}</span>
+														<span style="font-size:12px;">{{ $user->sobrenome }}</span>
 														
 														
 													</p>
@@ -919,8 +936,6 @@ function checaResolucao()
                             </div>
     					</div>        
 					</div>	
-    
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
                 </div>
             </div>  
         </div>

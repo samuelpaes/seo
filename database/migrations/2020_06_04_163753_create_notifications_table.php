@@ -17,7 +17,8 @@ class CreateNotificationsTable extends Migration
             $table->increments('id');
             $table->string('type');
             $table->text('data');
-            $table->timestamp('user_read')->nullable();
+            $table->string('to_user', 1000)->nullable();
+            $table->string('user_read', 1000)->nullable();
             $table->timestamps();
         });
     }
