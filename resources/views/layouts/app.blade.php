@@ -335,12 +335,12 @@ background: rgba(255, 255, 255, 0.4);
 										</p>
 										<span class="notif-count">0</span>
 									</a>
-									<ul class="dropdown-menu" id="notificacoes">
+									<ul class="dropdown-menu" id="notificacoes" style="">
 										@foreach ($notificacoes_naoLidas as $notificacao)
-											<li><a href="#" >{{$notificacao['data']}}<button type="button" class="remover" id="{{$notificacao['id']}}"><i style="position:relative; top:4px; color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>
+											<li style="width:1050px;"><a href="#" >{{$notificacao['data']}}<button type="button" class="remover" id="{{$notificacao['id']}}" style="float: right;"><i style="position:relative; top:4px; color:red;font-weight:bold; font-size:18px; " class="pe-7s-close"></i></button></a></li>
 										@endforeach
 										
-										<li><a href="#">LIMPAR</a></li>
+										<li><a href="#" style="background:#25385b; color:#fff; letter-spacing: 3px; text-align:center" class="limpaNotificacoes"><b>LIMPAR<i class="pe-7s-trash"></i></b></a></li>
 										
 									</ul>
 								</li>
@@ -430,6 +430,46 @@ function goForward() {
   window.history.forward();
 }
 
+// Remove notificação
+$(document).on("click", ".limpaNotificacoes" , function() {
+	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+	
+	var notificacao = document.getElementById("notificacoes");
+	for (var i = 0; i < array.length; i++) 
+	{
+    	var notificacao_id = array[i];
+    	if (text == "mm") {
+      		var listItem = document.createElement("LI");
+      		listItem.textContent = text;
+      		list.appendChild(listItem);
+    	}
+  	}
+
+ 	var user_registro = String(<?php echo auth()->user()->registro ?>);
+	alert('oi');
+	
+  if(notificacao_id != '' && user_registro != ''){
+	$.ajax({
+	  type: 'POST',
+	  url: '{{ route("removerNotificacao") }}',
+	  dataType: 'json',
+      data: {_token: CSRF_TOKEN, _method: 'POST', 'id_notificacao': notificacao_id, 'registro_user': user_registro},
+      success: function(response){
+        //alert(response);
+      }
+    });
+	console.log(data);
+	$(this).closest('li').remove();
+	
+	notificationsCount -= 1	;
+	notificationsCountElem.attr('data-count', notificationsCount);
+    notificationsWrapper.find('.notif-count').text(notificationsCount);
+    notificationsWrapper.show();
+  }else{
+    alert('Fill all fields');
+  }
+});
+
 $(document).ready(function() {
 	var notificationsCount = (document.querySelectorAll("#notificacoes li").length)-1;
 	//alert(notificationsCount);
@@ -505,7 +545,7 @@ $(document).on("click", ".remover" , function() {
         var existingNotifications = notifications.html();
         //var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
         var newNotificationHtml = `
-			<li><a href="#">`+notificacao+`<button type="button" class="remover" id="`+notificacao_id+`"><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>				
+			<li><a href="#" style="width:1050px;">`+notificacao+`<button type="button" class="remover" id="`+notificacao_id+`" style="float: right;"><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>				
         `;
         notifications.html(newNotificationHtml + existingNotifications);
 

@@ -482,9 +482,7 @@ background: rgba(255, 255, 255, 0.4);
                                                      document.getElementById('logout-form').submit();">
                                         Sair
                                     </a>
-									 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
+									
 								</li>								
 							</ul>
 					
@@ -828,7 +826,7 @@ function checaResolucao()
             <div class="content">
                 <div class="container-fluid">
                     <span class="dot" style="position:absolute; bottom:10px; right:10px;" data-toggle="collapse" data-target="#chatbox" >
-						<span style="position:relative;right:-35px;top:50px; background:red; color:#fff; z-index:5                                                                          " class="badge" id="contador">
+						<span style="position:relative;right:-35px;top:50px; background:red; color:#fff; z-index:5" class="badge" id="contadorTotal">
 						<?php 
 						$usuario_existente = array('usuario'=>array(),'contador'=>array()); 
 						$contador_totalMNLidas=0;
@@ -845,8 +843,10 @@ function checaResolucao()
 										}
 									}
 								}
-								echo $contador_totalMNLidas;
-						?>					
+								//echo $contador_totalMNLidas;
+						?> {{$contador_totalMNLidas}}
+						<input value="{{$contador_totalMNLidas}}" id="contadorTotal2" hidden/>
+									
 						</span></a><br>
 						<img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
                     </span>
@@ -896,7 +896,7 @@ function checaResolucao()
 										@if(!in_array($message['from_user'], $usuario_existente))
 										
 												 
-											<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}">
+											<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}" id="mensagem-{{$user->id}}" onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})">
 												<div class="friend">
 													<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
 													<p>
@@ -976,7 +976,21 @@ function checaResolucao()
 
 	</body>
 
+<script>
 
+function atualizacaMensagensNL(usuario_mensagemNL, usuario){
+
+var span = document.getElementById("contadorTotal");
+
+
+var mensagens = document.getElementById('contadorTotal2').value;
+mensagens = parseInt(mensagens) - parseInt(usuario_mensagemNL);
+span.textContent = mensagens;
+
+$('#mensagem-'usuario).remove();
+//document.getElementById('contadorTotal').value = mensagens;
+}
+</script>
 
 
 
