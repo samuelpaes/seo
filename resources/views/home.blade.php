@@ -896,8 +896,8 @@ function checaResolucao()
 										@if(!in_array($message['from_user'], $usuario_existente))
 										
 												 
-											<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}" id="mensagem-{{$user->id}}" onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})">
-												<div class="friend">
+											<a href="" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}" id="mensagem-{{$user->id}}" onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})">
+												<div class="friend" id="{{ $user->id }}">
 													<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
 													<p>
 													
@@ -980,15 +980,20 @@ function checaResolucao()
 
 function atualizacaMensagensNL(usuario_mensagemNL, usuario){
 
-var span = document.getElementById("contadorTotal");
-
+alert(usuario_mensagemNL);
+alert(usuario);
+let span = document.getElementById("contadorTotal");
 
 var mensagens = document.getElementById('contadorTotal2').value;
 mensagens = parseInt(mensagens) - parseInt(usuario_mensagemNL);
 span.textContent = mensagens;
 
-$('#mensagem-'usuario).remove();
-//document.getElementById('contadorTotal').value = mensagens;
+//document.getElementById('mensagem-'usuario).hidden = true;
+
+var element = document.getElementById('mensagem-'usuario);
+/*
+//element.parentNode.removeChild(usuario);
+document.getElementById('contadorTotal').value = mensagens;*/
 }
 </script>
 
