@@ -380,7 +380,7 @@ background: rgba(255, 255, 255, 0.4);
 
 
 </head>
-	<body onmouseover="checaResolucao()" onmousemove="checaResolucao()" onwheel="checaResolucao()" style="background:#25385b">
+	<body onmousemove="checaResolucao()" onwheel="checaResolucao()" style="background:#25385b">
 			<nav class="navbar navbar-default navbar-fixed" style="height:60px; z-index:10;text-overflow: ellipsis;" id="barraOficial">
 					<div class="container-fluid"  style="height:60px;">
 						<div class="navbar-header"  style="height:60px;">
@@ -804,50 +804,34 @@ background: rgba(255, 255, 255, 0.4);
 					</div>
 				</div>	
 			</div>
-				
-			
-		
-<script>
-function checaResolucao()
-{
-	//ajuste de tela
-	if($(window).width() < 1199)
-	{
-		document.getElementById('barraAlternativa').hidden=false;
-		document.getElementById('barraOficial').hidden=true;
-	}
-	else{	
-		document.getElementById('barraAlternativa').hidden=true;
-		document.getElementById('barraOficial').hidden=false;
-	}
-}
-</script>
 
             <div class="content">
                 <div class="container-fluid">
-                    <span class="dot" style="position:absolute; bottom:10px; right:10px;" data-toggle="collapse" data-target="#chatbox" >
-						<span style="position:relative;right:-35px;top:50px; background:red; color:#fff; z-index:5" class="badge" id="contadorTotal">
-						<?php 
+					<?php 
 						$usuario_existente = array('usuario'=>array(),'contador'=>array()); 
 						$contador_totalMNLidas=0;
-							foreach($users as $user)
+						foreach($users as $user)
+						{
+							foreach($messages_read as $message)
+							{
+								if($user->id == $message['from_user'])
 								{
-									foreach($messages_read as $message)
+									if(!in_array($message['from_user'], $usuario_existente))
 									{
-										if($user->id == $message['from_user'])
-										{
-											if(!in_array($message['from_user'], $usuario_existente))
-											{
-												$contador_totalMNLidas = $contador_totalMNLidas + 1;
-											}
-										}
+										$contador_totalMNLidas = $contador_totalMNLidas + 1;
 									}
 								}
-								//echo $contador_totalMNLidas;
-						?> {{$contador_totalMNLidas}}
-						<input value="{{$contador_totalMNLidas}}" id="contadorTotal2" hidden/>
-									
-						</span></a><br>
+							}
+						}
+						//echo $contador_totalMNLidas;
+					?>
+                    <span class="dot" style="position:absolute; bottom:10px; right:10px;" data-toggle="collapse" data-target="#chatbox" >
+						@if($contador_totalMNLidas > 0)
+						<span style="position:relative;right:-60px;top:20px; background:red; color:#fff; z-index:5" class="badge" id="contadorTotal">
+							{{$contador_totalMNLidas}}
+							<input value="{{$contador_totalMNLidas}}" id="contadorTotal2" hidden/>			
+						</span>
+						@endif
 						<img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
                     </span>
                     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
@@ -888,7 +872,7 @@ function checaResolucao()
                                 </div>   -->
                             </div>                
                             <div id="chats" style="height:100px;" hidden>
-							<?php $usuario_existente = array('usuario'=>array(),'contador'=>array()); ?>
+							<?php $usuario_existente = array(); ?>
 						
 							@foreach($users as $user)
 								@foreach($messages_read as $message)
@@ -896,7 +880,7 @@ function checaResolucao()
 										@if(!in_array($message['from_user'], $usuario_existente))
 										
 												 
-											<a href="" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}" id="mensagem-{{$user->id}}" onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})">
+											<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}" id="mensagem-{{$user->id}}" onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})">
 												<div class="friend" id="{{ $user->id }}">
 													<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
 													<p>
@@ -905,12 +889,13 @@ function checaResolucao()
 														<br>
 														<span style="font-size:12px;">{{ $user->sobrenome }}</span>
 														
-														
+	
 													</p>
-													<span style="position:relative;right:0px;top:30%; background:red; color:#fff" class="badge" id="contador">{{ $user->mensagensNaoLidas }}</span></a><br>
+													<span style="position:relative;right:0px;top:30%; background:red; color:#fff" class="badge" id="contador">{{ $user->mensagensNaoLidas }}</span><br>
 												</div>
 											</a>
 											
+											<?php $usuario_existente[] = $user->id;?>
 										@else
 											
 										@endif
@@ -978,22 +963,30 @@ function checaResolucao()
 
 <script>
 
-function atualizacaMensagensNL(usuario_mensagemNL, usuario){
 
-alert(usuario_mensagemNL);
-alert(usuario);
+function checaResolucao()
+{
+	//ajuste de tela
+	if($(window).width() < 1199)
+	{
+		document.getElementById('barraAlternativa').hidden=false;
+		document.getElementById('barraOficial').hidden=true;
+	}
+	else{	
+		document.getElementById('barraAlternativa').hidden=true;
+		document.getElementById('barraOficial').hidden=false;
+	}
+}
+
+function atualizacaMensagensNL(usuario_mensagemNL, usuario){
 let span = document.getElementById("contadorTotal");
 
 var mensagens = document.getElementById('contadorTotal2').value;
 mensagens = parseInt(mensagens) - parseInt(usuario_mensagemNL);
 span.textContent = mensagens;
 
-//document.getElementById('mensagem-'usuario).hidden = true;
-
-var element = document.getElementById('mensagem-'usuario);
-/*
-//element.parentNode.removeChild(usuario);
-document.getElementById('contadorTotal').value = mensagens;*/
+document.getElementById(usuario).remove();
+document.getElementById('contadorTotal').value = mensagens;
 }
 </script>
 

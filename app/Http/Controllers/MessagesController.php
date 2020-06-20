@@ -109,6 +109,7 @@ class MessagesController extends Controller
         ]);			
         
         $notificacao_id = Notification::get('id')->last();
+        $notiticacao_type = ["Message", $message->from_user_id,  $message->fromUserName];
     
         //testa conexão com a interner antes de enviar uma notificação via pusher
         if(!$sock = @fsockopen('www.google.com', 80))
@@ -117,7 +118,7 @@ class MessagesController extends Controller
         }
         else
         {
-            event(new Notificacao($notificacao_id, "Você recebeu uma nova mensagem de ".Auth::user()->name." ". Auth::user()->sobrenome));
+            event(new Notificacao($notificacao_id,  $notiticacao_type, "Você recebeu uma nova mensagem de ".Auth::user()->name." ". Auth::user()->sobrenome));
         }
         
 

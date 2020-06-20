@@ -11,8 +11,8 @@ class Notificacao implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $notification;
-
+    public $notification_id;
+    public $notification_type;
     public $message;
 
     /**
@@ -20,10 +20,11 @@ class Notificacao implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($notification, $message)
+    public function __construct($notification_id, $notification_type,  $message)
     {
-     
-        $this->notification  = $notification;
+        
+        $this->notification_id  = $notification_id;
+        $this->notification_type  = $notification_type;
         $this->message  = $message;
    
      

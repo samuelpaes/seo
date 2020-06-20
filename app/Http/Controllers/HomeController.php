@@ -101,6 +101,7 @@ class HomeController extends Controller
             $informacoes = Informacao::all()->take(10);
             
             //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
+            
             return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read)->with('notificacoes_naoLidas', $notificacoes_naoLidas);
         }
         else{

@@ -7,10 +7,7 @@
 	<meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	
 	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" >
-
-
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -26,6 +23,10 @@
 	
 	<!-- Bootstrap core CSS     -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
+
+	 <!--  Chat CSS    -->
+	<link rel="stylesheet" href="{{ asset('css/chat.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/chatStyle.css') }}" />
 
 	<!-- Bootstrap Notify CSS     -->
 	<!--<link href="{{ asset('css/bootstrap-notify.min.css') }}" rel="stylesheet" />-->
@@ -107,6 +108,16 @@
 
 	<!--Ajax-->
 	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+
+	<!-- Chat scripts -->
+    <script src="{{ asset('js/chatStyle.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/chat.js') }}"type="text/javascript"></script>
+    <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+
+    <script>
+        var base_url = '{{ url("/") }}';
+    </script>
+
 
   
 <style>
@@ -404,7 +415,134 @@ background: rgba(255, 255, 255, 0.4);
 						});
 					</script>
 					@endif
+					
+					
+					
 				</main>
+				<div class="content">
+						<div class="container-fluid">
+							<?php 
+								$usuario_existente = array('usuario'=>array(),'contador'=>array()); 
+								$contador_totalMNLidas=0;
+								foreach($users as $user)
+								{
+									foreach($messages_read as $message)
+									{
+										if($user->id == $message['from_user'])
+										{
+											if(!in_array($message['from_user'], $usuario_existente))
+											{
+												$contador_totalMNLidas = $contador_totalMNLidas + 1;
+											}
+										}
+									}
+								}
+								//echo $contador_totalMNLidas;
+								?>
+							<span class="dot" style="position:absolute; bottom:10px; right:10px;" data-toggle="collapse" data-target="#chatbox" >
+							@if($contador_totalMNLidas > 0)
+							<span style="position:relative;right:-60px;top:20px; background:red; color:#fff; z-index:5" class="badge" id="contadorTotal">
+							{{$contador_totalMNLidas}}
+							<input value="{{$contador_totalMNLidas}}" id="contadorTotal2" hidden/>			
+							</span>
+							@endif
+							<img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
+							</span>
+							<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+							<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+							<div id="chatbox"  hidden>
+								<div id="friendslist">
+									<!--<div id="topmenu" style="height:35px;">
+									<button class="btnFechar" data-toggle="collapse" data-target="#chatbox"></button>
+									</div>-->
+									<div id="topmenu" >
+									<span class="friends" onclick="change('friends')"></span>
+									<span class="chats" onclick="change('chats')"></span>
+									<span class="close" data-toggle="collapse" data-target="#chatbox"></span>
+									</div>
+									<div id="friends" style="height:100px;">
+									@foreach($users as $user)
+									<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}">
+										<div class="friend">
+											<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
+											<p>
+												<strong>{{ $user->name }}</strong>
+												<br>
+												<span style="font-size:12px;">{{ $user->sobrenome }}</span>
+											</p>
+											@if($user->isOnline())
+											<div class="status available"></div>
+											@else
+											<!--<div class="status away"></div>-->
+											<div class="status inactive"></div>
+											@endif
+										</div>
+									</a>
+									@endforeach
+									<!--<div id="search">
+										<input type="text" class="form-control" id="searchfield" style="position:relative; top:10px;"  value="Procurar contatos..." />
+										</div>   -->
+									</div>
+									<div id="chats" style="height:100px;" hidden>
+									<?php $usuario_existente = array(); ?>
+									@foreach($users as $user)
+									@foreach($messages_read as $message)
+									@if($user->id == $message['from_user'])
+									@if(!in_array($message['from_user'], $usuario_existente))
+									<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}" id="mensagem-{{$user->id}}" onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})">
+										<div class="friend" id="{{ $user->id }}">
+											<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
+											<p>
+												<strong>{{ $user->name }}</strong>
+												<br>
+												<span style="font-size:12px;">{{ $user->sobrenome }}</span>
+											</p>
+											<span style="position:relative;right:0px;top:30%; background:red; color:#fff" class="badge" id="contador">{{ $user->mensagensNaoLidas }}</span><br>
+										</div>
+									</a>
+									<?php $usuario_existente[] = $user->id;?>
+									@else
+									@endif
+									@endif
+									@endforeach
+									@endforeach
+									<!--<div id="search">
+										<input type="text" class="form-control" id="searchfield" style="position:relative; top:10px;"  value="Procurar contatos..." />
+										</div>   -->
+									</div>
+								</div>
+								<div id="chatview" class="p1" >
+									<div id="profile">
+									<p></p>
+									<span></span>
+									</div>
+									<div id="chat-messages">
+									<div id="chat-overlay" class="row" style="z-index:1000">                                  
+									</div>
+									<div id="sendmessage">
+									</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						</div>
+						</div>	
+						</div>
+						</div>
+						<!-- Teste -->
+						@include('chat-box')
+						<input type="hidden" id="current_user" value="{{ \Auth::user()->id }}" />
+						<input type="hidden" id="pusher_app_key" value="{{ env('PUSHER_APP_KEY') }}" />
+						<input type="hidden" id="pusher_cluster" value="{{ env('PUSHER_APP_CLUSTER') }}" />
+						@section('script')
+						@stop
+						<!--<div id="chat-overlay" class="row"></div>-->
+						<audio id="chat-alert-sound" style="display: none">
+						<source src="{{ asset('sound/facebook_chat.mp3') }}" />
+						</audio>
+						<!-- Fim do teste -->
+				
 			</div>
 		</div>
 	</div>	
@@ -540,8 +678,10 @@ $(document).on("click", ".remover" , function() {
 		
 		//console.log(data);
 		//alert(data.notification.id);
-		var notificacao_id = data.notification.id;
+		var notificacao_id = data.notification_id;
+		var notificacao_tipo = data.notification_type;
 		var notificacao = data.message;
+
         var existingNotifications = notifications.html();
         //var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
         var newNotificationHtml = `
@@ -553,6 +693,20 @@ $(document).on("click", ".remover" , function() {
         notificationsCountElem.attr('data-count', notificationsCount);
         notificationsWrapper.find('.notif-count').text(notificationsCount);
         notificationsWrapper.show();
+		
+		if(notificacao_tipo[0] == "Message")
+		{
+			let span = document.getElementById("contadorTotal");
+			if(document.getElementById('contadorTotal2') != null){
+				var mensagens = document.getElementById('contadorTotal2').value;
+				mensagens = parseInt(mensagens) + 1;
+				span.textContent = mensagens;
+				document.getElementById('contadorTotal').value = mensagens;
+			}
+			else{}
+
+			$("#chats").append("<a href='javascript:void(0);' style='text-decoration: none' class='chat-toggle' data-id='"+notificacao_tipo[1]+"' data-user='"+notificacao_tipo[2]+"' ><div class='friend' id='"+notificacao_tipo[1]+"'><img src='https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png'><p><strong>"+notificacao_tipo[2]+"</strong><br><span style='font-size:12px;'>"+notificacao_tipo[2]+"</span></p><span style='position:relative;right:0px;top:30%; background:red; color:#fff' class='badge' id='contador'>1</span><br></div></a>");
+		}
 
 		$.notify({
 			// options
@@ -601,5 +755,7 @@ $(document).on("click", ".remover" , function() {
 					'<a href="{3}" target="{4}" data-notify="url"></a>' +
 				'</div>' 
 			});
-      	});
+		  });
+		  
+		  
     </script>

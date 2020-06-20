@@ -8,7 +8,7 @@
 $(document).ready(function(){
 	
    var preloadbg = document.createElement("img");
-   preloadbg.src = "../public/img/chat/chat_background.png";
+   //preloadbg.src = "../public/img/chat/chat_background.png";
 
     
       $("#searchfield").focus(function(){
@@ -97,34 +97,84 @@ $(document).ready(function(){
         document.getElementById('friends').hidden=true;        
         document.getElementById('chats').hidden=false;
 
-        $(".chats").css({ 
-            'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+        var img = document.createElement('img');
+        img.src='../public/img/chat/top-menu.png';
+
+        
+
+        img.onload = function(e){
+            $(".chats").css({ 
+                'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+               
+            });
+           $(".chats").css({backgroundPosition: '-95px -118px'});
            
-        });
-       $(".chats").css({backgroundPosition: '-95px -118px'});
-       
-       $(".friends").css({ 
-        'background': 'url("../public/img/chat/top-menu.png") no-repeat',
-        });
-        $(".friends").css({backgroundPosition: '-3px 25px'});
-
-
+           $(".friends").css({ 
+            'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+            });
+            $(".friends").css({backgroundPosition: '-3px 25px'});
+        };
+        
+        img.onerror = function(e) {
+            $(".chats").css({ 
+                'background': 'url("../img/chat/top-menu.png") no-repeat',
+               
+            });
+           $(".chats").css({backgroundPosition: '-95px -118px'});
+           
+           $(".friends").css({ 
+            'background': 'url("../img/chat/top-menu.png") no-repeat',
+            });
+            $(".friends").css({backgroundPosition: '-3px 25px'});
+        };
     }
     else if(x == "friends")
     {
         document.getElementById('friends').hidden=false;
         document.getElementById('chats').hidden=true;
-
-        $(".chats").css({ 
-            'background': 'url("../public/img/chat/top-menu.png") no-repeat',
-           
-        });
-       $(".chats").css({backgroundPosition: '-95px 25px'});
        
-       $(".friends").css({ 
-        'background': 'url("../public/img/chat/top-menu.png") no-repeat',
-        });
-        $(".friends").css({backgroundPosition: '-3px -118px'});
+        var img = document.createElement('img');
+        img.src='../public/img/chat/top-menu.png';
+
+        
+
+        img.onload = function(e){
+            $(".chats").css({ 
+                'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+               
+            });
+            $(".chats").css({backgroundPosition: '-95px 25px'});
+    
+            $(".friends").css({ 
+            'background': 'url("../public/img/chat/top-menu.png") no-repeat',
+            });
+            $(".friends").css({backgroundPosition: '-3px -118px'});
+        };
+
+        img.onerror = function(e) {
+            $(".chats").css({ 
+                'background': 'url("../img/chat/top-menu.png") no-repeat',
+               
+            });
+            $(".chats").css({backgroundPosition: '-95px 25px'});
+    
+            $(".friends").css({ 
+            'background': 'url("../img/chat/top-menu.png") no-repeat',
+            });
+            $(".friends").css({backgroundPosition: '-3px -118px'});
+        };
+        
     }
        
   }
+
+function atualizacaMensagensNL(usuario_mensagemNL, usuario){
+    let span = document.getElementById("contadorTotal");
+
+    var mensagens = document.getElementById('contadorTotal2').value;
+    mensagens = parseInt(mensagens) - parseInt(usuario_mensagemNL);
+    span.textContent = mensagens;
+
+    document.getElementById(usuario).remove();
+    document.getElementById('contadorTotal').value = mensagens;
+}
