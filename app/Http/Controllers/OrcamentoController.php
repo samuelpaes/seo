@@ -79,8 +79,7 @@ class OrcamentoController extends Controller
 			}
 		}
 		else if($acao == 'pesquisar')
-		{	$secretaria = Auth::user()->secretaria;
-			
+		{				
 			if($request->filtro == "secretaria")
 			{
 				if($request->tipoFormulario <> "TODOS")
@@ -93,12 +92,12 @@ class OrcamentoController extends Controller
 			}
 			else if($request->filtro == "formulario")
 			{
-			
+				
 				if($request->tipoFormulario <> "TODOS")
 				{
 					
 					$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_formulario', '=', $request->tipoFormulario)->get();		
-					//return($formularios);
+					
 				}
 				else{
 					$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->get();
@@ -1993,7 +1992,7 @@ class OrcamentoController extends Controller
 			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
 				FormularioAlteracaoOrcamentaria::create([
-					'codigo_formulario' => "CAS".$cas."/".$exercicio,
+					'codigo_formulario' => "CAS".$cas."-".$exercicio,
 					'tipo_instrumento' => $request->instrumento,
 					'numero_instrumento' => $request->numeroInstrumento,
 					'tipo_formulario' => $request->tipo_alteracao,	
@@ -2012,6 +2011,8 @@ class OrcamentoController extends Controller
 				]);			
 				
 				$notificacao_id = Notification::get('id')->last();
+				$notiticacao_type = ["Formulário", Auth::user()->registro,  $secretaria, '0'];
+
 			
 				//testa conexão com a interner antes de enviar uma notificação via pusher
 				if(!$sock = @fsockopen('www.google.com', 80))
@@ -2020,13 +2021,13 @@ class OrcamentoController extends Controller
 				}
 				else
 				{
-					event(new Notificacao($notificacao_id, $secretaria." gerou o formulário CAS".$cas."/".$exercicio." de Crédito Adicional Suplementar"));
+					event(new Notificacao($notificacao_id, $notiticacao_type,  $secretaria." gerou o formulário CAS".$cas."/".$exercicio." de Crédito Adicional Suplementar"));
 				}
 				
 				
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
 				
-				$mpdf->Output('files/formularios_alteracao_orcamentaria/cas_'.$cas.'.pdf');
+				$mpdf->Output('files/formularios_alteracao_orcamentaria/CAS'.$cas."-".$exercicio.'.pdf');
 				$mpdf->Output();
 
 			}
@@ -2463,7 +2464,7 @@ class OrcamentoController extends Controller
 			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
 				FormularioAlteracaoOrcamentaria::create([
-					'codigo_formulario' => "RTT".$rtt."/".$exercicio,
+					'codigo_formulario' => "RTT".$rtt."-".$exercicio,
 					'tipo_instrumento' => $request->instrumento,
 					'numero_instrumento' => $request->numeroInstrumento,
 					'tipo_formulario' => $request->tipo_alteracao,	
@@ -2482,6 +2483,7 @@ class OrcamentoController extends Controller
 				]);
 				
 				$notificacao_id = Notification::get('id')->last();
+				$notiticacao_type = ["Formulário", Auth::user()->registro,  $secretaria, '0'];
 			
 				//testa conexão com a interner antes de enviar uma notificação via pusher
 				if(!$sock = @fsockopen('www.google.com', 80))
@@ -2490,13 +2492,12 @@ class OrcamentoController extends Controller
 				}
 				else
 				{
-					event(new Notificacao($notificacao_id, $secretaria.' gerou o formulário "RTT'.$rtt."/".$exercicio.'", de Remanejamento, Transferência e Transposição'));
+					event(new Notificacao($notificacao_id,  $notiticacao_type, $secretaria.' gerou o formulário "RTT'.$rtt."/".$exercicio.'", de Remanejamento, Transferência e Transposição'));
 				}
 
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
 				
-
-				$mpdf->Output('files/formularios_alteracao_orcamentaria/rtt_'.$rtt.'.pdf','F');
+				$mpdf->Output('files/formularios_alteracao_orcamentaria/RTT'.$rtt."-".$exercicio.'.pdf');
 				$mpdf->Output();
 
 				

@@ -109,7 +109,7 @@ class MessagesController extends Controller
         ]);			
         
         $notificacao_id = Notification::get('id')->last();
-        $notiticacao_type = ["Message", $message->from_user_id,  $message->fromUserName];
+        $notiticacao_type = ["Message", $message->from_user_id,  $message->fromUserName, $message->to_user_id];
     
         //testa conexão com a interner antes de enviar uma notificação via pusher
         if(!$sock = @fsockopen('www.google.com', 80))

@@ -22,6 +22,7 @@ class CreateFormularioAlteracaoOrcamentariasTable extends Migration
             $table->string('exercicio');
             $table->string('secretaria');
             $table->decimal('valor');
+            $table->string('status');
             $table->string('usuario');
             $table->string('path');
             $table->timestamps();

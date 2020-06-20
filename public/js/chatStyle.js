@@ -169,12 +169,7 @@ $(document).ready(function(){
   }
 
 function atualizacaMensagensNL(usuario_mensagemNL, usuario){
-    let span = document.getElementById("contadorTotal");
-
-    var mensagens = document.getElementById('contadorTotal2').value;
-    mensagens = parseInt(mensagens) - parseInt(usuario_mensagemNL);
-    span.textContent = mensagens;
-
-    document.getElementById(usuario).remove();
-    document.getElementById('contadorTotal').value = mensagens;
+    var contadorTotal = document.getElementById("contadorTotal").textContent;
+    document.getElementById('contadorTotal').textContent = parseInt(contadorTotal) - parseInt(usuario_mensagemNL);
+    document.getElementById("mensagem-"+usuario).remove();
 }

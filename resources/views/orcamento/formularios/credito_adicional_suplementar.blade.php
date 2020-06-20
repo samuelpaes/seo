@@ -759,9 +759,18 @@ $i++;
                                     <input name="tipo_suplementacao1" class="form-control" id="tipo_suplementacao1" type="hidden"></input>
                                     <input name="tipo_suplementacao2" class="form-control" id="tipo_suplementacao2" type="hidden"></input>
                                     <input name="tipo_suplementacao3" class="form-control" id="tipo_suplementacao3" type="hidden"></input>
-                                    <button type="submit" id="btnEnviar" style="display:none; background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-left"></button>    
-                                    <button type="button" data-dismiss="modal" onclick="validarFormulario()" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right">Enviar</button>    
-                                    <button type="button" class="btn btn-info btn-fill pull-right" data-dismiss="modal" style="background:#ffbc67; border-color:#ffbc67">Cancelar</button>                                    
+                                    <div class="row">
+                                        <div class="col-md-5"></div>
+                                        <div class="col-md-2">
+                                            <button type="submit" id="btnEnviar" style="display:none; background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-left"></button>    
+                                            <button type="button" data-dismiss="modal" onclick="validarFormulario()" style="background:#a1e82c; border-color:#a1e82c; margin-left:10px" class="btn btn-info btn-fill pull-right">Enviar</button>    
+                                        </div>
+									    <div class="col-md-1"></div>
+									    <div class="col-md-2">
+                                            <button type="button" class="btn btn-info btn-fill pull-right" data-dismiss="modal" style="background:#ffbc67; border-color:#ffbc67">Cancelar</button>                                    
+                                        </div>
+									    <div class="col-md-2"></div>
+								    </div>
                                 </div>
                             </div>    
                         </form>

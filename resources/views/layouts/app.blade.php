@@ -186,8 +186,8 @@ background: rgba(255, 255, 255, 0.4);
 @else
 <body style="overflow-x:scroll; overflow-y:scroll;">
 @endif
-    <div id="app">
-		<div class="wrapper" style="position:relative; z-index:1">
+    <div id="app" style="height:100%">
+		<div class="wrapper" style="position:relative; z-index:1;">
 			<div class="sidebar" data-color="blue" data-image="{{ asset('img/sidebar-1.jpg') }}" >
 
 			<!--
@@ -303,7 +303,7 @@ background: rgba(255, 255, 255, 0.4);
 								<li><a href="{{ url('natureza-de-despesa/index') }}">Natureza de Despesa</a></li>
 								<li><a href="{{ url('vinculos/index') }}">Vínculos</a></li>
 								<li><a href="{{ url('dotacao-orcamentaria/index') }}">Dotação Orçamentária</a></li>  
-								<li><a href="{{ url('dotacao-orcamentaria/index') }}">Informações</a></li> 
+								<li><a href="{{ url('informacao/index') }}">Informações</a></li> 
 							</ul>
 						</li>
 						
@@ -402,9 +402,9 @@ background: rgba(255, 255, 255, 0.4);
 				</nav>
 				
 			
-				<main class="py-4"  style="z-index:0">
+				<main class="py-4" style="z-index:0;">
 					<br>
-					@if(auth()->user()->isAdmin == 0 || auth()->user()->isAdmin == 1 || auth()->user()->isAdmin == 2)
+					@if(auth()->user()->isAdmin == 0 || auth()->user()->isAdmin == 1 || auth()->user()->isAdmin == 2 || auth()->user()->isAdmin == 3)
 						@yield('content')
 					@else<!-- Se o usuário não tem acesso, chama o modal sem acesso -->	
 					<script>
@@ -416,10 +416,7 @@ background: rgba(255, 255, 255, 0.4);
 					</script>
 					@endif
 					
-					
-					
-				</main>
-				<div class="content">
+					<div class="content">
 						<div class="container-fluid">
 							<?php 
 								$usuario_existente = array('usuario'=>array(),'contador'=>array()); 
@@ -438,17 +435,13 @@ background: rgba(255, 255, 255, 0.4);
 									}
 								}
 								//echo $contador_totalMNLidas;
-								?>
-							<span class="dot" style="position:absolute; bottom:10px; right:10px;" data-toggle="collapse" data-target="#chatbox" >
-							@if($contador_totalMNLidas > 0)
-							<span style="position:relative;right:-60px;top:20px; background:red; color:#fff; z-index:5" class="badge" id="contadorTotal">
-							{{$contador_totalMNLidas}}
-							<input value="{{$contador_totalMNLidas}}" id="contadorTotal2" hidden/>			
+							?>
+							<span class="dot" style="position:fixed; bottom:0px; right:10px;  z-index:4; " data-toggle="collapse" data-target="#chatbox" >
+									<span style="position:relative;right:-60px;top:20px; background:red; color:#fff; z-index:5; visibility:hidden" class="badge" id="contadorTotal">
+										{{$contador_totalMNLidas}}
+									</span>
+								<img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
 							</span>
-							@endif
-							<img class="chat-ico" src="{{url('img/chat-ico.svg')}}" >
-							</span>
-							<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 							<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 							<div id="chatbox"  hidden>
 								<div id="friendslist">
@@ -456,9 +449,9 @@ background: rgba(255, 255, 255, 0.4);
 									<button class="btnFechar" data-toggle="collapse" data-target="#chatbox"></button>
 									</div>-->
 									<div id="topmenu" >
-									<span class="friends" onclick="change('friends')"></span>
-									<span class="chats" onclick="change('chats')"></span>
-									<span class="close" data-toggle="collapse" data-target="#chatbox"></span>
+										<span class="friends" onclick="change('friends')"></span>
+										<span class="chats" onclick="change('chats')"></span>
+										<span class="close" data-toggle="collapse" data-target="#chatbox"></span>
 									</div>
 									<div id="friends" style="height:100px;">
 									@foreach($users as $user)
@@ -484,68 +477,69 @@ background: rgba(255, 255, 255, 0.4);
 										</div>   -->
 									</div>
 									<div id="chats" style="height:100px;" hidden>
-									<?php $usuario_existente = array(); ?>
-									@foreach($users as $user)
-									@foreach($messages_read as $message)
-									@if($user->id == $message['from_user'])
-									@if(!in_array($message['from_user'], $usuario_existente))
-									<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}" id="mensagem-{{$user->id}}" onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})">
-										<div class="friend" id="{{ $user->id }}">
-											<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
-											<p>
-												<strong>{{ $user->name }}</strong>
-												<br>
-												<span style="font-size:12px;">{{ $user->sobrenome }}</span>
-											</p>
-											<span style="position:relative;right:0px;top:30%; background:red; color:#fff" class="badge" id="contador">{{ $user->mensagensNaoLidas }}</span><br>
-										</div>
-									</a>
-									<?php $usuario_existente[] = $user->id;?>
-									@else
-									@endif
-									@endif
-									@endforeach
-									@endforeach
-									<!--<div id="search">
-										<input type="text" class="form-control" id="searchfield" style="position:relative; top:10px;"  value="Procurar contatos..." />
-										</div>   -->
+										<?php $usuario_existente = array(); ?>
+										@foreach($users as $user)
+											@foreach($messages_read as $message)
+												@if($user->id == $message['from_user'])
+													@if(!in_array($message['from_user'], $usuario_existente))
+														<a href="javascript:void(0);" style="text-decoration: none" class="chat-toggle" data-id="{{ $user->id }}" data-user="{{ $user->name }}" id="mensagem-{{$user->id}}" onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})">
+															<div class="friend" id="{{ $user->id }}">
+																<img src="https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png" />
+																<p>
+																	<strong>{{ $user->name }}</strong>
+																	<br>
+																	<span style="font-size:12px;">{{ $user->sobrenome }}</span>
+																</p>
+																<span style="position:relative;right:0px;top:30%; background:red; color:#fff" class="badge" id="contador-{{ $user->id }}">{{ $user->mensagensNaoLidas }}</span><br>
+															</div>
+														</a>
+														<?php $usuario_existente[] = $user->id;?>
+													@else
+													@endif
+												@endif
+											@endforeach
+										@endforeach
+										<!--<div id="search">
+											<input type="text" class="form-control" id="searchfield" style="position:relative; top:10px;"  value="Procurar contatos..." />
+											</div>   -->
 									</div>
 								</div>
 								<div id="chatview" class="p1" >
 									<div id="profile">
-									<p></p>
-									<span></span>
+										<p></p>
+										<span></span>
 									</div>
 									<div id="chat-messages">
-									<div id="chat-overlay" class="row" style="z-index:1000">                                  
-									</div>
-									<div id="sendmessage">
-									</div>
+										<div id="chat-overlay" class="row" style="z-index:1000"></div>
+										<div id="sendmessage"></div>
 									</div>
 								</div>
 							</div>
 						</div>
-						</div>
+					</div>
+						<!--APAGAR!?
 						</div>
 						</div>	
 						</div>
-						</div>
-						<!-- Teste -->
-						@include('chat-box')
+						</div>-->
+						
+					@include('chat-box')
 						<input type="hidden" id="current_user" value="{{ \Auth::user()->id }}" />
 						<input type="hidden" id="pusher_app_key" value="{{ env('PUSHER_APP_KEY') }}" />
 						<input type="hidden" id="pusher_cluster" value="{{ env('PUSHER_APP_CLUSTER') }}" />
-						@section('script')
-						@stop
-						<!--<div id="chat-overlay" class="row"></div>-->
-						<audio id="chat-alert-sound" style="display: none">
-						<source src="{{ asset('sound/facebook_chat.mp3') }}" />
-						</audio>
-						<!-- Fim do teste -->
+					@section('script')
+					@stop
+					<!--<div id="chat-overlay" class="row"></div>-->
+					<audio id="chat-alert-sound" style="display: none">
+					<source src="{{ asset('sound/facebook_chat.mp3') }}" />
+					</audio>
+				<!--Apagar!?
 				
-			</div>
+				</div>-->
+				</main>		
+			</div>	
 		</div>
-	</div>	
+	</div>
 </body>
 <!--  Modal Usuário Sem Acesso -->
 <div class="modal"  id="modalUsuarioSemAcesso" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
@@ -584,7 +578,6 @@ $(document).on("click", ".limpaNotificacoes" , function() {
   	}
 
  	var user_registro = String(<?php echo auth()->user()->registro ?>);
-	alert('oi');
 	
   if(notificacao_id != '' && user_registro != ''){
 	$.ajax({
@@ -674,88 +667,163 @@ $(document).on("click", ".remover" , function() {
       var channel = pusher.subscribe('notificar');
 	 
       // Bind a function to a Event (the full Laravel class)
-      channel.bind('SEO\\Events\\Notificacao', function(data) {
+    channel.bind('SEO\\Events\\Notificacao', function(data) {
 		
 		//console.log(data);
 		//alert(data.notification.id);
 		var notificacao_id = data.notification_id;
 		var notificacao_tipo = data.notification_type;
 		var notificacao = data.message;
-
-        var existingNotifications = notifications.html();
-        //var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
-        var newNotificationHtml = `
-			<li><a href="#" style="width:1050px;">`+notificacao+`<button type="button" class="remover" id="`+notificacao_id+`" style="float: right;"><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>				
-        `;
-        notifications.html(newNotificationHtml + existingNotifications);
-
-        notificationsCount += 1;
-        notificationsCountElem.attr('data-count', notificationsCount);
-        notificationsWrapper.find('.notif-count').text(notificationsCount);
-        notificationsWrapper.show();
 		
-		if(notificacao_tipo[0] == "Message")
+		if(notificacao_tipo[3] == <?php echo Auth::user()->id ?>)
 		{
-			let span = document.getElementById("contadorTotal");
-			if(document.getElementById('contadorTotal2') != null){
-				var mensagens = document.getElementById('contadorTotal2').value;
-				mensagens = parseInt(mensagens) + 1;
-				span.textContent = mensagens;
-				document.getElementById('contadorTotal').value = mensagens;
-			}
-			else{}
+			var existingNotifications = notifications.html();
+			//var avatar = Math.floor(Math.random() * (71 - 20 + 1)) + 20;
+			var newNotificationHtml = `
+				<li><a href="#" style="width:1050px;">`+notificacao+`<button type="button" class="remover" id="`+notificacao_id+`" style="float: right;"><i style="color:red;font-weight:bold; font-size:18px;" class="pe-7s-close"></i></button></a></li>				
+			`;
+			notifications.html(newNotificationHtml + existingNotifications);
 
-			$("#chats").append("<a href='javascript:void(0);' style='text-decoration: none' class='chat-toggle' data-id='"+notificacao_tipo[1]+"' data-user='"+notificacao_tipo[2]+"' ><div class='friend' id='"+notificacao_tipo[1]+"'><img src='https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png'><p><strong>"+notificacao_tipo[2]+"</strong><br><span style='font-size:12px;'>"+notificacao_tipo[2]+"</span></p><span style='position:relative;right:0px;top:30%; background:red; color:#fff' class='badge' id='contador'>1</span><br></div></a>");
-		}
-
-		$.notify({
-			// options
-			//icon: 'glyphicon glyphicon-warning-sign',
-			title: 'AVISO',
-			message: notificacao,
-			url: 'https://github.com/mouse0270/bootstrap-notify',
-			//target: '_blank'
-		},
+			notificationsCount += 1;
+			notificationsCountElem.attr('data-count', notificationsCount);
+			notificationsWrapper.find('.notif-count').text(notificationsCount);
+			notificationsWrapper.show();
+		
+			//verifica para quem é a mensagem
+			if(notificacao_tipo[0] == "Message")
 			{
-				// settings
-				element: 'body',
-				position: null,
-				type: "info",
-				allow_dismiss: true,
-				newest_on_top: false,
-				showProgressbar: false,
-				placement: {
-					from: "top",
-					align: "right"
+				var contadorTotal = document.getElementById("contadorTotal").textContent;
+					
+				if(document.getElementById('contador-'+notificacao_tipo[1]) != null)
+				{
+					var somaMNL = document.getElementById('contador-'+notificacao_tipo[1]).textContent;
+					somaMNL = parseInt(somaMNL) + 1;
+					document.getElementById('contador-'+notificacao_tipo[1]).textContent= somaMNL;
+					document.getElementById("contadorTotal").textContent =  parseInt(contadorTotal) + 1;
+				}
+				else{					
+					document.getElementById("contadorTotal").textContent =  parseInt(contadorTotal) + 1;
+					$("#chats").append("<a href='javascript:void(0);' style='text-decoration: none' class='chat-toggle' data-id='"+notificacao_tipo[1]+"' data-user='"+notificacao_tipo[2]+"' id='mensagem-"+notificacao_tipo[1]+"' onclick='atualizacaMensagensNL(1, "+notificacao_tipo[1]+")'><div class='friend' id='"+notificacao_tipo[1]+"'><img src='https://cdn.ppconcursos.com.br/uploads/depoimentos/padrao.png'><p><strong>"+notificacao_tipo[2]+"</strong><br><span style='font-size:12px;'>"+notificacao_tipo[2]+"</span></p><span style='position:relative;right:0px;top:30%; background:red; color:#fff' class='badge' id='contador-'"+notificacao_tipo[1]+"'>1</span><br></div></a>");
+				}
+				
+				//recarrega script para abrir a nova conversa recém criada
+				var script = document.createElement("script");
+				script.type = "text/javascript";
+				script.src = "{{ asset('js/chatStyle.js') }}";
+				document.getElementsByTagName("head")[0].appendChild(script);
+				onclick="atualizacaMensagensNL({{$user->mensagensNaoLidas}}, {{$user->id}})"	
+
+				$.notify({
+				// options
+				//icon: 'glyphicon glyphicon-warning-sign',
+				title: 'AVISO',
+				message: notificacao,
+				//url: 'https://github.com/mouse0270/bootstrap-notify',
+				//target: '_blank'
 				},
-				offset: 20,
-				spacing: 10,
-				z_index: 1031,
-				delay: 5000,
-				timer: 1000,
-				url_target: '_blank',
-				mouse_over: null,
-				animate: {
-					enter: 'animated fadeInDown',
-					exit: 'animated fadeOutUp'
+				{
+					// settings
+					element: 'body',
+					position: null,
+					type: "info",
+					allow_dismiss: true,
+					newest_on_top: false,
+					showProgressbar: false,
+					placement: {
+						from: "top",
+						align: "right"
+					},
+					offset: 20,
+					spacing: 10,
+					z_index: 1031,
+					delay: 5000,
+					timer: 1000,
+					url_target: '_blank',
+					mouse_over: null,
+					animate: {
+						enter: 'animated fadeInDown',
+						exit: 'animated fadeOutUp'
+					},
+					onShow: null,
+					onShown: null,
+					onClose: null,
+					onClosed: null,
+					icon_type: 'class',
+					template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+						'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+						'<span data-notify="icon"></span> ' +
+						'<span data-notify="title">{1}</span> ' +
+						'<span data-notify="message">{2}</span>' +
+						'<div class="progress" data-notify="progressbar">' +
+							'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+						'</div>' +
+						'<a href="{3}" target="{4}" data-notify="url"></a>' +
+					'</div>' 
+				});
+			}
+		}
+		else if(notificacao_tipo[0] != "Message" && <?php echo Auth::user()->isAdmin?> == notificacao_tipo[3])
+		{
+			$.notify({
+				// options
+				//icon: 'glyphicon glyphicon-warning-sign',
+				title: 'AVISO',
+				message: notificacao,
+				//url: 'https://github.com/mouse0270/bootstrap-notify',
+				//target: '_blank'
 				},
-				onShow: null,
-				onShown: null,
-				onClose: null,
-				onClosed: null,
-				icon_type: 'class',
-				template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
-					'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
-					'<span data-notify="icon"></span> ' +
-					'<span data-notify="title">{1}</span> ' +
-					'<span data-notify="message">{2}</span>' +
-					'<div class="progress" data-notify="progressbar">' +
-						'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-					'</div>' +
-					'<a href="{3}" target="{4}" data-notify="url"></a>' +
-				'</div>' 
+				{
+					// settings
+					element: 'body',
+					position: null,
+					type: "info",
+					allow_dismiss: true,
+					newest_on_top: false,
+					showProgressbar: false,
+					placement: {
+						from: "top",
+						align: "right"
+					},
+					offset: 20,
+					spacing: 10,
+					z_index: 1031,
+					delay: 5000,
+					timer: 1000,
+					url_target: '_blank',
+					mouse_over: null,
+					animate: {
+						enter: 'animated fadeInDown',
+						exit: 'animated fadeOutUp'
+					},
+					onShow: null,
+					onShown: null,
+					onClose: null,
+					onClosed: null,
+					icon_type: 'class',
+					template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+						'<button type="button" aria-hidden="true" class="close" data-notify="dismiss">×</button>' +
+						'<span data-notify="icon"></span> ' +
+						'<span data-notify="title">{1}</span> ' +
+						'<span data-notify="message">{2}</span>' +
+						'<div class="progress" data-notify="progressbar">' +
+							'<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+						'</div>' +
+						'<a href="{3}" target="{4}" data-notify="url"></a>' +
+					'</div>' 
 			});
-		  });
+
+		}
+	});
+		
+		
 		  
-		  
-    </script>
+	$('body').mousemove(function() {
+		if(parseInt(document.getElementById("contadorTotal").textContent) > 0)
+		{
+			document.getElementById("contadorTotal").style.visibility = "";
+		}
+		else{
+			document.getElementById("contadorTotal").style.visibility = "hidden";
+		}
+	});
+</script>

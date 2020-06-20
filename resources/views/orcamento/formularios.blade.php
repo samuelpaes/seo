@@ -61,7 +61,7 @@
 										<th>Data</th>
 										<th>Secretaria</th>
 										<th>Visualizar</th>
-
+										<th>Status</th>
                                		</tr>
 								</thead>
                                 <tbody>
@@ -78,7 +78,15 @@
 										<td>{{$formulario['secretaria']}}</td>
 										<td align="center">
 											<button type="button" value="{{$formulario['codigo_formulario']}}" onclick="abrirFormularioPDF(this)"><i class="pe-7s-file" style="font-size:24px; text-align:center"></i></button>
-										
+										</td>
+										<td align="center">
+											@if($formulario['status'] == "Aprovado")
+												<img src="{{url('img/status/formulario_aprovado.png ')}}" style="max-width: 30px; height: 20px;">
+											@elseif($formulario['status'] == "Reprovado")
+												<img src="{{url('img/status/formulario_reprovado.png ')}}" style="max-width: 30px; height: 20px;">
+											@else
+												<img src="{{url('img/status/formulario_emAnalise.png ')}}" style="max-width: 30px; height: 20px;">
+											@endif
 										</td>
                                     </tr>
 									@endforeach

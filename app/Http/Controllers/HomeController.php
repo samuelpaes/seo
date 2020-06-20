@@ -36,7 +36,6 @@ class HomeController extends Controller
 	
 	public function index(Request $request)
 	{    
-     
         //verifica as mensagens não lidas
         $messages_read = Message::Where('to_user',Auth::user()->id)->where('message_read','=' , 0)->orderBy('created_at', 'ASC')->get(); 
         
@@ -163,7 +162,7 @@ class HomeController extends Controller
     public function pre_index()
 	{ 
         //Verifica o tipo de usuário
-      
+       
         $isAdmin = Auth::user()->isAdmin;
         if($isAdmin == 0 || $isAdmin == 1)
         {
@@ -174,6 +173,13 @@ class HomeController extends Controller
         else
         {
             $secretaria = Auth::user()->secretaria;
+            //verifica o acesso e captura o id
+            $id=Auth::user()->id;
+            $access = Access::where('user_id', $id)->get()->last();
+            $access->secretaria = $secretaria;
+            $access->save();
+           
+         
             $users = User::where('id', '!=', Auth::user()->id)->get();
             $unidade_orcamentaria = UnidadeOrcamentaria::where('unidade', '=', $secretaria)->firstOrFail('codigo');		
             $exercicio = date("Y");
@@ -182,11 +188,11 @@ class HomeController extends Controller
             $reserva = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('reserva');
             $saldo = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('saldo');	;
             $empenhado = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('empenhado');	
-    
-            $informacoes = Informacao::all()->take(10);
             
+            $informacoes = Informacao::all()->take(10);
+           
             //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
-            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users);
+            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria);
 
         }
 

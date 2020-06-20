@@ -924,8 +924,9 @@
 					}
 				}
 			}
-			
-			document.getElementById('total').value = valor_total;
+			if(document.getElementById('total') != null){
+				document.getElementById('total').value = valor_total;
+			}
 			valor_total = valor_total.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 			if(document.getElementById('total_suplementar') != null)
 			{
