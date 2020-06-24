@@ -1999,7 +1999,7 @@ class OrcamentoController extends Controller
 					'exercicio' => date("Y"),
 					'secretaria' => $secretaria,
 					'valor' => $request->total,
-					'usuario' => Auth::user()->registro,
+					'usuario_emissor' => Auth::user()->registro,
 					'path' => '123',
 				]);		
 
@@ -2471,7 +2471,7 @@ class OrcamentoController extends Controller
 					'exercicio' => date("Y"),
 					'secretaria' => $secretaria,
 					'valor' => $request->total,
-					'usuario' => Auth::user()->registro,
+					'usuario_emissor' => Auth::user()->registro,
 					'path' => '123',
 				]);		
 

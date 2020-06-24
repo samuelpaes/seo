@@ -410,6 +410,10 @@ function abrirFormularioPDF(codigo_formulario)
 	
 			</div>
             <div class="modal-footer">
+				@if(auth()->user()->isAdmin == 0)
+					<button type="button"  class="btn btn-info btn-fill pull-left" style="background:#fc363d; border-color:#fc363d">Reprovar</button>
+					<button type="button"  class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;">Aprovar</button>
+				@endif
             </div>
         </div>
     </div>
