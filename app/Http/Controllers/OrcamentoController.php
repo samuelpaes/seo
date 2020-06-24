@@ -91,39 +91,79 @@ class OrcamentoController extends Controller
 				}
 			}
 			else if($request->filtro == "formulario")
-			{
-				
-				if($request->tipoFormulario <> "TODOS")
+			{ 
+				if(Auth::user()->isAdmin == 0)
 				{
-					
-					$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_formulario', '=', $request->tipoFormulario)->get();		
-					
+					if($request->tipoFormulario <> "TODOS")
+					{
+						$formularios[] =  FormularioAlteracaoOrcamentaria::where('tipo_formulario', '=', $request->tipoFormulario)->get();		
+					}
+					else{
+						$formularios[] = FormularioAlteracaoOrcamentaria::all();
+					}
 				}
-				else{
-					$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->get();
+				else
+				{
+					if($request->tipoFormulario <> "TODOS")
+					{
+						$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_formulario', '=', $request->tipoFormulario)->get();		
+					}
+					else{
+						$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->get();
+					}
 				}
 			}
 			else if($request->filtro == "instrumento")
 			{
-				if($request->tipoInstrumento == "PROCESSO")
+				if(Auth::user()->isAdmin == 0)
 				{
-					$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
-					$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_instrumento', '=', $request->tipoInstrumento)->where('numero_instrumento', '=', $instrumento)->get();
+					if($request->tipoInstrumento == "PROCESSO")
+					{
+						$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+						$formularios[] =  FormularioAlteracaoOrcamentaria::where('tipo_instrumento', '=', $request->tipoInstrumento)->where('numero_instrumento', '=', $instrumento)->get();
+					}
+					else if($request->tipoInstrumento == "MEMORANDO")
+					{
+						$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+						$formularios[] =  FormularioAlteracaoOrcamentaria::where('tipo_instrumento', '=', $request->tipoInstrumento)->where('numero_instrumento', '=', $instrumento)->get();		
+					}
+					
+					else{
+						$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+						$formularios[] = FormularioAlteracaoOrcamentaria::where('numero_instrumento', '=', $instrumento)->get();
+					}
 				}
-				else if($request->tipoInstrumento == "MEMORANDO")
+				else
 				{
-					$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
-					$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_instrumento', '=', $request->tipoInstrumento)->where('numero_instrumento', '=', $instrumento)->get();		
-				}
-				
-				else{
-					$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
-					$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->where('numero_instrumento', '=', $instrumento)->get();
+					if($request->tipoInstrumento == "PROCESSO")
+					{
+						$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+						$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_instrumento', '=', $request->tipoInstrumento)->where('numero_instrumento', '=', $instrumento)->get();
+					}
+					else if($request->tipoInstrumento == "MEMORANDO")
+					{
+						$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+						$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('tipo_instrumento', '=', $request->tipoInstrumento)->where('numero_instrumento', '=', $instrumento)->get();		
+					}
+					
+					else{
+						$instrumento = $request->numeroInstrumento."/".$request->anoInstrumento;
+						$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->where('numero_instrumento', '=', $instrumento)->get();
+					}
+
 				}
 			}
 			else if($request->filtro == "data")
 			{	
-				$formularios[] = FormularioAlteracaoOrcamentaria::whereDate('created_at', '=', $request->data)->get();
+				if(Auth::user()->isAdmin == 0)
+				{
+					$formularios[] = FormularioAlteracaoOrcamentaria::whereDate('created_at', '=', $request->data)->get();
+				}
+				else
+				{
+					$formularios[] = FormularioAlteracaoOrcamentaria::whereDate('created_at', '=', $request->data)->where("secretaria = '$secretaria'")->get();
+				}
+			
 				//return($formularios);	
 			}
 			else{
@@ -137,6 +177,25 @@ class OrcamentoController extends Controller
 			
 			return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("exercicio", $exercicio)->with("pesquisaFeita", $pesquisaFeita)->with("formularios", $formularios);
 
+		}
+		else if($acao == 'analisar')
+		{
+			
+			$formulario = FormularioAlteracaoOrcamentaria::whereCodigo_formulario($request->id_formulario)->firstOrFail();
+			if($request->status == "aprovado")
+			{
+				$formulario->status = "APROVADO";
+				$formulario->usuario_analise = Auth::user()->registro;
+				$formulario->save();
+			}
+			else if($request->status == "reprovado")
+			{
+				$formulario->status = "REPROVADO";
+				$formulario->usuario_analise = Auth::user()->registro;
+				$formulario->justificativa_analise = $request->justificativa;
+				$formulario->save();
+			}
+			
 		}
 		
 		return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("exercicio", $exercicio)->with("pesquisaFeita", $pesquisaFeita);
@@ -1300,8 +1359,7 @@ class OrcamentoController extends Controller
 					$a++;
 				}
 			}
-			
-
+	
 			asort($dotacoes_suplementacao);
 			asort($dotacoes_transferencia);
 			asort($dotacoes_transposicao);
@@ -1989,7 +2047,7 @@ class OrcamentoController extends Controller
 			{
 				$cas = '0'.$cas;
 			}
-			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
+			if (FormularioAlteracaoOrcamentaria::whereRaw(/*'numero_instrumento = "'.$request->numeroInstrumento.'" and*/'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
 				FormularioAlteracaoOrcamentaria::create([
 					'codigo_formulario' => "CAS".$cas."-".$exercicio,
@@ -2461,7 +2519,7 @@ class OrcamentoController extends Controller
 			{
 				$rtt = '0'.$rtt;
 			}
-			if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
+			if (FormularioAlteracaoOrcamentaria::whereRaw(/*'numero_instrumento = "'.$request->numeroInstrumento.'" and */'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
 				FormularioAlteracaoOrcamentaria::create([
 					'codigo_formulario' => "RTT".$rtt."-".$exercicio,
@@ -2512,6 +2570,5 @@ class OrcamentoController extends Controller
 		return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
 	
 	}
-	
 	
 }

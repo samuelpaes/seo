@@ -104,71 +104,7 @@
 	.outer:hover .inner:after {
 	bottom: 0;
 	}
-/* The container */
-.container {
-  display: block;
-  position: relative;
-  padding-left: 30px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 14px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  width: auto; 
-  height:15px;
-  font-weight:normal;
-}
-/* Hide the browser's default checkbox */
-.container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-/* Create a custom checkbox */
-.checkmark {
-  border-radius: 3px;
-  position: absolute;
-  top: 10;
-  left: 0;
-  height: 15px;
-  width: 15px;
-  background-color: #eee;
-}
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-  background-color: #49cfed;
-}
-/* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
-  background-color: #49cfed;
-}
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-/* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
-  display: block;
-}
-/* Style the checkmark/indicator */
-.container .checkmark:after {
-  left: 5px;
-  top: 1px;
-  width: 5px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
-}
-		
+/*removi o estilo da checkbox e inclui no css seo.css*/		
 </style>
 
 		<div class="content">

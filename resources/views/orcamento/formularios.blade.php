@@ -77,12 +77,12 @@
 										<td><?php echo date("d/m/Y", strtotime($formulario['created_at'])) ?></td>
 										<td>{{$formulario['secretaria']}}</td>
 										<td align="center">
-											<button type="button" value="{{$formulario['codigo_formulario']}}" onclick="abrirFormularioPDF(this)"><i class="pe-7s-file" style="font-size:24px; text-align:center"></i></button>
+											<button type="button" value="{{$formulario['codigo_formulario']}}" onclick="abrirFormularioPDF(this, '{{$formulario['status']}}', '{{$formulario['justificativa_analise']}}')"><i class="pe-7s-file" style="font-size:24px; text-align:center"></i></button>
 										</td>
 										<td align="center">
-											@if($formulario['status'] == "Aprovado")
+											@if($formulario['status'] == "APROVADO")
 												<img src="{{url('img/status/formulario_aprovado.png ')}}" style="max-width: 30px; height: 20px;">
-											@elseif($formulario['status'] == "Reprovado")
+											@elseif($formulario['status'] == "REPROVADO")
 												<img src="{{url('img/status/formulario_reprovado.png ')}}" style="max-width: 30px; height: 20px;">
 											@else
 												<img src="{{url('img/status/formulario_emAnalise.png ')}}" style="max-width: 30px; height: 20px;">
@@ -235,14 +235,13 @@ function ativarPesquisa()
 	
 function definirFiltro()
 {
-	
 	var e = document.getElementById("tipoFormulario");
 	var opcaoFormulario = e.options[e.selectedIndex].value;
 	alert(opcaoFormulario);
 	document.getElementById('filtro').value = opcaoFormulario;
 }
 
-function abrirFormularioPDF(codigo_formulario)
+function abrirFormularioPDF(codigo_formulario, status_formulario, justificativa)
 {
 	
 	var codigo_formulario = codigo_formulario.value;
@@ -261,11 +260,56 @@ function abrirFormularioPDF(codigo_formulario)
 					
     $("#body").html(object);
 					
-
+	document.getElementById("id_formulario").value = codigo_formulario;
+	document.getElementById("id_formulario2").value = codigo_formulario;
+	
+	if(status_formulario == "APROVADO"){
+		document.getElementById('formulario_aprovado').style.display="";
+		document.getElementById('formulario_reprovado').style.display = "none";
+		document.getElementById('formulario_analise').style.display="none";
+	}
+	else if(status_formulario == "REPROVADO")
+	{
+		document.getElementById('justificativa_reprovacao').value = justificativa;
+		document.getElementById('formulario_reprovado').style.display="";
+		document.getElementById('formulario_aprovado').style.display = "none";
+		document.getElementById('formulario_analise').style.display = "none";
+	}
+	else if(status_formulario == "EM ANÁLISE")
+	{
+		document.getElementById('formulario_analise').style.display="";
+		document.getElementById('formulario_aprovado').style.display = "none";
+		document.getElementById('formulario_reprovado').style.display = "none";
+	}
+	else{
+		document.getElementById('formulario_analise').style.display="none";
+		document.getElementById('formulario_aprovado').style.display = "none";
+		document.getElementById('formulario_reprovado').style.display = "none";
+	}
 	$('#abrirFormularioPDF').modal('show'); 
 	//alert(valor);
 }
 
+function ativarBtnAprovar()
+{
+	if ($('#chk_aceitoAprovar').is(':checked')) {
+		document.getElementById("btnAprovar").disabled = false;
+	}
+	else{
+		document.getElementById("btnAprovar").disabled = true;
+	}
+}
+
+function ativarBtnReprovar()
+{
+	
+	if (document.getElementById('justificativa').value != "") {
+		document.getElementById("btnReprovar").disabled = false;
+	}
+	else{
+		document.getElementById("btnReprovar").disabled = true;
+	}
+}
    
 </script>
 
@@ -410,11 +454,118 @@ function abrirFormularioPDF(codigo_formulario)
 	
 			</div>
             <div class="modal-footer">
-				@if(auth()->user()->isAdmin == 0)
-					<button type="button"  class="btn btn-info btn-fill pull-left" style="background:#fc363d; border-color:#fc363d">Reprovar</button>
-					<button type="button"  class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;">Aprovar</button>
-				@endif
-            </div>
+				<div style="display:none" id="formulario_reprovado">
+					<div class="row">
+						<div class="col-md-1">
+							<p style="font-size:18px;"><b>Justificativa:</b></p>
+						</div>
+						<div class="col-md-11">
+							<input id="justificativa_reprovacao" class="form-control" style="font-size:16px;background:none; border:none; font-size:16px; position:relative; top:-2px;" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<button type="button" class="btn btn-info btn-fill pull-left" data-dismiss="modal">Fechar</button>	
+						</div>
+					</div>
+				</div>
+				<div style="display:none" id="formulario_analise">
+					@if(auth()->user()->isAdmin == 0)
+						<button type="button" class="btn btn-info btn-fill pull-left" data-dismiss="modal">Fechar</button>	
+						<button type="button" class="btn btn-info btn-fill pull-right" style="background:#fc363d; border-color:#fc363d;"  data-toggle="modal" data-target="#modalAtencaoReprovar">Reprovar</button>
+						<button type="button" class="btn btn-info btn-fill pull-right" style="background:#a1e82c; border-color:#a1e82c;"  data-toggle="modal" data-target="#modalAtencaoAprovar">Aprovar</button>
+					@endif
+            	</div>
+            	<div style="display:none" id="formulario_aprovado">
+					@if(auth()->user()->isAdmin == 0)
+						<button type="button" class="btn btn-info btn-fill pull-left" data-dismiss="modal">Fechar</button>	
+					@endif
+            	</div>				
+			</div>
         </div>
     </div>
+</div>
+
+<!-- Modal Atenção Aprovação de Fomulário de Alteração Orçamentária-->
+<div class="modal"  id="modalAtencaoAprovar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
+	<div class="modal-dialog" role="document">
+	<form method="get" action="{{ route('orcamento_formularios') }}" >
+		<div class="alert alert-danger" style="border-radius: 5px">
+			<br>
+            <p style="text-align: center;" ><b> Atenção! - </b> 
+				Após a confirmação o formulário <b><input class="form-control" id="id_formulario" name="id_formulario" style="all: unset; width:75px;"/></b> fará parte definitiva da base de dados, com status <b>"APROVADO"</b>.
+			</p> 
+			<br>
+			<br> 
+			<p style="text-align: center;">Tem certeza que deseja aprova-lo?</p>
+			<br>
+			<br>
+			<label class="container"  style="text-align: center; line-height: normal; background:none;left:0px;">
+				SIM, O FORMULÁRIO ESTA EM ACORDO COM AS NORMAS E A LEGISLAÇÃO VIGENTE.
+				<input type="checkbox" value="" name="" id="chk_aceitoAprovar" onclick="ativarBtnAprovar()"/>
+					<span class="checkmark" style="left:-2px; top:-0.5px;" ></span>
+			</label>
+			<br>
+			<br>
+		
+			<input class="form-control" name="acao" value="analisar" type="hidden"></input>
+			<input class="form-control" name="status" value="aprovado" type="hidden"></input>
+			<div class="row">
+				<div class="col-md-2">
+				</div>
+				
+				<div class="col-md-4">
+					<button type="submit" id="btnAprovar" class="btn btn-info btn-fill pull-right" disabled>
+						Aprovar
+					</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" aria-hidden="true" data-dismiss="modal" class="btn btn-info btn-fill pull-left" style="background:#fc363d; border-color:#fc363d">Cancelar</button>
+				</div>
+					<div class="col-md-2">
+				</div>
+			</div>
+         </div>
+	</form>	
+	</div>
+</div>
+
+<!-- Modal Atenção Reprovação de Fomulário de Alteração Orçamentária-->
+<div class="modal"  id="modalAtencaoReprovar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  >
+	<div class="modal-dialog" role="document">
+	<form method="get" action="{{ route('orcamento_formularios') }}" >
+		<div class="alert alert-danger" style="border-radius: 5px">
+			<br>
+            <p style="text-align: center;" ><b> Atenção! - </b> 
+			Após a confirmação o formulário <b><input class="form-control" id="id_formulario2" name="id_formulario" style="all: unset; width:75px;"/></b> fará parte definitiva da base de dados, com status <b>"REPROVADO"</b>.
+			</p> 
+			<br>
+			<br> 
+			<p style="text-align: center;">Tem certeza que deseja Reprova-lo?</p>
+			<br>
+			<br>
+				<input class="form-control" name="justificativa" id="justificativa"   onmousemove="ativarBtnReprovar()" onkeyup="ativarBtnReprovar()" onkeypress="ativarBtnReprovar()" onclick="ativarBtnReprovar()"></input>	
+			<br>
+			<br>
+		
+			<input class="form-control" name="acao" value="analisar" type="hidden"></input>
+			<input class="form-control" name="status" value="reprovado" type="hidden"></input>
+			<div class="row">
+				<div class="col-md-2">
+				</div>
+				
+				<div class="col-md-4">
+					<button type="submit" id="btnReprovar" class="btn btn-info btn-fill pull-right" disabled>
+						Reprovar
+					</button>
+				</div>
+				<div class="col-md-4">
+					<button type="button" aria-hidden="true" data-dismiss="modal" class="btn btn-info btn-fill pull-left" style="background:#fc363d; border-color:#fc363d">Cancelar</button>
+				</div>
+					<div class="col-md-2">
+				</div>
+			</div>
+         </div>
+	</form>	
+	</div>
 </div>

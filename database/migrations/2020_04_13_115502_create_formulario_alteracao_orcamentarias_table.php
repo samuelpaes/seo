@@ -24,7 +24,8 @@ class CreateFormularioAlteracaoOrcamentariasTable extends Migration
             $table->decimal('valor');
             $table->string('status');
             $table->string('usuario_emissor');
-            $table->string('usuario_analise')->nullable();;
+            $table->string('usuario_analise')->nullable();
+            $table->string('justificativa_analise')->nullable();
             $table->string('path');
             $table->timestamps();
         });

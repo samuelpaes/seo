@@ -178,8 +178,7 @@ class HomeController extends Controller
             $access = Access::where('user_id', $id)->get()->last();
             $access->secretaria = $secretaria;
             $access->save();
-           
-         
+        
             $users = User::where('id', '!=', Auth::user()->id)->get();
             $unidade_orcamentaria = UnidadeOrcamentaria::where('unidade', '=', $secretaria)->firstOrFail('codigo');		
             $exercicio = date("Y");
