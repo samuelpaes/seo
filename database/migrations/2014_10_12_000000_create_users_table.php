@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('secretaria', 10000);
 			$table->string('name');
 			$table->string('sobrenome');
-			$table->integer('registro');
+			$table->string('registro');
             $table->string('email')->unique();
 			$table->timestamp('email_verified_at')->nullable();
 			$table->boolean('isAdmin')->default(0);

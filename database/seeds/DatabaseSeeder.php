@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('admin123456'),
 			'secretaria' => 'SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS',
 			'estado' => '1',
-			'registro' => '0000',
+			'registro' => 'admin',
 			'isAdmin' => '0',
         ]);
 		
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('user123456'),
 			'secretaria' => 'SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS',
 			'estado' => '1',
-			'registro' => '9999',
+			'registro' => 'user',
 			'isAdmin' => '0',
         ]);
     }

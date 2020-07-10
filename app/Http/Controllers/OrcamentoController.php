@@ -2043,12 +2043,14 @@ class OrcamentoController extends Controller
 			//verifica quantos formularios de Credito Adicional Complementar Existem
 			$cas = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
 			$cas = $cas+1;
+		
 			if($cas<10)
 			{
 				$cas = '0'.$cas;
 			}
 			if (FormularioAlteracaoOrcamentaria::whereRaw(/*'numero_instrumento = "'.$request->numeroInstrumento.'" and*/'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
+				return('oi');
 				FormularioAlteracaoOrcamentaria::create([
 					'codigo_formulario' => "CAS".$cas."-".$exercicio,
 					'tipo_instrumento' => $request->instrumento,
@@ -2057,6 +2059,7 @@ class OrcamentoController extends Controller
 					'exercicio' => date("Y"),
 					'secretaria' => $secretaria,
 					'valor' => $request->total,
+					'status' => "EM ANÁLISE",
 					'usuario_emissor' => Auth::user()->registro,
 					'path' => '123',
 				]);		
