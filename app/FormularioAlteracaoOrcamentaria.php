@@ -9,7 +9,7 @@ class FormularioAlteracaoOrcamentaria extends Model
 {
     use Notifiable;
      protected $fillable = [
-        'codigo_formulario', 'tipo_instrumento', 'numero_instrumento', 'tipo_formulario', 'exercicio', 'secretaria','valor', 'usuario', 'path',
+        'codigo_formulario', 'tipo_instrumento', 'numero_instrumento', 'tipo_formulario', 'exercicio', 'secretaria','valor', 'usuario_emissor', 'path',
     ];
 
 }

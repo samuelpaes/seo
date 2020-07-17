@@ -10,6 +10,7 @@ use SEO\UnidadeExecutora;
 use SEO\ClassificacaoFuncionalProgramatica;
 use SEO\NaturezaDeDespesa;
 use SEO\FormularioAlteracaoOrcamentaria;
+use SEO\DadosAlteracaoOrcamentaria;
 use SEO\Legislacao;
 use SEO\Contrato;
 use Illuminate\Support\Facades\Auth;
@@ -1653,6 +1654,15 @@ class OrcamentoController extends Controller
 			
 			$total = number_format($request->total,2,",",".");
 
+			//verifica quantos formularios de Credito Adicional Complementar Existem
+			$cas = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
+			$cas = $cas+1;
+		
+			if($cas<10)
+			{
+				$cas = '0'.$cas;
+			}
+
 			$html = '
 					<html>
 					<head>
@@ -1730,6 +1740,25 @@ class OrcamentoController extends Controller
 																if($request->sup_vinculo[$i] !=null)
 																{
 																	
+
+
+																	
+
+																	//registra na base de dados dados_alteracao_orcamentarias
+																	$sup_valor = str_replace("R$","",$request->sup_valor[$i]);
+																	DadosAlteracaoOrcamentaria::create([
+																		'codigo_formulario' => "CAS".$cas."-".$exercicio,
+																		'acao' => 'SUPLEMENTAÇÃO',
+																		'unidade_executora' => $request->sup_unidade_executora[$i],
+																		'classificacao_funcional_programatica' => $request->sup_classificacao_funcional[$i],	
+																		'natureza_de_depesa' => $request->sup_natureza_despesa[$i],
+																		'vinculo' => $request->sup_vinculo[$i],
+																		'dotacao' => $request->sup_codigo_dotacao[$i],
+																		'valor' =>str_replace(array(".",","),array("", "."),$sup_valor),
+																		'justificativa_recurso' => strtoupper($request->sup_justificativa[$i]),
+																	]);		
+													
+
 																	$html .= '<tr style="height:100px;">
 																			<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$request->sup_unidade_executora[$i].'</div></td>
 																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$request->sup_classificacao_funcional[$i].'</div></td>
@@ -1780,6 +1809,21 @@ class OrcamentoController extends Controller
 																	{
 																	if($request->anl_vinculo[$i] !=null)
 																	{
+																																									
+																		//registra na base de dados dados_alteracao_orcamentarias
+																		$anl_valor = str_replace("R$","",$request->anl_valor[$i]);
+																		DadosAlteracaoOrcamentaria::create([
+																			'codigo_formulario' => "CAS".$cas."-".$exercicio,
+																			'acao' => 'ANULAÇÃO',
+																			'unidade_executora' => $request->anl_unidade_executora[$i],
+																			'classificacao_funcional_programatica' => $request->anl_classificacao_funcional[$i],	
+																			'natureza_de_depesa' => $request->anl_natureza_despesa[$i],
+																			'vinculo' => $request->anl_vinculo[$i],
+																			'dotacao' => $request->anl_codigo_dotacao[$i],
+																			'valor' =>str_replace(array(".",","),array("", "."),$anl_valor),
+																			'justificativa_recurso' => strtoupper($request->anl_recurso[$i]),
+																		]);	
+
 																		$html .= '<tr style="height:100px;">
 																				<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;font-family:arial">'.$request->anl_unidade_executora[$i].'</div></td>
 																				<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;">'.$request->anl_classificacao_funcional[$i].'</div></td>
@@ -1829,7 +1873,22 @@ class OrcamentoController extends Controller
 																for($i=0; $i < count($request->spt_valor); $i++)
 																	{
 																	if($request->spt_valor[$i] !=null)
-																	{
+																	{																	
+																		//registra na base de dados dados_alteracao_orcamentarias
+																		$spt_valor = str_replace("R$","",$request->spt_valor[$i]);
+																		DadosAlteracaoOrcamentaria::create([
+																			'codigo_formulario' => "CAS".$cas."-".$exercicio,
+																			'acao' => 'SUPERAVIT FINANCEIRO',
+																			'unidade_executora' => "",
+																			'classificacao_funcional_programatica' => "",	
+																			'natureza_de_depesa' => "",
+																			'vinculo' => "",
+																			'dotacao' => "",
+																			'valor' =>str_replace(array(".",","),array("", "."),$spt_valor),
+																			'justificativa_recurso' => strtoupper($request->spt_recurso[$i]),
+																		]);	
+
+
 																		$html .= 	'<tr style="height:100px; ">
 																						<td style="border-right:dotted;border-top:dotted;border-width:1px; width:500px;text-align: center;"><p style="text-transform: uppercase;font-family:arial; font-size:17px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000">'.$request->spt_valor[$i].'</p></td>
 																						<td style="border-top:dotted;border-width:1px; width:500px;text-align: center;"><p style="text-transform: uppercase;font-family:arial; font-size:17px; flex-wrap:nowrap; display: inline-block; width: 450px; line-height: 1.5; text-align:center; color:#000">'.$request->spt_recurso[$i].'</p></td>
@@ -1871,6 +1930,22 @@ class OrcamentoController extends Controller
 																	{
 																	if($request->exc_valor[$i] !=null)
 																	{
+
+																		
+																		//registra na base de dados dados_alteracao_orcamentarias
+																		$exc_valor = str_replace("R$","",$request->exc_valor[$i]);
+																		DadosAlteracaoOrcamentaria::create([
+																			'codigo_formulario' => "CAS".$cas."-".$exercicio,
+																			'acao' => 'SUPERAVIT FINANCEIRO',
+																			'unidade_executora' => "",
+																			'classificacao_funcional_programatica' => "",	
+																			'natureza_de_depesa' => "",
+																			'vinculo' => "",
+																			'dotacao' => "",
+																			'valor' =>str_replace(array(".",","),array("", "."),$exc_valor),
+																			'justificativa_recurso' => strtoupper($request->exc_recurso[$i]),
+																		]);
+
 																		$html .= 	'<tr style="height:100px; ">
 																						<td style="border-right:dotted;border-top:dotted;border-width:1px; width:500px;text-align: center;"><p style="text-transform: uppercase;font-family:arial; font-size:17px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000">'.$request->exc_valor[$i].'</p></td>
 																						<td style="border-top:dotted;border-width:1px; width:500px;text-align: center;"><p style="text-transform: uppercase;font-family:arial; font-size:17px; flex-wrap:nowrap; display: inline-block; width: 450px; line-height: 1.5; text-align:center; color:#000">'.$request->exc_recurso[$i].'</p></td>
@@ -2040,17 +2115,9 @@ class OrcamentoController extends Controller
 				
 			};		
 			
-			//verifica quantos formularios de Credito Adicional Complementar Existem
-			$cas = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
-			$cas = $cas+1;
-		
-			if($cas<10)
-			{
-				$cas = '0'.$cas;
-			}
 			if (FormularioAlteracaoOrcamentaria::whereRaw(/*'numero_instrumento = "'.$request->numeroInstrumento.'" and*/'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
-				return('oi');
+				
 				FormularioAlteracaoOrcamentaria::create([
 					'codigo_formulario' => "CAS".$cas."-".$exercicio,
 					'tipo_instrumento' => $request->instrumento,
