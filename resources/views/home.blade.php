@@ -199,7 +199,7 @@
   padding: 0;
   width: 100%;
   background: #40609d	 !important;
-  color:#fff;5--------
+  color:#fff;
 }
 #marker {
   height: 6px;
@@ -402,29 +402,29 @@ background: rgba(255, 255, 255, 0.4);
 										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-graph2" style="position:relative;font-weight:bold; top:1.5px"></i></b> ORÇAMENTO</div>
 										<ul class="drop" style="width:108.5%;">
 											<div>
-												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset;">Saldo de Dotações</a></li>
-												<li><a href="{{ route('orcamento_contratos') }}" style="all: unset;">Contratos</a></li>
-												<li><a href="{{ route('orcamento_agenda_orcamentaria') }}" style="all: unset;">Agenda Orçamentária</a></li>
-												<li><a href="{{ route('orcamento_formularios') }}" style="all: unset;">Formulários</a></li>
-												<li><a href="{{ route('orcamento_manual') }}" style="all: unset;">Manual de Alterações</a></li>
-												<li><a href="{{ route('orcamento_leis_decretos') }}" style="all: unset;">Leis e Decretos</a></li>
+												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset; color:inherit">Saldo de Dotações</a></li>
+												<li><a href="{{ route('orcamento_contratos') }}" style="all: unset; color:inherit">Contratos</a></li>
+												<li><a href="{{ route('orcamento_agenda_orcamentaria') }}" style="all: unset; color:inherit">Agenda Orçamentária</a></li>
+												<li><a href="{{ route('orcamento_formularios') }}" style="all: unset; color:inherit">Formulários</a></li>
+												<li><a href="{{ route('orcamento_manual') }}" style="all: unset; color:inherit">Manual de Alterações</a></li>
+												<li><a href="{{ route('orcamento_leis_decretos') }}" style="all: unset; color:inherit">Leis e Decretos</a></li>
 											</div>
 										</ul>
 									</div>
 								</li>
-								
+								<!--
 								<li>
 									<div class="btn from-top" >
 										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-calculator" style="position:relative;font-weight:bold; top:1.5px"></i></b> CONTABILIDADE</div>
 										<ul class="drop" style="width:110%;">
 											<div>
-												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset;">Formulários</a></li>
-												<li><a href="#" style="all: unset;">Leis e Decretos</a></li>
+												<li><a href="{{ route('orcamento_saldo_dotacoes') }}" style="all: unset; color:inherit">Formulários</a></li>
+												<li><a href="#" style="all: unset; color:inherit">Leis e Decretos</a></li>
 											</div>
 										</ul>
 									</div>
 								</li>
-								
+								-->
 								<li>
 								
 									<div class="btn from-top" >
@@ -447,8 +447,8 @@ background: rgba(255, 255, 255, 0.4);
 										<div style="position:relative; top:5px; font-size:14px"><i class="pe-7s-users" style="position:relative;font-weight:bold; top:1.5px"></i></b> USUÁRIOS</div>
 										<ul class="drop" style="width:110.5%;">
 											<div>
-												<li><a href="{{ route('register') }}" style="all: unset;">Cadastrar Usuário</a></li>
-												<li><a href="{{ url('/alterar-usuario') }}" style="all: unset;">Alterar Usuário</a></li>
+												<li><a href="{{ route('register') }}" style="all: unset; color:inherit">Cadastrar Usuário</a></li>
+												<li><a href="{{ url('/alterar-usuario') }}" style="all: unset; color:inherit">Alterar Usuário</a></li>
 											</div>
 										</ul>
 									</div>
@@ -459,12 +459,12 @@ background: rgba(255, 255, 255, 0.4);
 										<div style="position:relative;top:5px;font-size:14px"><i class="pe-7s-config" style="position:relative;font-weight:bold; top:1.5px"></i> CONFIGURAÇÕES</b></div>
 										<ul class="drop" style="width:108%;">
 											<div>
-												<li><a href="{{ url('unidade-orcamentaria/index') }}" style="all: unset;">Unidade Orçamentária</a></li>
-												<li><a href="{{ url('classificacao-funcional-programatica/index') }}" style="all: unset;">Classificação <br>Funcional Programática</a></li>
-												<li><a href="{{ url('natureza-de-despesa/index') }}" style="all: unset;">Natureza de Despesa</a></li>
-												<li><a href="{{ url('vinculos/index') }}" style="all: unset;">Vínculos</a></li>
-												<li><a href="{{ url('dotacao-orcamentaria/index') }}" style="all: unset;">Dotação Orçamentária</a></li>  
-												<li><a href="{{ url('informacao/index') }}" style="all: unset;">Informações</a></li>  
+												<li><a href="{{ url('unidade-orcamentaria/index') }}" style="all: unset; color:inherit">Unidade Orçamentária</a></li>
+												<li><a href="{{ url('classificacao-funcional-programatica/index') }}" style="all: unset; color:inherit">Classificação <br>Funcional Programática</a></li>
+												<li><a href="{{ url('natureza-de-despesa/index') }}" style="all: unset; color:inherit">Natureza de Despesa</a></li>
+												<li><a href="{{ url('vinculos/index') }}" style="all: unset; color:inherit">Vínculos</a></li>
+												<li><a href="{{ url('dotacao-orcamentaria/index') }}" style="all: unset; color:inherit">Dotação Orçamentária</a></li>  
+												<li><a href="{{ url('informacao/index') }}" style="all: unset; color:inherit">Informações</a></li>  
 											</div>
 										</ul>
 									</div>

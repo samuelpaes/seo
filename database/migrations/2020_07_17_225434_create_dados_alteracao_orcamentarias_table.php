@@ -21,7 +21,7 @@ class CreateDadosAlteracaoOrcamentariasTable extends Migration
             $table->string('classificacao_funcional_programatica')->nullable();
             $table->string('natureza_de_despesa')->nullable();
             $table->string('vinculo')->nullable();
-            $table->string('dotacao')->nullable();
+            $table->string('codigo_dotacao')->nullable();
             $table->decimal('valor');
             $table->string('justificativa_recurso');
             $table->timestamps();

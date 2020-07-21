@@ -1,5 +1,57 @@
 @extends('layouts.app')
 @section('content')	
+<style>
+btnEdicao:hover{cursor: pointer}
+.btnEdicao{
+	display: inline-block;
+    background: transparent; outline: none;
+    position: relative;
+    border: 0px solid #111;
+    overflow: hidden;
+	height:20px;
+}
+
+.btnEdicao:hover:before{
+	opacity: 1; 
+	transform: 
+	translate(0,0);
+	width:20px;
+}
+
+.btnEdicao:hover{
+	opacity: 1; 
+	transform: 
+	translate(0,0);
+	width:65px;
+}
+
+.btnEdicao:before{
+    content: attr(data-hover);
+    position: absolute;
+    left: 0;
+	top:2.5px;
+    text-transform: uppercase;
+	width:10%;
+    font-weight: 600;
+    font-size: 12px;
+    opacity: 0;
+    transform: translate(-100%,0);
+    transition: all .3s ease-in-out;
+}
+
+/*button div (button text before hover)*/
+.btnEdicao:hover div{opacity: 0; transform: translate(100%,0); width:10%;}
+.btnEdicao div{
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all .3s ease-in-out;
+}
+
+.btnEdicao:active div {
+	font-size: 6px;
+}
+</style>
 <div class="content">
 	<div class="container-fluid">
 		<div class="row">
@@ -53,6 +105,7 @@
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
+										<th></th>
 										<th>Tipo de Formulário</th>
 										<th>Instrumento</th>
 										<th>Número</th>
@@ -69,6 +122,16 @@
 									@foreach($value as $formulario)
 								
                                     <tr>
+										@if($formulario['status'] == "APROVADO" || $formulario['status'] == "REPROVADO")
+										<td><button style='right:4px; position: relative; opacity:0.5' disabled><div><i class='fa fa-pencil' ></i></div></button></td>
+										@else
+										<form method="get" action="{{route('orcamento_formularios')}}" style="align:center">
+										<input name="acao" value="editar" hidden />
+										<input name="formulario_codigo" value="{{$formulario['codigo_formulario']}}" hidden />
+										<input name="formulario" value="{{$formulario['tipo_formulario']}}" hidden />
+										<td><button class='btnEdicao' type='submit' data-hover='Alterar' id="" style='left:3px;'><div><i class='fa fa-pencil'></i></div></button></td>
+										</form>
+										@endif
                                        	<td>{{$formulario['tipo_formulario']}}</td>
                                        	<td>{{$formulario['tipo_instrumento']}}</td>
                                        	<td>{{$formulario['numero_instrumento']}}</td>
@@ -88,6 +151,7 @@
 												<img src="{{url('img/status/formulario_emAnalise.png ')}}" style="max-width: 30px; height: 20px;">
 											@endif
 										</td>
+	
                                     </tr>
 									@endforeach
 								@endforeach
@@ -243,14 +307,30 @@ function definirFiltro()
 
 function abrirFormularioPDF(codigo_formulario, status_formulario, justificativa)
 {
-	
 	var codigo_formulario = codigo_formulario.value;
+	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');	
+	
+	//chama o controller que renderiza o pdf
+    $.ajax({
+        type: "POST",
+		url: '{{ route("visualizar_criar_pdf") }}',
+        dataType: 'json',
+        //headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+		data: {_token: CSRF_TOKEN, _method: 'POST', 'formulario_codigo': codigo_formulario,},
+        success: function (data) {
+        	console.log(data);
+        },complete() {
+            console.log("complete");	 
+         }
+    });
+	
+	var tipo_formulario = codigo_formulario.substring(0, 3);
 	var object = "<object data=\"{FileName}\" type=\"application/pdf\"  style=\"width: 100%; margin: 0 auto;\" height=\"1000px\">";
 
-	var valor = "http://127.0.0.1/seo/public/files/formularios_alteracao_orcamentaria/"+codigo_formulario+".pdf";
+	var valor = "http://127.0.0.1/seo/public/files/formularios_alteracao_orcamentaria/"+tipo_formulario+".pdf";
 	//alert(codigo_formulario)		;
 	var sub = "{{url('files/formularios_alteracao_orcamentaria/arquivo.pdf')}}";
-	sub = sub.replace("arquivo", codigo_formulario);
+	sub = sub.replace("arquivo", tipo_formulario);
 	//alert(sub);				
 	object += "Exibição indisponível!";
    // object += " or download <a target = \"_blank\" href = \"http://get.adobe.com/reader/\">Adobe PDF Reader</a> to view the file.";
@@ -288,6 +368,7 @@ function abrirFormularioPDF(codigo_formulario, status_formulario, justificativa)
 	}
 	$('#abrirFormularioPDF').modal('show'); 
 	//alert(valor);
+	
 }
 
 function ativarBtnAprovar()

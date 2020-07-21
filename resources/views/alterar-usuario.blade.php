@@ -36,7 +36,7 @@
     font-size: 12px;
     opacity: 0;
     transform: translate(-100%,0);
-    transition: all .6s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 /*button div (button text before hover)*/
@@ -45,7 +45,7 @@
     text-transform: uppercase;
     font-weight: 600;
     font-size: 16px;
-    transition: all .6s ease-in-out;
+    transition: all .3s ease-in-out;
 }
 
 .btnEdicao:active div {

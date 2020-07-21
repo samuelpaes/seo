@@ -61,11 +61,13 @@ class OrcamentoController extends Controller
 		{
 			$acao = $request->acao;
 		}
-	
+		
 		if($acao == 'criar')
 		{
+			
 			if($formulario == "credito_adicional_suplementar")
 			{
+				
 				$anulacao = false;
 				$superavit = false;
 				$excesso = false;
@@ -77,6 +79,126 @@ class OrcamentoController extends Controller
 				$transposicao = false;
 				$transferencia = false;
 				return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("pesquisaFeita", $pesquisaFeita)->with("secretaria", $secretaria);
+			}
+		}
+		else if($acao == 'editar')
+		{
+			
+			$anulacao = false;
+			$superavit = false;
+			$excesso = false;
+
+			$remanejamento = false;
+			$transposicao = false;
+			$transferencia = false;
+			
+			$data = "";
+			$tipoInstrumento="";
+			$numeroInstrumento=array("","");
+			$total_suplementar=0;
+			$total_anular=0;
+			$dotacoes_suplementacao = array();
+			$dotacoes_anulacao = array();
+			$dotacoes_remanejamento = array();
+			$dotacoes_transposicao = array();
+			$dotacoes_transferencia = array();
+			$dotacoes_suplementacao_vinculos = array();
+			$dotacoes_anulacao_vinculos = array();
+			$dotacoes_remanejamento_vinculos = array();
+			$dotacoes_transposicao_vinculos = array();
+			$dotacoes_transferencia_vinculos = array();
+			$acao = $request->acao;
+			$superavit_valor_recurso = array();
+			$excesso_valor_recurso = array();
+			$mensagem = "ok";
+			$mensagem_dotacao = "";
+			$unidade_orcamentaria = "";
+			
+			$sup_valor = array();
+			$sup_justificativa = array();
+			$sup_vinculo = array();
+		
+			$anl_valor = array();
+			$anl_recurso = array();
+			$anl_vinculo= array();
+
+			//Verifica a unidade Orçamentária do Gestor
+			$id=Auth::user()->id;
+			$access = Access::where('user_id', $id)->get()->last();
+			$saldoDeDotacoes = array();
+			$unidade_orcamentaria = DB::table('unidade_orcamentarias')->where('unidade', $access['secretaria'])->value('codigo');
+			$secretaria = $access['secretaria'];
+		
+
+			$formularios =  DadosAlteracaoOrcamentaria::whereRaw('codigo_formulario ="'.$request->formulario_codigo.'" ')->get();
+		
+			if($formulario == "credito_adicional_suplementar" || $formulario == "CRÉDITO ADICIONAL SUPLEMENTAR")
+			{
+				
+				foreach($formularios as $form)
+				{
+					if($form->acao == "SUPLEMENTAÇÃO")
+					{
+						$dotacoes_suplementacao[] = $form;
+
+						//alterar a key do array para ser reconhecido no html
+						$form['justificativa'] = $form['justificativa_recurso'];
+						unset($form['justificativa_recurso']);
+						
+						//resultado da consulta de vinculos no banco de dados
+						$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $form->codigo_dotacao)->get();;
+						// converte o objeto em array
+						$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+						// remove os valore duplicados
+						$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+						//copia o resultado para o objeto de vinculos
+						$dotacoes_suplementacao_vinculos[] = $resultadoConsulta;
+						
+					}
+					else if($form->acao == "ANULAÇÃO")
+					{
+						$anulacao = true;
+
+						$dotacoes_anulacao[] = $form;
+
+						//alterar a key do array para ser reconhecido no html
+						$form['recurso'] = $form['justificativa_recurso'];
+						unset($form['justificativa_recurso']);
+						
+						//resultado da consulta de vinculos no banco de dados
+						$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $form->codigo_dotacao)->get();;
+						// converte o objeto em array
+						$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+						// remove os valore duplicados
+						$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+						//copia o resultado para o objeto de vinculos
+						$dotacoes_anulacao_vinculos[] = $resultadoConsulta;
+					}
+					else if($form->acao == "SUPERÁVIT FINANCEIRO")
+					{
+						$superavit = true;
+						
+						$a1=array("valor"=>$form->valor,"recurso"=>$form->justificativa_recurso);
+						$a3 = array_merge($a1,$superavit_valor_recurso);
+
+
+					
+					}
+					else if($form->acao == "EXCESSO DE ARRECADAÇÃO")
+					{
+						$excesso = true;
+					}
+				}
+				
+				return($a3);
+				return view ('orcamento/formularios/credito_adicional_suplementar')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("dotacoes_anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria)->with("dotacoes_suplementacao_vinculos", $dotacoes_suplementacao_vinculos)->with("dotacoes_anulacao_vinculos", $dotacoes_anulacao_vinculos);
+			}
+			else if ($formulario == "remanejamento_transposicao_transferencia" || $formulario == "REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA")
+			{
+				$remanejamento = false;
+				$transposicao = false;
+				$transferencia = false;
+				return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("dotacoes_anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("pesquisaFeita", $pesquisaFeita)->with("secretaria", $secretaria);
 			}
 		}
 		else if($acao == 'pesquisar')
@@ -181,7 +303,6 @@ class OrcamentoController extends Controller
 		}
 		else if($acao == 'analisar')
 		{
-			
 			$formulario = FormularioAlteracaoOrcamentaria::whereCodigo_formulario($request->id_formulario)->firstOrFail();
 			if($request->status == "aprovado")
 			{
@@ -483,7 +604,7 @@ class OrcamentoController extends Controller
 				}
 				
 			}
-			
+		
 									
 			foreach ($request->anl_codigo_dotacao as $dotacao)
 			{
@@ -700,6 +821,7 @@ class OrcamentoController extends Controller
 			//reordena as dotacoes
 			asort($dotacoes_anulacao);
 			asort($dotacoes_suplementacao);
+			
 			return view ('orcamento/formularios/credito_adicional_suplementar')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria);
 			
 		}
@@ -1622,6 +1744,7 @@ class OrcamentoController extends Controller
 		return view ('orcamento/saldo_dotacoes')->with('saldoDeDotacoes', $saldoDeDotacoes)->with('unidadesOrcamentarias', $unidadesOrcamentarias)->with('unidadesExecutoras', $unidadesExecutoras)->with('classificacoesFuncionais', $classificacoesFuncionais)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('naturezas_dotacoes_total', $naturezas_dotacoes_total)->with('vinculos_valores',$vinculos_valores)->with('mensagem',$mensagem)->with('verificacao',$verificacao)->with('exercicio',$exercicio);
 	}
 	
+	// renderiza pdf e salva dados nas tabelas
 	public function criar_pdf(Request $request)
     {
 		
@@ -1648,7 +1771,7 @@ class OrcamentoController extends Controller
 
 		}
 		
-		if($request->tipo_alteracao == "CREDITO ADICIONAL SUPLEMENTAR")
+		if($request->tipo_alteracao == "CRÉDITO ADICIONAL SUPLEMENTAR")
 		{
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
 			
@@ -1693,13 +1816,13 @@ class OrcamentoController extends Controller
 													<br>
 													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>CRÉDITO ADICIONAL SUPLEMENTAR</b></h3>
-													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
+													<h4 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao2.'</h6>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
 													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$ldo->numero.'/'.$exercicioLei.'</p>									
 												</div>
-												<div>
+												<div><!--
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
 														<tr>
 															<td style="text-align:right">
@@ -1715,7 +1838,7 @@ class OrcamentoController extends Controller
 															'.$request->instrumento.' '.$request->numeroInstrumento.'
 															</td>
 														</tr>	
-													</table>
+													</table>-->
 													<h4 class="title" style="text-align: center; font-family: Arial;"><b>SUPLEMENTAÇÃO</b></h4>
 													<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
 														<thead>
@@ -1751,9 +1874,9 @@ class OrcamentoController extends Controller
 																		'acao' => 'SUPLEMENTAÇÃO',
 																		'unidade_executora' => $request->sup_unidade_executora[$i],
 																		'classificacao_funcional_programatica' => $request->sup_classificacao_funcional[$i],	
-																		'natureza_de_depesa' => $request->sup_natureza_despesa[$i],
+																		'natureza_de_despesa' => $request->sup_natureza_despesa[$i],
 																		'vinculo' => $request->sup_vinculo[$i],
-																		'dotacao' => $request->sup_codigo_dotacao[$i],
+																		'codigo_dotacao' => $request->sup_codigo_dotacao[$i],
 																		'valor' =>str_replace(array(".",","),array("", "."),$sup_valor),
 																		'justificativa_recurso' => strtoupper($request->sup_justificativa[$i]),
 																	]);		
@@ -1817,9 +1940,9 @@ class OrcamentoController extends Controller
 																			'acao' => 'ANULAÇÃO',
 																			'unidade_executora' => $request->anl_unidade_executora[$i],
 																			'classificacao_funcional_programatica' => $request->anl_classificacao_funcional[$i],	
-																			'natureza_de_depesa' => $request->anl_natureza_despesa[$i],
+																			'natureza_de_despesa' => $request->anl_natureza_despesa[$i],
 																			'vinculo' => $request->anl_vinculo[$i],
-																			'dotacao' => $request->anl_codigo_dotacao[$i],
+																			'codigo_dotacao' => $request->anl_codigo_dotacao[$i],
 																			'valor' =>str_replace(array(".",","),array("", "."),$anl_valor),
 																			'justificativa_recurso' => strtoupper($request->anl_recurso[$i]),
 																		]);	
@@ -1878,12 +2001,12 @@ class OrcamentoController extends Controller
 																		$spt_valor = str_replace("R$","",$request->spt_valor[$i]);
 																		DadosAlteracaoOrcamentaria::create([
 																			'codigo_formulario' => "CAS".$cas."-".$exercicio,
-																			'acao' => 'SUPERAVIT FINANCEIRO',
+																			'acao' => 'SUPERÁVIT FINANCEIRO',
 																			'unidade_executora' => "",
 																			'classificacao_funcional_programatica' => "",	
-																			'natureza_de_depesa' => "",
+																			'natureza_de_despesa' => "",
 																			'vinculo' => "",
-																			'dotacao' => "",
+																			'codigo_dotacao' => "",
 																			'valor' =>str_replace(array(".",","),array("", "."),$spt_valor),
 																			'justificativa_recurso' => strtoupper($request->spt_recurso[$i]),
 																		]);	
@@ -1936,12 +2059,12 @@ class OrcamentoController extends Controller
 																		$exc_valor = str_replace("R$","",$request->exc_valor[$i]);
 																		DadosAlteracaoOrcamentaria::create([
 																			'codigo_formulario' => "CAS".$cas."-".$exercicio,
-																			'acao' => 'SUPERAVIT FINANCEIRO',
+																			'acao' => 'EXCESSO DE ARRECADAÇÃO',
 																			'unidade_executora' => "",
 																			'classificacao_funcional_programatica' => "",	
-																			'natureza_de_depesa' => "",
+																			'natureza_de_despesa' => "",
 																			'vinculo' => "",
-																			'dotacao' => "",
+																			'codigo_dotacao' => "",
 																			'valor' =>str_replace(array(".",","),array("", "."),$exc_valor),
 																			'justificativa_recurso' => strtoupper($request->exc_recurso[$i]),
 																		]);
@@ -2155,9 +2278,9 @@ class OrcamentoController extends Controller
 				
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
 				
-				$mpdf->Output('files/formularios_alteracao_orcamentaria/CAS'.$cas."-".$exercicio.'.pdf');
-				$mpdf->Output();
-
+				//$mpdf->Output('files/formularios_alteracao_orcamentaria/CAS'.$cas."-".$exercicio.'.pdf');
+				//$mpdf->Output();
+				$mpdf->Output('CAS'.$cas."-".$exercicio.'.pdf','D'); 
 			}
 			else{
 				
@@ -2172,6 +2295,14 @@ class OrcamentoController extends Controller
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
 			
 			$total = number_format($request->total,2,",",".");
+
+			//verifica quantos formularios de Credito Adicional Complementar Existem
+			$rtt = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
+			$rtt = $rtt+1;
+			if($rtt<10)
+			{
+				$rtt = '0'.$rtt;
+			}
 
 			$html = '
 					<html>
@@ -2250,6 +2381,21 @@ class OrcamentoController extends Controller
 																if($request->sup_vinculo[$i] !=null)
 																{
 																	
+																	//registra na base de dados dados_alteracao_orcamentarias
+																	$sup_valor = str_replace("R$","",$request->sup_valor[$i]);
+																	DadosAlteracaoOrcamentaria::create([
+																		'codigo_formulario' => "RTT".$rtt."-".$exercicio,
+																		'acao' => 'SUPLEMENTAÇÃO',
+																		'unidade_executora' => $request->sup_unidade_executora[$i],
+																		'classificacao_funcional_programatica' => $request->sup_classificacao_funcional[$i],	
+																		'natureza_de_despesa' => $request->sup_natureza_despesa[$i],
+																		'vinculo' => $request->sup_vinculo[$i],
+																		'codigo_dotacao' => $request->sup_codigo_dotacao[$i],
+																		'valor' =>str_replace(array(".",","),array("", "."),$sup_valor),
+																		'justificativa_recurso' => strtoupper($request->sup_justificativa[$i]),
+																	]);	
+
+																	
 																	$html .= '<tr style="height:100px;">
 																			<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$request->sup_unidade_executora[$i].'</div></td>
 																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$request->sup_classificacao_funcional[$i].'</div></td>
@@ -2301,6 +2447,20 @@ class OrcamentoController extends Controller
 																	{
 																	if($request->rmj_vinculo[$i] !=null)
 																	{
+																		//registra na base de dados dados_alteracao_orcamentarias
+																		$rmj_valor = str_replace("R$","",$request->rmj_valor[$i]);
+																		DadosAlteracaoOrcamentaria::create([
+																			'codigo_formulario' => "RTT".$rtt."-".$exercicio,
+																			'acao' => 'REMANEJAMENTO',
+																			'unidade_executora' => $request->rmj_unidade_executora[$i],
+																			'classificacao_funcional_programatica' => $request->rmj_classificacao_funcional[$i],	
+																			'natureza_de_despesa' => $request->rmj_natureza_despesa[$i],
+																			'vinculo' => $request->rmj_vinculo[$i],
+																			'codigo_dotacao' => $request->rmj_codigo_dotacao[$i],
+																			'valor' =>str_replace(array(".",","),array("", "."),$rmj_valor),
+																			'justificativa_recurso' => strtoupper($request->rmj_recurso[$i]),
+																		]);	
+
 																		$html .= '<tr style="height:100px;">
 																				<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;font-family:arial">'.$request->rmj_unidade_executora[$i].'</div></td>
 																				<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;">'.$request->rmj_classificacao_funcional[$i].'</div></td>
@@ -2355,6 +2515,20 @@ class OrcamentoController extends Controller
 																	{
 																	if($request->tnp_vinculo[$i] !=null)
 																	{
+																		//registra na base de dados dados_alteracao_orcamentarias
+																		$tnp_valor = str_replace("R$","",$request->tnp_valor[$i]);
+																		DadosAlteracaoOrcamentaria::create([
+																			'codigo_formulario' => "RTT".$rtt."-".$exercicio,
+																			'acao' => 'TRANSPOSIÇÃO',
+																			'unidade_executora' => $request->tnp_unidade_executora[$i],
+																			'classificacao_funcional_programatica' => $request->tnp_classificacao_funcional[$i],	
+																			'natureza_de_despesa' => $request->tnp_natureza_despesa[$i],
+																			'vinculo' => $request->tnp_vinculo[$i],
+																			'codigo_dotacao' => $request->tnp_codigo_dotacao[$i],
+																			'valor' =>str_replace(array(".",","),array("", "."),$tnp_valor),
+																			'justificativa_recurso' => strtoupper($request->tnp_recurso[$i]),
+																		]);	
+
 																		$html .= '<tr style="height:100px;">
 																				<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;font-family:arial">'.$request->tnp_unidade_executora[$i].'</div></td>
 																				<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;">'.$request->tnp_classificacao_funcional[$i].'</div></td>
@@ -2407,6 +2581,21 @@ class OrcamentoController extends Controller
 																	{
 																	if($request->tnf_vinculo[$i] !=null)
 																	{
+																		//registra na base de dados dados_alteracao_orcamentarias
+																		$tnf_valor = str_replace("R$","",$request->tnf_valor[$i]);
+																		DadosAlteracaoOrcamentaria::create([
+																			'codigo_formulario' => "RTT".$rtt."-".$exercicio,
+																			'acao' => 'TRANSFERÊNCIA',
+																			'unidade_executora' => $request->tnf_unidade_executora[$i],
+																			'classificacao_funcional_programatica' => $request->tnf_classificacao_funcional[$i],	
+																			'natureza_de_despesa' => $request->tnf_natureza_despesa[$i],
+																			'vinculo' => $request->tnf_vinculo[$i],
+																			'codigo_dotacao' => $request->tnf_codigo_dotacao[$i],
+																			'valor' =>str_replace(array(".",","),array("", "."),$tnf_valor),
+																			'justificativa_recurso' => strtoupper($request->tnf_recurso[$i]),
+																		]);	
+
+
 																		$html .= '<tr style="height:100px;">
 																				<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;font-family:arial">'.$request->tnf_unidade_executora[$i].'</div></td>
 																				<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center;">'.$request->tnf_classificacao_funcional[$i].'</div></td>
@@ -2582,13 +2771,7 @@ class OrcamentoController extends Controller
 			else{
 	
 			};
-			//verifica quantos formularios de Credito Adicional Complementar Existem
-			$rtt = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
-			$rtt = $rtt+1;
-			if($rtt<10)
-			{
-				$rtt = '0'.$rtt;
-			}
+			
 			if (FormularioAlteracaoOrcamentaria::whereRaw(/*'numero_instrumento = "'.$request->numeroInstrumento.'" and */'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
 			{
 				FormularioAlteracaoOrcamentaria::create([
@@ -2625,8 +2808,10 @@ class OrcamentoController extends Controller
 
 				$mensagem="Formulário para ".$request->tipo_alteracao." gerado";
 				
-				$mpdf->Output('files/formularios_alteracao_orcamentaria/RTT'.$rtt."-".$exercicio.'.pdf');
-				$mpdf->Output();
+				//$mpdf->Output('files/formularios_alteracao_orcamentaria/RTT'.$rtt."-".$exercicio.'.pdf');
+				//$mpdf->Output();
+
+				$mpdf->Output('RTT'.$rtt."-".$exercicio.'.pdf','D'); 
 
 				
 
@@ -2640,5 +2825,950 @@ class OrcamentoController extends Controller
 		return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
 	
 	}
+
+	// renderiza pdf e resgata dados das tabelas
+	public function visualizar_pdf(Request $request)
+    {
+		
+		//pega os dados na tabela dados_alteracao_orcamentarias
+		$formulario =  DadosAlteracaoOrcamentaria::whereRaw('codigo_formulario ="'.$request->formulario_codigo.'" ')->get();
+		
+		//define o tipo de formulário
+		$tipo_alteracao =substr($request->formulario_codigo, 0, 3);
+	
+		$acao = "";
+		$pesquisaFeita = "";
+		$exercicio = date("Y"); 
+		$mensagem="";
+		$exercicioLei = $exercicio-1;
+		
+		//Verifica em qual secretaria o usuário esta logado
+		$id=Auth::user()->id;
+		$access = Access::where('user_id', $id)->get()->last();
+		$secretaria = $access['secretaria'];
+		
+		//Antes da geração de qualquer formulário para o novo exercício é obrigatório constar na tabela Legislação o número da LOA e da LDO.
+		$loa = Legislacao::whereRaw('classificacao = "LOA" and ano ="'.$exercicioLei.'" ')->first("numero");
+		$ldo = Legislacao::whereRaw('classificacao = "LDO" and ano ="'.$exercicioLei.'" ')->first("numero");
+		
+		if($loa == null || $ldo == null){
+			$mensagem="É necessário ter registrado na base de dados a Lei de Diretrizes Orçamentárias e a Lei Orçamentária Anual do exercício corrente, para efetivar o pedido de alteração orçamentária. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
+			return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
+		}
+		else{
+
+		}
+
+
+		
+		if($tipo_alteracao == "CAS")
+		{
+		
+			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
+			
+			$pre_total = 0;
+		
+			$cas = $request->formulario_codigo;
+			
+
+			$tipo_suplementacao1 = "";
+			$tipo_suplementacao2 = "";
+			$tipo_suplementacao3 = "";
+
+			//armazena a quantidade de dotacoes para suplmentação, anulação, superávit e excesso
+			$sup_codigo_dotacao = 0;
+			$anl_codigo_dotacao = 0;
+			$spt_codigo_dotacao = 0;
+			$exc_codigo_dotacao = 0;
+			foreach($formulario as $form)
+			{
+				if($form->acao == "SUPLEMENTAÇÃO")
+				{
+					$sup_codigo_dotacao = $sup_codigo_dotacao + 1;
+					$pre_total = $pre_total + $form->valor;
+				}
+				else if($form->acao == "ANULAÇÃO")
+				{
+					$tipo_suplementacao1 = "Anulação";
+					$anl_codigo_dotacao = $anl_codigo_dotacao + 1;
+				}
+				else if($form->acao == "SUPERÁVIT FINANCEIRO")
+				{
+					$tipo_suplementacao2 = "Superávit Financeiro";
+					$spt_codigo_dotacao = $spt_codigo_dotacao + 1 ;
+				}
+				else if($form->acao == "EXCESSO DE ARRECADAÇÃO")
+				{
+					$tipo_suplementacao3 = "Excesso de Arrecadação";
+					$exc_codigo_dotacao = $exc_codigo_dotacao + 1;
+				}
+
+				
+			}
+
+			$total = number_format($pre_total,2,",",".");
+
+			$html = '
+					<html>
+					<head>
+					<style>
+				
+					
+						@page{
+						margin-right: 0.60cm;
+						margin-left: 0.60cm;
+						margin-top: 1cm;
+						margin-bottom: 1cm;
+						
+						overflow:auto;
+				
+						background:{{url("img/pdf_backgroundBorder.png ")}};
+						background-repeat: no-repeat;
+					
+						
+						}
+					</style>
+					</head>
+
+								<body class="page">
+									<div>
+										<div>
+											<div>
+												<div style="display:table-cell; vertical-align:middle; text-align:center; padding:5px">
+													<br>
+													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
+													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>CRÉDITO ADICIONAL SUPLEMENTAR</b></h3>
+													<h4 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
+													<h6 style="line-height: 0.05; font-family:arial">'.$tipo_suplementacao1.'</h6>
+													<h6 style="line-height: 0.05; font-family:arial">'.$tipo_suplementacao2.'</h6>
+													<h6 style="line-height: 0.05; font-family:arial">'.$tipo_suplementacao3.'</h6>
+													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$ldo->numero.'/'.$exercicioLei.'</p>									
+												</div>
+												<div><!--
+													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
+														<tr>
+															<td style="text-align:right">
+															<b>DATA DA SOLICITAÇÃO:</b>
+															</td>
+															<td >
+															'.$request->data.'
+															</td>
+															<td style="text-align:right">
+															<b>INSTRUMENTO ADMINISTRATIVO: </b>
+															</td>
+															<td>
+															
+															</td>
+														</tr>	
+													</table>
+													-->
+													<h4 class="title" style="text-align: center; font-family: Arial;"><b>SUPLEMENTAÇÃO</b></h4>
+													<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
+														<thead>
+															<tr style="height:100px;  background-color:#E9EEF3; border-color:#000">
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 150px; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 110px; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000"><b>Dotação</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000"><b>Justificativa</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 20px; line-height: 1.5; text-align:center; color:#000"><b></b></p></th>
+															</tr>
+														</thead>
+														<tbody>';
+														
+														if($sup_codigo_dotacao > 0)
+														{
+														
+															for($i=0; $i < count($formulario); $i++)
+																{
+																	
+																if($formulario[$i]['acao'] =="SUPLEMENTAÇÃO")
+																{
+																	
+																	$html .= '<tr style="height:100px;">
+																			<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['unidade_executora'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['classificacao_funcional_programatica'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['natureza_de_despesa'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['vinculo'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['dotacao'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">R$'.number_format($formulario[$i]['valor'],2,",",".").'</div></td>
+																			<td style="border-top:dotted;border-width:1px; width:200;text-align: center;"><div class="form-control" style="width:100%; height:40px; font-family:arial">'.strtoupper($formulario[$i]['justificativa_recurso']).'</div></td>
+																			<td style="border-top:dotted;border-width:1px;"></td>
+																			</tr>';
+																}
+															};
+															
+														}
+														else
+														{
+														
+														};
+														
+						
+														
+													$html .='</tbody>
+													</table>';
+													
+													if(!empty($anl_codigo_dotacao))
+													{
+				
+														$html .='<h4 class="title" style="text-align: center; font-family: Arial;"><b>ANULAÇÃO</b></h4>
+														<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
+															<thead>
+																<tr style="height:100px;  background-color:#F5E3E3; border-color:#000">
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 150px; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 110px; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000"><b>Dotação</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000"><b>Justificativa</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 20px; line-height: 1.5; text-align:center; color:#000"><b></b></p></th>
+																</tr>
+															</thead>
+															<tbody>';
+														
+															if($anl_codigo_dotacao > 0)
+															{
+																
+																for($i=0; $i < count($formulario); $i++)
+																	{
+																	if($formulario[$i]['acao'] =="ANULAÇÃO")
+																	{
+																		$html .= '<tr style="height:100px;">
+																			<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['unidade_executora'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['classificacao_funcional_programatica'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['natureza_de_despesa'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['vinculo'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['dotacao'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">R$'.number_format($formulario[$i]['valor'],2,",",".").'</div></td>
+																			<td style="border-top:dotted;border-width:1px; width:200;text-align: center;"><div class="form-control" style="width:100%; height:40px; font-family:arial">R$'.strtoupper($formulario[$i]['justificativa_recurso']).'</div></td>
+																			<td style="border-top:dotted;border-width:1px;"></td>
+																			</tr>';
+																	}
+																};
+																
+															}
+															else
+															{
+															
+															};
+															
+															
+															
+														$html .='</tbody>
+														
+													
+														
+													</table>';
+													};
+													
+													if(!empty($spt_codigo_dotacao))
+													{
+													
+													$html .= '
+													<h4 class="title" style="text-align: center; font-family: Arial;"><b>SUPERÁVIT FINANCEIRO</b></h4>
+														<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
+															<thead>
+																<tr style="height:100px;  background-color:#F5E3E3; border-color:#000">
+																	<th style="width:200px"><p style="text-transform: uppercase;font-family:arial; font-size:14px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></p></th>
+																	<th style="width:550px"><p style="text-transform: uppercase;font-family:arial; font-size:14px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Recurso</b></p></th>
+																</tr>
+															</thead>
+															<tbody>';
+															
+															
+															if($spt_codigo_dotacao > 0)
+															{
+																
+																for($i=0; $i < count($formulario); $i++)
+																	{
+																	if($formulario[$i]['acao'] == "SUPERÁVIT FINANCEIRO")
+																	{																	
+																		$html .= 	'<tr style="height:100px; ">
+																						<td style="border-right:dotted;border-top:dotted;border-width:1px; width:500px;text-align: center;"><p style="text-transform: uppercase;font-family:arial; font-size:17px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000">'.$formulario[$i]['valor'].'</p></td>
+																						<td style="border-top:dotted;border-width:1px; width:500px;text-align: center;"><p style="text-transform: uppercase;font-family:arial; font-size:17px; flex-wrap:nowrap; display: inline-block; width: 450px; line-height: 1.5; text-align:center; color:#000">R$'.number_format($formulario[$i]['valor'],2,",",".").'</p></td>
+																					</tr>';
+																	}
+																};
+																
+															}
+															else
+															{
+															
+															};
+															
+															
+																
+														$html .='</tbody>
+														</table>';
+													};
+													
+													if(!empty($exc_codigo_dotacao))
+													{
+													
+													$html .= '
+													<h4 class="title" style="text-align: center; font-family: Arial;"><b>EXCESSO DE ARRECADAÇÃO</b></h4>
+														<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
+															<thead>
+																<tr style="height:100px;  background-color:#F5E3E3; border-color:#000">
+																	<th style="width:200px"><p style="text-transform: uppercase;font-family:arial; font-size:14px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></p></th>
+																	<th style="width:550px"><p style="text-transform: uppercase;font-family:arial; font-size:14px; flex-wrap:nowrap; display: inline-block; width: 450px; line-height: 1.5; text-align:center; color:#000"><b>Recurso</b></p></th>
+																</tr>
+															</thead>
+															<tbody>';
+															
+															
+															if($exc_codigo_dotacao > 0)
+															{
+																
+																for($i=0; $i < count($formulario); $i++)
+																	{
+																	if($formulario[$i]['acao'] == "EXCESSO DE ARRECADAÇÃO")
+																	{
+																		$html .= 	'<tr style="height:100px; ">
+																						<td style="border-right:dotted;border-top:dotted;border-width:1px; width:500px;text-align: center;"><p style="text-transform: uppercase;font-family:arial; font-size:17px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000">'.$formulario[$i]['valor'].'</p></td>
+																						<td style="border-top:dotted;border-width:1px; width:500px;text-align: center;"><p style="text-transform: uppercase;font-family:arial; font-size:17px; flex-wrap:nowrap; display: inline-block; width: 450px; line-height: 1.5; text-align:center; color:#000">R$'.number_format($formulario[$i]['valor'],2,",",".").'</p></td>
+																					</tr>';
+																	}
+																};
+																
+															}
+															else
+															{
+															
+															};
+															
+															
+																
+														$html .='</tbody>
+														</table>';
+													};
+														
+													
+													$html .= '
+													<br>
+													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:14px;">
+														<tr>
+															<td style="text-align:right">
+															<b>TOTAL DA ALTERAÇÃO ORÇAMENTÁRIA:</b>
+															</td>
+															<td >
+															R$ '.$total.'
+															</td>
+															
+														</tr>	
+													</table>
+													<table width="100%">
+														<tr >
+															<td style="text-align:right">
+																<br>
+																<br>
+																<br>
+																<br>
+															</td>
+														</tr>	
+													</table>
+													<br>
+													
+												</div>
+												<br>
+												<br>
+											</div>
+										</div>
+									</div>
+
+					</body>
+					</html>';
+					
+			$mpdf->WriteHTML($html);
+			$gestores =  User::where("secretaria", "=" , $secretaria)->where("isAdmin", "=", "2")->get();
+			$secretario = User::where("secretaria", "=" , $secretaria)->where("isAdmin", "=", "1")->get();	
+		
+			if(count($secretario)<0){
+				
+				$mensagem="A Unidade Orçamentária precisa ter cadastrado secretário(a) responsável pela pasta. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
+				return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
+			}
+			else if(count($secretario)>=1 && count($gestores)<1)
+			{
+				$mpdf->SetHTMLFooter('
+
+				<table align="center" width="50%" style="">											
+					<tr style="text-align:center">
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						NOME<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+						<td style="width:50px">
+						</td>
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						NOME<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+						
+					</tr>
+				</table>
+				<br>
+				<br>
+				<br>
+				<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+					<tr style="text-align:center">
+						<td style="text-align:center">
+						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+						SECRETARIO(A) <br>
+						Data______/______/_______
+						</td>
+					</tr>
+				</table>
+		
+			<br>');
+			}
+			else if(count($secretario)>=1 && count($gestores)==1){
+				
+				$mpdf->SetHTMLFooter('
+													
+				<table align="center" width="50%" style="">											
+					<tr style="text-align:center">
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+						<td style="width:50px">
+						</td>
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						NOME<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+					</tr>
+				</table>
+				<br>
+				<br>
+				<br>
+				<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+					<tr style="text-align:center">
+						<td style="text-align:center">
+						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+						SECRETARIO(A) <br>
+						Data______/______/_______
+						</td>
+					</tr>
+				</table>
+		
+			<br>');
+			}
+			else if(count($secretario)>=1 && count($gestores)>=1){
+				
+				$mpdf->SetHTMLFooter('
+														
+					<table align="center" width="50%" style="">											
+						<tr style="text-align:center">
+							<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+							'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+							GESTOR(A) ORÇAMENTÁRIO(A)
+							</td>
+							<td style="width:50px">
+							</td>
+							<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+							'.strtoupper($gestores[1]['name']).' '.strtoupper($gestores[1]['sobrenome']).'<br>
+							GESTOR(A) ORÇAMENTÁRIO(A)
+							</td>
+							
+						</tr>
+					</table>
+					<br>
+					<br>
+					<br>
+					<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+						<tr style="text-align:center">
+							<td style="text-align:center">
+							'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+							SECRETARIO(A) <br>
+							Data______/______/_______
+							</td>
+						</tr>
+					</table>
+			
+				<br>');
+			}
+			else{
+				
+			};		
+	
+				
+			$mpdf->Output('files/formularios_alteracao_orcamentaria/CAS.pdf');	
+			
+			
+		}
+		else if ($tipo_alteracao == "RTT")
+		{
+			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
+
+			$pre_total = 0;
+		
+			$rtt = $request->formulario_codigo;
+			
+
+			$tipo_suplementacao1 = "";
+			$tipo_suplementacao2 = "";
+			$tipo_suplementacao3 = "";
+
+			//armazena a quantidade de dotacoes para suplmentação, anulação, superávit e excesso
+			$sup_codigo_dotacao = 0;
+			$rmj_codigo_dotacao = 0;
+			$tnp_codigo_dotacao = 0;
+			$tnf_codigo_dotacao = 0;
+			foreach($formulario as $form)
+			{
+				if($form->acao == "SUPLEMENTAÇÃO")
+				{
+					$sup_codigo_dotacao = $sup_codigo_dotacao + 1;
+					$pre_total = $pre_total + $form->valor;
+				}
+				else if($form->acao == "REMANEJAMENTO")
+				{
+					$tipo_suplementacao1 = "Remanejamento";
+					$rmj_codigo_dotacao = $rmj_codigo_dotacao + 1;
+				}
+				else if($form->acao == "TRANSPOSIÇÃO")
+				{
+					$tipo_suplementacao2 = "Transposição";
+					$tnp_codigo_dotacao = $tnp_codigo_dotacao + 1 ;
+				}
+				else if($form->acao == "TRANSFERÊNCIA")
+				{
+					$tipo_suplementacao3 = "Transferência";
+					$tnf_codigo_dotacao = $tnf_codigo_dotacao + 1;
+				}
+			}
+			
+			$total = number_format($request->total,2,",",".");
+
+			$html = '
+					<html>
+					<head>
+					<style>
+				
+					
+						@page{
+						margin-right: 0.60cm;
+						margin-left: 0.60cm;
+						margin-top: 1cm;
+						margin-bottom: 1cm;
+						
+						overflow:auto;
+				
+						background:{{url("img/pdf_backgroundBorder.png ")}};
+						background-repeat: no-repeat;
+					
+						
+						}
+					</style>
+					</head>
+
+								<body class="page">
+									<div>
+										<div>
+											<div>
+												<div style="display:table-cell; vertical-align:middle; text-align:center; padding:5px">
+													<br>
+													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
+													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA</b></h3>
+													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
+													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
+													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao2.'</h6>
+													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
+													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$loa->numero.'/'.$exercicioLei.'</p>									
+												</div>
+												<div><!--
+													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
+														<tr>
+															<td style="text-align:right">
+															<b>DATA DA SOLICITAÇÃO:</b>
+															</td>
+															<td >
+															'.$request->data.'
+															</td>
+															<td style="text-align:right">
+															<b>INSTRUMENTO ADMINISTRATIVO: </b>
+															</td>
+															<td>
+															'.$request->instrumento.' '.$request->numeroInstrumento.'
+															</td>
+														</tr>	
+													</table>-->
+													<h4 class="title" style="text-align: center; font-family: Arial;"><b>SUPLEMENTAÇÃO</b></h4>
+													<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
+														<thead>
+															<tr style="height:100px;  background-color:#E9EEF3; border-color:#000">
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 150px; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 110px; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000"><b>Dotação</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000"><b>Justificativa</b></p></th>
+																<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 20px; line-height: 1.5; text-align:center; color:#000"><b></b></p></th>
+															</tr>
+														</thead>
+														<tbody>';
+														
+														if($sup_codigo_dotacao > 0)
+														{
+														
+															for($i=0; $i < count($formulario); $i++)
+																{
+																	
+																if($formulario[$i]['acao'] =="SUPLEMENTAÇÃO")
+																{
+																	
+																	$html .= '<tr style="height:100px;">
+																			<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['unidade_executora'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['classificacao_funcional_programatica'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['natureza_de_despesa'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['vinculo'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['dotacao'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">R$'.number_format($formulario[$i]['valor'],2,",",".").'</div></td>
+																			<td style="border-top:dotted;border-width:1px; width:200;text-align: center;"><div class="form-control" style="width:100%; height:40px; font-family:arial">'.strtoupper($formulario[$i]['justificativa_recurso']).'</div></td>
+																			<td style="border-top:dotted;border-width:1px;"></td>
+																			</tr>';
+																}
+															};
+															
+														}
+														else
+														{
+														
+														};
+														
+													$html .='</tbody>
+													</table>';
+													
+													if(!empty($rmj_codigo_dotacao))
+													{
+														
+														$html .='<h4 class="title" style="text-align: center; font-family: Arial;"><b>REMANEJAMENTO</b></h4>
+														<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
+															<thead>
+																<tr style="height:100px;  background-color:#F5E3E3; border-color:#000">
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 150px; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 110px; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000"><b>Dotação</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000"><b>Justificativa</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 20px; line-height: 1.5; text-align:center; color:#000"><b></b></p></th>
+																</tr>
+															</thead>
+															<tbody>';
+														
+															if($rmj_codigo_dotacao > 0)
+															{
+																
+															
+																for($i=0; $i < count($formulario); $i++)
+																	{
+																	if($formulario[$i]['acao'] == "REMANEJAMENTO")
+																	{
+																		
+																		$html .= '<tr style="height:100px;">
+																			<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['unidade_executora'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['classificacao_funcional_programatica'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['natureza_de_despesa'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['vinculo'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['dotacao'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">R$'.number_format($formulario[$i]['valor'],2,",",".").'</div></td>
+																			<td style="border-top:dotted;border-width:1px; width:200;text-align: center;"><div class="form-control" style="width:100%; height:40px; font-family:arial">'.strtoupper($formulario[$i]['justificativa_recurso']).'</div></td>
+																			<td style="border-top:dotted;border-width:1px;"></td>
+																			</tr>';
+																	}
+																};
+																
+															}
+															else
+															{
+															
+															};
+															
+							
+															
+														$html .='</tbody>
+														
+													
+														
+													</table>';
+													};
+												
+													if(!empty($tnp_codigo_dotacao))
+													{
+														
+														$html .='<h4 class="title" style="text-align: center; font-family: Arial;"><b>TRANSPOSIÇÃO</b></h4>
+														<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
+															<thead>
+																<tr style="height:100px;  background-color:#F5E3E3; border-color:#000">
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 150px; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 110px; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000"><b>Dotação</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000"><b>Justificativa</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 20px; line-height: 1.5; text-align:center; color:#000"><b></b></p></th>
+																</tr>
+															</thead>
+															<tbody>';
+															
+															if($tnp_codigo_dotacao > 0)
+															{
+																
+															
+																for($i=0; $i < count($formulario); $i++)
+																	{
+																	if($formulario[$i]['acao'] == "TRANSPOSIÇÃO")
+																	{
+																		
+
+																		$html .= '<tr style="height:100px;">
+																			<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['unidade_executora'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['classificacao_funcional_programatica'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['natureza_de_despesa'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['vinculo'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['dotacao'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">R$'.number_format($formulario[$i]['valor'],2,",",".").'</div></td>
+																			<td style="border-top:dotted;border-width:1px; width:200;text-align: center;"><div class="form-control" style="width:100%; height:40px; font-family:arial">'.strtoupper($formulario[$i]['justificativa_recurso']).'</div></td>
+																			<td style="border-top:dotted;border-width:1px;"></td>
+																			</tr>';
+																	}
+																};
+																
+															}
+															else
+															{
+															
+															};
+															
+															
+																
+														$html .='</tbody>
+														</table>';
+													};
+												
+													if(!empty($tnf_codigo_dotacao))
+													{
+														
+														$html .='<h4 class="title" style="text-align: center; font-family: Arial;"><b>TRANSFERÊNCIA</b></h4>
+														<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
+															<thead>
+																<tr style="height:100px;  background-color:#F5E3E3; border-color:#000">
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Unidade Executora</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 150px; line-height: 1.5; text-align:center; color:#000"><b>Classificação Funcional Programática</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 110px; line-height: 1.5; text-align:center; color:#000"><b>Natureza De Despesa</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Vínculo</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 50px; line-height: 1.5; text-align:center; color:#000"><b>Dotação</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 100px; line-height: 1.5; text-align:center; color:#000"><b>Valor</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 200px; line-height: 1.5; text-align:center; color:#000"><b>Justificativa</b></p></th>
+																	<th><p style="text-transform: uppercase;font-family:arial; font-size:12px; flex-wrap:nowrap; display: inline-block; width: 20px; line-height: 1.5; text-align:center; color:#000"><b></b></p></th>
+																</tr>
+															</thead>
+															<tbody>';
+														
+															if($tnf_codigo_dotacao > 0)
+															{
+																
+															
+																for($i=0; $i < count($formulario); $i++)
+																	{
+																	if($formulario[$i]['acao'] == "TRANSFERÊNCIA")
+																	{
+																		
+
+																		$html .= '<tr style="height:100px;">
+																			<td style="border-right:dotted; border-top:dotted;border-width:1px; width:100px;text-align: center;"><div class="form-control" style="flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['unidade_executora'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:150px;text-align: center;"><div class="form-control" style=" flex-wrap:nowrap; display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['classificacao_funcional_programatica'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['natureza_de_despesa'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['vinculo'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">'.$formulario[$i]['dotacao'].'</div></td>
+																			<td style="border-right:dotted;border-top:dotted;border-width:1px; width:110px;text-align: center;"><div class="form-control" style="display:hidden; border:none; background:none; color:#000; font-weight:normal; height:auto; width:auto; text-align:center; font-family:arial">R$'.number_format($formulario[$i]['valor'],2,",",".").'</div></td>
+																			<td style="border-top:dotted;border-width:1px; width:200;text-align: center;"><div class="form-control" style="width:100%; height:40px; font-family:arial">'.strtoupper($formulario[$i]['justificativa_recurso']).'</div></td>
+																			<td style="border-top:dotted;border-width:1px;"></td>
+																			</tr>';
+																	}
+																};
+																
+															}
+															else
+															{
+															
+															};
+															
+							
+															
+														$html .='</tbody>
+														</table>';
+													};
+													
+														
+													
+													$html .= '
+													<br>
+													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:14px;">
+														<tr>
+															<td style="text-align:right">
+															<b>TOTAL DA ALTERAÇÃO ORÇAMENTÁRIA:</b>
+															</td>
+															<td >
+															R$ '.$total.'
+															</td>
+															
+														</tr>	
+													</table>
+													<table width="100%">
+														<tr >
+															<td style="text-align:right">
+																<br>
+																<br>
+																<br>
+																<br>
+															</td>
+														</tr>	
+													</table>
+													<br>
+													
+												</div>
+												<br>
+												<br>
+											</div>
+										</div>
+									</div>
+
+					</body>
+					</html>';
+			
+			$mpdf->WriteHTML($html);
+			$gestores =  User::where("secretaria", "=" , $secretaria)->where("isAdmin", "=", "2")->get();
+			$secretario = User::where("secretaria", "=" , $secretaria)->where("isAdmin", "=", "1")->get();	
+			
+			if(count($secretario)<0){
+				
+				$mensagem="A Unidade Orçamentária precisa ter cadastrado secretário(a) responsável pela pasta. Contate a Coordenadoria de Gestão e Avaliação Orçamentária.";
+				return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
+			}
+			else if(count($secretario)>=1 && count($gestores)<1)
+			{
+				$mpdf->SetHTMLFooter('
+
+				<table align="center" width="50%" style="">											
+					<tr style="text-align:center">
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						NOME<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+						<td style="width:50px">
+						</td>
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						NOME<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+						
+					</tr>
+				</table>
+				<br>
+				<br>
+				<br>
+				<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+					<tr style="text-align:center">
+						<td style="text-align:center">
+						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+						SECRETARIO(A) <br>
+						Data______/______/_______
+						</td>
+					</tr>
+				</table>
+		
+			<br>');
+			}
+			else if(count($secretario)>=1 && count($gestores)==1){
+				
+				$mpdf->SetHTMLFooter('
+													
+				<table align="center" width="50%" style="">											
+					<tr style="text-align:center">
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+						<td style="width:50px">
+						</td>
+						<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+						NOME<br>
+						GESTOR(A) ORÇAMENTÁRIO(A)
+						</td>
+					</tr>
+				</table>
+				<br>
+				<br>
+				<br>
+				<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+					<tr style="text-align:center">
+						<td style="text-align:center">
+						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+						SECRETARIO(A) <br>
+						Data______/______/_______
+						</td>
+					</tr>
+				</table>
+		
+			<br>');
+			}
+			else if(count($secretario)>=1 && count($gestores)>=1){
+				
+				$mpdf->SetHTMLFooter('
+														
+					<table align="center" width="50%" style="">											
+						<tr style="text-align:center">
+							<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+							'.strtoupper($gestores[0]['name']).' '.strtoupper($gestores[0]['sobrenome']).'<br>
+							GESTOR(A) ORÇAMENTÁRIO(A)
+							</td>
+							<td style="width:50px">
+							</td>
+							<td style="width:300px; text-align:center; border-top:solid; border-width: 0.5px; font-size:10px;">
+							'.strtoupper($gestores[1]['name']).' '.strtoupper($gestores[1]['sobrenome']).'<br>
+							GESTOR(A) ORÇAMENTÁRIO(A)
+							</td>
+							
+						</tr>
+					</table>
+					<br>
+					<br>
+					<br>
+					<table align="center" width="50%" style="border-top:solid; border-width: 0.5px; font-size:10px;">											
+						<tr style="text-align:center">
+							<td style="text-align:center">
+							'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
+							SECRETARIO(A) <br>
+							Data______/______/_______
+							</td>
+						</tr>
+					</table>
+			
+				<br>');
+			}
+			else{
+	
+			};
+			
+				$mpdf->Output('files/formularios_alteracao_orcamentaria/RTT.pdf');	
+
+			
+		}
+	
+		return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
+	
+	}
+	
 	
 }

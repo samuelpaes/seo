@@ -231,7 +231,7 @@ background: rgba(255, 255, 255, 0.4);
 									<li><a href="{{ route('orcamento_leis_decretos') }}">Leis e Decretos</a></li>
 							</ul>
 						</li>
-
+						<!--
 						<li>
 							<input id="check03" type="checkbox" name="menu"/>
 							<div class="arrow-down" onclick="this.classList.toggle('active')">
@@ -245,7 +245,7 @@ background: rgba(255, 255, 255, 0.4);
 								<li><a href="{{ route('contabilidade_leis_decretos') }}">Leis e Decretos</a></li>
 							</ul>
 						</li>
-						
+						-->
 						<li>
 							<input id="check04" type="checkbox" name="menu"/>
 							<label for="check04">

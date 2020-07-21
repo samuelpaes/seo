@@ -104,6 +104,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('orcamento/agenda_orcamentaria', 'OrcamentoController@agenda_orcamentaria', function () {})->name('orcamento_agenda_orcamentaria');
 	Route::any('orcamento/show', 'OrcamentoController@show', function () {})->name('orcamento_show');
 	Route::any('orcamento/criar_pdf', 'OrcamentoController@criar_pdf', function () {})->name('orcamento_criar_pdf');
+	Route::any('orcamento/visualizar_pdf', 'OrcamentoController@visualizar_pdf', function () {})->name('visualizar_criar_pdf');
 	
 	//Route::any('orcamento/formularios/credito_adicional_suplementar', 'OrcamentoController@formularios', function () {})->name('orcamento_formularios');
 });

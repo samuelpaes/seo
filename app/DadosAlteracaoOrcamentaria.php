@@ -9,7 +9,7 @@ class DadosAlteracaoOrcamentaria extends Model
 {
     use Notifiable;
      protected $fillable = [
-        'codigo_formulario', 'acao', 'unidade_executora', 'classificacao_funcional_programatica', 'natureza_de_despesa', 'vinculo','dotacao', 'valor', 'justificativa_recurso',
+        'codigo_formulario', 'acao', 'unidade_executora', 'classificacao_funcional_programatica', 'natureza_de_despesa', 'vinculo','codigo_dotacao', 'valor', 'justificativa_recurso',
     ];
 
 }
