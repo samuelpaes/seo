@@ -752,7 +752,8 @@ $i++;
                                     </div>                            
                                     
                                     <input name="secretaria" value="{{ Auth::user()->secretaria }}" class="form-control" id="secretaria" type="hidden"></input>
-                                    <input name="tipo_alteracao" type="hidden" value="CREDITO ADICIONAL SUPLEMENTAR"></input>
+                                    <input name="formulario_codigo" value="{{ $formulario_codigo }}" class="form-control" id="formulario_codigo" type="hidden"></input>
+                                    <input name="tipo_alteracao" type="hidden" value="CRÉDITO ADICIONAL SUPLEMENTAR"></input>
                                     <input name="instrumento" class="form-control" id="instrumento2" type="hidden"></input>
                                     <input name="numeroInstrumento" class="form-control" id="numeroInstrumento2" type="hidden"></input>
                                     <input name="data" class="form-control" id="data2" type="hidden"></input>

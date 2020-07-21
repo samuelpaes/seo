@@ -26,6 +26,7 @@ class OrcamentoController extends Controller
 {
      public function formularios(Request $request)
     {
+		
 		//return($request);
 		$total_suplementar=0;
 		$total_anular=0;
@@ -64,21 +65,20 @@ class OrcamentoController extends Controller
 		
 		if($acao == 'criar')
 		{
-			
+			$formulario_codigo = "";
 			if($formulario == "credito_adicional_suplementar")
 			{
-				
 				$anulacao = false;
 				$superavit = false;
 				$excesso = false;
-				return view ('orcamento/formularios/credito_adicional_suplementar')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria);
+				return view ('orcamento/formularios/credito_adicional_suplementar')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria)->with("formulario_codigo", $formulario_codigo);
 			}
 			else if ($formulario == "remanejamento_transposicao_transferencia")
 			{
 				$remanejamento = false;
 				$transposicao = false;
 				$transferencia = false;
-				return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("pesquisaFeita", $pesquisaFeita)->with("secretaria", $secretaria);
+				return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("pesquisaFeita", $pesquisaFeita)->with("secretaria", $secretaria)->with("formulario_codigo", $formulario_codigo);
 			}
 		}
 		else if($acao == 'editar')
@@ -131,7 +131,7 @@ class OrcamentoController extends Controller
 		
 
 			$formularios =  DadosAlteracaoOrcamentaria::whereRaw('codigo_formulario ="'.$request->formulario_codigo.'" ')->get();
-		
+			$formulario_codigo = $request->formulario_codigo;
 			if($formulario == "credito_adicional_suplementar" || $formulario == "CRÉDITO ADICIONAL SUPLEMENTAR")
 			{
 				
@@ -178,27 +178,112 @@ class OrcamentoController extends Controller
 					{
 						$superavit = true;
 						
-						$a1=array("valor"=>$form->valor,"recurso"=>$form->justificativa_recurso);
-						$a3 = array_merge($a1,$superavit_valor_recurso);
-
+						$superavit_valor_recurso['valor'][] = $form->valor;
+						$superavit_valor_recurso['recurso'][] = $form->justificativa_recurso;
+						
 
 					
 					}
 					else if($form->acao == "EXCESSO DE ARRECADAÇÃO")
 					{
 						$excesso = true;
+
+						$excesso_valor_recurso['valor'][] = $form->valor;
+						$excesso_valor_recurso['recurso'][] = $form->justificativa_recurso;
 					}
 				}
 				
-				return($a3);
-				return view ('orcamento/formularios/credito_adicional_suplementar')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("dotacoes_anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria)->with("dotacoes_suplementacao_vinculos", $dotacoes_suplementacao_vinculos)->with("dotacoes_anulacao_vinculos", $dotacoes_anulacao_vinculos);
+				
+				return view('orcamento/formularios/credito_adicional_suplementar')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("dotacoes_anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria)->with("dotacoes_suplementacao_vinculos", $dotacoes_suplementacao_vinculos)->with("dotacoes_anulacao_vinculos", $dotacoes_anulacao_vinculos)->with("formulario_codigo", $formulario_codigo);
 			}
 			else if ($formulario == "remanejamento_transposicao_transferencia" || $formulario == "REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA")
 			{
+
 				$remanejamento = false;
 				$transposicao = false;
 				$transferencia = false;
-				return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("dotacoes_anulacao", $dotacoes_anulacao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("pesquisaFeita", $pesquisaFeita)->with("secretaria", $secretaria);
+
+				foreach($formularios as $form)
+				{
+					if($form->acao == "SUPLEMENTAÇÃO")
+					{
+						$dotacoes_suplementacao[] = $form;
+
+						//alterar a key do array para ser reconhecido no html
+						$form['justificativa'] = $form['justificativa_recurso'];
+						unset($form['justificativa_recurso']);
+						
+						//resultado da consulta de vinculos no banco de dados
+						$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $form->codigo_dotacao)->get();;
+						// converte o objeto em array
+						$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+						// remove os valore duplicados
+						$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+						//copia o resultado para o objeto de vinculos
+						$dotacoes_suplementacao_vinculos[] = $resultadoConsulta;
+						
+					}
+					else if($form->acao == "REMANEJAMENTO")
+					{
+						$remanejamento = true;
+
+						$dotacoes_remanejamento[] = $form;
+
+						//alterar a key do array para ser reconhecido no html
+						$form['recurso'] = $form['justificativa_recurso'];
+						unset($form['justificativa_recurso']);
+						
+						//resultado da consulta de vinculos no banco de dados
+						$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $form->codigo_dotacao)->get();;
+						// converte o objeto em array
+						$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+						// remove os valore duplicados
+						$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+						//copia o resultado para o objeto de vinculos
+						$dotacoes_remanejamento_vinculos[] = $resultadoConsulta;
+					}
+					else if($form->acao == "TRANSPOSIÇÃO")
+					{
+						$transposicao = true;
+
+						$dotacoes_transposicao[] = $form;
+
+						//alterar a key do array para ser reconhecido no html
+						$form['recurso'] = $form['justificativa_recurso'];
+						unset($form['justificativa_recurso']);
+						
+						//resultado da consulta de vinculos no banco de dados
+						$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $form->codigo_dotacao)->get();;
+						// converte o objeto em array
+						$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+						// remove os valore duplicados
+						$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+						//copia o resultado para o objeto de vinculos
+						$dotacoes_transposicao_vinculos[] = $resultadoConsulta;
+					}
+					else if($form->acao == "TRANSFERÊNCIA")
+					{
+						$transferencia = true;
+
+						$dotacoes_transferencia[] = $form;
+
+						//alterar a key do array para ser reconhecido no html
+						$form['recurso'] = $form['justificativa_recurso'];
+						unset($form['justificativa_recurso']);
+						
+						//resultado da consulta de vinculos no banco de dados
+						$resultadoConsulta = SaldoDeDotacao::select('codigo_dotacao','vinculo')->where('codigo_dotacao', $form->codigo_dotacao)->get();;
+						// converte o objeto em array
+						$resultadoConsulta = json_decode(json_encode($resultadoConsulta), true);
+						// remove os valore duplicados
+						$resultadoConsulta = array_unique($resultadoConsulta, SORT_REGULAR);
+						//copia o resultado para o objeto de vinculos
+						$dotacoes_transferencia_vinculos[] = $resultadoConsulta;
+					}
+					
+				}
+				
+				return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with("dotacoes_remanejamento", $dotacoes_remanejamento)->with("dotacoes_transposicao", $dotacoes_transposicao)->with("dotacoes_transferencia", $dotacoes_transferencia)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("mensagem_dotacao", $mensagem_dotacao)->with("pesquisaFeita", $pesquisaFeita)->with("secretaria", $secretaria)->with("dotacoes_suplementacao_vinculos", $dotacoes_suplementacao_vinculos)->with("dotacoes_remanejamento_vinculos", $dotacoes_remanejamento_vinculos)->with("dotacoes_transposicao_vinculos", $dotacoes_transposicao_vinculos)->with("dotacoes_transferencia_vinculos", $dotacoes_transferencia_vinculos)->with("formulario_codigo", $formulario_codigo);;
 			}
 		}
 		else if($acao == 'pesquisar')
@@ -1747,6 +1832,7 @@ class OrcamentoController extends Controller
 	// renderiza pdf e salva dados nas tabelas
 	public function criar_pdf(Request $request)
     {
+		$formulario_codigo = $request->formulario_codigo;
 		
 		$acao = "";
 		$pesquisaFeita = "";
@@ -1773,6 +1859,7 @@ class OrcamentoController extends Controller
 		
 		if($request->tipo_alteracao == "CRÉDITO ADICIONAL SUPLEMENTAR")
 		{
+			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
 			
 			$total = number_format($request->total,2,",",".");
@@ -1866,7 +1953,7 @@ class OrcamentoController extends Controller
 
 
 																	
-
+																	
 																	//registra na base de dados dados_alteracao_orcamentarias
 																	$sup_valor = str_replace("R$","",$request->sup_valor[$i]);
 																	DadosAlteracaoOrcamentaria::create([
