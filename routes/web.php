@@ -33,7 +33,7 @@ Route::post('alterar-senha', 'UserController@updatePassword')->name('alterar-sen
 Route::post('alterar-secretaria', 'UserController@updateSecretaria')->name('alterar-secretaria');
 
 /*Rotas Natureza de Despesa*/
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'], )->group(function () {
     Route::get('natureza-de-despesa/index', 'NaturezaDeDespesaController@index', function () {});
     Route::any('natureza-de-despesa/cadastrar', 'NaturezaDeDespesaController@cadastrar', function () {})->name('cadastrarNaturezaDeDespesa');
 	Route::post('natureza-de-despesa/inserir', 'NaturezaDeDespesaController@create', function () {})->name('inserirNaturezaDeDespesa');
@@ -132,3 +132,4 @@ Route::get('/load-latest-messages', 'MessagesController@getLoadLatestMessages');
 Route::post('/send', 'MessagesController@postSendMessage');
 Route::get('/fetch-old-messages', 'MessagesController@getOldMessages');
 Route::post('/status_message', 'MessagesController@status_message')->name('status_message');
+

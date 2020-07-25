@@ -377,7 +377,7 @@ function ativarPesquisa()
 
 function abrirLegislacaoPDF(link)
 {
-	alert(link.value);
+	//alert(link.value);
 	var sub = link.value;
 	var object = "<object data=\"{FileName}\" type=\"application/pdf\"  style=\"width: 100%; margin: 0 auto;\" height=\"1000px\">";
 

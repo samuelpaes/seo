@@ -1424,6 +1424,7 @@
 			document.getElementById('anl_data2').value =document.getElementById('data').value;
 			
 			var instrumento = document.getElementById('instrumento').value;
+			//alert(instrumento);
 			document.getElementById('sup_instrumento2').value = instrumento;
 			document.getElementById('anl_instrumento2').value = instrumento;
 				

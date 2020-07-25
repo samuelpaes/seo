@@ -75,7 +75,8 @@ btnEdicao:hover{cursor: pointer}
 											<option value="" selected></option>					
 											@if(auth()->user()->isAdmin == 0)(<option value="SECRETARIA">SECRETARIA</option>@endif
 											<option value="TIPO DE FORMULARIO">TIPO DE FORMULÁRIO</option>
-											<option value="TIPO DE INSTRUMENTO">TIPO DE INSTRUMENTO</option>
+											<!--<option value="TIPO DE INSTRUMENTO">TIPO DE INSTRUMENTO</option>-->
+											<option value="STATUS">STATUS</option>
 											<option value="DATA">DATA</option>
 										</select>
 									</div>
@@ -237,6 +238,7 @@ function ativarPesquisa()
 		document.getElementById("tipoInstrumento").hidden = true;
 		document.getElementById("data").hidden = true;
 		document.getElementById("texto").hidden = true;
+		document.getElementById("status").hidden = true;
 
 		document.getElementById('filtro').value = "secretaria";
 		document.getElementById('btnPesquisar').disabled = false;
@@ -248,6 +250,7 @@ function ativarPesquisa()
 		document.getElementById("tipoInstrumento").hidden = true;
 		document.getElementById("data").hidden = true;
 		document.getElementById("texto").hidden = true;
+		document.getElementById("status").hidden = true;
 
 		document.getElementById('filtro').value = "formulario";
 		document.getElementById('btnPesquisar').disabled = false;
@@ -260,6 +263,7 @@ function ativarPesquisa()
 		document.getElementById("tipoFormulario").hidden = true;
 		document.getElementById("data").hidden = true;
 		document.getElementById("texto").hidden = false;
+		document.getElementById("status").hidden = true;
 
 		document.getElementById('filtro').value = "instrumento";
 		document.getElementById('btnPesquisar').disabled = false;
@@ -272,12 +276,26 @@ function ativarPesquisa()
 		document.getElementById("texto").hidden = true;
 		document.getElementById("tipoFormulario").hidden = true;
 		document.getElementById("tipoInstrumento").hidden = true;
+		document.getElementById("status").hidden = true;
 
 		document.getElementById('date').valueAsDate = new Date();
 
 		document.getElementById('filtro').value = "data";
 		document.getElementById('btnPesquisar').disabled = false;
 		//document.getElementById('btnPesquisar2').disabled = false;
+
+	}
+	else if(opcao == "STATUS")
+	{
+		document.getElementById("secretaria").hidden = true;
+		document.getElementById("tipoInstrumento").hidden = true;
+		document.getElementById("tipoFormulario").hidden = true;
+		document.getElementById("data").hidden = true;
+		document.getElementById("texto").hidden = true;
+		document.getElementById("status").hidden = false;
+
+		document.getElementById('filtro').value = "status";
+		document.getElementById('btnPesquisar').disabled = false;
 
 	}
 	else{
@@ -309,7 +327,7 @@ function abrirFormularioPDF(codigo_formulario, status_formulario, justificativa)
 {
 	var codigo_formulario = codigo_formulario.value;
 	var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');	
-	
+
 	//chama o controller que renderiza o pdf
     $.ajax({
         type: "POST",
@@ -494,8 +512,19 @@ function ativarBtnReprovar()
 									<option value="MEMORANDO">MEMORANDO</option>
 								</select>
 							</div>
+
+							
 							<div  class="col-md-12" style="margin-right:-4px;"  id="data"  hidden>
 								<input id="date" type="date"  name="data" class="form-control"></input>
+							</div>
+
+							<div class="col-md-12" style="margin-right:-4px;"  id="status" hidden>
+								<select class="form-control" name="status">
+									<option value="TODOS" selected>TODOS</option>
+									<option value="EM ANÁLISE">EM ANÁLISE</option>
+									<option value="APROVADO">APROVADO</option>
+									<option value="REPROVADO">REPROVADO</option>
+								</select>
 							</div>
 						</div>
 						<div class="row">	

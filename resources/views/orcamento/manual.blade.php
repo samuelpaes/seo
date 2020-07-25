@@ -28,7 +28,7 @@
 								
 								<div class="row">
 									<div class="col-md-12 text-center">
-										<a href="{{url('exported_files/manual_2019.pdf')}}" class="btn btn-white" target="_blank">Manual de Alterações Orçamentárias - 2019</a>
+										<a href="{{url('exported_files/manual_2019.pdf')}}" class="btn btn-white" target="_blank">Manual de Alterações Orçamentárias</a>
 									</div>
 								</div>	
 								<br>

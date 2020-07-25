@@ -374,6 +374,32 @@ class OrcamentoController extends Controller
 			
 				//return($formularios);	
 			}
+			else if($request->filtro == "status")
+			{	
+			
+				if(Auth::user()->isAdmin == 0)
+				{
+					if($request->status == 'TODOS')
+					{
+						$formularios[] = FormularioAlteracaoOrcamentaria::all();
+						
+					}
+					else{
+						$formularios[] = FormularioAlteracaoOrcamentaria::where('status', '=', $request->status)->get();
+					}	
+				}
+				else
+				{
+					if($request->status == 'TODOS')
+					{
+						//return($secretaria);
+						$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->get();
+					}
+					else{
+						$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('status', '=', $request->status)->get();		
+					}
+				}
+			}
 			else{
 				$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$secretaria'")->get();
 				
@@ -612,6 +638,7 @@ class OrcamentoController extends Controller
 		$unidade_orcamentaria = DB::table('unidade_orcamentarias')->where('unidade', $access['secretaria'])->value('codigo');
 		$secretaria = $access['secretaria'];;
 		
+		$formulario_codigo = $request->formulario_codigo;
 			
 		//Verifica qual o tipo de formulario
 				
@@ -907,7 +934,7 @@ class OrcamentoController extends Controller
 			asort($dotacoes_anulacao);
 			asort($dotacoes_suplementacao);
 			
-			return view ('orcamento/formularios/credito_adicional_suplementar')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria);
+			return view ('orcamento/formularios/credito_adicional_suplementar')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria)->with("formulario_codigo", $formulario_codigo);
 			
 		}
 		else if ($request->formulario =="remanejamento_transposicao_transferencia")
@@ -1572,7 +1599,7 @@ class OrcamentoController extends Controller
 			asort($dotacoes_transferencia);
 			asort($dotacoes_transposicao);
 			asort($dotacoes_remanejamento);
-			return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with("dotacoes_remanejamento", $dotacoes_remanejamento)->with('dotacoes_remanejamento_vinculos', $dotacoes_remanejamento_vinculos)->with("dotacoes_transposicao", $dotacoes_transposicao)->with('dotacoes_transposicao_vinculos', $dotacoes_transposicao_vinculos)->with("dotacoes_transferencia", $dotacoes_transferencia)->with('dotacoes_transferencia_vinculos', $dotacoes_transferencia_vinculos)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria);
+			return view ('orcamento/formularios/remanejamento_transposicao_transferencia')->with("mensagem", $mensagem)->with("acao", $acao)->with("dotacoes_suplementacao", $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with("dotacoes_remanejamento", $dotacoes_remanejamento)->with('dotacoes_remanejamento_vinculos', $dotacoes_remanejamento_vinculos)->with("dotacoes_transposicao", $dotacoes_transposicao)->with('dotacoes_transposicao_vinculos', $dotacoes_transposicao_vinculos)->with("dotacoes_transferencia", $dotacoes_transferencia)->with('dotacoes_transferencia_vinculos', $dotacoes_transferencia_vinculos)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("remanejamento", $remanejamento)->with("transposicao", $transposicao)->with("transferencia", $transferencia)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao)->with("secretaria", $secretaria)->with("formulario_codigo", $formulario_codigo);
 		}
 		
 		//return view ('orcamento/formularios')->with('dotacoes_suplementacao', $dotacoes_suplementacao)->with('dotacoes_suplementacao_vinculos', $dotacoes_suplementacao_vinculos)->with('dotacoes_anulacao', $dotacoes_anulacao)->with('dotacoes_anulacao_vinculos', $dotacoes_anulacao_vinculos)->with("mensagem", $mensagem)->with("acao", $acao)->with("total_suplementar", $total_suplementar)->with("total_anular", $total_anular)->with("anulacao", $anulacao)->with("superavit", $superavit)->with("excesso", $excesso)->with("data", $data)->with("tipoInstrumento", $tipoInstrumento)->with("numeroInstrumento", $numeroInstrumento)->with("superavit_valor_recurso", $superavit_valor_recurso)->with("excesso_valor_recurso", $excesso_valor_recurso)->with("mensagem_dotacao", $mensagem_dotacao);
@@ -1833,6 +1860,12 @@ class OrcamentoController extends Controller
 	public function criar_pdf(Request $request)
     {
 		$formulario_codigo = $request->formulario_codigo;
+
+		if(!empty($formulario_codigo))
+		{
+			$dados = DadosAlteracaoOrcamentaria::where('codigo_formulario', $formulario_codigo)->get(['id']);
+			DadosAlteracaoOrcamentaria::destroy($dados->toArray());
+		}
 		
 		$acao = "";
 		$pesquisaFeita = "";
@@ -1859,20 +1892,32 @@ class OrcamentoController extends Controller
 		
 		if($request->tipo_alteracao == "CRÉDITO ADICIONAL SUPLEMENTAR")
 		{
+			//return($request);
 			
 			$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-P']);
 			
 			$total = number_format($request->total,2,",",".");
 
-			//verifica quantos formularios de Credito Adicional Complementar Existem
-			$cas = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
-			$cas = $cas+1;
-		
-			if($cas<10)
-			{
-				$cas = '0'.$cas;
-			}
+			//verifica se o formulário esta sendo editado ou é um novo
+			if(empty($formulario_codigo))
+				{
+				//verifica quantos formularios de Credito Adicional Complementar Existem
+				$cas = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
+				$cas = $cas+1;
+			
+				if($cas<10)
+				{
+					$cas = '0'.$cas;
+				}
 
+				$cas  = "CAS".$cas."-".$exercicio;
+			}
+			else{
+			
+				$cas = $formulario_codigo;
+			}
+			
+		
 			$html = '
 					<html>
 					<head>
@@ -1883,7 +1928,7 @@ class OrcamentoController extends Controller
 						margin-right: 0.60cm;
 						margin-left: 0.60cm;
 						margin-top: 1cm;
-						margin-bottom: 1cm;
+						margin-bottom: 2cm;
 						
 						overflow:auto;
 				
@@ -1901,7 +1946,7 @@ class OrcamentoController extends Controller
 											<div>
 												<div style="display:table-cell; vertical-align:middle; text-align:center; padding:5px">
 													<br>
-													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
+													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:65%">
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>CRÉDITO ADICIONAL SUPLEMENTAR</b></h3>
 													<h4 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
@@ -1909,7 +1954,7 @@ class OrcamentoController extends Controller
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
 													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$ldo->numero.'/'.$exercicioLei.'</p>									
 												</div>
-												<div><!--
+												<div>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
 														<tr>
 															<td style="text-align:right">
@@ -1919,13 +1964,19 @@ class OrcamentoController extends Controller
 															'.$request->data.'
 															</td>
 															<td style="text-align:right">
-															<b>INSTRUMENTO ADMINISTRATIVO: </b>
+															<b>PROCESSO: </b>
 															</td>
 															<td>
 															'.$request->instrumento.' '.$request->numeroInstrumento.'
 															</td>
+															<td style="text-align:right">
+															<b>CÓDIGO: </b>
+															</td>
+															<td>
+															'.$cas.'
+															</td>
 														</tr>	
-													</table>-->
+													</table>
 													<h4 class="title" style="text-align: center; font-family: Arial;"><b>SUPLEMENTAÇÃO</b></h4>
 													<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
 														<thead>
@@ -1949,15 +2000,10 @@ class OrcamentoController extends Controller
 																{
 																if($request->sup_vinculo[$i] !=null)
 																{
-																	
-
-
-																	
-																	
 																	//registra na base de dados dados_alteracao_orcamentarias
 																	$sup_valor = str_replace("R$","",$request->sup_valor[$i]);
 																	DadosAlteracaoOrcamentaria::create([
-																		'codigo_formulario' => "CAS".$cas."-".$exercicio,
+																		'codigo_formulario' => $cas,
 																		'acao' => 'SUPLEMENTAÇÃO',
 																		'unidade_executora' => $request->sup_unidade_executora[$i],
 																		'classificacao_funcional_programatica' => $request->sup_classificacao_funcional[$i],	
@@ -2023,7 +2069,7 @@ class OrcamentoController extends Controller
 																		//registra na base de dados dados_alteracao_orcamentarias
 																		$anl_valor = str_replace("R$","",$request->anl_valor[$i]);
 																		DadosAlteracaoOrcamentaria::create([
-																			'codigo_formulario' => "CAS".$cas."-".$exercicio,
+																			'codigo_formulario' => $cas,
 																			'acao' => 'ANULAÇÃO',
 																			'unidade_executora' => $request->anl_unidade_executora[$i],
 																			'classificacao_funcional_programatica' => $request->anl_classificacao_funcional[$i],	
@@ -2087,7 +2133,7 @@ class OrcamentoController extends Controller
 																		//registra na base de dados dados_alteracao_orcamentarias
 																		$spt_valor = str_replace("R$","",$request->spt_valor[$i]);
 																		DadosAlteracaoOrcamentaria::create([
-																			'codigo_formulario' => "CAS".$cas."-".$exercicio,
+																			'codigo_formulario' => $cas,
 																			'acao' => 'SUPERÁVIT FINANCEIRO',
 																			'unidade_executora' => "",
 																			'classificacao_funcional_programatica' => "",	
@@ -2145,7 +2191,7 @@ class OrcamentoController extends Controller
 																		//registra na base de dados dados_alteracao_orcamentarias
 																		$exc_valor = str_replace("R$","",$request->exc_valor[$i]);
 																		DadosAlteracaoOrcamentaria::create([
-																			'codigo_formulario' => "CAS".$cas."-".$exercicio,
+																			'codigo_formulario' => $cas,
 																			'acao' => 'EXCESSO DE ARRECADAÇÃO',
 																			'unidade_executora' => "",
 																			'classificacao_funcional_programatica' => "",	
@@ -2178,6 +2224,11 @@ class OrcamentoController extends Controller
 													
 													$html .= '
 													<br>
+													<table >
+														<tr><td><br></td></tr>
+														<tr><td><br></td></tr>
+														<tr><td><br></td></tr>
+													</table>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:14px;">
 														<tr>
 															<td style="text-align:right">
@@ -2247,7 +2298,7 @@ class OrcamentoController extends Controller
 						<td style="text-align:center">
 						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
-						Data______/______/_______
+						<!--Data______/______/_______-->
 						</td>
 					</tr>
 				</table>
@@ -2280,7 +2331,7 @@ class OrcamentoController extends Controller
 						<td style="text-align:center">
 						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
-						Data______/______/_______
+						<!--Data______/______/_______-->
 						</td>
 					</tr>
 				</table>
@@ -2314,7 +2365,7 @@ class OrcamentoController extends Controller
 							<td style="text-align:center">
 							'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 							SECRETARIO(A) <br>
-							Data______/______/_______
+							<!--Data______/______/_______-->
 							</td>
 						</tr>
 					</table>
@@ -2325,26 +2376,27 @@ class OrcamentoController extends Controller
 				
 			};		
 			
-			if (FormularioAlteracaoOrcamentaria::whereRaw(/*'numero_instrumento = "'.$request->numeroInstrumento.'" and*/'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
-			{
-				
-				FormularioAlteracaoOrcamentaria::create([
-					'codigo_formulario' => "CAS".$cas."-".$exercicio,
-					'tipo_instrumento' => $request->instrumento,
-					'numero_instrumento' => $request->numeroInstrumento,
-					'tipo_formulario' => $request->tipo_alteracao,	
-					'exercicio' => date("Y"),
-					'secretaria' => $secretaria,
-					'valor' => $request->total,
-					'status' => "EM ANÁLISE",
-					'usuario_emissor' => Auth::user()->registro,
-					'path' => '123',
-				]);		
-
+			/*if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and 'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
+			{*/
+				if(empty($formulario_codigo))
+				{
+					FormularioAlteracaoOrcamentaria::create([
+						'codigo_formulario' => $cas,
+						'tipo_instrumento' => $request->instrumento,
+						'numero_instrumento' => $request->numeroInstrumento,
+						'tipo_formulario' => $request->tipo_alteracao,	
+						'exercicio' => date("Y"),
+						'secretaria' => $secretaria,
+						'valor' => $request->total,
+						'status' => "EM ANÁLISE",
+						'usuario_emissor' => Auth::user()->registro,
+						'path' => '123',
+					]);		
+				}
 
 				Notification::create([
 					'type' =>'Formulário de Alteração Orçamentária',
-					'data' => $secretaria." gerou o formulário CAS".$cas."/".$exercicio." de Crédito Adicional Suplementar",
+					'data' => $secretaria." gerou o formulário ".$cas." de Crédito Adicional Suplementar",
 					'to_user' => "administrador",
 				]);			
 				
@@ -2359,7 +2411,7 @@ class OrcamentoController extends Controller
 				}
 				else
 				{
-					event(new Notificacao($notificacao_id, $notiticacao_type,  $secretaria." gerou o formulário CAS".$cas."/".$exercicio." de Crédito Adicional Suplementar"));
+					event(new Notificacao($notificacao_id, $notiticacao_type,  $secretaria." gerou o formulário ".$cas." de Crédito Adicional Suplementar"));
 				}
 				
 				
@@ -2367,12 +2419,12 @@ class OrcamentoController extends Controller
 				
 				//$mpdf->Output('files/formularios_alteracao_orcamentaria/CAS'.$cas."-".$exercicio.'.pdf');
 				//$mpdf->Output();
-				$mpdf->Output('CAS'.$cas."-".$exercicio.'.pdf','D'); 
-			}
+				$mpdf->Output($cas.'.pdf','D'); 
+			/*}
 			else{
 				
 				$mensagem="Já Existe Formulário Gerado Para Esta Alteração Orçamentária - ".$request->instrumento." ".$request->numeroInstrumento;
-			}
+			}*/
 			
 			
 		}
@@ -2383,13 +2435,23 @@ class OrcamentoController extends Controller
 			
 			$total = number_format($request->total,2,",",".");
 
-			//verifica quantos formularios de Credito Adicional Complementar Existem
-			$rtt = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
-			$rtt = $rtt+1;
-			if($rtt<10)
-			{
-				$rtt = '0'.$rtt;
+			//verifica se o formulário esta sendo editado ou é um novo
+			if(empty($formulario_codigo))
+				{
+				//verifica quantos formularios de Remanejamento, Transposição e Transferência Existem
+				$rtt = DB::table('formulario_alteracao_orcamentarias')->where('tipo_formulario', $request->tipo_alteracao)->where('exercicio', $exercicio)->count();
+				$rtt = $rtt+1;
+				if($rtt<10)
+				{
+					$rtt = '0'.$rtt;
+				}
+				$rtt  = "RTT".$rtt."-".$exercicio;
 			}
+			else{
+				$rtt = $formulario_codigo;
+			}
+			//verifica quantos formularios de Credito Adicional Complementar Existem
+			
 
 			$html = '
 					<html>
@@ -2401,7 +2463,7 @@ class OrcamentoController extends Controller
 						margin-right: 0.60cm;
 						margin-left: 0.60cm;
 						margin-top: 1cm;
-						margin-bottom: 1cm;
+						margin-bottom: 2cm;
 						
 						overflow:auto;
 				
@@ -2419,7 +2481,7 @@ class OrcamentoController extends Controller
 											<div>
 												<div style="display:table-cell; vertical-align:middle; text-align:center; padding:5px">
 													<br>
-													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
+													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:65%">
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA</b></h3>
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
@@ -2437,10 +2499,16 @@ class OrcamentoController extends Controller
 															'.$request->data.'
 															</td>
 															<td style="text-align:right">
-															<b>INSTRUMENTO ADMINISTRATIVO: </b>
+															<b>PROCESSO: </b>
 															</td>
 															<td>
 															'.$request->instrumento.' '.$request->numeroInstrumento.'
+															</td>
+															<td style="text-align:right">
+															<b>CÓDIGO: </b>
+															</td>
+															<td>
+															'.$rtt.'
 															</td>
 														</tr>	
 													</table>
@@ -2471,7 +2539,7 @@ class OrcamentoController extends Controller
 																	//registra na base de dados dados_alteracao_orcamentarias
 																	$sup_valor = str_replace("R$","",$request->sup_valor[$i]);
 																	DadosAlteracaoOrcamentaria::create([
-																		'codigo_formulario' => "RTT".$rtt."-".$exercicio,
+																		'codigo_formulario' => $rtt,
 																		'acao' => 'SUPLEMENTAÇÃO',
 																		'unidade_executora' => $request->sup_unidade_executora[$i],
 																		'classificacao_funcional_programatica' => $request->sup_classificacao_funcional[$i],	
@@ -2537,7 +2605,7 @@ class OrcamentoController extends Controller
 																		//registra na base de dados dados_alteracao_orcamentarias
 																		$rmj_valor = str_replace("R$","",$request->rmj_valor[$i]);
 																		DadosAlteracaoOrcamentaria::create([
-																			'codigo_formulario' => "RTT".$rtt."-".$exercicio,
+																			'codigo_formulario' => $rtt,
 																			'acao' => 'REMANEJAMENTO',
 																			'unidade_executora' => $request->rmj_unidade_executora[$i],
 																			'classificacao_funcional_programatica' => $request->rmj_classificacao_funcional[$i],	
@@ -2605,7 +2673,7 @@ class OrcamentoController extends Controller
 																		//registra na base de dados dados_alteracao_orcamentarias
 																		$tnp_valor = str_replace("R$","",$request->tnp_valor[$i]);
 																		DadosAlteracaoOrcamentaria::create([
-																			'codigo_formulario' => "RTT".$rtt."-".$exercicio,
+																			'codigo_formulario' => $rtt,
 																			'acao' => 'TRANSPOSIÇÃO',
 																			'unidade_executora' => $request->tnp_unidade_executora[$i],
 																			'classificacao_funcional_programatica' => $request->tnp_classificacao_funcional[$i],	
@@ -2671,7 +2739,7 @@ class OrcamentoController extends Controller
 																		//registra na base de dados dados_alteracao_orcamentarias
 																		$tnf_valor = str_replace("R$","",$request->tnf_valor[$i]);
 																		DadosAlteracaoOrcamentaria::create([
-																			'codigo_formulario' => "RTT".$rtt."-".$exercicio,
+																			'codigo_formulario' => $rtt,
 																			'acao' => 'TRANSFERÊNCIA',
 																			'unidade_executora' => $request->tnf_unidade_executora[$i],
 																			'classificacao_funcional_programatica' => $request->tnf_classificacao_funcional[$i],	
@@ -2712,6 +2780,11 @@ class OrcamentoController extends Controller
 													
 													$html .= '
 													<br>
+													<table >
+														<tr><td><br></td></tr>
+														<tr><td><br></td></tr>
+														<tr><td><br></td></tr>
+													</table>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:14px;">
 														<tr>
 															<td style="text-align:right">
@@ -2720,7 +2793,7 @@ class OrcamentoController extends Controller
 															<td >
 															R$ '.$total.'
 															</td>
-															
+														
 														</tr>	
 													</table>
 													<table width="100%">
@@ -2781,7 +2854,7 @@ class OrcamentoController extends Controller
 						<td style="text-align:center">
 						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
-						Data______/______/_______
+						<!--Data______/______/_______-->
 						</td>
 					</tr>
 				</table>
@@ -2814,7 +2887,7 @@ class OrcamentoController extends Controller
 						<td style="text-align:center">
 						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
-						Data______/______/_______
+						<!--Data______/______/_______-->
 						</td>
 					</tr>
 				</table>
@@ -2848,7 +2921,7 @@ class OrcamentoController extends Controller
 							<td style="text-align:center">
 							'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 							SECRETARIO(A) <br>
-							Data______/______/_______
+							<!--Data______/______/_______-->
 							</td>
 						</tr>
 					</table>
@@ -2859,24 +2932,27 @@ class OrcamentoController extends Controller
 	
 			};
 			
-			if (FormularioAlteracaoOrcamentaria::whereRaw(/*'numero_instrumento = "'.$request->numeroInstrumento.'" and */'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
-			{
-				FormularioAlteracaoOrcamentaria::create([
-					'codigo_formulario' => "RTT".$rtt."-".$exercicio,
-					'tipo_instrumento' => $request->instrumento,
-					'numero_instrumento' => $request->numeroInstrumento,
-					'tipo_formulario' => $request->tipo_alteracao,	
-					'exercicio' => date("Y"),
-					'secretaria' => $secretaria,
-					'valor' => $request->total,
-					'usuario_emissor' => Auth::user()->registro,
-					'path' => '123',
-				]);		
-
+			/*if (FormularioAlteracaoOrcamentaria::whereRaw('numero_instrumento = "'.$request->numeroInstrumento.'" and 'valor ="'.$request->total.'" and tipo_formulario = "'. $request->tipo_alteracao.'" and secretaria ="'.$request->secretaria.'"')->count() == 0)
+			{*/
+				
+				if(empty($formulario_codigo))
+				{
+					FormularioAlteracaoOrcamentaria::create([
+						'codigo_formulario' => $rtt,
+						'tipo_instrumento' => $request->instrumento,
+						'numero_instrumento' => $request->numeroInstrumento,
+						'tipo_formulario' => $request->tipo_alteracao,	
+						'exercicio' => date("Y"),
+						'secretaria' => $secretaria,
+						'valor' => $request->total,
+						'usuario_emissor' => Auth::user()->registro,
+						'path' => '123',
+					]);		
+				}
 
 				Notification::create([
 					'type' =>'Formulário de Alteração Orçamentária',
-					'data' => $secretaria.' gerou o formulário "RTT'.$rtt."/".$exercicio.'", de Remanejamento, Transferência e Transposição',
+					'data' => $secretaria.' gerou o formulário "'.$rtt.'", de Remanejamento, Transferência e Transposição',
 					'to_user' => "administrador",
 				]);
 				
@@ -2898,15 +2974,15 @@ class OrcamentoController extends Controller
 				//$mpdf->Output('files/formularios_alteracao_orcamentaria/RTT'.$rtt."-".$exercicio.'.pdf');
 				//$mpdf->Output();
 
-				$mpdf->Output('RTT'.$rtt."-".$exercicio.'.pdf','D'); 
+				$mpdf->Output($rtt.'.pdf','D'); 
 
 				
 
-			}
+			/*}
 			else{
 				$mensagem="Já Existe Formulário Gerado Para Esta Alteração Orçamentária - ".$request->instrumento." ".$request->numeroInstrumento;
 
-			}
+			}*/
 		}
 	
 		return view ('orcamento/formularios')->with("mensagem", $mensagem)->with("acao", $acao)->with("pesquisaFeita", $pesquisaFeita)->with("exercicio", $exercicio);
@@ -2967,6 +3043,7 @@ class OrcamentoController extends Controller
 			$anl_codigo_dotacao = 0;
 			$spt_codigo_dotacao = 0;
 			$exc_codigo_dotacao = 0;
+			
 			foreach($formulario as $form)
 			{
 				if($form->acao == "SUPLEMENTAÇÃO")
@@ -3005,7 +3082,7 @@ class OrcamentoController extends Controller
 						margin-right: 0.60cm;
 						margin-left: 0.60cm;
 						margin-top: 1cm;
-						margin-bottom: 1cm;
+						margin-bottom: 2cm;
 						
 						overflow:auto;
 				
@@ -3023,7 +3100,7 @@ class OrcamentoController extends Controller
 											<div>
 												<div style="display:table-cell; vertical-align:middle; text-align:center; padding:5px">
 													<br>
-													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
+													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:65%">
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>CRÉDITO ADICIONAL SUPLEMENTAR</b></h3>
 													<h4 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
 													<h6 style="line-height: 0.05; font-family:arial">'.$tipo_suplementacao1.'</h6>
@@ -3031,7 +3108,7 @@ class OrcamentoController extends Controller
 													<h6 style="line-height: 0.05; font-family:arial">'.$tipo_suplementacao3.'</h6>
 													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$ldo->numero.'/'.$exercicioLei.'</p>									
 												</div>
-												<div><!--
+												<div>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
 														<tr>
 															<td style="text-align:right">
@@ -3041,14 +3118,19 @@ class OrcamentoController extends Controller
 															'.$request->data.'
 															</td>
 															<td style="text-align:right">
-															<b>INSTRUMENTO ADMINISTRATIVO: </b>
+															<b>PROCESSO: </b>
 															</td>
 															<td>
-															
+															'.$request->instrumento.' '.$request->numeroInstrumento.'
+															</td>
+															<td style="text-align:right">
+															<b>CÓDIGO: </b>
+															</td>
+															<td>
+															'.$cas.'
 															</td>
 														</tr>	
 													</table>
-													-->
 													<h4 class="title" style="text-align: center; font-family: Arial;"><b>SUPLEMENTAÇÃO</b></h4>
 													<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
 														<thead>
@@ -3116,12 +3198,13 @@ class OrcamentoController extends Controller
 																</tr>
 															</thead>
 															<tbody>';
-														
+															
 															if($anl_codigo_dotacao > 0)
 															{
 																
 																for($i=0; $i < count($formulario); $i++)
 																	{
+																		
 																	if($formulario[$i]['acao'] =="ANULAÇÃO")
 																	{
 																		$html .= '<tr style="height:100px;">
@@ -3237,6 +3320,11 @@ class OrcamentoController extends Controller
 													
 													$html .= '
 													<br>
+													<table >
+														<tr><td><br></td></tr>
+														<tr><td><br></td></tr>
+														<tr><td><br></td></tr>
+													</table>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:14px;">
 														<tr>
 															<td style="text-align:right">
@@ -3248,6 +3336,7 @@ class OrcamentoController extends Controller
 															
 														</tr>	
 													</table>
+													
 													<table width="100%">
 														<tr >
 															<td style="text-align:right">
@@ -3306,7 +3395,7 @@ class OrcamentoController extends Controller
 						<td style="text-align:center">
 						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
-						Data______/______/_______
+						<!--Data______/______/_______-->
 						</td>
 					</tr>
 				</table>
@@ -3339,7 +3428,7 @@ class OrcamentoController extends Controller
 						<td style="text-align:center">
 						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
-						Data______/______/_______
+						<!--Data______/______/_______-->
 						</td>
 					</tr>
 				</table>
@@ -3373,7 +3462,7 @@ class OrcamentoController extends Controller
 							<td style="text-align:center">
 							'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 							SECRETARIO(A) <br>
-							Data______/______/_______
+							<!--Data______/______/_______-->
 							</td>
 						</tr>
 					</table>
@@ -3383,9 +3472,9 @@ class OrcamentoController extends Controller
 			else{
 				
 			};		
-	
-				
+			
 			$mpdf->Output('files/formularios_alteracao_orcamentaria/CAS.pdf');	
+			
 			
 			
 		}
@@ -3443,7 +3532,7 @@ class OrcamentoController extends Controller
 						margin-right: 0.60cm;
 						margin-left: 0.60cm;
 						margin-top: 1cm;
-						margin-bottom: 1cm;
+						margin-bottom: 2cm;
 						
 						overflow:auto;
 				
@@ -3461,7 +3550,7 @@ class OrcamentoController extends Controller
 											<div>
 												<div style="display:table-cell; vertical-align:middle; text-align:center; padding:5px">
 													<br>
-													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:80%">
+													<img src="img/logo_bertioga.png" style=" margin-left: auto;margin-right: auto; display: block; width:65%">
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>REMANEJAMENTO, TRANSPOSIÇÃO E TRANSFERÊNCIA</b></h3>
 													<h3 class="title" style="text-align: center; font-family: Arial; line-height: 0.4"><b>'.$secretaria.'</b></h3>
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao1.'</h6>
@@ -3770,7 +3859,7 @@ class OrcamentoController extends Controller
 						<td style="text-align:center">
 						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
-						Data______/______/_______
+						<!--Data______/______/_______-->
 						</td>
 					</tr>
 				</table>
@@ -3803,7 +3892,7 @@ class OrcamentoController extends Controller
 						<td style="text-align:center">
 						'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 						SECRETARIO(A) <br>
-						Data______/______/_______
+						<!--Data______/______/_______-->
 						</td>
 					</tr>
 				</table>
@@ -3837,7 +3926,7 @@ class OrcamentoController extends Controller
 							<td style="text-align:center">
 							'.strtoupper($secretario[0]['name']).' '.strtoupper($secretario[0]['sobrenome']).'<br>
 							SECRETARIO(A) <br>
-							Data______/______/_______
+							<!--Data______/______/_______-->
 							</td>
 						</tr>
 					</table>

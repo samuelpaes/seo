@@ -168,27 +168,15 @@
                         <div class="container-fluid">
                             <div class="row">    
 
-                                
-                                <div class="col-md-4">        
+                              
+                                <div class="col-md-4 text-left">        
                                     <label style="padding:0px; margin:0px; width: auto; font-weight:normal">DATA DA SOLICITAÇÃO:</label>
                                     <input type="date" onkeyup="" onclick="" onmouseout=""  onmouseover="" name="data" value="{{$data}}" class="form-control" id="data" style="display: inline-block; width:auto"></input>
-                                </div>        
-                                <div class="col-md-4">
-                                    <label  style="padding:0px; margin:0px; width: auto; font-weight:normal">INSTRUMENTO ADMINISTRATIVO:</label>
-                                    <select  class="form-control" onkeyup="" onclick="" onmouseout=""  onmouseover="" name="instrumento" id="instrumento" style="display: inline-block; width:auto">
-                                        <option selected></option>
-                                        <option value="PROCESSO" <?php
-if ($tipoInstrumento == 'PROCESSO')
-    echo ' selected="selected"';
-?> >PROCESSO</option>
-                                        <option value="MEMORANDO"<?php
-if ($tipoInstrumento == 'MEMORANDO')
-    echo ' selected="selected"';
-?> >MEMORANDO</option>                    
-                                    </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <label style=" padding:0px; margin:0px; display: inline-block; width: auto; font-weight:normal">NÚMERO:</label>
+                                <div class="col-md-4 text-right"></div>      
+                                <div class="col-md-4 text-right">
+                                    <label style=" padding:0px; margin:0px; display: inline-block; width: auto; font-weight:normal">PROCESSO:</label>
+                                    <input class="form-control"  name="instrumento" id="instrumento" value="PROCESSO" type="hidden"></input>
                                     <input value="{{$numeroInstrumento[0]}}" type="number" id="numeroInstrumento" class="form-control" style="display: inline-block; width:150px;" ></input>
                                     /
                                     <select class="form-control" onkeyup="" onclick="" onmouseout=""  onmouseover="" name="anoInstrumento" id="anoInstrumento" style="display: inline-block; width:auto">
@@ -209,7 +197,22 @@ if ($numeroInstrumento[1] == '2017')
 ?> >2017</option>-->
                                                             
                                     </select>
-                                </div>
+                                </div>        
+                               <!-- <div class="col-md-4">
+                                    <label  style="padding:0px; margin:0px; width: auto; font-weight:normal">INSTRUMENTO ADMINISTRATIVO:</label>
+                                    <select  class="form-control" onkeyup="" onclick="" onmouseout=""  onmouseover="" name="instrumento" id="instrumento" style="display: inline-block; width:auto">
+                                        <option selected></option>
+                                        <option value="PROCESSO" <?php
+if ($tipoInstrumento == 'PROCESSO')
+    echo ' selected="selected"';
+?> >PROCESSO</option>
+                                        <option value="MEMORANDO"<?php
+if ($tipoInstrumento == 'MEMORANDO')
+    echo ' selected="selected"';
+?> >MEMORANDO</option>                    
+                                    </select>
+                                </div>-->
+
                             </div>
                         </div>
                         <br>
@@ -222,33 +225,24 @@ if ($numeroInstrumento[1] == '2017')
                                 
                                     <div class="col-lg-4" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap;">
                                         <label class="container">Anulação
-                                            <input type="checkbox" onkeyup="ativarTipoCard()" onclick="ativarTipoCard()" onmouseout="ativarTipoCard()" onmouseover="ativarTipoCard()" value="Anulação" name="anulacao" id="chk_anulacao"
-                                            <?php
-if ($anulacao === true)
-    echo 'checked="checked"';
-?> />
+                                            <input type="checkbox" onkeyup="ativarTipoCard()" onclick="ativarTipoCard()" onmouseout="ativarTipoCard()" onmouseover="ativarTipoCard()" value="Anulação" name="anulacao" id="chk_anulacao" style="display: inline-block;width:auto"
+                                            <?php if ($anulacao === true) echo 'checked="checked"';?> />
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
     
-                                    <div class="col-lg-4" align="left" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap">
-                                        <label class="container">Superávit Financeiro
-                                            <input type="checkbox" onkeyup="ativarTipoCard()" onclick="ativarTipoCard()" onmouseout="ativarTipoCard()" onmouseover="ativarTipoCard()" value="Superávit Financeiro" name="superavit" id="chk_superavit"
-                                            <?php
-if ($superavit === true)
-    echo 'checked="checked"';
-?> />
+                                    <div class="col-lg-4" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap">
+                                        <label class="container" style="text-align:left">Superávit Financeiro
+                                            <input type="checkbox" onkeyup="ativarTipoCard()" onclick="ativarTipoCard()" onmouseout="ativarTipoCard()" onmouseover="ativarTipoCard()" value="Superávit Financeiro" name="superavit" id="chk_superavit" style="display: inline-block;width:auto" 
+                                            <?php if ($superavit === true)  echo 'checked="checked"';?> />
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
                                 
-                                    <div class="col-lg-4" >
-                                        <label class="container">Excesso de Arrecadação
-                                            <input type="checkbox" onkeyup="ativarTipoCard()" onclick="ativarTipoCard()" onmouseout="ativarTipoCard()" onmouseover="ativarTipoCard()" value="Excesso de Arrecadação" name="excesso" id="chk_excesso"
-                                            <?php
-if ($excesso === true)
-    echo 'checked="checked"';
-?> />
+                                    <div class="col-lg-4">
+                                        <label class="container" >Excesso de Arrecadação
+                                            <input type="checkbox" onkeyup="ativarTipoCard()" onclick="ativarTipoCard()" onmouseout="ativarTipoCard()" onmouseover="ativarTipoCard()" value="Excesso de Arrecadação" name="excesso" id="chk_excesso" style="display: inline-block;width:auto" 
+                                            <?php if ($excesso === true) echo 'checked="checked"';?> />
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
@@ -279,7 +273,7 @@ if ($excesso === true)
                                 
                                 
                                 <input name="data" class="form-control" id="sup_data2" type="hidden"></input>
-                                <input name="tipoInstrumento" class="form-control" id="sup_instrumento2" type="hidden"></input>
+                                <input name="tipoInstrumento" class="form-control" id="sup_instrumento2" value="PROCESSO" type="hidden"></input>
                                 <input name="numeroInstrumento" class="form-control" id="sup_numeroInstrumento2" type="hidden"></input>
                                 <input name="tipo_anulacao" class="form-control" id="sup_tipo_anulacao" type="hidden"></input>
                                 <input name="tipo_superavit" class="form-control" id="sup_tipo_superavit" type="hidden"></input>
@@ -393,7 +387,7 @@ if ($excesso === true)
                                 
                                 
                                 <input name="data" class="form-control" id="anl_data2" type="hidden"></input>
-                                <input name="tipoInstrumento" class="form-control" id="anl_instrumento2" type="hidden"></input>
+                                <input name="tipoInstrumento" class="form-control" id="anl_instrumento2" type="hidden" value="PROCESSO"></input>
                                 <input name="numeroInstrumento" class="form-control" id="anl_numeroInstrumento2" type="hidden"></input>
                                 
                                 <input name="tipo_anulacao" class="form-control" id="anl_tipo_anulacao" type="hidden"></input>
@@ -754,7 +748,7 @@ $i++;
                                     <input name="secretaria" value="{{ Auth::user()->secretaria }}" class="form-control" id="secretaria" type="hidden"></input>
                                     <input name="formulario_codigo" value="{{ $formulario_codigo }}" class="form-control" id="formulario_codigo" type="hidden"></input>
                                     <input name="tipo_alteracao" type="hidden" value="CRÉDITO ADICIONAL SUPLEMENTAR"></input>
-                                    <input name="instrumento" class="form-control" id="instrumento2" type="hidden"></input>
+                                    <input name="instrumento" class="form-control" id="instrumento2" type="hidden"  value="PROCESSO"></input>
                                     <input name="numeroInstrumento" class="form-control" id="numeroInstrumento2" type="hidden"></input>
                                     <input name="data" class="form-control" id="data2" type="hidden"></input>
                                     <input name="tipo_suplementacao1" class="form-control" id="tipo_suplementacao1" type="hidden"></input>

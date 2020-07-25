@@ -45,7 +45,7 @@
     text-transform: uppercase;
     font-weight: 600;
     font-size: 16px;
-    transition: all .3s ease-in-out;
+    transition: all .3Fs ease-in-out;
 }
 
 .btnEdicao:active div {
@@ -345,9 +345,9 @@ transform: scale(1.0);
 								@foreach($usuarios as $usuario)
 									<tr>
 										<td style="width:3%">
-											<button class='btnEdicao' type='button' data-hover='Cancelar' id="cancelar-{{$usuario['registro']}}" style='margin-right:-5px;left:0px; display: none;' onclick="cancelarUsuario({{$usuario['registro']}})"><div><i class='fa fa-times'></i></div></button>
-											<button class='btnEdicao' type='button' data-hover='Salvar'  id="salvar-{{$usuario['registro']}}" style='margin:-5px;left:5px; display: none;' onclick="salvarUsuario({{$usuario['registro']}})"><div><i class='fa fa-check'></i></div></button> 
-											<button class='btnEdicao' type='button' data-hover='Alterar' id="alterar-{{$usuario['registro']}}" style='margin-left:-5px; left:4px;' onclick="alterarUsuario({{$usuario['registro']}})"><div><i class='fa fa-pencil'></i></div></button>
+											<button class='btnEdicao' type='button' data-hover='Cancelar' id="cancelar-{{$usuario['registro']}}" style='margin-right:-5px;left:0px; display: none;' onclick="cancelarUsuario('{{$usuario['registro']}}')"><div><i class='fa fa-times'></i></div></button>
+											<button class='btnEdicao' type='button' data-hover='Salvar'  id="salvar-{{$usuario['registro']}}" style='margin:-5px;left:5px; display: none;' onclick="salvarUsuario('{{$usuario['registro']}}')"><div><i class='fa fa-check'></i></div></button> 
+											<button class='btnEdicao' type='button' data-hover='Alterar' id="alterar-{{$usuario['registro']}}" style='margin-left:-5px; left:4px;' onclick="alterarUsuario('{{$usuario['registro']}}')"><div><i class='fa fa-pencil'></i></div></button>
 										</td>
 										<td style="width: 15%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="nome-{{$usuario['registro']}}" name='nome[]' value="{{$usuario['name']}}" readonly></td>
 										<td style="width: 25%"><input align='right' class='form-control' style='padding: 0px; margin: 0px; background: none; border:none; font-size:14px; color:#333333;text-transform: uppercase;' id="sobrenome-{{$usuario['registro']}}" name='sobrenome[]' value="{{$usuario['sobrenome']}}" readonly></td>
@@ -370,10 +370,10 @@ transform: scale(1.0);
 											</select>
 										</td>	
 										<td style="width: 8%">
-											<i class="pe-7s-albums" id="alterar_secretaria" data-toggle="modal" data-target="#alterar-secretaria" onclick="enviarUserRegistro(<?php echo $usuario['registro'];?>)"></i>
+											<i class="pe-7s-albums" id="alterar_secretaria" data-toggle="modal" data-target="#alterar-secretaria" onclick="enviarUserRegistro('<?php echo $usuario['registro'];?>')"></i>
 										</td>
 										<td style="width: 8%">
-											<i class="pe-7s-key" id="alterar_senha" data-toggle="modal" data-target="#alterar-senha" onclick="enviarUserRegistro(<?php echo $usuario['registro'];?>)"></i>
+											<i class="pe-7s-key" id="alterar_senha" data-toggle="modal" data-target="#alterar-senha" onclick="enviarUserRegistro('<?php echo $usuario['registro'];?>'')"></i>
 										<td>
                                     </tr>
 								
@@ -701,7 +701,6 @@ transform: scale(1.0);
 
 
 function enviarUserRegistro(x){
-
 	document.getElementById("registro_alterarSenha").value=x;
 	document.getElementById("registro_alterarSecretaria").value=x;
 }

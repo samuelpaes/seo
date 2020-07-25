@@ -104,9 +104,10 @@ class UserController extends Controller
         $pesquisaFeita = "";
         $usuarios = array();
         $filtro = "";
-        
+       
         if($request->filtro == "REGISTRO")
         {
+           
             $usuarios =  User::where('registro', '=',$request->pre_registro)->get();	
             $filtro = "REGISTRO";   
             $pesquisaFeita="ok";
@@ -165,6 +166,19 @@ class UserController extends Controller
         {   
             $usuarios =  User::where('isAdmin', '=', $request->tipoUsuario)->get();	
             $filtro = "TIPO_USUARIO";
+            $pesquisaFeita="ok";
+            $i=0;
+            foreach($usuarios as $usuario)
+            {   
+                $secretarias[$i]['registro'] = $usuario['registro'];
+                $secretarias[$i]['secretarias'] =  $usuario['secretaria'];       
+                $i=$i+1;
+            }
+        }
+        else if($request->filtro == "TODOS")
+        {
+            $usuarios = User::all();		
+            $filtro = "TODOS";
             $pesquisaFeita="ok";
             $i=0;
             foreach($usuarios as $usuario)
@@ -313,13 +327,13 @@ class UserController extends Controller
 
     public function updateSecretaria(Request $request)
     {
+       
         $secretarias = "";
         $request["secretaria"] = array_unique($request["secretaria"]);
         foreach($request["secretaria"] as $secretaria){
             $secretarias =  $secretaria.";".$secretarias;
         }
 
-       
         $usuario = User::whereRegistro($request->registro_alterarSecretaria)->firstOrFail();
         $usuario->secretaria = $secretarias;
         

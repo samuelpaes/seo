@@ -135,12 +135,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Governo <br>e Gestão <br>
+													<a href="#" style="width:300px; margin: auto; font-size:16px;  font-family:Helvetica">Secretaria de Governo <br>e Gestão <br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE GOVERNO E GESTÃO")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -150,7 +150,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE GOVERNO E GESTÃO")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -165,12 +165,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Administração <br>e Finanças<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica">Secretaria de Administração <br>e Finanças<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																	<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -180,7 +180,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE ADMINISTRAÇÃO E FINANÇAS")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -195,12 +195,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Serviços <br>Urbanos<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica">Secretaria de Serviços <br>Urbanos<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE SERVIÇOS URBANOS")
 																@if($usuario->isAdmin == 1)
-																<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -210,7 +210,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SERVIÇOS URBANOS")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -227,12 +227,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria <br>de Educação<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica">Secretaria <br>de Educação<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE EDUCAÇÃO")
 																@if($usuario->isAdmin == 1)
-																<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -242,7 +242,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE EDUCAÇÃO")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -257,12 +257,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;" >Secretaria de Desenvolvimento <br>Social, Trabalho e Renda<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica" >Secretaria de Desenvolvimento <br>Social, Trabalho e Renda<br>
 													@foreach($usuarios as $usuario)
 													<!--Verifica se o usuário é da Secretaria em questão -->
 														@if($usuario->secretaria == "SECRETARIA DE DESENVOLVIMENTO SOCIAL E RENDA")
 															@if($usuario->isAdmin == 1)
-																<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+															<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 															@endif	
 														@endif
 													@endforeach
@@ -272,7 +272,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE DESENVOLVIMENTO SOCIAL, TRABALHO E RENDA")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+															<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -287,12 +287,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Meio <br>Ambiente<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica">Secretaria de Meio <br>Ambiente<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE MEIO AMBIENTE")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -302,7 +302,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE MEIO AMBIENTE")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -319,12 +319,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Planejamento <br>Urbano<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica">Secretaria de Planejamento <br>Urbano<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE PLANEJAMENTO URBANO")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -334,7 +334,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE PLANEJAMENTO URBANO")
 															<li>
-																<a style="width:140px; height:100px; margin: auto;" href="#"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -349,12 +349,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Segurança <br>e Cidadania<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica">Secretaria de Segurança <br>e Cidadania<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE SEGURANÇA E CIDADANIA")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -364,7 +364,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SEGURANÇA E CIDADANIA")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -379,12 +379,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Turismo, <br>Esporte e Cultura<br>
+													<a href="#" style="width:300px; margin: auto; font-size:16px;  font-family:Helvetica">Secretaria de Turismo, <br>Esporte e Cultura<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE TURISMO, ESPORTE E CULTURA")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -394,7 +394,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE TURISMO, ESPORTE E CULTURA")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -412,12 +412,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Saúde<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica">Secretaria de Saúde<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE SAÚDE")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -427,7 +427,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE SAÚDE")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -442,12 +442,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Secretaria de Obras <br>e Habitação<br>
+													<a href="#" style="width:300px; margin: auto; font-size:16px;  font-family:Helvetica">Secretaria de Obras <br>e Habitação<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "SECRETARIA DE OBRAS E HABITAÇÃO")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -457,7 +457,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "SECRETARIA DE OBRAS E HABITAÇÃO")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach
@@ -472,12 +472,12 @@
 										 <div class="organigrama" style="align-content: center;">
 											<ul>
 												<li>
-													<a href="#" style="width:300px; margin: auto;">Procuradoria Geral do Município<br>
+													<a href="#" style="width:300px; margin: auto;  font-size:16px;  font-family:Helvetica">Procuradoria Geral do Município<br>
 														@foreach($usuarios as $usuario)
 														<!--Verifica se o usuário é da Secretaria em questão -->
 															@if($usuario->secretaria == "PROCURADORIA GERAL DO MUNICÍPIO")
 																@if($usuario->isAdmin == 1)
-																	<span style="font-weight:normal;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?></span>
+																<span style="font-weight:normal; font-size:14px;  font-family:Helvetica"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?></span>
 																@endif	
 															@endif
 														@endforeach
@@ -487,7 +487,7 @@
 													@foreach($usuarios as $usuario)
 														@if($usuario->isAdmin == 2 and $usuario->estado == 1 and $usuario->secretaria == "PROCURADORIA GERAL DO MUNICÍPIO")
 															<li>
-																<a href="#" style="width:140px; height:100px; margin: auto;"><?php echo ucwords(strtolower($usuario->name)).' '.ucwords(strtolower($usuario->sobrenome)) ; ?> <br><?php echo $usuario->registro; ?></a>
+																<a style="width:140px; height:100px; margin: auto; font-size:14px;  font-family:Helvetica" href="#"><?php echo mb_convert_case($usuario->name, MB_CASE_TITLE, "UTF-8").' '.mb_convert_case($usuario->sobrenome, MB_CASE_TITLE, "UTF-8") ; ?> <br><?php echo $usuario->registro; ?></a>
 															</li>
 														@endif
 													@endforeach

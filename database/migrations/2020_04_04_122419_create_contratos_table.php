@@ -20,7 +20,7 @@ class CreateContratosTable extends Migration
             $table->string('ano_processo');
             $table->integer('numero_contrato');
             $table->integer('ano_contrato');
-            $table->decimal('valor');
+            $table->decimal('valor', 15, 2);
             $table->string('objeto');
             $table->string('observacao');
             $table->string('usuario');

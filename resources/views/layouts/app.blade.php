@@ -323,7 +323,7 @@ background: rgba(255, 255, 255, 0.4);
 							</button>
 						</div>
 						<div class="collapse navbar-collapse">
-							<ul class="nav navbar-nav navbar-left">
+							<!--<ul class="nav navbar-nav navbar-left">
 								<div class="arrow left" onclick="goBack()"></div>
 								<div class="arrow right" onclick="goForward()"></div>
 								
@@ -331,8 +331,8 @@ background: rgba(255, 255, 255, 0.4);
 										<i class="fa fa-search"></i>
 										<p class="hidden-lg hidden-md">Search</p>
 									</a>
-								</li>-->
-							</ul>
+								</li>
+							</ul>-->
 
 							<ul class="nav navbar-nav navbar-right">
 								<!-- teste-->
@@ -351,7 +351,7 @@ background: rgba(255, 255, 255, 0.4);
 											<li style="width:1050px;"><a href="#" >{{$notificacao['data']}}<button type="button" class="remover" id="{{$notificacao['id']}}" style="float: right;"><i style="position:relative; top:4px; color:red;font-weight:bold; font-size:18px; " class="pe-7s-close"></i></button></a></li>
 										@endforeach
 										
-										<li><a href="#" style="background:#25385b; color:#fff; letter-spacing: 3px; text-align:center" class="limpaNotificacoes"><b>LIMPAR<i class="pe-7s-trash"></i></b></a></li>
+										<li><a href="#" style="background:#25385b; color:#fff; letter-spacing: 3px; text-align:center; font-size:12px" class="limpaNotificacoes"><b>LIMPAR<i class="pe-7s-trash"></i></b></a></li>
 										
 									</ul>
 								</li>

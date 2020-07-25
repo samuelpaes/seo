@@ -11,7 +11,7 @@ class ComiteGestorController extends Controller
     {
       
     $usuarios = User::all();
-    //return($usuarios[0]->secretaria);
+    //return($usuarios);
 		return view ('comite-gestor/index')->with('usuarios', $usuarios);
 	}
 }

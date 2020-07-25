@@ -21,10 +21,10 @@ class CreateSaldoDeDotacaosTable extends Migration
             $table->string('natureza_de_despesa');
             $table->string('vinculo');
             $table->integer('codigo_dotacao');
-            $table->decimal('dotacao');
-            $table->decimal('empenhado');
-            $table->decimal('saldo');
-            $table->decimal('reserva');
+            $table->decimal('dotacao', 15, 2);
+            $table->decimal('empenhado', 15, 2);
+            $table->decimal('saldo', 15, 2);
+            $table->decimal('reserva', 15, 2);
             $table->string('user_update');
             $table->timestamps();
         });

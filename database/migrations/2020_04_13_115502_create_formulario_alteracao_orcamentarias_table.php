@@ -21,7 +21,7 @@ class CreateFormularioAlteracaoOrcamentariasTable extends Migration
             $table->string('tipo_formulario');
             $table->string('exercicio');
             $table->string('secretaria');
-            $table->decimal('valor');
+            $table->decimal('valor', 15, 2);
             $table->string('status');
             $table->string('usuario_emissor');
             $table->string('usuario_analise')->nullable();

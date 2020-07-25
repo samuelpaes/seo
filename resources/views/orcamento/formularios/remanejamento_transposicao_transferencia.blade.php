@@ -173,8 +173,9 @@
 								<span>&nbsp</span>
 								<span>&nbsp</span>
 								<input type="date" name="data" value="{{$data}}" class="form-control" id="data" style="display: inline-block; width:auto"></input>
-							</div>		
-							<div align="center" class="col-md-4" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap">
+							</div>	
+							<div class="col-md-4 text-right"></div>	
+							<!--<div align="center" class="col-md-4" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap">
 								<span>&nbsp</span>
 								<span>&nbsp</span>
 								<label align="center" style="flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block;width: auto; font-weight:normal">INSTRUMENTO ADMINISTRATIVO:</label>
@@ -186,10 +187,11 @@
 									<option value="PROCESSO" <?php if ($tipoInstrumento == 'PROCESSO') echo ' selected="selected"'; ?> >PROCESSO</option>
 									<option value="MEMORANDO"<?php if ($tipoInstrumento == 'MEMORANDO') echo ' selected="selected"'; ?> >MEMORANDO</option>					
 								</select>
-							</div>
+							</div>-->
 							
 							<div class="col-md-4" align="right" style="flex-wrap:nowrap; display: inline-block; white-space: nowrap">
-								<label align="right" style="flex-wrap:nowrap; padding:0px; margin:0px; display: inline-block; width: auto; font-weight:normal">NÚMERO:</label>
+								<label style=" padding:0px; margin:0px; display: inline-block; width: auto; font-weight:normal">PROCESSO:</label>
+                                <input class="form-control"  name="instrumento" id="instrumento" value="PROCESSO" type="hidden"></input>
 								<span>&nbsp</span>
 								<span>&nbsp</span>
 								<span>&nbsp</span>

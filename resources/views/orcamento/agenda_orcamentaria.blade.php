@@ -133,7 +133,9 @@ request.execute(function(event) {
 						<div class="card">
 							<div class="content">
 								<div class="row">
-									<div class="col-md-2">	
+                  <div class="col-md-2">	
+									</div>
+									<!--<div class="col-md-2">	
 										<a class="btn btn-info btn-fill pull-right" data-toggle="modal" style="width:100px" data-target="#cadastrarContrato">
 											Novo
 										</a>
@@ -142,7 +144,7 @@ request.execute(function(event) {
 										<a class="btn btn-info btn-fill pull-right" data-toggle="modal" style="width:100px" data-target="#cadastrarContrato">
 											Remover
 										</a>
-									</div>
+									</div>-->
 									<div class="col-md-8">
 										<div id="calendar" style="max-width: 600px; margin: 0 auto;font-size:16px;"></div>
 									</div>

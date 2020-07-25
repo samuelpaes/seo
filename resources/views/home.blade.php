@@ -428,12 +428,12 @@ background: rgba(255, 255, 255, 0.4);
 								<li>
 								
 									<div class="btn from-top" >
-										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-study" style="position:relative;font-weight:bold; top:1.5px"></i></b> CAPACITAÇÕES</div>	
+										<div style="position:relative; top:5px;font-size:14px;"><i class="pe-7s-study" style="position:relative;font-weight:bold; top:1.5px"></i></b> CAPACITAÇÕES</div>	
 									</div>
 								</li>
 								<li>
 									<div class="btn from-top" >
-										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-network" style="position:relative;font-weight:bold; top:1.5px" ></i></b><a href="{{ route('comite_gestor') }}" style="font:inherit; color: inherit; text-decoration: inherit;">COMITÊ GESTOR</a></div>	
+										<div style="position:relative; top:5px;font-size:14px"><i class="pe-7s-network" style="position:relative;font-weight:bold; top:2px; left:-2px" ></i></b><a href="{{ route('comite_gestor') }}" style="font:inherit; color: inherit; text-decoration: inherit;">COMITÊ GESTOR</a></div>	
 									</div>
 								</li>
 								<!--<li>
@@ -533,7 +533,7 @@ background: rgba(255, 255, 255, 0.4);
 										<li><a href="{{ route('orcamento_leis_decretos') }}">Leis e Decretos</a></li>
 								</ul>
 							</li>
-
+							<!--
 							<li>
 								<input id="check03" type="checkbox" name="menu"/>
 								<div class="arrow-down" onclick="this.classList.toggle('active')">
@@ -547,7 +547,7 @@ background: rgba(255, 255, 255, 0.4);
 									<li><a href="{{ route('contabilidade_leis_decretos') }}">Leis e Decretos</a></li>
 								</ul>
 							</li>
-							
+							-->
 							<li>
 								<input id="check04" type="checkbox" name="menu"/>
 								<label for="check04">

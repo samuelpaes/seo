@@ -22,7 +22,7 @@ class CreateDadosAlteracaoOrcamentariasTable extends Migration
             $table->string('natureza_de_despesa')->nullable();
             $table->string('vinculo')->nullable();
             $table->string('codigo_dotacao')->nullable();
-            $table->decimal('valor');
+            $table->decimal('valor', 15, 2);
             $table->string('justificativa_recurso');
             $table->timestamps();
         });
