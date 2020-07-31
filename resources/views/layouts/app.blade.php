@@ -336,8 +336,12 @@ background: rgba(255, 255, 255, 0.4);
 
 							<ul class="nav navbar-nav navbar-right">
 								<!-- teste-->
-								
-								<li class="dropdown" style="position:relative; top:2px;">
+								<li>
+									<a href="{{ url('pre_home') }}">
+										<i class="pe-7s-repeat" style="position:relative;font-weight: bolder; font-size:20px; top:0px;"></i>
+									</a>
+								</li>
+								<li class="dropdown" style="position:relative; top:0px;">
 									<a href="#notifications-panel" class="dropdown-toggle" data-toggle="dropdown">
 										<i class="fa fa-globe" data-count="0"></i>
 										<b class="caret hidden-lg hidden-md"></b>

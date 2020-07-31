@@ -43,7 +43,7 @@ class HomeController extends Controller
         //captura todas as notificações do bd
         $notificacoes = Notification::all();
         
-
+        
         //verifica quais não foram lidas pelo usuário
         foreach($notificacoes as $notificacao)
         {
@@ -105,6 +105,7 @@ class HomeController extends Controller
         }
         else{
             //return redirect()->action('HomeController@pre_index');
+            
             $id=Auth::user()->id;
             $access = Access::where('user_id', $id)->get()->last();
            
@@ -121,7 +122,7 @@ class HomeController extends Controller
                 $access->save();
             }
                    
-
+           
             $users = User::where('id', '!=', Auth::user()->id)->get();
 
             for($i = 0; $i<sizeof($users); $i++)
@@ -143,7 +144,12 @@ class HomeController extends Controller
                     
                 }
             }
-            
+            if(empty($secretaria))
+            {
+                Auth::logout();
+                return redirect('/login');
+            }
+          
             $unidade_orcamentaria = UnidadeOrcamentaria::where('unidade', '=', $secretaria)->firstOrFail('codigo');		
             $exercicio = date("Y");
         

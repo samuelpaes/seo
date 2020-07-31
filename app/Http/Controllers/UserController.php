@@ -104,6 +104,7 @@ class UserController extends Controller
         $pesquisaFeita = "";
         $usuarios = array();
         $filtro = "";
+        $secretarias = array();
        
         if($request->filtro == "REGISTRO")
         {
@@ -194,12 +195,12 @@ class UserController extends Controller
             $pesquisaFeita="";
             $usuario_naoLocalizado="ok";
             $i=0;
-            foreach($usuarios as $usuario)
+            /*foreach($usuarios as $usuario)
             {   
                 $secretarias[$i]['registro'] = $usuario['registro'];
                 $secretarias[$i]['secretarias'] =  $usuario['secretaria'];        
                 $i=$i+1;
-            }
+            }*/
         }
         //return($secretarias);
         return view('alterar-usuario')->with('usuarios', $usuarios)->with('usuario_cadastrado',$usuario_cadastrado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('pesquisaFeita', $pesquisaFeita)->with('filtro', $filtro)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias)->with('usuario_secretariaAtualizada', $usuario_secretariaAtualizada);
@@ -293,8 +294,8 @@ class UserController extends Controller
     public function updatePassword(Request $request)
     {
       
-        
-       if($request->password>6 && $request->password == $request->password_confirmation)
+       
+       if(strlen($request->password) >=6 && $request->password == $request->password_confirmation)
        {
         $usuario = User::whereRegistro($request->registro_alterarSenha)->firstOrFail();
         $usuario->password = Hash::make($request->get('password'));
@@ -318,6 +319,7 @@ class UserController extends Controller
         return view('alterar-usuario')->with('usuario', $usuario)->with('usuario_atualizado', $usuario_atualizado)->with('usuario_naoLocalizado', $usuario_naoLocalizado)->with('filtro', $filtro)->with('pesquisaFeita', $pesquisaFeita)->with('usuario_senhaAtualizada', $usuario_senhaAtualizada)->with('secretarias', $secretarias)->with('usuario_secretariaAtualizada', $usuario_secretariaAtualizada);
     }
     else{
+       return('oi');
        $this->validate($request, [
             'password'     => ['required', 'string', 'min:6', 'confirmed'],
             'password_confirmation' => ['required', 'string', 'min:6', 'confirmed',],

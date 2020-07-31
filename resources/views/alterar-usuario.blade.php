@@ -373,7 +373,7 @@ transform: scale(1.0);
 											<i class="pe-7s-albums" id="alterar_secretaria" data-toggle="modal" data-target="#alterar-secretaria" onclick="enviarUserRegistro('<?php echo $usuario['registro'];?>')"></i>
 										</td>
 										<td style="width: 8%">
-											<i class="pe-7s-key" id="alterar_senha" data-toggle="modal" data-target="#alterar-senha" onclick="enviarUserRegistro('<?php echo $usuario['registro'];?>'')"></i>
+											<i class="pe-7s-key" id="alterar_senha" data-toggle="modal" data-target="#alterar-senha" onclick="enviarUserRegistro('<?php echo $usuario['registro'];?>')"></i>
 										<td>
                                     </tr>
 								
@@ -506,7 +506,7 @@ transform: scale(1.0);
 						<div class="col-md-12">	
 							<input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password"  placeholder="Nova senha" required>
 							@if ($errors->has('password'))
-								<script src="{{ asset('js/jquery-3.4.1.min.js') }}" type="text/javascript"></script>
+								<script src="{{ asset('js/jquery-3.5.1.min.js') }}" type="text/javascript"></script>
 									<script>
 										$(document).ready(function()
 										{
@@ -519,7 +519,7 @@ transform: scale(1.0);
 									<strong>{{ $errors->first('password') }}</strong>
 								</span>
 							@elseif($usuario_senhaAtualizada=="ok")
-							<script src="{{ asset('js/jquery-3.4.1.min.js') }}" type="text/javascript"></script>
+							<script src="{{ asset('js/jquery-3.5.1.min.js') }}" type="text/javascript"></script>
 								<script>
 									$(document).ready(function()
 									{
@@ -701,6 +701,7 @@ transform: scale(1.0);
 
 
 function enviarUserRegistro(x){
+	//alert(x);
 	document.getElementById("registro_alterarSenha").value=x;
 	document.getElementById("registro_alterarSecretaria").value=x;
 }

@@ -48,7 +48,7 @@
   animation: animate 0.5s linear infinite;
   position: absolute;
   top: 0;
-  left: 0;
+  left: -100px;
   border-radius: 3px;
 }
 @keyframes animate {
@@ -76,7 +76,7 @@
   opacity: 0.1;
   position: absolute;
   top: 59px;
-  left: 0;
+  left: -100px;
   border-radius: 50%;
   animation: shadow 0.5s linear infinite;
 }
@@ -92,7 +92,7 @@
 <div id="loader">
   <div id="shadow"></div>
   <div id="box"></div>
-  <p style="color:#25385b; position:relative; left:-23px;top:65px;font-size:20px;"><b>Aguarde...</b></p>
+  <p style="color:#25385b; position:relative; left:-125px;top:65px;font-size:20px;"><b>AGUARDE...</b></p>
 </div>
 @extends('layouts.app')
 	@section('content')

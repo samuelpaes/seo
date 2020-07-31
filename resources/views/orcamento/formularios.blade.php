@@ -1,6 +1,95 @@
 @extends('layouts.app')
 @section('content')	
 <style>
+
+#loader_background{
+
+position:fixed;
+padding:0;
+margin:0;
+
+top:0;
+left:0;
+
+width: 100%;
+height: 100%;
+background:rgba(255,255,255,0.9);
+z-index:3001;
+
+ /* Add the blur effect */
+ filter: blur(20px);
+
+-webkit-filter: blur(25px);
+
+}
+
+#loader {
+/* Uncomment this to make it run! */
+/*
+ animation: loader 5s linear infinite; 
+*/
+
+position: absolute;
+top: calc(50% - 20px);
+left: calc(50% - 20px);
+z-index:3001;
+
+
+}
+@keyframes loader {
+	0% {
+		left: -100px;
+	}
+	100% {
+		  left: 110%;
+	}
+}
+
+#box {
+  width: 50px;
+  height: 50px;
+  background: #25385b;
+  animation: animate 0.5s linear infinite;
+  position: absolute;
+  top: 0;
+  left: -100px;
+  border-radius: 3px;
+}
+@keyframes animate {
+  17% {
+    border-bottom-right-radius: 3px;
+  }
+  25% {
+    transform: translateY(9px) rotate(22.5deg);
+  }
+  50% {
+    transform: translateY(18px) scale(1, 0.9) rotate(45deg);
+    border-bottom-right-radius: 40px;
+  }
+  75% {
+    transform: translateY(9px) rotate(67.5deg);
+  }
+  100% {
+    transform: translateY(0) rotate(90deg);
+  }
+}
+#shadow {
+  width: 50px;
+  height: 5px;
+  background: #000;
+  opacity: 0.1;
+  position: absolute;
+  top: 59px;
+  left: -100px;
+  border-radius: 50%;
+  animation: shadow 0.5s linear infinite;
+}
+@keyframes shadow {
+  50% {
+    transform: scale(1.2, 1);
+  }
+}
+/*fim loader */
 btnEdicao:hover{cursor: pointer}
 .btnEdicao{
 	display: inline-block;
@@ -52,6 +141,12 @@ btnEdicao:hover{cursor: pointer}
 	font-size: 6px;
 }
 </style>
+<div id="loader_background"></div>
+<div id="loader">
+  <div id="shadow"></div>
+  <div id="box"></div>
+  <p style="color:#25385b; position:relative; left:-125px;top:65px;font-size:20px;"><b>AGUARDE...</b></p>
+</div>
 <div class="content">
 	<div class="container-fluid">
 		<div class="row">
@@ -72,7 +167,8 @@ btnEdicao:hover{cursor: pointer}
 									</div>
 									<div class="col-md-4">
 										<select class="form-control" id="pesquisa" name="pesquisa" onclick="ativarPesquisa()">
-											<option value="" selected></option>					
+											<option value="" selected></option>		
+											<option value="FORMULARIO">CÓDIGO FORMULÁRIO</option>			
 											@if(auth()->user()->isAdmin == 0)(<option value="SECRETARIA">SECRETARIA</option>@endif
 											<option value="TIPO DE FORMULARIO">TIPO DE FORMULÁRIO</option>
 											<!--<option value="TIPO DE INSTRUMENTO">TIPO DE INSTRUMENTO</option>-->
@@ -177,6 +273,20 @@ btnEdicao:hover{cursor: pointer}
 					</script>
 				@endif	
 				
+				<script>
+					$(document).ready(function() {
+						$('#loader').hide();
+						$('#loader_background').hide();
+					});
+				</script>
+
+				<script>
+					/*function load(){
+						$('#loader').show();  
+						$('#loader_background').show();
+						$('#importarArquivo').modal('toggle');
+					}*/
+				</script>
 			</div>
 		</div>
 	</div>	
@@ -235,6 +345,7 @@ function ativarPesquisa()
 	{
 		document.getElementById("secretaria").hidden = false;
 		document.getElementById("tipoFormulario").hidden = true;
+		document.getElementById("formulario").hidden = true;
 		document.getElementById("tipoInstrumento").hidden = true;
 		document.getElementById("data").hidden = true;
 		document.getElementById("texto").hidden = true;
@@ -243,10 +354,11 @@ function ativarPesquisa()
 		document.getElementById('filtro').value = "secretaria";
 		document.getElementById('btnPesquisar').disabled = false;
 	}
-	else if(opcao == "TIPO DE FORMULARIO")
+	else if(opcao == "FORMULARIO")
 	{
 		document.getElementById("secretaria").hidden = true;
-		document.getElementById("tipoFormulario").hidden = false;
+		document.getElementById("tipoFormulario").hidden = true;
+		document.getElementById("formulario").hidden = false;
 		document.getElementById("tipoInstrumento").hidden = true;
 		document.getElementById("data").hidden = true;
 		document.getElementById("texto").hidden = true;
@@ -254,12 +366,27 @@ function ativarPesquisa()
 
 		document.getElementById('filtro').value = "formulario";
 		document.getElementById('btnPesquisar').disabled = false;
+
+	}
+	else if(opcao == "TIPO DE FORMULARIO")
+	{
+		document.getElementById("secretaria").hidden = true;
+		document.getElementById("tipoFormulario").hidden = false;
+		document.getElementById("formulario").hidden = true;
+		document.getElementById("tipoInstrumento").hidden = true;
+		document.getElementById("data").hidden = true;
+		document.getElementById("texto").hidden = true;
+		document.getElementById("status").hidden = true;
+
+		document.getElementById('filtro').value = "tipo_formulario";
+		document.getElementById('btnPesquisar').disabled = false;
 		//document.getElementById('btnPesquisar2').disabled = false;
 	}
 	else if(opcao == "TIPO DE INSTRUMENTO")
 	{
 		document.getElementById("secretaria").hidden = true;
 		document.getElementById("tipoInstrumento").hidden = false;
+		document.getElementById("formulario").hidden = true;
 		document.getElementById("tipoFormulario").hidden = true;
 		document.getElementById("data").hidden = true;
 		document.getElementById("texto").hidden = false;
@@ -275,6 +402,7 @@ function ativarPesquisa()
 		document.getElementById("data").hidden = false;
 		document.getElementById("texto").hidden = true;
 		document.getElementById("tipoFormulario").hidden = true;
+		document.getElementById("formulario").hidden = true;
 		document.getElementById("tipoInstrumento").hidden = true;
 		document.getElementById("status").hidden = true;
 
@@ -290,6 +418,7 @@ function ativarPesquisa()
 		document.getElementById("secretaria").hidden = true;
 		document.getElementById("tipoInstrumento").hidden = true;
 		document.getElementById("tipoFormulario").hidden = true;
+		document.getElementById("formulario").hidden = true;
 		document.getElementById("data").hidden = true;
 		document.getElementById("texto").hidden = true;
 		document.getElementById("status").hidden = false;
@@ -342,13 +471,13 @@ function abrirFormularioPDF(codigo_formulario, status_formulario, justificativa)
          }
     });
 	
-	var tipo_formulario = codigo_formulario.substring(0, 3);
+	//var tipo_formulario = codigo_formulario.substring(0, 3);
 	var object = "<object data=\"{FileName}\" type=\"application/pdf\"  style=\"width: 100%; margin: 0 auto;\" height=\"1000px\">";
 
-	var valor = "http://127.0.0.1/seo/public/files/formularios_alteracao_orcamentaria/"+tipo_formulario+".pdf";
-	//alert(codigo_formulario)		;
+	var valor = "http://127.0.0.1/seo/public/files/formularios_alteracao_orcamentaria/"+codigo_formulario+".pdf";
+
 	var sub = "{{url('files/formularios_alteracao_orcamentaria/arquivo.pdf')}}";
-	sub = sub.replace("arquivo", tipo_formulario);
+	sub = sub.replace("arquivo", codigo_formulario);
 	//alert(sub);				
 	object += "Exibição indisponível!";
    // object += " or download <a target = \"_blank\" href = \"http://get.adobe.com/reader/\">Adobe PDF Reader</a> to view the file.";
@@ -384,9 +513,15 @@ function abrirFormularioPDF(codigo_formulario, status_formulario, justificativa)
 		document.getElementById('formulario_aprovado').style.display = "none";
 		document.getElementById('formulario_reprovado').style.display = "none";
 	}
-	$('#abrirFormularioPDF').modal('show'); 
-	//alert(valor);
 	
+	$('#loader').show();  
+	$('#loader_background').show();
+	
+	setTimeout(function wait(){
+		$('#loader').hide();
+		$('#loader_background').hide();
+		$('#abrirFormularioPDF').modal('show'); 
+    }, 2000);
 }
 
 function ativarBtnAprovar()
@@ -513,6 +648,9 @@ function ativarBtnReprovar()
 								</select>
 							</div>
 
+							<div class="col-md-12" style="margin-right:-4px;"  id="formulario"  hidden>
+								<input class="form-control" name="formulario" style="text-transform: uppercase"></input>
+							</div>
 							
 							<div  class="col-md-12" style="margin-right:-4px;"  id="data"  hidden>
 								<input id="date" type="date"  name="data" class="form-control"></input>

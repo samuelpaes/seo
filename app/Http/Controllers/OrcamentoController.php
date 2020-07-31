@@ -297,8 +297,22 @@ class OrcamentoController extends Controller
 				else{
 					$formularios[] = FormularioAlteracaoOrcamentaria::whereRaw("secretaria = '$request->secretaria'")->get();
 				}
+			}else if($request->filtro == "formulario")
+			{ 
+				if(Auth::user()->isAdmin == 0)
+				{
+					
+					$formularios[] =  FormularioAlteracaoOrcamentaria::where('codigo_formulario', '=', $request->formulario)->get();		
+					
+				}
+				else
+				{
+					
+					$formularios[] =  FormularioAlteracaoOrcamentaria::where('secretaria', '=', $secretaria)->where('codigo_formulario', '=', $request->formulario)->get();		
+				}
+					
 			}
-			else if($request->filtro == "formulario")
+			else if($request->filtro == "tipo_formulario")
 			{ 
 				if(Auth::user()->isAdmin == 0)
 				{
@@ -2998,6 +3012,7 @@ class OrcamentoController extends Controller
 		
 		//define o tipo de formulário
 		$tipo_alteracao =substr($request->formulario_codigo, 0, 3);
+		$data_formulario = FormularioAlteracaoOrcamentaria::whereRaw('codigo_formulario ="'.$request->formulario_codigo.'" ')->get('created_at', date('d-m-Y'));
 	
 		$acao = "";
 		$pesquisaFeita = "";
@@ -3069,7 +3084,7 @@ class OrcamentoController extends Controller
 
 				
 			}
-
+			//return($formulario);
 			$total = number_format($pre_total,2,",",".");
 
 			$html = '
@@ -3115,7 +3130,7 @@ class OrcamentoController extends Controller
 															<b>DATA DA SOLICITAÇÃO:</b>
 															</td>
 															<td >
-															'.$request->data.'
+															'.$data_formulario.'
 															</td>
 															<td style="text-align:right">
 															<b>PROCESSO: </b>
@@ -3473,7 +3488,8 @@ class OrcamentoController extends Controller
 				
 			};		
 			
-			$mpdf->Output('files/formularios_alteracao_orcamentaria/CAS.pdf');	
+			array_map('unlink', glob("files/formularios_alteracao_orcamentaria/*.pdf")); 
+			$mpdf->Output('files/formularios_alteracao_orcamentaria/'.$request->formulario_codigo.'.pdf');	
 			
 			
 			
@@ -3558,23 +3574,29 @@ class OrcamentoController extends Controller
 													<h6 style="line-height: 0.05; font-family:arial">'.$request->tipo_suplementacao3.'</h6>
 													<p style="text-align:right; font-size:10px;  font-family: Arial;">Lei '.$loa->numero.'/'.$exercicioLei.'</p>									
 												</div>
-												<div><!--
+												<div>
 													<table width="100%" style="border-bottom:solid;border-top:solid;border-width: 1px; font-family: Arial; font-size:12px;">
 														<tr>
 															<td style="text-align:right">
 															<b>DATA DA SOLICITAÇÃO:</b>
 															</td>
 															<td >
-															'.$request->data.'
+															'.$data_formulario.'
 															</td>
 															<td style="text-align:right">
-															<b>INSTRUMENTO ADMINISTRATIVO: </b>
+															<b>PROCESSO: </b>
 															</td>
 															<td>
 															'.$request->instrumento.' '.$request->numeroInstrumento.'
 															</td>
-														</tr>	
-													</table>-->
+															<td style="text-align:right">
+															<b>CÓDIGO: </b>
+															</td>
+															<td>
+															'.$rtt.'
+															</td>
+														</tr>		
+													</table>
 													<h4 class="title" style="text-align: center; font-family: Arial;"><b>SUPLEMENTAÇÃO</b></h4>
 													<table style="border-top:solid; border-bottom:solid; border-width: 1px; border-collapse: collapse;">
 														<thead>
@@ -3937,7 +3959,10 @@ class OrcamentoController extends Controller
 	
 			};
 			
-				$mpdf->Output('files/formularios_alteracao_orcamentaria/RTT.pdf');	
+		
+				array_map('unlink', glob("files/formularios_alteracao_orcamentaria/*.pdf")); 
+				$mpdf->Output('files/formularios_alteracao_orcamentaria/'.$request->formulario_codigo.'.pdf');	
+				
 
 			
 		}
