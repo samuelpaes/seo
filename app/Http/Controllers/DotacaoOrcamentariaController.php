@@ -584,7 +584,7 @@ class DotacaoOrcamentariaController extends Controller
 		$nome = $arquivo->getClientOriginalName();
 		$pesquisaFeita='';
 		$exercicio = date("Y");
-		
+	
 		if($arquivo->getClientOriginalExtension() == "xlsx")
 		{
 			$mensagem = '';

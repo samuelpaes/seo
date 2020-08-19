@@ -48,7 +48,7 @@
   animation: animate 0.5s linear infinite;
   position: absolute;
   top: 0;
-  left: -100px;
+  left: 0px;
   border-radius: 3px;
 }
 @keyframes animate {
@@ -76,7 +76,7 @@
   opacity: 0.1;
   position: absolute;
   top: 59px;
-  left: -100px;
+  left: 0px;
   border-radius: 50%;
   animation: shadow 0.5s linear infinite;
 }
@@ -92,7 +92,7 @@
 <div id="loader">
   <div id="shadow"></div>
   <div id="box"></div>
-  <p style="color:#25385b; position:relative; left:-125px;top:65px;font-size:20px;"><b>AGUARDE...</b></p>
+  <p style="color:#25385b; position:relative; left:-25px;top:65px;font-size:20px;"><b>AGUARDE...</b></p>
 </div>
 @extends('layouts.app')
 	@section('content')
@@ -135,8 +135,7 @@
 										</div>
 										<div class="col-md-2">
 											<label for="Exercicio">Exercício</label>
-												<select class="form-control" name="exercicio" id="exercicio" onchange="ativarCamposParaFiltro()">
-												
+											<select class="form-control" name="exercicio" id="exercicio" onchange="ativarCamposParaFiltro()">
 											</select>
 										</div>
 										<div class="col-md-2">
@@ -237,8 +236,11 @@ function ativarEnviar()
 		}
 	}		
 
-function ativarCamposParaFiltro() 
+function ativarCamposParaFiltro(x) 
 	{
+		var e = document.getElementById("exercicio");
+		var exercicio = e.options[e.selectedIndex].value;	
+		document.getElementById('exercicio2').value = exercicio;
 		if ((document.getElementById('unidade_orcamentaria').value == "") || (document.getElementById('exercicio').value == ""))
 		{
 			document.getElementById('btnImplementar').disabled = true;
@@ -291,7 +293,7 @@ function ativarCamposParaFiltro()
 			</div>
 			<form action="{{ route('importarAtualizarDotacaoOrcamentaria') }}" method="post" enctype="multipart/form-data"  files="true">
 			{{ csrf_field() }}
-				<input id="exercicio2" name="exercicio" hidden/>
+				<input id="exercicio2" name="exercicio"/>
 				<div class="modal-body" onclick="ativarEnviar()" onmouseover="ativarEnviar()" onmousemove="ativarEnviar()">
 
 					

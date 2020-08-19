@@ -48,7 +48,8 @@ class HomeController extends Controller
         foreach($notificacoes as $notificacao)
         {
             $notificacao_lida = explode(';', $notificacao['user_read']);    
-            if (in_array(Auth::user()->registro, $notificacao_lida)) { 
+            $notificacao_user = explode(';', $notificacao['to_user']);   
+            if (in_array(Auth::user()->registro, $notificacao_lida) && in_array(Auth::user()->registro, $notificacao_user)) { 
                 $notificacoes_naoLidas[] = $notificacao;
             }
         }
