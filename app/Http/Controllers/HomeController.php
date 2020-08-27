@@ -96,13 +96,27 @@ class HomeController extends Controller
             $dotacao = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('dotacao');	
             $reserva = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('reserva');
             $saldo = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('saldo');	;
-            $empenhado = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('empenhado');	
+            $empenhado = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('empenhado');
+            
+            //captura os programas da unidade orçamentária
+            $programas = array();
+            $programas_temp = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->pluck("classificacao_funcional_programatica");	
+            $programas_temp = $programas_temp->unique()->values()->all(); 
+            foreach($programas_temp as $program)
+            {
+            
+               $programa["codigo"] = $program;
+               $programa['descricao'] = DB::table("classificacao_funcional_programaticas")->where('codigo', '=', $program)->value("especificacao");
+               $programa['valor'] = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->where('classificacao_funcional_programatica', '=', $program)->sum("dotacao");
+               $programa['valor'] = 'R$ '.number_format($programa['valor'], 2, ',', '.');	
+               array_push($programas, $programa);
+            }
 
             $informacoes = Informacao::all()->take(10);
             
             //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
             
-            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read)->with('notificacoes_naoLidas', $notificacoes_naoLidas);
+            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('programas', $programas)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read)->with('notificacoes_naoLidas', $notificacoes_naoLidas);
         }
         else{
             //return redirect()->action('HomeController@pre_index');
@@ -159,10 +173,24 @@ class HomeController extends Controller
             $saldo = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('saldo');	;
             $empenhado = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->sum('empenhado');	
 
+            //captura os programas da unidade orçamentária
+            $programas = array();
+            $programas_temp = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->pluck("classificacao_funcional_programatica");	
+            $programas_temp = $programas_temp->unique()->values()->all(); 
+            foreach($programas_temp as $program)
+            {
+            
+               $programa["codigo"] = $program;
+               $programa['descricao'] = DB::table("classificacao_funcional_programaticas")->where('codigo', '=', $program)->value("especificacao");
+               $programa['valor'] = DB::table("saldo_de_dotacaos")->where('unidade_orcamentaria', '=', $unidade_orcamentaria['codigo'])->where('exercicio', '=', $exercicio)->where('classificacao_funcional_programatica', '=', $program)->sum("dotacao");
+               array_push($programas, $programa);
+            }
+           
+
             $informacoes = Informacao::all()->take(10);
             
             //$dotacao = 'R$ '.number_format($dotacao, 2, ',', '.');
-            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read)->with('notificacoes_naoLidas', $notificacoes_naoLidas);
+            return view('home')->with('dotacao', $dotacao)->with('reserva', $reserva)->with('saldo', $saldo)->with('empenhado', $empenhado)->with('programas', $programas)->with('informacoes', $informacoes)->with('users', $users)->with('secretaria', $secretaria)->with('messages_read', $messages_read)->with('notificacoes_naoLidas', $notificacoes_naoLidas);
         }
 	}
     
