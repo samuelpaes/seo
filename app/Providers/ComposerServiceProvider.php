@@ -36,6 +36,7 @@ class ComposerServiceProvider extends ServiceProvider {
                 //captura todas as notificações do bd
                 $notificacoes = Notification::all();
                 
+           
                 //verifica as mensagens não lidas
                 $id = strval(auth()->user()->id);
                 $messages_read = Message::Where('to_user',$id)->where('message_read','=' , 0)->orderBy('created_at', 'ASC')->get(); 
@@ -61,47 +62,26 @@ class ComposerServiceProvider extends ServiceProvider {
                 }
 
                 $registro = strval(auth()->user()->registro);
-                //verifica quais não foram lidas pelo usuário
+                //verifica quais não foram lidas pelo usuário e se são para o usuário logado
                 foreach($notificacoes as $notificacao)
                 {
-                    $notificacao_lida = explode(';', $notificacao['user_read']);    
+                    $notificacao_lida = explode(';', $notificacao['user_read']);   
+                    $notificacao_user = explode(';', $notificacao['to_user']);
                     if (in_array($registro, $notificacao_lida)) { 
                         
                     }
-                    else{
+                    else if(in_array($registro, $notificacao_user))
+                    {
                         $notificacoes_naoLidas[] = $notificacao;
+                    }
+                    else{
+                        
                     }
                 } 
                 $view->with('notificacoes_naoLidas', $notificacoes_naoLidas)->with('users', $users)->with('messages_read', $messages_read);
             }
             $view->with('notificacoes_naoLidas', $notificacoes_naoLidas);
         });
-
-
-
-        //código funcionando
-        /*
-        View::composer('*', function($view){
-            $notificacoes_naoLidas = array();
-            //captura todas as notificações do bd
-            $notificacoes = Notification::all();
-            
-            if (auth()->user() != null) {
-                $registro = strval(auth()->user()->registro);
-                //verifica quais não foram lidas pelo usuário
-                foreach($notificacoes as $notificacao)
-                {
-                    $notificacao_lida = explode(';', $notificacao['user_read']);    
-                    if (in_array($registro, $notificacao_lida)) { 
-                        
-                    }
-                    else{
-                        $notificacoes_naoLidas[] = $notificacao;
-                    }
-                } 
-            }
-            $view->with('notificacoes_naoLidas', $notificacoes_naoLidas)->with('users', $users);
-        });*/
 
     }
 
